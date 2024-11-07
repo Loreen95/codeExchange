@@ -62,6 +62,11 @@ body {
     font-family: 'Trebuchet MS', sans-serif;
     display: flex;
     flex-direction: row;
+    cursor: pointer;
+}
+
+.navLinks p:hover {
+    color: rgb(212, 210, 237);
 }
 
 .menu {
@@ -159,22 +164,45 @@ body {
     align-self: flex-end;
     justify-content: space-around;
     margin: 10px;
-    background-color: brown;
+    /* background-color: brown; */
     width: 80%;   
 }
 
 .footerFillerItem {
-    font-family: Verdana, sans-serif;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    background-color: black;
+    /* background-color: black; */
     padding: 10px;
 }
 
-.footerFillerItem p {
-    margin: 0 0 5px 0;
+.footerFillerItem h1 {
+    font-size: 30px;
+    margin-bottom: 10px;
+    font-family: 'Trebuchet MS', sans-serif;
+}
 
+.footerFillerItem p, a {
+    font-family: Verdana, sans-serif;
+    margin: 0 0 5px 0;
+    letter-spacing: 0.05em;
+    margin-left: 5px;
+    cursor: pointer;
+    width: fit-content;
+}
+
+
+.footerFillerItem p:hover { 
+    color: rgb(85, 83, 108);
+}
+
+.footerFillerItem a:hover { 
+    color: rgb(139, 61, 122);
+    cursor: help;
+}
+
+.socealMedia i:hover { 
+    color: rgb(85, 83, 108);
 }
 
 .socealMedia {
@@ -182,10 +210,12 @@ body {
     align-self: flex-end;
     /* background-color: brown; */
     font-size: 30px;
+    
 }
 
 .socealMedia p {
     margin: 0;
+    margin-left: 10px;
 }
 
 .copyRightNonsense {
@@ -208,12 +238,16 @@ body {
     .socealMedia {
         align-self: center;
         text-align: center;
-        margin-top: 10px;
+        margin-top: 0;
     }
 
     .corpoFiller {
         flex-direction: column;
         width: 100%;
-        align-items: center;
+        align-items: flex-start;
+    }
+
+    .footerFillerItem {
+        margin-left: 10%;
     }
 }
