@@ -37,7 +37,7 @@ body {
     width: 100%;
     top: 0;
     align-items: center;
-    background-image: linear-gradient(to bottom right, rgb(11, 11, 11), rgb(16, 17, 18));
+    background-image: linear-gradient(to bottom right, rgb(11, 11, 11), rgb(13, 17, 20));
     height: 80px;
     overflow: hidden;
     z-index: 1;
@@ -63,8 +63,8 @@ body {
 }
 
 .navLink :hover {
-    text-decoration: underline;
-    color: rgb(211, 40, 40);
+    text-decoration: none;
+    color: rgb(158, 41, 41);
 }
 
 .navLinks li {
@@ -72,17 +72,17 @@ body {
 }
 
 .navLinks :hover {
-    text-decoration: underline;
-    color: rgb(211, 40, 40);
+    text-decoration: none;
+    color: rgb(158, 41, 41);
+    transition: ease 0.3s;
 }
 
 .menu {
-    transition: all 0.2s;
     border-top: 10px rgb(218, 218, 218) solid;
     background-image: linear-gradient(to bottom right, rgb(211, 40, 40), rgb(67, 1, 1));
     height: 100px;
     width: 300px;
-    rotate: 225deg;
+    rotate: -135deg;
     position: fixed;
     right: -90px;
     top: -75px;
@@ -91,10 +91,11 @@ body {
 
 .menu button {
     border: none;
+    transition: all 0.2s;
     background-color: transparent;
     color: aliceblue;
     font-size: 35px;
-    rotate: -225deg;
+    rotate: 135deg;
     position: fixed;
     left: 75px;
     bottom: 45px;
@@ -165,10 +166,75 @@ body {
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
+.defaultInputBox {
+    display: flex;
+    flex-direction: column;
+    border-radius: 4px;
+    height: fit-content;
+    border: solid rgb(168, 32, 32) 2px;
+    margin-top: 170px;
+    margin-bottom: 70px;
+    width: 30%;
+    padding: 20px;
+    background-image: linear-gradient(to bottom right, rgb(14, 14, 14), rgb(11, 21, 31));
+}
+
+.defaultInputBox h1 {
+    font-family: Arial, sans-serif;
+    align-self: center;
+    font-size: 50px;
+    margin: 0;
+}
+
+.defaultInputBox input {
+    border: 3px solid rgb(58, 58, 58);
+    background-color: rgb(87, 94, 100);
+    padding: 5px;
+    border-radius: 1px;
+    margin-bottom: 20px;
+    color: aliceblue;
+    font-size: 20px;
+    outline: none;
+    width: 79%;
+    align-self: center;
+}
+
+.defaultInputBox input:focus {
+    border: 3px solid rgb(210, 210, 210);
+    transition: all 0.2s;
+}
+
+.defaultInputBox label {
+    font-family: 'Trebuchet MS', sans-serif;
+    margin-bottom: 7px;
+    letter-spacing: 0.05em;
+    width: 80%;
+    align-self: center;
+}
+
+.defaultInputBox button {
+    border: none;
+    border-radius: 2px;
+    color: aliceblue;
+    font-size: 19px;
+    background-image: linear-gradient(to bottom right, rgb(211, 40, 40), rgb(200, 22, 22));
+    padding: 15px 40px 15px 40px;
+    width: fit-content;
+    align-self: center;
+    cursor: pointer;
+}
+
+.defaultInputBox button:hover {
+    background-image: linear-gradient(to bottom right, rgb(211, 40, 40), rgb(158, 39, 39));
+    transition: ease 0.3s;
+}
+
 /* Footer */
 .tempitem {
-    background-color: rgb(32, 32, 32);
-    height: 3000px;
+    display: flex;
+    justify-content: center;
+    background-color: transparent;
+    height: fit-content;
     width: 100%;
     align-self: center;
 }
@@ -176,9 +242,10 @@ body {
 .footer {
     display: flex;
     flex-direction: column;
-    background-image: linear-gradient(to bottom right, rgb(11, 11, 11), rgb(16, 17, 18));
+    background-image: linear-gradient(to bottom right, rgb(11, 11, 11), rgb(2, 5, 8));
     box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
     height: auto;
+    margin-top: 25vh;
 }
 
 .corpoFiller {
@@ -249,6 +316,9 @@ body {
 
 /* Responsive */
 @media (max-width: 630px) {
+    .defaultInputBox {
+        width: 75%;
+    }
     .copyRightNonsense {
         margin-bottom: 250px;
         align-self: center;
