@@ -1,3 +1,4 @@
+/* Global Styling */
 body {
     background-color: rgb(27, 27, 27);
     color: aliceblue;
@@ -6,40 +7,28 @@ body {
     transition: all 0.3s;
 }
 
-.barka {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-image: linear-gradient(to bottom right, rgb(211, 40, 40), rgb(67, 1, 1));
-    border-top: 10px rgb(218, 218, 218) solid;
-    height: 200px;
-    width: 600px;
-    rotate: 45deg;
-    position: fixed;
-    left: -200px;
-    bottom: -75px;
-}
-
-.barka button {
-    color: aliceblue;
-    font-size: 30px;
-    rotate: -45deg;
-    position: relative;
-    bottom: 15px;
-    right: 50px;
-    border: none;
-    height: 70px;
-    width: 70px;
-    border-radius: 50%;
-    background-color: rgb(35, 27, 27);
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-}
-
+/* Header */
 #apatureLogo {
     height: 50px;
     margin-right: 10px;
 }
 
+/* Hero */
+.logoImage {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 10px;
+    font-family: Tahoma, sans-serif;
+}
+
+.logoImage h1 {
+    margin-left: 10px;
+    margin: 0 0 0 0;
+    font-size: 25px;
+}
+
+/* Navigation */
 .navigationBar {
     display: flex;
     min-width: 800px;
@@ -57,7 +46,6 @@ body {
 
 .navLinks {
     gap: 10px;
-    /* background-color: brown; */
     margin: 0 100px 0 0;
     font-family: 'Trebuchet MS', sans-serif;
     display: flex;
@@ -67,6 +55,25 @@ body {
 
 .navLinks p:hover {
     color: rgb(212, 210, 237);
+}
+
+.navLink {
+    text-decoration: none;
+    color: white;
+}
+
+.navLink :hover {
+    text-decoration: underline;
+    color: rgb(211, 40, 40);
+}
+
+.navLinks li {
+    list-style-type: none;
+}
+
+.navLinks :hover {
+    text-decoration: underline;
+    color: rgb(211, 40, 40);
 }
 
 .menu {
@@ -128,20 +135,37 @@ body {
     transition: ease 0.1s;
 }
 
-.logimage {
+/* Main */
+.barka {
     display: flex;
-    flex-direction: row;
     align-items: center;
-    margin-left: 10px;
-    font-family: Tahoma, sans-serif;
+    justify-content: center;
+    background-image: linear-gradient(to bottom right, rgb(211, 40, 40), rgb(67, 1, 1));
+    border-top: 10px rgb(218, 218, 218) solid;
+    height: 200px;
+    width: 600px;
+    rotate: 45deg;
+    position: fixed;
+    left: -200px;
+    bottom: -75px;
 }
 
-.logimage h1 {
-    margin-left: 10px;
-    margin: 0 0 0 0;
-    font-size: 25px;
+.barka button {
+    color: aliceblue;
+    font-size: 30px;
+    rotate: -45deg;
+    position: relative;
+    bottom: 15px;
+    right: 50px;
+    border: none;
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    background-color: rgb(35, 27, 27);
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
+/* Footer */
 .tempitem {
     background-color: rgb(32, 32, 32);
     height: 3000px;
@@ -152,10 +176,9 @@ body {
 .footer {
     display: flex;
     flex-direction: column;
-
     background-image: linear-gradient(to bottom right, rgb(11, 11, 11), rgb(16, 17, 18));
     box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
-    height: fit-content;
+    height: auto;
 }
 
 .corpoFiller {
@@ -164,7 +187,6 @@ body {
     align-self: flex-end;
     justify-content: space-around;
     margin: 10px;
-    /* background-color: brown; */
     width: 80%;   
 }
 
@@ -172,7 +194,6 @@ body {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    /* background-color: black; */
     padding: 10px;
 }
 
@@ -201,19 +222,18 @@ body {
     cursor: help;
 }
 
-.socealMedia i:hover { 
+.socialMedia i:hover { 
     color: rgb(85, 83, 108);
 }
 
-.socealMedia {
+.socialMedia {
     width: 80%;
     align-self: flex-end;
-    /* background-color: brown; */
     font-size: 30px;
     
 }
 
-.socealMedia p {
+.socialMedia p {
     margin: 0;
     margin-left: 10px;
 }
@@ -225,9 +245,9 @@ body {
     align-self: flex-end;
     text-align: center;
     margin: 0;
-    /* background-color: brown; */
 }
 
+/* Responsive */
 @media (max-width: 630px) {
     .copyRightNonsense {
         margin-bottom: 250px;
@@ -235,7 +255,7 @@ body {
         width: 100%;
     }
 
-    .socealMedia {
+    .socialMedia {
         align-self: center;
         text-align: center;
         margin-top: 0;
