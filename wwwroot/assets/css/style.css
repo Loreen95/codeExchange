@@ -145,9 +145,30 @@ body {
 }
 
 .footer {
+    display: flex;
+    justify-content: flex-end;
+
     background-image: linear-gradient(to bottom right, rgb(11, 11, 11), rgb(16, 17, 18));
     box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
-    height: 260px;
+    height: fit-content;
+}
+
+.corpoFiller {
+    margin: 10px;
+    background-color: brown;
+    width: 80%;
+    
+    
+}
+
+.footerFillerItem {
+    font-family: Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+.footerFillerItem p {
+    margin: 0;
 }
 
 @media (max-width: 630px) {
