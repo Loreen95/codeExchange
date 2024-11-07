@@ -1,49 +1,46 @@
-/* General Styling */
 body {
     background-color: rgb(27, 27, 27);
     color: aliceblue;
     padding: 0;
     margin: 0;
     transition: all 0.3s;
-    font-family: Tahoma, sans-serif;
 }
 
-/* Header */
-/* Hero */
+.barka {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: linear-gradient(to bottom right, rgb(211, 40, 40), rgb(67, 1, 1));
+    border-top: 10px rgb(218, 218, 218) solid;
+    height: 200px;
+    width: 600px;
+    rotate: 45deg;
+    position: fixed;
+    left: -200px;
+    bottom: -75px;
+}
+
+.barka button {
+    color: aliceblue;
+    font-size: 30px;
+    rotate: -45deg;
+    position: relative;
+    bottom: 15px;
+    right: 50px;
+    border: none;
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    background-color: rgb(35, 27, 27);
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
 #apatureLogo {
-    height: 80px;
+    height: 50px;
     margin-right: 10px;
 }
 
-.logoImage {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-left: 10px;
-}
-
-.logoImage h1 {
-    margin-left: 10px;
-    margin: 0 0 0 0;
-    font-size: 25px;
-}
-
-.logoImage a {
-    text-decoration: none;
-    color: rgb(165, 16, 30, 1)
-}
-
-.logoImage a :hover {
-    text-decoration: underline;
-    color: white;
-}
-
-.logoName { 
-    color: rgb(211, 40, 40);
-}
-
-/* Navigation */
-.navBar {
+.navigationBar {
     display: flex;
     min-width: 800px;
     justify-content: space-between;
@@ -60,15 +57,11 @@ body {
 
 .navLinks {
     gap: 10px;
+    /* background-color: brown; */
     margin: 0 100px 0 0;
     font-family: 'Trebuchet MS', sans-serif;
     display: flex;
     flex-direction: row;
-}
-
-.navItems {
-    list-style: none;
-    text-align: center;
     cursor: pointer;
 }
 
@@ -76,25 +69,11 @@ body {
     color: rgb(212, 210, 237);
 }
 
-.navItems {
-    list-style: none;
-    text-align: center;
-    position: relative;
-    right: 35%;
-    display: flex;
-    flex-direction: row;
-    font-size: 20px;
-}
-
-.navItems li {
-    margin-right: 50px;
-    color: rgb(165, 16, 30, 1)
-}
 .menu {
     transition: all 0.2s;
     border-top: 10px rgb(218, 218, 218) solid;
     background-image: linear-gradient(to bottom right, rgb(211, 40, 40), rgb(67, 1, 1));
-    height: 96px;
+    height: 100px;
     width: 300px;
     rotate: 225deg;
     position: fixed;
@@ -118,38 +97,6 @@ body {
 .menu button:hover {
     color: rgb(39, 39, 39);
     transition: all 0.1s;
-}
-/* Main */
-/* Sections */
-/* Footer */
-
-.barka {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-image: linear-gradient(to bottom right, rgb(211, 40, 40), rgb(67, 1, 1));
-    border-top: 10px rgb(218, 218, 218) solid;
-    height: 100px;
-    width: 600px;
-    rotate: 35deg;
-    position: fixed;
-    left: -200px;
-    bottom: -75px;
-}
-
-.barka button {
-    color: aliceblue;
-    font-size: 30px;
-    rotate: -45deg;
-    position: relative;
-    bottom: 15px;
-    right: 50px;
-    border: none;
-    height: 70px;
-    width: 70px;
-    border-radius: 50%;
-    background-color: rgb(35, 27, 27);
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
 .foldopenMenu {
@@ -179,6 +126,20 @@ body {
 .foldopenMenu p:hover {
     color: rgb(180, 180, 180);
     transition: ease 0.1s;
+}
+
+.logimage {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 10px;
+    font-family: Tahoma, sans-serif;
+}
+
+.logimage h1 {
+    margin-left: 10px;
+    margin: 0 0 0 0;
+    font-size: 25px;
 }
 
 .tempitem {
