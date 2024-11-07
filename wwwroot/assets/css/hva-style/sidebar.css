@@ -1,0 +1,67 @@
+/* !!Doesn't work without importing the base.css first!! */
+/* Sidebar Filter */
+.sidebar {
+    width: 250px;
+    background-color: var(--white);
+    padding: 1rem;
+    border: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+.sidebar .filter-section {
+    margin-bottom: 2rem;
+}
+
+.sidebar .filter-section h3 {
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--secondary-color);
+}
+
+.sidebar .filter-section ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+/* Filter items */
+.sidebar .filter-section ul li {
+    margin-bottom: 0.5rem;
+}
+
+/* Styling for selectable tags (checkbox) */
+.sidebar .filter-section ul li label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    background-color: var(--light-gray);
+    border-radius: 0.25rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar .filter-section ul li label:hover {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+/* Hide the checkbox but keep it functional */
+.sidebar .filter-section ul li input[type="checkbox"] {
+    display: none;
+}
+
+/* Selected state */
+.sidebar .filter-section ul li input[type="checkbox"]:checked + label {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+/* FontAwesome Icon Styling */
+.sidebar .filter-section .icon {
+    margin-right: 0.5rem;
+    color: var(--primary-color);
+}
+
+/* Change icon color when selected */
+.sidebar .filter-section ul li input[type="checkbox"]:checked + label .icon {
+    color: var(--white);
+}

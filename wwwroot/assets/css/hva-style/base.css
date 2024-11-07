@@ -1,0 +1,150 @@
+/* Base CSS Variables for HvA Color Scheme */
+:root {
+    --primary-color: #005792;
+    --secondary-color: #333333;
+    --accent-color: #c60035;
+    --background-color: #f5f5f5;
+    --white: #ffffff;
+    --gray: #8c8c8c;
+    --light-gray: #e1e4e8;
+    --border-color: var(--light-gray);
+    --hover-color: #b8002e;
+    --link-color: #005792;
+    --link-hover-color: #003f5e;
+}
+
+/* General layout */
+body {
+    font-family: sans-serif;
+    background-color: var(--background-color);
+    color: var(--secondary-color);
+    margin: 0px;
+}
+
+/* Utility classes */
+.flex {
+    display: flex;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.flex-row {
+    flex-direction: row;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.m-0 {
+    margin: 0;
+}
+
+.mb-4 {
+    margin-bottom: 1rem;
+}
+
+.mt-4 {
+    margin-top: 1rem;
+}
+
+.p-4 {
+    padding: 1rem;
+}
+
+.px-2 {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.w-full {
+    width: 100%;
+}
+
+.bg-white {
+    background-color: var(--white);
+}
+
+.border {
+    border: 1px solid var(--border-color);
+}
+
+.rounded {
+    border-radius: 0.5rem;
+}
+
+/* Main content */
+.main-content {
+    flex-grow: 1;
+    background-color: var(--background-color);
+    padding: 1rem;
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        padding: 0 1rem;
+    }
+}
+
+/* Responsive Layout */
+.container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+}
+
+/* Icons (CSS-based or SVG) */
+.icon {
+    width: 16px;
+    height: 16px;
+    fill: var(--gray);
+    margin-right: 0.5rem;
+}
+
+.icon:hover {
+    fill: var(--primary-color);
+}
+
+/* Buttons */
+.btn {
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    border: none;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: var(--hover-color);
+}
+
+.btn-secondary {
+    background-color: var(--light-gray);
+    color: var(--secondary-color);
+}
+
+.btn-secondary:hover {
+    color: var(--white);
+    background-color: var(--hover-color);
+}

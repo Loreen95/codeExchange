@@ -1,0 +1,20 @@
+/* Imports for the HvA Style */
+@import url("./hva-style/base.css");
+@import url("./hva-style/card.css");
+@import url("./hva-style/form.css");
+@import url("./hva-style/modal.css");
+@import url("./hva-style/nav.css");
+@import url("./hva-style/pagination.css");
+@import url("./hva-style/profile.css");
+@import url("./hva-style/question.css");
+@import url("./hva-style/sidebar.css");
+@import url("./hva-style/table.css");
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-size: 1.2em;
+    color: var(--black);
+}

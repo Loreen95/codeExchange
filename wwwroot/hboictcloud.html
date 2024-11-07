@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Code Exchange - HBO-ICT.Cloud</title>
+
+    <link rel="stylesheet" href="/assets/css/main.css" />
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            Code Exchange
+        </div>
+
+        <div class="nav-links">
+            <a href="/index.html">Home</a>
+            <a href="/demo.html">Demo</a>
+            <a href="/hboictcloud.html" class="active">HBO-ICT.Cloud</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <h1>HBO-ICT.Cloud</h1>
+
+        <p>Dit zijn een aantal voorbeelden van de mogelijkheden van de HBO-ICT.Cloud API.</p>
+
+        <p>Bekijk ook de <a href="https://hbo-ict.cloud/Help" target="_blank">Help</a>-pagina van de HBO-ICT.Cloud en de
+            <a href="https://docs.hbo-ict.cloud/" target="_blank">Technische documentatie</a> van de API.
+        </p>
+
+        <h2>Url</h2>
+
+        <p>
+            Je kunt gemakkelijk de URL manipuleren en uitlezen.
+
+        <ul>
+            <li>"Replace" zal alleen de URL aanpassen zonder dat de pagina ververst. Kijk eens wat er gebeurd als je
+                daarna handmatig ververst!</li>
+            <li>"Redirect" ververst wel de pagina direct.</li>
+        </ul>
+        </p>
+
+        <form onsubmit="return false">
+            <div class="form-group">
+                Dit zit er in de huidige URL:
+
+                <code id="url"></code>
+            </div>
+
+            <div class="form-group">
+                <input type="text" id="input-url" />
+            </div>
+
+            <button type="submit" id="button-url-replace">Replace</button>
+            <button type="submit" id="button-url-redirect">Redirect</button>
+        </form>
+
+        <h2>Session</h2>
+
+        <p>
+            Met de sessie kun je informatie in de browser opslaan en later weer opvragen, ook op andere pagina's.
+        </p>
+
+        <form onsubmit="return false">
+            <div class="form-group">
+                Dit zit er in de huidige sessie:
+
+                <code id="session"></code>
+            </div>
+
+            <div class="form-group">
+                <input type="text" id="input-session" />
+            </div>
+
+            <button type="submit" id="button-session-ok">OK</button>
+            <button type="submit" id="button-session-reset">Reset</button>
+        </form>
+
+        <h2>Query</h2>
+
+        <p>
+            Een browser kan normaal gesproken niet direct met een database communiceren.
+        </p>
+
+        <p>
+            Voor dit voorbeeld zul je wel eerst de <code>./src/config.ts</code> moeten aanpassen en een tabel aan de
+            gekoppelde database moeten toevoegen!
+        </p>
+
+        <p>
+            Vul hieronder een SQL-query in om informatie uit de gekoppelde database op te halen.
+        </p>
+
+        <form onsubmit="return false">
+            <div class="form-group">
+                <input type="text" id="input-query" />
+            </div>
+
+            <div class="form-group">
+                <pre id="query">Leeg...</pre>
+            </div>
+
+            <button type="submit" id="button-query">Query</button>
+        </form>
+
+        <h2>Localization</h2>
+
+        <p>
+            Soms is het belangrijk dat je een website in meer dan één taal kan aanbieden.
+        </p>
+
+        <p data-translate="paragraph"></p>
+
+        <button class="btn" data-translate="english" id="button-localization-english">Engels</button>
+        <button class="btn" data-translate="dutch" id="button-localization-dutch">Nederlands</button>
+        <button class="btn" id="button-localization-xx">Geen taal (om te testen)</button>
+    </main>
+
+    <script src="/src/views/hboictcloud.ts" type="module"></script>
+</body>
+
+</html>

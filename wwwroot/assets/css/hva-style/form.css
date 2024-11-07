@@ -1,0 +1,90 @@
+/* !!Doesn't work without importing the base.css first!! */
+/* Form Styling */
+/* Form */
+form {
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+    margin: auto;
+    margin-bottom: 1.5rem;
+    max-width: 60%;
+}
+
+form .form-group {
+    margin-bottom: 1rem;
+}
+
+/* Form Input Elements */
+form label {
+    display: block;
+    font-weight: 600;
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
+}
+
+form input[type="text"].invalid,
+form input[type="email"].invalid,
+form input[type="password"].invalid,
+form input[type="number"].invalid,
+form select.invalid,
+form textarea.invalid {
+    border: 1px solid var(--accent-color);
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+form input[type="number"],
+form select,
+form textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    color: var(--secondary-color);
+    background-color: var(--background-color);
+}
+
+form input[type="text"]:focus,
+form input[type="email"]:focus,
+form input[type="password"]:focus,
+form input[type="number"]:focus,
+form select:focus,
+form textarea:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 87, 146, 0.5);
+}
+
+/* Form Button */
+form button[type="submit"] {
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+form button[type="submit"]:hover {
+    background-color: var(--hover-color);
+}
+
+/* Form Prompt */
+form .form-text {
+    font-size: 0.875rem;
+    color: var(--gray);
+    margin-top: 0.5rem;
+}
+
+form .form-error {
+    color: var(--accent-color);
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+}

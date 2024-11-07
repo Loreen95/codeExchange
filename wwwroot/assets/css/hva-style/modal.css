@@ -1,0 +1,61 @@
+/* !!Doesn't work without importing the base.css first!! */
+/* Modal */
+dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
+}
+
+dialog {
+    border: none;
+    border-radius: 0.25rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: var(--background-color);
+    width: 30%; /* Could be more or less, depending on screen size */
+    max-width: 500px;
+    padding: 0;
+}
+
+.modal-header {
+    padding: 0.5rem 1rem;
+    background-color: var(--primary-color);
+    color: var(--white);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.modal-header {
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+}
+
+.modal-body {
+    padding: 1rem;
+    color: var(--secondary-color);
+}
+
+.modal-close {
+    float: right;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--white);
+    cursor: pointer;
+}
+
+.modal-close:hover,
+.modal-close:focus {
+    color: var(--secondary-color);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-button {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.25rem;
+    color: var(--primary-color);
+    cursor: pointer;
+    background-color: var(--background-color);
+}
+
+.modal-button:hover {
+    background-color: var(--secondary-color);
+    color: white;
+}

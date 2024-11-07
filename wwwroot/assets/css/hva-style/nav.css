@@ -1,0 +1,60 @@
+/* !!Doesn't work without importing the base.css first!! */
+
+/* Navigation */
+/* Navbar */
+.navbar {
+    background-color: var(--primary-color);
+    padding: 1rem;
+    display: flex;
+    color: var(--white);
+}
+
+/* Center-align the logo and nav-links */
+.navbar .logo {
+    font-weight: bold;
+    font-size: 2rem;
+    color: var(--white);
+}
+
+.navbar .nav-links {
+    display: flex;
+    gap: 1rem;
+    margin-right: auto;
+    margin-left: 10%;
+}
+
+/* Styling the navbar items as buttons */
+.navbar .nav-links a {
+    text-decoration: none;
+    color: var(--white);
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    background-color: var(--accent-color);
+    border-radius: 0.25rem;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover effect for navbar buttons */
+.navbar .nav-links a:hover {
+    background-color: var(--secondary-color);
+}
+
+/* Responsive navbar */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .navbar .nav-links {
+        flex-direction: row;
+        width: 80%;
+        margin-top: 1rem;
+        flex-wrap: wrap;
+    }
+    .navbar .nav-links a {
+        min-width: 100px;
+        width: 45%;
+        text-align: center;
+        padding: 1rem 0;
+    }
+}
