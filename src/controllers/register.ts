@@ -18,8 +18,7 @@ class RegistrationClass {
         if (!userInputEmail) {
             errorMessage.innerText = "You'll have to give me an email if you want to join the comunnity";
         }
-        // get proper regex
-        else if (!userInputEmail.match(/^[A-Za-z]*$/)) {
+        else if (!userInputEmail.match(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)) {
             errorMessage.innerText = "The email provided here is unvalid";
         }
         else {
