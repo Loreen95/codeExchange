@@ -22,16 +22,18 @@
 
         <nav class="navBar">
             <ul class="navLinks">
-                <li><a href="#" class="navLink">New Posts</a></li>
-                <li><a href="#" class="navLink">Users</a></li>
+                <li class="loggedInMedia"><a href="#" class="navLink">New Posts</a></li>
+                <li class="loggedInMedia"><a href="#" class="navLink">Users</a></li>
+                <li class="loggedOutMedia"><a href="#" class="navLink">Login</a></li>
+                <li class="loggedOutMedia"><a href="#" class="navLink">Sign in</a></li>
             </ul>
         </nav>
     </header>
 
     <main class="tempitem">
-        <div class="menu"><button id="foldoutBttn"><i class="fa-solid fa-bars"></i></button></div>
+        <div class="menu"><button id="foldoutBttn" class="loggedInMedia"><i class="fa-solid fa-bars"></i></button></div>
         <section class="barka"><button id="bttttn"><i class="fa-solid fa-copy"></i></button></section>
-        <section class="foldopenMenu">
+        <section class="foldopenMenu loggedInMedia">
             <p><i class="fa-solid fa-house"></i> Home</p>
             <p class="loginButton"><i class="fa-solid fa-user"></i> Login</p>
             <!-- theese two will swap out when the user is logged in -->

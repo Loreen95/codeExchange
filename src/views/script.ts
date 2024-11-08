@@ -1,8 +1,9 @@
 import UserInterfaceClass from "./interface";
 const UI: UserInterfaceClass = new UserInterfaceClass();
 
-const boLeftButtn: HTMLButtonElement = document.querySelector("#foldoutBttn")!;
+UI.ajustPageToLoginStatus(false);
 
+const boLeftButtn: HTMLButtonElement = document.querySelector("#foldoutBttn")!;
 boLeftButtn.addEventListener("click", () => {
     UI.shutterSlide();
 });

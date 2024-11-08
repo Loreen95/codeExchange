@@ -1,5 +1,5 @@
 import { api } from "@hboictcloud/api";
-import test from "node:test";
+// import test from "node:test";
 
 try {
     // TODO: Pas de .env bestanden aan met de gegevens van HBO-ICT.Cloud
