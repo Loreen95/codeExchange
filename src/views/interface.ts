@@ -15,6 +15,22 @@ class UserInterfaceClass {
     //         console.log(lineup[j]);
     //     }
     // }
+
+    public ajustPageToLoginStatus(isLoggedIn: boolean): void {
+        const logedinExclusives: NodeListOf<HTMLElement> = document.querySelectorAll(".loggedInMedia");
+        const logedOutExclusives: NodeListOf<HTMLElement> = document.querySelectorAll(".loggedOutMedia");
+        if (isLoggedIn) {
+            for (let l: number = 0; l < logedOutExclusives.length; l++) {
+                logedOutExclusives[l].style.display = "none";
+            }
+        }
+        else {
+            for (let l: number = 0; l < logedinExclusives.length; l++) {
+                logedinExclusives[l].style.display = "none";
+            }
+        }
+    }
+
     // this here method opens a foldnav. And closes it too!
     private opened: boolean = false;
     public shutterSlide(): void {
