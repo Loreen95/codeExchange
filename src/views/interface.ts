@@ -15,6 +15,7 @@ class UserInterfaceClass {
     //         console.log(lineup[j]);
     //     }
     // }
+    // this here method opens a foldnav. And closes it too!
     private opened: boolean = false;
     public shutterSlide(): void {
         const slideoutMenu: HTMLDivElement = document.querySelector(".foldopenMenu")!;
