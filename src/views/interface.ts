@@ -20,13 +20,11 @@ class UserInterfaceClass {
         const logedinExclusives: NodeListOf<HTMLElement> = document.querySelectorAll(".loggedInMedia");
         const logedOutExclusives: NodeListOf<HTMLElement> = document.querySelectorAll(".loggedOutMedia");
         if (isLoggedIn) {
-            console.log("access granted");
             for (let l: number = 0; l < logedOutExclusives.length; l++) {
                 logedOutExclusives[l].style.display = "none";
             }
         }
         else {
-            console.log("not logged in");
             for (let l: number = 0; l < logedinExclusives.length; l++) {
                 logedinExclusives[l].style.display = "none";
             }

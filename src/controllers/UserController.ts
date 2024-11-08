@@ -16,7 +16,7 @@ export class UserController {
             if (email && password) {
                 const newUser: UserModel | null = await this.saveUserToDatabase(email, password);
                 this.users.push(newUser);
-                console.log("Gebruiker toegevoegd:", newUser);
+                // console.log("Gebruiker toegevoegd:", newUser);
             }
             else {
                 console.log("Kan de gegevens niet toevoegen, ontbreekt email of wachtwoord");
