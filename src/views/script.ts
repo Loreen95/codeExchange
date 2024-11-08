@@ -1,3 +1,4 @@
+import "../database/database";
 import UserInterfaceClass from "./interface";
 const UI: UserInterfaceClass = new UserInterfaceClass();
 
@@ -8,23 +9,9 @@ boLeftButtn.addEventListener("click", () => {
     UI.shutterSlide();
 });
 
-import { api } from "@hboictcloud/api";
-
-try {
-    api.configure({
-        url: "https://api.hbo-ict.cloud",
-        apiKey: VITE_HBOICTCLOUD_APIKEY,
-        database: VITE_HBOICTCLOUD_DATABASE,
-        environment: VITE_HBOICTCLOUD_ENVIRONMENT,
-    });
-}
-catch (reason) {
-    console.error(reason);
-}
-
-console.log("o");
-console.log(api.queryDatabase("SELECT `username` FROM `users` WHERE `id` = 2"));
-console.log("o");
+// console.log("o");
+// console.log(api.queryDatabase("SELECT `username` FROM `users` WHERE `id` = 1"));
+// console.log("o");
 
 // const stuff = api.queryDatabase("SELECT `username` FROM `users` WHERE `id` = 2");
 
