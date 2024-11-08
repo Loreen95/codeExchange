@@ -6,16 +6,6 @@ class UserInterfaceClass {
     //     return `${this.item1} has ${this.item3}ley bested ${this.item2} of them ${belp}`;
     // }
 
-    // public echo(lineup: string[]): void {
-    //     const severoaubarka: HTMLParagraphElement = document.querySelector("#severo")!;
-    //     for (let j: number = 0; j < lineup.length; j++) {
-    //         severoaubarka.innerHTML += `
-    //         <p>${lineup[j]}</p>
-    //         `;
-    //         console.log(lineup[j]);
-    //     }
-    // }
-
     public ajustPageToLoginStatus(isLoggedIn: boolean): void {
         const logedinExclusives: NodeListOf<HTMLElement> = document.querySelectorAll(".loggedInMedia");
         const logedOutExclusives: NodeListOf<HTMLElement> = document.querySelectorAll(".loggedOutMedia");
