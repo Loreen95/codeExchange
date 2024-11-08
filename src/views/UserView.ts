@@ -1,11 +1,12 @@
-import { UserModel } from "../models/UserModel";
-
+// import { UserModel } from "../models/UserModel";
+import { User } from "../controllers/UserController";
 /**
  * Dit is de view, hierbij worden de gegevens weergegeven
  */
 export class UserView {
-    public render(user: UserModel): void {
-        console.log(`Gebruiker ID: ${user.getId()}`);
-        console.log(`Email: ${user.getEmail()}`);
+    public render(users: User[]): void {
+        users.forEach(user => {
+            console.log(`ID: ${user.id}, Name: ${user.name}, Email: ${user.email}`);
+        });
     }
 }
