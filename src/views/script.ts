@@ -26,6 +26,10 @@ console.log("o");
 console.log(api.queryDatabase("SELECT `username` FROM `users` WHERE `id` = 2"));
 console.log("o");
 
+// const stuff = api.queryDatabase("SELECT `username` FROM `users` WHERE `id` = 2");
+
+// console.log(stuff.username);
+
 // console.log(UI.anguish("Jikitiki Yupa Yuba"));
 
 // const users: string[] = ["Sevellus Au Juliai", "Neveliuss Au Loon", "The spitefull one", "reptile"];
