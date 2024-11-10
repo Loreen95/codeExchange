@@ -1,5 +1,5 @@
 const Registration: RegistrationClass = new RegistrationClass();
-import RegistrationClass from "../controllers/register";
+import RegistrationClass from "../controllers/RegisterController";
 
 const EmailAdressUserInput: HTMLInputElement = document.querySelector("#emailInput")!;
 const errorMessage: HTMLParagraphElement = document.querySelector("#errMsg")!;
