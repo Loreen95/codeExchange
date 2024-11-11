@@ -7,7 +7,7 @@ const passwordUserInput: HTMLInputElement = document.querySelector("#password")!
 const errorMessage: HTMLParagraphElement = document.querySelector("#errMsg")!;
 
 const registerBttn: HTMLButtonElement = document.querySelector(".registerNewUser")!;
-registerBttn.addEventListener("click", () => {
+registerBttn.addEventListener("click", async () => {
     errorMessage.innerText = "";
-    Registration.verifyCridentials(nameUserInput.value, emailAdressUserInput.value, passwordUserInput.value);
+    await Registration.verifyCridentials(nameUserInput.value, emailAdressUserInput.value, passwordUserInput.value);
 });

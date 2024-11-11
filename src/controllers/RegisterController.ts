@@ -60,6 +60,7 @@ class RegistrationClass {
         else {
             errorMessage.innerHTML = "";
             infoMessage.innerText = "Success!";
+            await userModel.create(userInputName, userInputEmail, userInputPassword);
         }
     }
 }
