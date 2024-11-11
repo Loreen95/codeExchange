@@ -17,7 +17,7 @@ export class User {
     private _password: string;
 
     // Constructor
-    public constructor(username: string, email: string, password: string, id: number = 0) {
+    public constructor(id: number = 0, username: string, email: string, password: string) {
         this._id = id;
         this._username = username;
         this._email = email;
@@ -41,22 +41,51 @@ export class User {
             }
         }
         catch (reason) {
-            console.error("Er is een fout met het opzoeken van gebruikers", reason);
+            console.error("Er is een fout met het opzoeken van het emailadres", reason);
             return undefined;
         }
     }
+
     /**
      * This function determines whether a username exists.
      * @param username requires username for the data-query.
      * @returns true or false based off database data.
      */
     public async doesUserExistForUsername(username: string): Promise<boolean | undefined> {
-        
+        try {
+            const result: userResult[] = await api.queryDatabase("SELECT username FROM users WHERE username = ?", [username]) as userResult[];
+            if (result.length > 0) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        catch (reason) {
+            console.error("Er is een fout met het opzoeken van de gebruikersnaam", reason);
+            return undefined;
+        }
     }
 
-    // public async getUserById(id: number): Promise<User | undefined> {
-    //     return;
-    // }
+    /**
+     * This function will find a user based off their ID.
+     * @param id requires the ID to find a match in de database
+     */
+    public async getUserById(id: number): Promise<User | undefined> {
+        try {
+            const result: userResult[] = await api.queryDatabase("SELECT * from users WHERE id = ?", [id]) as userResult[];
+            if (result.length > 0) {
+                return new User(result[0].id, result[0].username, result[0].email, result[0].password);
+            }
+            else {
+                return undefined;
+            }
+        }
+        catch (reason) {
+            console.error("Er is een fout met het opzoeken van de gebruiker", reason);
+            return undefined;
+        }
+    }
 
     // public async getUserByEmailAndPassword(email: string, password: string): Promise<User | undefined> {
     //     return;
