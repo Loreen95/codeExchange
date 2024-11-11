@@ -1,5 +1,3 @@
-function app(): void {
-    console.log("Welkom bij Code Exchange!");
+function checkEmail() {
+    
 }
-
-app();

@@ -6,8 +6,9 @@ export interface ApiFailReason {
     reason: string;
 }
 
-export interface User {
+export interface UserInterface {
     id: number;
+    username: string;
     email: string;
     password: string;
 }
