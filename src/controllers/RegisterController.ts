@@ -1,14 +1,6 @@
 class RegistrationClass {
-    // public echo(lineup: string[]): void {
-    //     const severoaubarka: HTMLParagraphElement = document.querySelector("#severo")!;
-    //     for (let j: number = 0; j < lineup.length; j++) {
-    //         severoaubarka.innerHTML += `
-    //         <p>${lineup[j]}</p>
-    //         `;
-    //         console.log(lineup[j]);
-    //     }
-    // }
     private reasonOfWeakness: string = "";
+    private neededInformation: string = "";
     public passChecker(givenPassword: string): boolean {
         console.log("trigger1");
         if (givenPassword.length < 7) {
@@ -26,7 +18,8 @@ class RegistrationClass {
                 return true;
             }
             else {
-                this.reasonOfWeakness = "Your password isn't strong enough. Use lowercase, uppercase, numbers and special caracters";
+                this.reasonOfWeakness = "Your password isn't strong enough.";
+                this.neededInformation = "Note: Remember to use uppercase letters, lowercase letters, numbers and special caracters";
                 return false;
             }
         }
@@ -34,6 +27,7 @@ class RegistrationClass {
 
     public verifyCridentials(userInputName: string, userInputEmail: string, userInputPassword: string): void {
         const errorMessage: HTMLParagraphElement = document.querySelector("#errMsg")!;
+        const infoMessage: HTMLParagraphElement = document.querySelector("#infoMsg")!;
         if (!userInputName) {
             errorMessage.innerText = "You must provide a name";
         }
@@ -45,6 +39,7 @@ class RegistrationClass {
         }
         else if (!this.passChecker(userInputPassword)) {
             errorMessage.innerText = String(this.reasonOfWeakness);
+            infoMessage.innerText = String(this.neededInformation);
         }
         else if (!userInputEmail.match(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)) {
             errorMessage.innerText = "The provided email is invalid";
