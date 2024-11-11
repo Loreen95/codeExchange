@@ -91,9 +91,17 @@ export class User {
     //     return;
     // }
 
-    // public async create(): Promise<boolean> {
-    //     return;
-    // }
+    public async create(username: string, email: string, password: string): Promise<boolean> {
+        try {
+            const result: userResult[] = await api.queryDatabase("INSERT INTO users (username, email, password) VALUES (?, ?, ?)", [username, email, password]) as userResult[];
+            console.log("Success", result);
+            return true;
+        }
+        catch (reason) {
+            console.error("Er is een fout met het aanmaken van gebruikers", reason);
+            return false;
+        }
+    }
 
     // public async update(): Promise<boolean> {
     //     return;
