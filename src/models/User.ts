@@ -25,6 +25,11 @@ export class User {
     }
 
     // CRUD functies
+    /**
+     * This function determines whether an email adress exists.
+     * @param email requires the emailadress for the data-query.
+     * @returns true or false based off database data.
+     */
     public async doesUserExistForEmail(email: string): Promise<boolean | undefined> {
         try {
             const result: userResult[] = await api.queryDatabase("SELECT email FROM users WHERE email = ?", [email]) as userResult[];
@@ -40,9 +45,14 @@ export class User {
             return undefined;
         }
     }
-    // public async doesUserExistForUsername(username: string): Promise<boolean | undefined> {
-    //     return;
-    // }
+    /**
+     * This function determines whether a username exists.
+     * @param username requires username for the data-query.
+     * @returns true or false based off database data.
+     */
+    public async doesUserExistForUsername(username: string): Promise<boolean | undefined> {
+        
+    }
 
     // public async getUserById(id: number): Promise<User | undefined> {
     //     return;
