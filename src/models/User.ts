@@ -28,7 +28,7 @@ export class User {
     public async doesUserExistForEmail(email: string): Promise<boolean | undefined> {
         try {
             const result: userResult[] = await api.queryDatabase("SELECT email FROM users WHERE email = ?", [email]) as userResult[];
-            if (result) {
+            if (result.length > 0) {
                 return true;
             }
             else {
@@ -37,7 +37,7 @@ export class User {
         }
         catch (reason) {
             console.error("Er is een fout met het opzoeken van gebruikers", reason);
-            return true;
+            return undefined;
         }
     }
     // public async doesUserExistForUsername(username: string): Promise<boolean | undefined> {
