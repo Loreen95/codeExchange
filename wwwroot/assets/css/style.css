@@ -239,6 +239,14 @@ body {
     transition: all 0.4s;
 }
 
+#infoMsg {
+    font-family: 'Courier New', monospace;
+    text-align: center;
+    font-size: 15px;
+    color: rgb(140, 140, 140);
+    margin: 20px 0 0 0;
+}
+
 /* Footer */
 .tempitem {
     display: flex;
