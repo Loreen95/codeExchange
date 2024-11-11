@@ -22,16 +22,16 @@ class UserInterfaceClass {
     }
 
     // this here method opens a foldnav. And closes it too!
-    private opened: boolean = false;
+    private _opened: boolean = false;
     public shutterSlide(): void {
         const slideoutMenu: HTMLDivElement = document.querySelector(".foldopenMenu")!;
-        if (this.opened) {
+        if (this._opened) {
             slideoutMenu.style.right = "-320px";
-            this.opened = false;
+            this._opened = false;
         }
         else {
             slideoutMenu.style.right = "0";
-            this.opened = true;
+            this._opened = true;
         }
     }
 }
