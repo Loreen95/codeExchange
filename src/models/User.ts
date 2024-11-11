@@ -1,6 +1,11 @@
 import { api } from "@hboictcloud/api";
-import { NonQueryResult, ApiFailReason, UserInterface } from "../views/interfaces";
-import { TransformStreamDefaultController } from "stream/web";
+
+type userResult = {
+    id: number;
+    username: string;
+    email: string;
+    password: string;
+};
 
 /* Class User
  * Users hebben alleen een ID (voor de database), username, email en wachtwoord nodig
@@ -22,19 +27,17 @@ export class User {
     // CRUD functies
     public async doesUserExistForEmail(email: string): Promise<boolean | undefined> {
         try {
-            const result: UserInterface[] | NonQueryResult | ApiFailReason | string = await api.queryDatabase("SELECT * FROM users WHERE email = ?", [email]);
-            if (!result) {
-                console.log("Dit emailadres is nog niet in gebruik.");
-                return false;
+            const result: userResult[] = await api.queryDatabase("SELECT email FROM users WHERE email = ?", [email]) as userResult[];
+            if (result.length > 0) {
+                return true;
             }
             else {
-                console.log("User found:", result);
-                return true;
+                return false;
             }
         }
         catch (reason) {
             console.error("Er is een fout met het opzoeken van gebruikers", reason);
-            return true;
+            return undefined;
         }
     }
     // public async doesUserExistForUsername(username: string): Promise<boolean | undefined> {
