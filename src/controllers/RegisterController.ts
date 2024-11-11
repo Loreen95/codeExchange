@@ -1,5 +1,5 @@
 import { User } from "../models/User";
-const userModel: User = new User("", "", "");
+const userModel: User = new User("", "", "", 0);
 
 class RegistrationClass {
     private _reasonOfWeakness: string = "";

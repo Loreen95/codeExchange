@@ -3,7 +3,7 @@ import { User } from "../models/User";
 
 // Functie om te controleren of een gebruiker met het gegeven emailadres al bestaat
 async function checkUserEmail(email: string): Promise<void> {
-    const userModel: User = new User(0, "", email, "");
+    const userModel: User = new User("", email, "", 0);
     const exists: boolean | undefined = await userModel.doesUserExistForEmail(email);
 
     if (exists) {
@@ -17,7 +17,7 @@ async function checkUserEmail(email: string): Promise<void> {
 // Functie om een gebruiker te vinden door het id
 async function main(id: number): Promise<void> {
     // Haal de gebruiker op met het gegeven id
-    const userModel: User = new User(id, "", "", "");
+    const userModel: User = new User("", "", "", 0);
     const user: User | undefined = await userModel.getUserById(id);
 
     if (user) {
@@ -31,7 +31,7 @@ async function main(id: number): Promise<void> {
 }
 
 // Roep de main functie aan om het proces te starten met een voorbeeld id
-await main(1);
+await main(2);
 
 // Roep de functie aan met een voorbeeld-email
 await checkUserEmail("lisa.hakhoff@hva.nl");

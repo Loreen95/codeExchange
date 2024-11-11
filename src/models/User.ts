@@ -17,7 +17,7 @@ export class User {
     private _password: string;
 
     // Constructor
-    public constructor(id: number = 0, username: string, email: string, password: string) {
+    public constructor(username: string, email: string, password: string, id: number = 0) {
         this._id = id;
         this._username = username;
         this._email = email;
@@ -75,7 +75,7 @@ export class User {
         try {
             const result: userResult[] = await api.queryDatabase("SELECT * from users WHERE id = ?", [id]) as userResult[];
             if (result.length > 0) {
-                return new User(result[0].id, result[0].username, result[0].email, result[0].password);
+                return new User(result[0].username, result[0].email, result[0].password, result[0].id);
             }
             else {
                 return undefined;
