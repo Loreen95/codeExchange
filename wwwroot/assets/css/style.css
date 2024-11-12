@@ -217,6 +217,36 @@ body {
     align-self: center;
 }
 
+.hideBttn {
+    cursor: pointer;
+    align-self: center;
+    margin-right: 7px;
+    display: none;
+}
+.unHideBttn {
+    cursor: pointer;
+    align-self: center;
+    margin-right: 7px;
+}
+
+#password {
+    margin-bottom: 0;
+    width: 90%;
+    border-radius: 0 0 0 14px;
+    border: none;
+}
+
+.passPhrase {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border: 3px solid rgb(58, 58, 58);
+    background-color: rgb(87, 94, 100);
+    width: 82%;
+    align-self: center;
+    margin-bottom: 20px;
+}
+
 .defaultInputBox button {
     border: none;
     border-radius: 2px;
