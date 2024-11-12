@@ -7,7 +7,6 @@ class RegistrationClass {
     private _neededInformation: string = "";
 
     private passChecker(givenPassword: string): boolean {
-        console.log("trigger1");
         if (givenPassword.length < 7) {
             this._whyItIsNotGoodEnough = "your password is too short.";
             this._neededInformation = "Note: Use at least 7 caracters";
@@ -24,12 +23,31 @@ class RegistrationClass {
             }
             else {
                 this._whyItIsNotGoodEnough = "Your password is unsafe.";
-                this._neededInformation = "Note: Remember to use uppercase letters, lowercase letters, numbers and special caracters";
+                this._neededInformation = "Note: You must include the following in your password: ";
+                if (!givenPassword.match(/[a-z]/)) {
+                    this._neededInformation += "lowercase letters, ";
+                }
+                if (!givenPassword.match(/[A-Z]/)) {
+                    this._neededInformation += "uppercase letters, ";
+                }
+                if (!givenPassword.match(/9-0/)) {
+                    this._neededInformation += "numbers, ";
+                }
+                if (!givenPassword.match(/[!@#$%^&*()]/)) {
+                    this._neededInformation += "special caracters, ";
+                }
                 return false;
             }
         }
     }
 
+    /**
+        This here function contains an else if chain that goes through each individual input,
+        and spits out an error with some information on the html page if somethings wrong with them
+        It also activates the
+     * Arguments include the three user inputs: username, password, and email
+     * The return value is a void (nothing) because it's just supposed to process and directly display information
+    */
     public async verifyCridentials(userInputName: string, userInputEmail: string, userInputPassword: string): Promise<void> {
         const errorMessage: HTMLParagraphElement = document.querySelector("#errMsg")!;
         const infoMessage: HTMLParagraphElement = document.querySelector("#infoMsg")!;

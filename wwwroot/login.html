@@ -47,7 +47,11 @@
             <label for="emailAdress">Email</label>
             <input type="text" name="emailAdress" placeholder="Email adress...">
             <label for="passWord">Password</label>
-            <input type="text" name="passWord" placeholder="Password...">
+            <section class="passPhrase">
+                <input id="password" type="password" name="passWord" placeholder="Password...">
+                <a class="hideBttn"><i id="eyeSymbol" class="fa-solid fa-eye-slash"></i></a>
+                <a class="unHideBttn"><i id="eyeSymbol" class="fa-solid fa-eye"></i></a>
+            </section> 
             <p id="errMsg"></p>
             <p id="infoMsg"></p>    
             <button>Login</button>

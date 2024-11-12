@@ -34,6 +34,25 @@ class UserInterfaceClass {
             this._opened = true;
         }
     }
+
+    private _hidden: boolean = true;
+    public revealAndHidePass(): void {
+        const passinput: HTMLInputElement = document.querySelector("#password")!;
+        const eyeSlumbering: HTMLLinkElement = document.querySelector(".hideBttn")!;
+        const eyeAwakened: HTMLLinkElement = document.querySelector(".unHideBttn")!;
+        if (this._hidden) {
+            passinput.type = "text";
+            eyeAwakened.style.display = "none";
+            eyeSlumbering.style.display = "block";
+            this._hidden = false;
+        }
+        else {
+            passinput.type = "password";
+            eyeAwakened.style.display = "block";
+            eyeSlumbering.style.display = "none";
+            this._hidden = true;
+        }
+    }
 }
 
 export default UserInterfaceClass;

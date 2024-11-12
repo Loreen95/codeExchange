@@ -45,11 +45,15 @@
         <section class="defaultInputBox">
             <h1>Register</h1>
             <label for="userName">Full Name</label>
-            <input id="userName" type="text" name="userName" placeholder="Username...">
+            <input id="userName" type="text" name="userName" placeholder="Full Name...">
             <label for="emailAdress">Email</label>
             <input id="emailInput" type="text" name="emailAdress" placeholder="Email adress...">
             <label for="passWord">Password</label>
-            <input id="password" type="text" name="passWord" placeholder="Password...">
+            <section class="passPhrase">
+                <input id="password" type="password" name="passWord" placeholder="Password...">
+                <a class="hideBttn"><i id="eyeSymbol" class="fa-solid fa-eye-slash"></i></a>
+                <a class="unHideBttn"><i id="eyeSymbol" class="fa-solid fa-eye"></i></a>
+            </section>            
             <button class="registerNewUser">Join Us</button>
             <p id="errMsg"></p>
             <p id="infoMsg"></p>            

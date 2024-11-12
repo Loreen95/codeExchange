@@ -9,6 +9,16 @@ boLeftButtn.addEventListener("click", () => {
     UI.shutterSlide();
 });
 
+const passwordEyeButton: HTMLElement = document.querySelector(".hideBttn")!;
+passwordEyeButton.addEventListener("click", () => {
+    UI.revealAndHidePass();
+});
+
+const passwordEyeButtonAgain: HTMLElement = document.querySelector(".unHideBttn")!;
+passwordEyeButtonAgain.addEventListener("click", () => {
+    UI.revealAndHidePass();
+});
+
 // console.log("o");
 // console.log(api.queryDatabase("SELECT `username` FROM `users` WHERE `id` = 1"));
 // console.log("o");
