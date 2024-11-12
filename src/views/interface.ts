@@ -6,7 +6,7 @@ class UserInterfaceClass {
     //     return `${this.item1} has ${this.item3}ley bested ${this.item2} of them ${belp}`;
     // }
 
-    public ajustPageToLoginStatus(isLoggedIn: boolean): void {
+    public adjustPageToLoginStatus(isLoggedIn: boolean): void {
         const logedinExclusives: NodeListOf<HTMLElement> = document.querySelectorAll(".loggedInMedia");
         const logedOutExclusives: NodeListOf<HTMLElement> = document.querySelectorAll(".loggedOutMedia");
         if (isLoggedIn) {

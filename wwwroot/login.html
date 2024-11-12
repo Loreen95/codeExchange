@@ -35,7 +35,7 @@
         <section class="barka"><button id="bttttn"><i class="fa-solid fa-copy"></i></button></section>
         <section class="foldopenMenu loggedInMedia">
             <p><a href="#"><i class="fa-solid fa-house"></i> Home</a></p>
-            <p class="loginButton"><a href="login.html"><i class="fa-solid fa-user"></i> Login</a></p>
+            <p class="loginButton loggedOutMedia"><a href="login.html" id="loginText"><i class="fa-solid fa-user"></i> Login</a></p>
             <!-- theese two will swap out when the user is logged in -->
             <p class="logOutButton"><a href="#"><i class="fa-solid fa-user-slash"></i> Logout</a></p>
             <p><a href="#"><i class="fa-solid fa-envelope"></i> Posts</a></p>
@@ -104,6 +104,7 @@
     <script src="/src/views/script.ts" type="module"></script>
     <script src="/src/views/LoginView.ts" type="module"></script>
     <script src="/src/controllers/LoginController.ts" type="module"></script>
+    <script src="/src/controllers/HomeController.ts" type="module"></script>
     <script src="/src/views/interface.ts" type="module"></script>
 
 </body>

@@ -1,9 +1,14 @@
 import "../database/database";
 import UserInterfaceClass from "./interface";
 const UI: UserInterfaceClass = new UserInterfaceClass();
-
-UI.ajustPageToLoginStatus(true);
-
+import { session } from "@hboictcloud/api";
+const loggedUser: string | null = localStorage.getItem("session");
+if (loggedUser) {
+    UI.adjustPageToLoginStatus(true);
+}
+else {
+    UI.adjustPageToLoginStatus(false);
+}
 const boLeftButtn: HTMLButtonElement = document.querySelector("#foldoutBttn")!;
 boLeftButtn.addEventListener("click", () => {
     UI.shutterSlide();

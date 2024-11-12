@@ -48,7 +48,7 @@ class RegistrationClass {
      * Arguments include the three user inputs: username, password, and email
      * The return value is a void (nothing) because it's just supposed to process and directly display information
     */
-    public async verifyCridentials(userInputName: string, userInputEmail: string, userInputPassword: string): Promise<void> {
+    public async onClickRegister(userInputName: string, userInputEmail: string, userInputPassword: string): Promise<void> {
         const errorMessage: HTMLParagraphElement = document.querySelector("#errMsg")!;
         const infoMessage: HTMLParagraphElement = document.querySelector("#infoMsg")!;
 
