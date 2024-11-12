@@ -45,16 +45,16 @@
         <section class="defaultInputBox">
             <h1>Welcome</h1>
             <label for="emailAdress">Email</label>
-            <input type="text" name="emailAdress" placeholder="Email adress...">
+            <input type="text" name="emailAdress" placeholder="Email adress..." id="email">
             <label for="passWord">Password</label>
             <section class="passPhrase">
                 <input id="password" type="password" name="passWord" placeholder="Password...">
                 <a class="hideBttn"><i id="eyeSymbol" class="fa-solid fa-eye-slash"></i></a>
                 <a class="unHideBttn"><i id="eyeSymbol" class="fa-solid fa-eye"></i></a>
             </section> 
+            <button class="loginUser">Login</button>
             <p id="errMsg"></p>
-            <p id="infoMsg"></p>    
-            <button>Login</button>
+            <p id="infoMsg"></p>
         </section>
     </main>
 
@@ -102,8 +102,9 @@
 
     <script src="https://kit.fontawesome.com/d5a758504d.js" crossorigin="anonymous"></script>
     <script src="/src/views/script.ts" type="module"></script>
-    <script src="/src/views/interface.ts" type="module"></script>
+    <script src="/src/views/LoginView.ts" type="module"></script>
     <script src="/src/controllers/LoginController.ts" type="module"></script>
+    <script src="/src/views/interface.ts" type="module"></script>
 
 </body>
 
