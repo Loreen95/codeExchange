@@ -122,16 +122,20 @@ body {
     border-left: solid 1px rgb(28, 28, 28);
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     transition: all 0.3s;
-    
 }
 
 .foldopenMenu p {
     margin-left: 20px;
     cursor: pointer;
-    
+    color: aliceblue;
 }
 
-.foldopenMenu p:hover {
+.foldopenMenu a {
+    text-decoration: none;
+    color: aliceblue;
+}
+
+.foldopenMenu a:hover {
     color: rgb(180, 180, 180);
     transition: ease 0.1s;
 }
