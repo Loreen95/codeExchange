@@ -2,29 +2,27 @@ import { User } from "../models/User";
 const userModel: User = new User("", "", "", 0);
 
 class RegistrationClass {
-    private _reasonOfWeakness: string = "";
+    private _whyItIsNotGoodEnough: string = "";
     private _neededInformation: string = "";
 
     private passChecker(givenPassword: string): boolean {
         console.log("trigger1");
         if (givenPassword.length < 7) {
-            this._reasonOfWeakness = "your password is too short.";
+            this._whyItIsNotGoodEnough = "your password is too short.";
             this._neededInformation = "Note: Use at least 7 caracters";
             return false;
         }
         else if (givenPassword.length > 20) {
-            this._reasonOfWeakness = "Your password is too long.";
+            this._whyItIsNotGoodEnough = "Your password is too long.";
             this._neededInformation = "Note: You're not gonna remember all that. Use a maximum of 20 caracters.";
             return false;
         }
         else {
-            const streangth: boolean = Boolean(givenPassword.match(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()]).{8,}$/));
-
-            if (streangth) {
+            if (givenPassword.match(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()]).{8,}$/)) {
                 return true;
             }
             else {
-                this._reasonOfWeakness = "Your password is unsafe.";
+                this._whyItIsNotGoodEnough = "Your password is unsafe.";
                 this._neededInformation = "Note: Remember to use uppercase letters, lowercase letters, numbers and special caracters";
                 return false;
             }
@@ -54,7 +52,7 @@ class RegistrationClass {
             errorMessage.innerText = "you must provide a password";
         }
         else if (!this.passChecker(userInputPassword)) {
-            errorMessage.innerText = String(this._reasonOfWeakness);
+            errorMessage.innerText = String(this._whyItIsNotGoodEnough);
             infoMessage.innerText = String(this._neededInformation);
         }
         else {

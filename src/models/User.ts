@@ -93,7 +93,10 @@ export class User {
 
     public async create(username: string, email: string, password: string): Promise<boolean> {
         try {
-            const result: userResult[] = await api.queryDatabase("INSERT INTO users (username, email, password) VALUES (?, ?, ?)", [username, email, password]) as userResult[];
+            const result: userResult[] = await api.queryDatabase(
+                "INSERT INTO users (username, email, password) VALUES (?, ?, ?)", username, email, password
+            ) as userResult[];
+
             console.log("Success", result);
             return true;
         }
