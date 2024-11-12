@@ -1,7 +1,6 @@
 import "../database/database";
 import UserInterfaceClass from "./interface";
 const UI: UserInterfaceClass = new UserInterfaceClass();
-import { session } from "@hboictcloud/api";
 const loggedUser: string | null = localStorage.getItem("session");
 if (loggedUser) {
     UI.adjustPageToLoginStatus(true);
