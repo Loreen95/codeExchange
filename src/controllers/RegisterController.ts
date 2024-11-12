@@ -3,8 +3,8 @@ import { User } from "../models/User";
 const userModel: User = new User("", "", "", 0);
 
 class RegistrationClass {
-    private _whyItIsNotGoodEnough: string = "";
-    private _neededInformation: string = "";
+    private _whyItIsNotGoodEnough: string = ""; // Error messages
+    private _neededInformation: string = ""; // Information needed
 
     private passChecker(givenPassword: string): boolean {
         console.log("trigger1");

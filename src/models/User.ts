@@ -87,9 +87,20 @@ export class User {
         }
     }
 
-    // public async getUserByEmailAndPassword(email: string, password: string): Promise<User | undefined> {
-    //     return;
-    // }
+    public async getUserByEmailAndPassword(email: string, password: string): Promise<User | undefined> {
+        try {
+            const result: userResult[] = await api.queryDatabase("SELECT * from users WHERE (email, password) = ?, ?", [email], [password]) as userResult[];
+            if (result.length > 0) {
+                return new User(result[0].username, result[0].email, result[0].password);
+            }
+            else {
+                return undefined;
+            }
+        }
+        catch (reason) {
+            console.error("Er is een fout met het opzoeken van de gegevens", reason);
+        }
+    }
 
     public async create(username: string, email: string, password: string): Promise<boolean> {
         try {
