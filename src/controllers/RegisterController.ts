@@ -25,16 +25,16 @@ class RegistrationClass {
                 this._whyItIsNotGoodEnough = "Your password is unsafe.";
                 this._neededInformation = "Note: You must include the following in your password: ";
                 if (!givenPassword.match(/[a-z]/)) {
-                    this._neededInformation += "lowercase letters, ";
+                    this._neededInformation += "-lowercase letters ";
                 }
                 if (!givenPassword.match(/[A-Z]/)) {
-                    this._neededInformation += "uppercase letters, ";
+                    this._neededInformation += "-uppercase letters ";
                 }
-                if (!givenPassword.match(/9-0/)) {
-                    this._neededInformation += "numbers, ";
+                if (!givenPassword.match(/[0-9]/)) {
+                    this._neededInformation += "-numbers ";
                 }
                 if (!givenPassword.match(/[!@#$%^&*()]/)) {
-                    this._neededInformation += "special caracters, ";
+                    this._neededInformation += "-special caracters ";
                 }
                 return false;
             }
