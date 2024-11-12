@@ -1,4 +1,19 @@
-import "../database/database";
+import { utils } from "@hboictcloud/api";
+
+try {
+    // TODO: Pas de .env bestanden aan met de gegevens van HBO-ICT.Cloud
+    await utils.fetchAndParseHtml("../../default.html");
+    console.log(await utils.fetchAndParseHtml("../../landingspagina.html"));
+}
+catch (reason) {
+    console.error(reason);
+}
+
+// const errorMessage: HTMLParagraphElement = document.querySelector("#errMsg")!;
+
+// errorMessage.innerHTML = NodeList[3];
+// console.log(Nodelist);
+
 import UserInterfaceClass from "./interface";
 const UI: UserInterfaceClass = new UserInterfaceClass();
 
