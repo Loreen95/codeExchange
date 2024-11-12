@@ -1,3 +1,4 @@
+// hello meat bags. This file contains the functionality of registration (Not the sql for some reason)
 import { User } from "../models/User";
 const userModel: User = new User("", "", "", 0);
 
@@ -59,6 +60,7 @@ class RegistrationClass {
             errorMessage.innerHTML = "";
             infoMessage.innerText = "Success!";
             await userModel.create(userInputName, userInputEmail, userInputPassword);
+            window.location.href = "http://localhost:3000/landingspagina.html";
         }
     }
 }
