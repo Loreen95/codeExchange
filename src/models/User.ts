@@ -87,9 +87,23 @@ export class User {
         }
     }
 
-    // public async getUserByEmailAndPassword(email: string, password: string): Promise<User | undefined> {
-    //     return;
-    // }
+    public async getUserByEmailAndPassword(email: string, password: string): Promise<number | undefined> {
+        try {
+            const result: userResult[] = await api.queryDatabase("SELECT * FROM users WHERE email = ? AND password = ?", email, password) as userResult[];
+
+            if (result.length > 0) {
+                console.log(result[0].id);
+                return result[0].id; // retourneer het ID van de gevonden gebruiker
+            }
+            else {
+                return undefined; // geen gebruiker gevonden
+            }
+        }
+        catch (reason) {
+            console.error("Er is een fout met het opzoeken van de gegevens", reason);
+            return undefined; // fout opgetreden, geen ID
+        }
+    }
 
     public async create(username: string, email: string, password: string): Promise<boolean> {
         try {
