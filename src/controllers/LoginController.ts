@@ -32,10 +32,13 @@ export class LoginClass {
             errorMessage.innerHTML = "";
 
             if (!givenEmail) {
-                errorMessage.innerText = "Je moet een emailadres opgeven";
+                errorMessage.innerText = "you must provide an email";
+            }
+            else if (!givenEmail.match(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)) {
+                errorMessage.innerText = "Provided email is invalid";
             }
             else if (!givenPassword) {
-                errorMessage.innerText = "Voer een wachtwoord in!";
+                errorMessage.innerText = "you must provide a password";
             }
             else if (!await this.checkRecords(givenEmail, givenPassword)) {
                 errorMessage.innerText = String(this._errorMessage);

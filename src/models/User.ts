@@ -94,6 +94,7 @@ export class User {
      * @returns the ID of the entry which matches to the parameters above.
      */
     public async getUserByEmailAndPassword(email: string, password: string): Promise<number | undefined> {
+        console.log("trigger 1 active");
         try {
             const result: userResult[] = await api.queryDatabase("SELECT * FROM users WHERE email = ? AND password = ?", email, password) as userResult[];
 
