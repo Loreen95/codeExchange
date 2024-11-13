@@ -1,7 +1,8 @@
 import { utils } from "@hboictcloud/api";
 import UserInterfaceClass from "./interface";
-const userModel: User = new User("", "", "", 0);
 const UI: UserInterfaceClass = new UserInterfaceClass();
+import { User } from "../models/User";
+const userModel: User = new User("", "", "", 0);
 
 const isolatedNodelistElement: NodeList = await utils.fetchAndParseHtml("../../default.html");
 const arraybasic: string[] = Array.from(isolatedNodelistElement).map(element => (element as HTMLElement).outerHTML);
@@ -13,9 +14,7 @@ headerofpage.innerHTML = String(arraybasic[1]);
 strayElements.innerHTML = String(arraybasic[3]);
 footerContent.innerHTML = String(arraybasic[5]);
 
-UI.adjustPageToLoginStatus(false);
-
-const loggedUser: string | null = localStorage.getItem("session");
+const loggedUser: string | null = sessionStorage.getItem("session");
 if (loggedUser) {
     UI.adjustPageToLoginStatus(true);
 }
@@ -25,13 +24,11 @@ else {
 
 const userNameOnPage: NodeListOf<HTMLElement> = document.querySelectorAll("#injectUsernameHere");
 for (let l: number = 0; l < userNameOnPage.length; l++) {
-    const userId: string | null = sessionStorage.getItem("session");
-    // Zet session-data om naar number
-    const userIdNumber: number | null = userId ? parseInt(userId, 10) : null;
-
-    const userInfo = userModel.getUserById(userIdNumber);
-    console.log(userInfo);
-    userNameOnPage[l].innerHTML = `${username}`;
+    const userID: string | null = sessionStorage.getItem("session");
+    const userIdToNumber: number | null = userID ? parseInt(userID, 10): null;
+    const userInfo: User | null = await userModel.getUserById(userIdToNumber);
+    const userName: string | undefined = userInfo?.getUserName();
+    userNameOnPage[l].innerHTML = `${userName}`;
 }
 
 const boLeftButtn: HTMLButtonElement = document.querySelector("#foldoutBttn")!;
