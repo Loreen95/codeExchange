@@ -98,7 +98,7 @@ export class User {
         try {
             const result: userResult[] = await api.queryDatabase("SELECT * FROM users WHERE email = ? AND password = ?", email, password) as userResult[];
             if (result.length > 0) {
-                return new User(result[0].username, result[0].email, result[0].password);
+                return new User(result[0].username, result[0].email, result[0].password, result[0].id);
             }
             else {
                 return undefined;

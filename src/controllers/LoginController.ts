@@ -7,25 +7,21 @@ const UI: UserInterfaceClass = new UserInterfaceClass();
 export class LoginClass {
     private _errorMessage: string = "";
 
-    public async checkRecords(givenEmail: string, givenPassword: string): Promise<boolean> {
+    public async checkRecords(givenEmail: string, givenPassword: string): Promise<User | undefined> {
         const resultEmailPassword: User | undefined = await userModel.getUserByEmailAndPassword(givenEmail, givenPassword);
-        if (resultEmailPassword?.getEmail() !== givenEmail) {
+        if (!resultEmailPassword) {
+            this._errorMessage = "De gebruiker bestaat niet!";
+            return undefined;
+        }
+        if (resultEmailPassword.getEmail() !== givenEmail) {
             this._errorMessage = "De emailadressen komen niet overeen!";
-            return false;
+            return undefined;
         }
-        else if (resultEmailPassword.getPassword() !== givenPassword) {
+        if (resultEmailPassword.getPassword() !== givenPassword) {
             this._errorMessage = "De wachtwoorden komen niet overeen!";
-            return false;
+            return undefined;
         }
-        else if (resultEmailPassword.getEmail() === givenEmail || resultEmailPassword.getPassword() === givenPassword) {
-            this._errorMessage = "Dit is een test";
-            console.log(resultEmailPassword);
-            return true;
-        }
-        else {
-            this._errorMessage = "Er is een fout opgetreden bij het ophalen van de gegevens";
-            return false;
-        }
+        return resultEmailPassword; // retourneert het User object als alle checks kloppen
     }
 
     public async onClickLogin(givenEmail: string, givenPassword: string): Promise<void> {
@@ -34,23 +30,24 @@ export class LoginClass {
             errorMessage.innerHTML = "";
 
             if (!givenEmail) {
-                errorMessage.innerText = "you must provide an email";
+                errorMessage.innerText = "Je moet een e-mailadres opgeven";
             }
             else if (!givenEmail.match(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)) {
-                errorMessage.innerText = "Provided email is invalid";
+                errorMessage.innerText = "Het opgegeven e-mailadres is ongeldig";
             }
             else if (!givenPassword) {
-                errorMessage.innerText = "you must provide a password";
-            }
-            else if (!await this.checkRecords(givenEmail, givenPassword)) {
-                errorMessage.innerText = String(this._errorMessage);
+                errorMessage.innerText = "Je moet een wachtwoord opgeven";
             }
             else {
-                const userId: number | undefined = userModel.getId();
-                errorMessage.innerHTML = "";
-                session.set("Logged in User", userId);
-                window.location.href = "http://localhost:3000/landingspagina.html";
-                UI.adjustPageToLoginStatus(true);
+                const user: User | undefined = await this.checkRecords(givenEmail, givenPassword);
+                if (user) {
+                    session.set("session", user.getId());
+                    window.location.href = "http://localhost:3000/landingspagina.html";
+                    UI.adjustPageToLoginStatus(true);
+                }
+                else {
+                    errorMessage.innerText = this._errorMessage;
+                }
             }
         }
         catch (reason) {
