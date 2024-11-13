@@ -1,7 +1,6 @@
 import { api } from "@hboictcloud/api";
 
 try {
-    // TODO: Pas de .env bestanden aan met de gegevens van HBO-ICT.Cloud
     api.configure({
         url: "https://api.hbo-ict.cloud",
         apiKey: VITE_HBOICTCLOUD_APIKEY,

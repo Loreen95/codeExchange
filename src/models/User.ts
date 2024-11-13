@@ -1,3 +1,4 @@
+import "../hicConfig";
 import { api } from "@hboictcloud/api";
 
 type userResult = {
@@ -93,14 +94,11 @@ export class User {
      * @param password requires the password to find a match in the database.
      * @returns the ID of the entry which matches to the parameters above.
      */
-    public async getUserByEmailAndPassword(email: string, password: string): Promise<number | undefined> {
-        console.log("trigger 1 active");
+    public async getUserByEmailAndPassword(email: string, password: string): Promise<User | undefined> {
         try {
             const result: userResult[] = await api.queryDatabase("SELECT * FROM users WHERE email = ? AND password = ?", email, password) as userResult[];
-
             if (result.length > 0) {
-                console.log(result[0].id);
-                return result[0].id;
+                return new User(result[0].username, result[0].email, result[0].password);
             }
             else {
                 return undefined;
