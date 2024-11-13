@@ -52,6 +52,7 @@ body {
     flex-direction: row;
     cursor: pointer;
     align-items: center;
+    gap: 40px;
 }
 
 .navLinks p:hover {

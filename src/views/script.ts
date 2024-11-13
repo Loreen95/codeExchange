@@ -24,11 +24,8 @@ else {
 
 const userNameOnPage: NodeListOf<HTMLElement> = document.querySelectorAll("#injectUsernameHere");
 for (let l: number = 0; l < userNameOnPage.length; l++) {
-    const userID: string | null = sessionStorage.getItem("session");
-    const userIdToNumber: number | null = userID ? parseInt(userID, 10): null;
-    const userInfo: User | null = await userModel.getUserById(userIdToNumber);
-    const userName: string | undefined = userInfo?.getUserName();
-    userNameOnPage[l].innerHTML = `${userName}`;
+    const usersName: string | undefined = (await userModel.getUserById(Number(sessionStorage.getItem("session"))))?.getUserName();
+    userNameOnPage[l].innerHTML = `${usersName}`;
 }
 
 const boLeftButtn: HTMLButtonElement = document.querySelector("#foldoutBttn")!;
