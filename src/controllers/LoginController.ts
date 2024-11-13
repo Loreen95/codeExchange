@@ -9,7 +9,8 @@ export class LoginClass {
     public async checkRecords(givenEmail: string, givenPassword: string): Promise<User | undefined> {
         const resultEmailPassword: User | undefined = await userModel.getUserByEmailAndPassword(givenEmail, givenPassword);
         if (!resultEmailPassword) {
-            this._errorMessage = "De gebruiker bestaat niet!";
+            // this._errorMessage = "De gebruiker bestaat niet!";
+            this._errorMessage = "Incorrect password";
             return undefined;
         }
         if (resultEmailPassword.getEmail() !== givenEmail) {
@@ -29,13 +30,16 @@ export class LoginClass {
             errorMessage.innerHTML = "";
 
             if (!givenEmail) {
-                errorMessage.innerText = "Je moet een e-mailadres opgeven";
+                // errorMessage.innerText = "Je moet een e-mailadres opgeven";
+                errorMessage.innerText = "you must provide an email";
             }
             else if (!givenEmail.match(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)) {
-                errorMessage.innerText = "Het opgegeven e-mailadres is ongeldig";
+                // errorMessage.innerText = "Het opgegeven e-mailadres is ongeldig";
+                errorMessage.innerText = "The provided email is invalid";
             }
             else if (!givenPassword) {
-                errorMessage.innerText = "Je moet een wachtwoord opgeven";
+                // errorMessage.innerText = "Je moet een wachtwoord opgeven";
+                errorMessage.innerText = "you must provide a password";
             }
             else {
                 const user: User | undefined = await this.checkRecords(givenEmail, givenPassword);
@@ -53,6 +57,13 @@ export class LoginClass {
         }
         catch (reason) {
             console.error("Fout bij het inloggen.", reason);
+        }
+    }
+
+    public onClicklogout(): void {
+        if (confirm("Are you sure you want to log out?")) {
+            sessionStorage.removeItem("session");
+            window.location.href = "http://localhost:3000/landingspagina.html";
         }
     }
 }

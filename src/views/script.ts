@@ -4,6 +4,9 @@ const UI: UserInterfaceClass = new UserInterfaceClass();
 import { User } from "../models/User";
 const userModel: User = new User("", "", "", 0);
 
+const Login: LoginClass = new LoginClass();
+import { LoginClass } from "../controllers/LoginController";
+
 const isolatedNodelistElement: NodeList = await utils.fetchAndParseHtml("../../default.html");
 const arraybasic: string[] = Array.from(isolatedNodelistElement).map(element => (element as HTMLElement).outerHTML);
 
@@ -34,11 +37,24 @@ boLeftButtn.addEventListener("click", () => {
 });
 
 const passwordEyeButton: HTMLElement = document.querySelector(".hideBttn")!;
-passwordEyeButton.addEventListener("click", () => {
-    UI.revealAndHidePass();
-});
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+if (passwordEyeButton) {
+    passwordEyeButton.addEventListener("click", () => {
+        UI.revealAndHidePass();
+    });
+}
 
 const passwordEyeButtonAgain: HTMLElement = document.querySelector(".unHideBttn")!;
-passwordEyeButtonAgain.addEventListener("click", () => {
-    UI.revealAndHidePass();
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+if (passwordEyeButtonAgain) {
+    passwordEyeButtonAgain.addEventListener("click", () => {
+        UI.revealAndHidePass();
+    });
+}
+
+const logoutBttn: HTMLLinkElement = document.querySelector(".loggingOut")!;
+logoutBttn.addEventListener("click", () => {
+    Login.onClicklogout();
 });
+
+console.log("wakbj");

@@ -78,7 +78,7 @@ class RegistrationClass {
             errorMessage.innerHTML = "";
             infoMessage.innerText = "Success!";
             await userModel.create(userInputName, userInputEmail, userInputPassword);
-            window.location.href = "http://localhost:3000/landingspagina.html";
+            window.location.href = "http://localhost:3000/login.html";
         }
     }
 }
