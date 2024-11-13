@@ -1,18 +1,22 @@
 import { utils } from "@hboictcloud/api";
 
-try {
-    // TODO: Pas de .env bestanden aan met de gegevens van HBO-ICT.Cloud
-    await utils.fetchAndParseHtml("../../default.html");
-    console.log(await utils.fetchAndParseHtml("../../landingspagina.html"));
-}
-catch (reason) {
-    console.error(reason);
-}
+const isolatedNodelistElement: NodeList = await utils.fetchAndParseHtml("../../default.html");
 
-// const errorMessage: HTMLParagraphElement = document.querySelector("#errMsg")!;
+// eslint-disable-next-line @typescript-eslint/typedef
+const arraybasic = Array.from(isolatedNodelistElement).map(element => (element as HTMLElement).outerHTML);
 
-// errorMessage.innerHTML = NodeList[3];
-// console.log(Nodelist);
+console.log("oooooooooooooooo");
+console.log(arraybasic[5]);
+console.log("oooooooooooooooo");
+
+const headerofpage: HTMLDivElement = document.querySelector(".navigationBar")!;
+headerofpage.innerHTML = String(arraybasic[1]);
+
+const strayElements: HTMLDivElement = document.querySelector(".vagabondElements")!;
+strayElements.innerHTML = String(arraybasic[3]);
+
+const footerContent: HTMLDivElement = document.querySelector(".footerFilin")!;
+footerContent.innerHTML = String(arraybasic[5]);
 
 import UserInterfaceClass from "./interface";
 const UI: UserInterfaceClass = new UserInterfaceClass();

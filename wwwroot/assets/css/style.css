@@ -65,6 +65,7 @@ body {
 .navLink :hover {
     text-decoration: none;
     color: rgb(158, 41, 41);
+    transition: all 0.3s;
 }
 
 .navLinks li {
