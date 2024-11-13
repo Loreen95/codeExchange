@@ -1,5 +1,6 @@
 import { utils } from "@hboictcloud/api";
 import UserInterfaceClass from "./interface";
+const userModel: User = new User("", "", "", 0);
 const UI: UserInterfaceClass = new UserInterfaceClass();
 
 const isolatedNodelistElement: NodeList = await utils.fetchAndParseHtml("../../default.html");
@@ -12,6 +13,8 @@ headerofpage.innerHTML = String(arraybasic[1]);
 strayElements.innerHTML = String(arraybasic[3]);
 footerContent.innerHTML = String(arraybasic[5]);
 
+UI.adjustPageToLoginStatus(false);
+
 const loggedUser: string | null = localStorage.getItem("session");
 if (loggedUser) {
     UI.adjustPageToLoginStatus(true);
@@ -20,9 +23,15 @@ else {
     UI.adjustPageToLoginStatus(false);
 }
 
-const userNameOnPaige: NodeListOf<HTMLElement> = document.querySelectorAll("#injectUsernameHere");
-for (let l: number = 0; l < userNameOnPaige.length; l++) {
-    userNameOnPaige[l].innerHTML = "Temporary Name";
+const userNameOnPage: NodeListOf<HTMLElement> = document.querySelectorAll("#injectUsernameHere");
+for (let l: number = 0; l < userNameOnPage.length; l++) {
+    const userId: string | null = sessionStorage.getItem("session");
+    // Zet session-data om naar number
+    const userIdNumber: number | null = userId ? parseInt(userId, 10) : null;
+
+    const userInfo = userModel.getUserById(userIdNumber);
+    console.log(userInfo);
+    userNameOnPage[l].innerHTML = `${username}`;
 }
 
 const boLeftButtn: HTMLButtonElement = document.querySelector("#foldoutBttn")!;

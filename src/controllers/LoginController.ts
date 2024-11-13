@@ -1,5 +1,4 @@
 import { User } from "../models/User";
-import { session } from "@hboictcloud/api";
 const userModel: User = new User("", "", "", 0);
 import UserInterfaceClass from "../views/interface";
 const UI: UserInterfaceClass = new UserInterfaceClass();
@@ -41,7 +40,9 @@ export class LoginClass {
             else {
                 const user: User | undefined = await this.checkRecords(givenEmail, givenPassword);
                 if (user) {
-                    session.set("session", user.getId());
+                    const userId: number | string = user.getId().toString();
+                    // Sla alleen het userId direct op in de sessie zonder extra key
+                    sessionStorage.setItem("session", userId);
                     window.location.href = "http://localhost:3000/landingspagina.html";
                     UI.adjustPageToLoginStatus(true);
                 }
