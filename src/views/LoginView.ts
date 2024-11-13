@@ -6,5 +6,5 @@ const passwordUserInput: HTMLInputElement = document.querySelector("#password")!
 
 const loginBttn: HTMLButtonElement = document.querySelector(".loginUser")!;
 loginBttn.addEventListener("click", async () => {
-    await Login.verifyCridentials(emailAdressUserInput.value, passwordUserInput.value);
+    await Login.onClickLogin(emailAdressUserInput.value, passwordUserInput.value);
 });

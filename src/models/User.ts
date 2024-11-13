@@ -69,7 +69,7 @@ export class User {
 
     /**
      * This function will find a user based off their ID.
-     * @param id requires the ID to find a match in de database
+     * @param id requires the ID to find a match in de database.
      */
     public async getUserById(id: number): Promise<User | undefined> {
         try {
@@ -87,24 +87,37 @@ export class User {
         }
     }
 
+    /**
+     * This function will return an ID based off the user email and password.
+     * @param email requires the email to find a match in the database.
+     * @param password requires the password to find a match in the database.
+     * @returns the ID of the entry which matches to the parameters above.
+     */
     public async getUserByEmailAndPassword(email: string, password: string): Promise<number | undefined> {
         try {
             const result: userResult[] = await api.queryDatabase("SELECT * FROM users WHERE email = ? AND password = ?", email, password) as userResult[];
 
             if (result.length > 0) {
                 console.log(result[0].id);
-                return result[0].id; // retourneer het ID van de gevonden gebruiker
+                return result[0].id;
             }
             else {
-                return undefined; // geen gebruiker gevonden
+                return undefined;
             }
         }
         catch (reason) {
             console.error("Er is een fout met het opzoeken van de gegevens", reason);
-            return undefined; // fout opgetreden, geen ID
+            return undefined;
         }
     }
 
+    /**
+     * Stores inputted data into the database.
+     * @param username requires the username to be put in the database.
+     * @param email requires the email to be put in the database.
+     * @param password requires the password to be put in the database.
+     * @returns true or false based off.
+     */
     public async create(username: string, email: string, password: string): Promise<boolean> {
         try {
             const result: userResult[] = await api.queryDatabase(

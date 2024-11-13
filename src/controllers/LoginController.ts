@@ -1,6 +1,8 @@
 import { User } from "../models/User";
 import { session } from "@hboictcloud/api";
 const userModel: User = new User("", "", "", 0);
+import UserInterfaceClass from "../views/interface";
+const UI: UserInterfaceClass = new UserInterfaceClass();
 
 export class LoginClass {
     private _errorMessage: string = "";
@@ -24,7 +26,7 @@ export class LoginClass {
         }
     }
 
-    public async verifyCridentials(givenEmail: string, givenPassword: string): Promise<void> {
+    public async onClickLogin(givenEmail: string, givenPassword: string): Promise<void> {
         try {
             const errorMessage: HTMLParagraphElement = document.querySelector("#errMsg")!;
             errorMessage.innerHTML = "";
@@ -43,6 +45,7 @@ export class LoginClass {
                 errorMessage.innerHTML = "";
                 session.set("Logged in User", userId);
                 window.location.href = "http://localhost:3000/landingspagina.html";
+                UI.adjustPageToLoginStatus(true);
             }
         }
         catch (reason) {
