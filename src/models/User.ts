@@ -1,12 +1,6 @@
 import "../hicConfig";
 import { api } from "@hboictcloud/api";
-
-type userResult = {
-    id: number;
-    username: string;
-    email: string;
-    password: string;
-};
+import { userResult } from "../views/types";
 
 /* Class User
  * Users hebben alleen een ID (voor de database), username, email en wachtwoord nodig
