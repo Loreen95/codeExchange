@@ -1,11 +1,4 @@
 class UserInterfaceClass {
-    // public item1: string = "Juleus";
-    // public item2: number = 8;
-    // public item3: boolean = false;
-    // public anguish(belp: string): string {
-    //     return `${this.item1} has ${this.item3}ley bested ${this.item2} of them ${belp}`;
-    // }
-
     public adjustPageToLoginStatus(isLoggedIn: boolean): void {
         const logedinExclusives: NodeListOf<HTMLElement> = document.querySelectorAll(".loggedInMedia");
         const logedOutExclusives: NodeListOf<HTMLElement> = document.querySelectorAll(".loggedOutMedia");
