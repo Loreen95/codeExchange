@@ -62,7 +62,7 @@ body {
     color: white;
 }
 
-.navLink :hover {
+.navLink:hover {
     text-decoration: none;
     color: rgb(158, 41, 41);
     transition: all 0.3s;
@@ -123,6 +123,15 @@ body {
     border-left: solid 1px rgb(28, 28, 28);
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     transition: all 0.3s;
+}
+
+.foldopenMenu h3 {
+    color: aliceblue;
+    margin: 10px 0 0 15px;
+    padding: 12px;
+    background-image: linear-gradient(to bottom right, rgb(25, 22, 39), rgb(0, 0, 0));
+    border-radius: 3px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .foldopenMenu p {
@@ -406,5 +415,9 @@ body {
         border-left: none;
         border-right: none;
         border-radius: 0;
+    }
+
+    .logoImage h1 {
+        font-size: 17px;
     }
 }

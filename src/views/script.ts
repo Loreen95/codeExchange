@@ -1,32 +1,31 @@
 import { utils } from "@hboictcloud/api";
-
-const isolatedNodelistElement: NodeList = await utils.fetchAndParseHtml("../../default.html");
-
-// eslint-disable-next-line @typescript-eslint/typedef
-const arraybasic = Array.from(isolatedNodelistElement).map(element => (element as HTMLElement).outerHTML);
-
-console.log("oooooooooooooooo");
-console.log(arraybasic[5]);
-console.log("oooooooooooooooo");
-
-const headerofpage: HTMLDivElement = document.querySelector(".navigationBar")!;
-headerofpage.innerHTML = String(arraybasic[1]);
-
-const strayElements: HTMLDivElement = document.querySelector(".vagabondElements")!;
-strayElements.innerHTML = String(arraybasic[3]);
-
-const footerContent: HTMLDivElement = document.querySelector(".footerFilin")!;
-footerContent.innerHTML = String(arraybasic[5]);
-
 import UserInterfaceClass from "./interface";
 const UI: UserInterfaceClass = new UserInterfaceClass();
-const loggedUser: string | null = localStorage.getItem("session");
-if (loggedUser) {
-    UI.adjustPageToLoginStatus(true);
+
+const isolatedNodelistElement: NodeList = await utils.fetchAndParseHtml("../../default.html");
+const arraybasic: string[] = Array.from(isolatedNodelistElement).map(element => (element as HTMLElement).outerHTML);
+
+const headerofpage: HTMLDivElement = document.querySelector(".navigationBar")!;
+const strayElements: HTMLDivElement = document.querySelector(".vagabondElements")!;
+const footerContent: HTMLDivElement = document.querySelector(".footerFilin")!;
+headerofpage.innerHTML = String(arraybasic[1]);
+strayElements.innerHTML = String(arraybasic[3]);
+footerContent.innerHTML = String(arraybasic[5]);
+
+UI.adjustPageToLoginStatus(false);
+// const loggedUser: string | null = localStorage.getItem("session");
+// if (loggedUser) {
+//     UI.adjustPageToLoginStatus(true);
+// }
+// else {
+//     UI.adjustPageToLoginStatus(false);
+// }
+
+const userNameOnPaige: NodeListOf<HTMLElement> = document.querySelectorAll("#injectUsernameHere");
+for (let l: number = 0; l < userNameOnPaige.length; l++) {
+    userNameOnPaige[l].innerHTML = "Temporairy Name";
 }
-else {
-    UI.adjustPageToLoginStatus(false);
-}
+
 const boLeftButtn: HTMLButtonElement = document.querySelector("#foldoutBttn")!;
 boLeftButtn.addEventListener("click", () => {
     UI.shutterSlide();
@@ -41,17 +40,3 @@ const passwordEyeButtonAgain: HTMLElement = document.querySelector(".unHideBttn"
 passwordEyeButtonAgain.addEventListener("click", () => {
     UI.revealAndHidePass();
 });
-
-// console.log("o");
-// console.log(api.queryDatabase("SELECT `username` FROM `users` WHERE `id` = 1"));
-// console.log("o");
-
-// const stuff = api.queryDatabase("SELECT `username` FROM `users` WHERE `id` = 2");
-
-// console.log(stuff.username);
-
-// console.log(UI.anguish("Jikitiki Yupa Yuba"));
-
-// const users: string[] = ["Sevellus Au Juliai", "Neveliuss Au Loon", "The spitefull one", "reptile"];
-
-// reflectionOfPriorJoy.echo(users);
