@@ -34,7 +34,7 @@ export class LanguageClass {
             },
             posts: {
                 en: "Posts",
-                nl: "Berichten",
+                nl: "Vragen",
             },
             newpost: {
                 en: "New post",
