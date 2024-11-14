@@ -3,7 +3,7 @@ import { api } from "@hboictcloud/api";
 import { userResult } from "../views/types";
 
 /* Class User
- * Users hebben alleen een ID (voor de database), username, email en wachtwoord nodig
+ * user hebben alleen een ID (voor de database), username, email en wachtwoord nodig
  */
 export class User {
     private _id: number;
@@ -27,7 +27,7 @@ export class User {
      */
     public async doesUserExistForEmail(email: string): Promise<boolean | undefined> {
         try {
-            const result: userResult[] = await api.queryDatabase("SELECT email FROM users WHERE email = ?", [email]) as userResult[];
+            const result: userResult[] = await api.queryDatabase("SELECT email FROM user WHERE email = ?", [email]) as userResult[];
             if (result.length > 0) {
                 return true;
             }
@@ -48,7 +48,7 @@ export class User {
      */
     public async doesUserExistForUsername(username: string): Promise<boolean | undefined> {
         try {
-            const result: userResult[] = await api.queryDatabase("SELECT username FROM users WHERE username = ?", [username]) as userResult[];
+            const result: userResult[] = await api.queryDatabase("SELECT username FROM user WHERE username = ?", [username]) as userResult[];
             if (result.length > 0) {
                 return true;
             }
@@ -68,7 +68,7 @@ export class User {
      */
     public async getUserById(id: number): Promise<User | undefined> {
         try {
-            const result: userResult[] = await api.queryDatabase("SELECT * from users WHERE id = ?", [id]) as userResult[];
+            const result: userResult[] = await api.queryDatabase("SELECT * from user WHERE id = ?", [id]) as userResult[];
             if (result.length > 0) {
                 return new User(result[0].username, result[0].email, result[0].password, result[0].id);
             }
@@ -90,7 +90,7 @@ export class User {
      */
     public async getUserByEmailAndPassword(email: string, password: string): Promise<User | undefined> {
         try {
-            const result: userResult[] = await api.queryDatabase("SELECT * FROM users WHERE email = ? AND password = ?", email, password) as userResult[];
+            const result: userResult[] = await api.queryDatabase("SELECT * FROM user WHERE email = ? AND password = ?", email, password) as userResult[];
             if (result.length > 0) {
                 return new User(result[0].username, result[0].email, result[0].password, result[0].id);
             }
@@ -114,7 +114,7 @@ export class User {
     public async create(username: string, email: string, password: string): Promise<boolean> {
         try {
             const result: userResult[] = await api.queryDatabase(
-                "INSERT INTO users (username, email, password) VALUES (?, ?, ?)", username, email, password
+                "INSERT INTO user (username, email, password) VALUES (?, ?, ?)", username, email, password
             ) as userResult[];
 
             console.log("Success", result);
