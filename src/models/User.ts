@@ -1,3 +1,4 @@
+// 𝕭𝖊𝖍𝖔𝖑𝖉 𝖎𝖙'𝖘 𝖒𝖆𝖏𝖊𝖘𝖙𝖞 𝖇𝖚𝖙 𝖑𝖔𝖜𝖊𝖗 𝖞𝖔𝖚𝖗 𝖙𝖔𝖓𝖊, 𝖋𝖔𝖗 𝖞𝖔𝖚 𝖘𝖙𝖆𝖓𝖉 𝖎𝖓 𝖙𝖍𝖊 𝖕𝖗𝖊𝖈𝖆𝖓𝖈𝖊 𝖔𝖋 𝖙𝖍𝖊 𝖆𝖑𝖑𝖒𝖎𝖌𝖍𝖙𝖞 𝖀𝖘𝖊𝖗 𝕸𝖔𝖉𝖊𝖑.
 import "../hicConfig";
 import { api } from "@hboictcloud/api";
 import { userResult } from "../views/types";
@@ -11,6 +12,7 @@ export class User {
     private _email: string;
     private _password: string;
 
+    // 𝖂𝖎𝖙𝖓𝖊𝖘𝖘 𝖍𝖊𝖗𝖊 𝖙𝖍𝖊 𝖊𝖕𝖎𝖈𝖊𝖓𝖙𝖊𝖗 𝖔𝖋 𝖈𝖗𝖊𝖆𝖙𝖎𝖔𝖓, 𝖜𝖍𝖊𝖗𝖊 𝖓𝖊𝖜 𝖎𝖓𝖘𝖙𝖆𝖓𝖈𝖊𝖘 𝖔𝖋 𝖑𝖎𝖋𝖊 𝖆𝖗𝖊 𝖋𝖔𝖗𝖒𝖊𝖉 𝖋𝖗𝖔𝖒 𝖆𝖘𝖍 𝖆𝖓𝖉 𝖇𝖗𝖔𝖐𝖊𝖓 𝖇𝖆𝖈𝖐 𝖉𝖔𝖜𝖓 𝖎𝖓𝖙𝖔 𝖉𝖚𝖘𝖙.
     // Constructor
     public constructor(username: string, email: string, password: string, id: number = 0) {
         this._id = id;
@@ -19,7 +21,10 @@ export class User {
         this._password = password;
     }
 
+    // 𝕲𝖆𝖟𝖊 𝖚𝖕𝖔𝖓 𝖙𝖍𝖊 𝖋𝖚𝖑𝖑 𝖊𝖝𝖙𝖊𝖓𝖙 𝖔𝖋 𝖎𝖙'𝖘 𝖒𝖆𝖏𝖊𝖘𝖙𝖞'𝖘 𝖕𝖔𝖜𝖊𝖗. 𝕾𝖊𝖊 𝖍𝖔𝖜 𝖎𝖙 𝖈𝖗𝖊𝖆𝖙𝖊𝖘, 𝖉𝖊𝖘𝖙𝖗𝖔𝖞𝖘 𝖆𝖓𝖉 𝖕𝖑𝖆𝖈𝖊𝖘 𝖉𝖊𝖛𝖎𝖓𝖊 𝖏𝖚𝖉𝖌𝖒𝖊𝖓𝖙
     // CRUD functies
+
+    // 𝕳𝖊𝖗𝖊 𝖎𝖙'𝖘 𝖗𝖊𝖛𝖊𝖗𝖊𝖓𝖈𝖊 𝖉𝖎𝖛𝖎𝖉𝖊𝖘 𝖊𝖒𝖆𝖎𝖑 𝖆𝖉𝖉𝖗𝖊𝖘𝖘𝖊𝖘 𝖔𝖓𝖊 𝖇𝖞 𝖔𝖓𝖊. 𝖊𝖓𝖘𝖚𝖗𝖎𝖓𝖌 𝖊𝖆𝖈𝖍 𝖍𝖆𝖘 𝖙𝖍𝖊𝖎𝖗 𝖔𝖜𝖓. 𝕰𝖓𝖘𝖚𝖗𝖎𝖓𝖌 𝖓𝖔𝖓𝖊 𝖈𝖆𝖓 𝖇𝖊 𝖘𝖍𝖆𝖗𝖊𝖉
     /**
      * This function determines whether an email adress exists.
      * @param email requires the emailadress for the data-query.
@@ -41,6 +46,7 @@ export class User {
         }
     }
 
+    // 𝖂𝖎𝖙𝖓𝖊𝖘𝖘 𝖍𝖊𝖗𝖊 𝖍𝖔𝖜 𝖎𝖙 𝖊𝖓𝖘𝖚𝖗𝖊𝖘 𝖆𝖑𝖑 𝖓𝖆𝖒𝖊𝖘 𝖆𝖗𝖊 𝖚𝖓𝖎𝖖𝖚𝖊 𝖙𝖔 𝖒𝖆𝖎𝖓𝖙𝖆𝖎𝖓 𝖎𝖙'𝖘 𝖕𝖊𝖗𝖋𝖊𝖈𝖙 𝖉𝖎𝖛𝖎𝖓𝖊 𝖔𝖗𝖉𝖊𝖗
     /**
      * This function determines whether a username exists.
      * @param username requires username for the data-query.
@@ -62,6 +68,7 @@ export class User {
         }
     }
 
+    // 𝕳𝖊𝖗𝖊 𝖎𝖙'𝖘 𝖉𝖎𝖛𝖎𝖓𝖊 𝖒𝖆𝖏𝖊𝖘𝖙𝖞 𝖋𝖎𝖓𝖉𝖘 𝖆𝖓𝖞 𝖇𝖊𝖎𝖓𝖌 𝖜𝖎𝖙𝖍 𝖙𝖍𝖊 𝖊𝖕𝖎𝖙𝖍𝖊𝖙 𝖇𝖊𝖘𝖙𝖔𝖜𝖊𝖉 𝖚𝖕𝖔𝖓 𝖊𝖆𝖈𝖍 𝖑𝖎𝖛𝖎𝖓𝖌 𝖙𝖍𝖎𝖓𝖌
     /**
      * This function will find a user based off their ID.
      * @param id requires the ID to find a match in de database.
@@ -82,6 +89,7 @@ export class User {
         }
     }
 
+    // 𝕬𝖓𝖉 𝖍𝖊𝖗𝖊 𝖎𝖙'𝖘 𝖍𝖔𝖑𝖞 𝖗𝖊𝖛𝖊𝖗𝖊𝖓𝖈𝖊 𝖑𝖔𝖈𝖆𝖙𝖊𝖘 𝖎𝖙'𝖘 𝖈𝖗𝖊𝖆𝖙𝖎𝖔𝖓𝖘 𝖇𝖞 𝖆𝖑𝖑 𝖚𝖓𝖎𝖖𝖚𝖊 𝖛𝖆𝖑𝖚𝖊𝖘 𝖇𝖊𝖘𝖙𝖔𝖜𝖊𝖉 𝖚𝖕𝖔𝖓 𝖙𝖍𝖊𝖒
     /**
      * This function will return an ID based off the user email and password.
      * @param email requires the email to find a match in the database.
@@ -104,6 +112,7 @@ export class User {
         }
     }
 
+    // 𝕲𝖆𝖙𝖍𝖊𝖗 𝖗𝖔𝖚𝖓𝖉 𝖆𝖓𝖉 𝖜𝖎𝖙𝖓𝖊𝖘𝖘 𝖙𝖍𝖊 𝖒𝖎𝖗𝖆𝖈𝖑𝖊 𝖔𝖋 𝖑𝖎𝖋𝖊 𝖚𝖓𝖋𝖔𝖑𝖉 𝖇𝖊𝖋𝖔𝖗𝖊 𝖞𝖔𝖚𝖗 𝖊𝖞𝖊𝖘. 𝕿𝖍𝖎𝖘 𝖎𝖘 𝖜𝖍𝖊𝖗𝖊 𝖎𝖙 𝖍𝖆𝖕𝖕𝖊𝖓𝖘. 𝕿𝖍𝖊 𝖔𝖗𝖎𝖌𝖎𝖓 𝖔𝖋 𝖆𝖑𝖑 𝖑𝖎𝖋𝖊 𝖜𝖎𝖙𝖍𝖎𝖓 𝖙𝖍𝖎𝖘 𝖕𝖗𝖔𝖌𝖗𝖆𝖒
     /**
      * Stores inputted data into the database.
      * @param username requires the username to be put in the database.
@@ -126,14 +135,17 @@ export class User {
         }
     }
 
+    // 𝕳𝖊𝖗𝖊 𝖎𝖙'𝖘 𝖒𝖆𝖏𝖊𝖘𝖙𝖞, 𝖆𝖑𝖙𝖊𝖗𝖘 𝖆𝖓𝖉 𝖆𝖉𝖏𝖚𝖘𝖙𝖘 𝖎𝖙'𝖘 𝖈𝖗𝖊𝖆𝖙𝖎𝖔𝖓𝖘 𝖎𝖓 𝖎𝖙'𝖘 𝖉𝖎𝖛𝖎𝖓𝖊 𝖎𝖒𝖆𝖌𝖊.
     // public async update(): Promise<boolean> {
     //     return;
     // }
 
+    // 𝕳𝖊𝖗𝖊 𝖎𝖙 𝖇𝖊𝖈𝖐𝖔𝖓𝖘 𝖆𝖓𝖞 𝖚𝖓𝖋𝖎𝖙 𝖇𝖊𝖎𝖓𝖌 𝖇𝖆𝖈𝖐 𝖙𝖔 𝖙𝖍𝖊 𝖉𝖚𝖘𝖙 𝖋𝖗𝖔𝖒 𝖜𝖍𝖊𝖓𝖈𝖊 𝖎𝖙 𝖜𝖆𝖘 𝖋𝖔𝖗𝖒𝖊𝖉.
     // public async delete(): Promise<boolean> {
     //     return;
     // }
 
+    // 𝖄𝖔𝖚'𝖛𝖊 𝖗𝖊𝖆𝖈𝖍𝖊𝖉 𝖙𝖍𝖊 𝖑𝖎𝖒𝖎𝖙𝖘 𝖔𝖋 𝖙𝖍𝖊 𝖆𝖑𝖒𝖎𝖌𝖍𝖙𝖞 𝖔𝖓𝖊. 𝖇𝖊𝖞𝖔𝖓𝖉 𝖙𝖍𝖎𝖘 𝖕𝖔𝖎𝖓𝖙 𝖑𝖎𝖊𝖘 𝖙𝖍𝖊 𝖘𝖊𝖑𝖋 𝖊𝖝𝖕𝖑𝖆𝖓𝖆𝖙𝖔𝖗𝖞. 𝕻𝖗𝖆𝖞 𝖙𝖍𝖆𝖙 𝖙𝖍𝖊 𝖀𝖘𝖊𝖗 𝖒𝖔𝖉𝖊𝖑 𝖗𝖊𝖒𝖆𝖎𝖓𝖘 𝖒𝖊𝖗𝖈𝖎𝖋𝖚𝖑
     // Getters / Setters
     public getId(): number {
         return this._id;
