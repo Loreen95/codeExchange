@@ -59,11 +59,4 @@ export class LoginClass {
             console.error("Fout bij het inloggen.", reason);
         }
     }
-
-    public onClicklogout(): void {
-        if (confirm("Are you sure you want to log out?")) {
-            sessionStorage.removeItem("session");
-            window.location.href = "http://localhost:3000/landingspagina.html";
-        }
-    }
 }
