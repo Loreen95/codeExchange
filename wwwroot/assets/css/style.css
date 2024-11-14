@@ -270,16 +270,35 @@ body {
     border-radius: 2px;
     color: aliceblue;
     font-size: 19px;
-    background-image: linear-gradient(to bottom right, rgb(211, 40, 40), rgb(200, 22, 22));
-    padding: 15px 40px 15px 40px;
     width: fit-content;
     align-self: center;
     cursor: pointer;
 }
 
-.defaultInputBox button:hover {
+.registerNewUser, .loginUser {
     background-image: linear-gradient(to bottom right, rgb(211, 40, 40), rgb(158, 39, 39));
+    padding: 15px 40px 15px 40px;
+}
+
+.registerNewUser:hover, .loginUser:hover {
+    background-image: linear-gradient(to bottom right, rgb(211, 40, 40), rgb(200, 22, 22));
     transition: ease 0.3s;
+}
+
+.buttonRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+}
+
+.otherOptionRedirect {
+    background-image: linear-gradient(to bottom right, rgb(47, 45, 49), rgb(46, 46, 46));
+    padding: 15px 20px 15px 20px;
+}
+
+.otherOptionRedirect:hover {
+    background-image: linear-gradient(to bottom right, rgb(33, 32, 35), rgb(29, 29, 29));
 }
 
 #errMsg {
@@ -421,5 +440,9 @@ body {
 
     .logoImage h1 {
         font-size: 17px;
+    }
+
+    .buttonRow {
+        flex-direction: column;
     }
 }
