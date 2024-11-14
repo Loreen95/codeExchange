@@ -4,6 +4,8 @@ import { LogoutClass } from "../controllers/LogoutController";
 import UserInterfaceClass from "./interface";
 import { utils } from "@hboictcloud/api";
 import { User } from "../models/User";
+import { LanguageClass } from "../controllers/LanguageController";
+
 const UI: UserInterfaceClass = new UserInterfaceClass();
 const userModel: User = new User("", "", "", 0);
 const logout: LogoutClass = new LogoutClass();
@@ -14,6 +16,7 @@ const arraybasic: string[] = Array.from(isolatedNodelistElement).map(element => 
 const headerofpage: HTMLDivElement = document.querySelector(".navigationBar")!;
 const strayElements: HTMLDivElement = document.querySelector(".vagabondElements")!;
 const footerContent: HTMLDivElement = document.querySelector(".footerFilin")!;
+
 headerofpage.innerHTML = String(arraybasic[1]);
 strayElements.innerHTML = String(arraybasic[3]);
 footerContent.innerHTML = String(arraybasic[5]);
@@ -56,4 +59,18 @@ if (passwordEyeButtonAgain) {
     passwordEyeButtonAgain.addEventListener("click", () => {
         UI.revealAndHidePass();
     });
+}
+
+const languageController: LanguageClass = new LanguageClass();
+
+const currentLanguage: string | null = languageController.getLanguage();
+languageController.translatePage();
+
+const translateBttn: HTMLLinkElement | null = document.querySelector("#icon");
+if (translateBttn) {
+    if (currentLanguage || currentLanguage === "nl" || currentLanguage === "en") {
+        const newLang: string = currentLanguage === "en" ? "nl" : "en";
+        languageController.setLanguage(newLang);
+        languageController.translatePage();
+    }
 }

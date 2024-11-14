@@ -45,8 +45,8 @@ export class LoginClass {
                 const user: User | undefined = await this.checkRecords(givenEmail, givenPassword);
                 if (user) {
                     const userId: number | string = user.getId().toString();
-                    // Sla alleen het userId direct op in de sessie zonder extra key
                     sessionStorage.setItem("session", userId);
+                    sessionStorage.setItem("lang", "en");
                     window.location.href = "http://localhost:3000/landingspagina.html";
                     UI.adjustPageToLoginStatus(true);
                 }
