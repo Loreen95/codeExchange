@@ -9,14 +9,14 @@ const userModel: User = new User("", "", "", 0);
 const logout: LogoutClass = new LogoutClass();
 
 const isolatedNodelistElement: NodeList = await utils.fetchAndParseHtml("../../default.html");
-const arraybasic: string[] = Array.from(isolatedNodelistElement).map(element => (element as HTMLElement).outerHTML);
+const stringifiedNodes: string[] = Array.from(isolatedNodelistElement).map(element => (element as HTMLElement).outerHTML);
 
-const headerofpage: HTMLDivElement = document.querySelector(".navigationBar")!;
 const strayElements: HTMLDivElement = document.querySelector(".vagabondElements")!;
+const headerofpage: HTMLDivElement = document.querySelector(".navigationBar")!;
 const footerContent: HTMLDivElement = document.querySelector(".footerFilin")!;
-headerofpage.innerHTML = String(arraybasic[1]);
-strayElements.innerHTML = String(arraybasic[3]);
-footerContent.innerHTML = String(arraybasic[5]);
+headerofpage.innerHTML = String(stringifiedNodes[1]);
+strayElements.innerHTML = String(stringifiedNodes[3]);
+footerContent.innerHTML = String(stringifiedNodes[5]);
 
 const logoutBttn: HTMLLinkElement = document.querySelector(".loggingOut")!;
 logoutBttn.addEventListener("click", () => {
