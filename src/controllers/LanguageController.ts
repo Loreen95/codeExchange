@@ -48,6 +48,42 @@ export class LanguageClass {
                 en: "Dutch",
                 nl: "Engels",
             },
+            logout: {
+                en: "Logout",
+                nl: "Uitloggen",
+            },
+            registermessage: {
+                en: "Create account",
+                nl: "Account maken",
+            },
+            username: {
+                en: "Username",
+                nl: "Gebruikersnaam",
+            },
+            password: {
+                en: "Password",
+                nl: "Wachtwoord",
+            },
+            email: {
+                en: "Email addres",
+                nl: "E-mailadres",
+            },
+            createaccount: {
+                en: "Create",
+                nl: "Aanmaken",
+            },
+            loginmessage: {
+                en: "Log in",
+                nl: "Inloggen",
+            },
+            notmember: {
+                en: "Have you not registered yet?",
+                nl: "Ben je nog geen lid?",
+            },
+            alreadymember: {
+                en: "Already have an account?",
+                nl: "Heb je al een account?",
+            },
         });
     }
 

@@ -19,15 +19,16 @@
     <main class="tempitem">
         <section class="defaultInputBox">
             <h1>Welcome</h1>
-            <label for="emailAdress">Email</label>
+            <label for="emailAdress" data-translate="email">Email</label>
             <input type="text" name="emailAdress" placeholder="Email adress..." id="email">
-            <label for="passWord">Password</label>
+            <label for="passWord" data-translate="password">Password</label>
             <section class="passPhrase">
                 <input id="password" type="password" name="passWord" placeholder="Password...">
                 <a class="hideBttn"><i id="eyeSymbol" class="fa-solid fa-eye-slash"></i></a>
                 <a class="unHideBttn"><i id="eyeSymbol" class="fa-solid fa-eye"></i></a>
             </section> 
-            <button class="loginUser">Login</button>
+            <p data-translate="notmember"></p><a href="register.html" data-translate="registermessage"> </a>
+            <button class="loginUser" data-translate="loginmessage">Login</button>
             <p id="errMsg"></p>
             <p id="infoMsg"></p>
         </section>
