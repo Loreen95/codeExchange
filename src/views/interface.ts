@@ -1,7 +1,16 @@
+// Welcome to the mucles behind the face of this website!
+// This controller exists to perform the user interface features
 class UserInterfaceClass {
+    /* This function swaps out certain elements based on the loginstatus of the user
+    *  It receives an affermative or negative as argument
+    *  And returns nothing.
+    */
     public adjustPageToLoginStatus(isLoggedIn: boolean): void {
+        // Collect all needed assets
         const logedinExclusives: NodeListOf<HTMLElement> = document.querySelectorAll(".loggedInMedia");
         const logedOutExclusives: NodeListOf<HTMLElement> = document.querySelectorAll(".loggedOutMedia");
+
+        // Loop through all affected assets and disables unwanted ones
         if (isLoggedIn) {
             for (let l: number = 0; l < logedOutExclusives.length; l++) {
                 logedOutExclusives[l].style.display = "none";
@@ -14,7 +23,7 @@ class UserInterfaceClass {
         }
     }
 
-    // this here method opens a foldnav. And closes it too!
+    // this method opens the foldnav. And it can close it too
     private _opened: boolean = false;
     public shutterSlide(): void {
         const slideoutMenu: HTMLDivElement = document.querySelector(".foldopenMenu")!;
@@ -28,6 +37,7 @@ class UserInterfaceClass {
         }
     }
 
+    // And this affects the eye uf the unseeing one. Hiding and revealing secrets only the user may know.
     private _hidden: boolean = true;
     public revealAndHidePass(): void {
         const passinput: HTMLInputElement = document.querySelector("#password")!;
@@ -49,5 +59,3 @@ class UserInterfaceClass {
 }
 
 export default UserInterfaceClass;
-
-// severoaubarka.innerHTML = "ello3";
