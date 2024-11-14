@@ -136,9 +136,17 @@ export class User {
     }
 
     // 𝕳𝖊𝖗𝖊 𝖎𝖙'𝖘 𝖒𝖆𝖏𝖊𝖘𝖙𝖞, 𝖆𝖑𝖙𝖊𝖗𝖘 𝖆𝖓𝖉 𝖆𝖉𝖏𝖚𝖘𝖙𝖘 𝖎𝖙'𝖘 𝖈𝖗𝖊𝖆𝖙𝖎𝖔𝖓𝖘 𝖎𝖓 𝖎𝖙'𝖘 𝖉𝖎𝖛𝖎𝖓𝖊 𝖎𝖒𝖆𝖌𝖊.
-    // public async update(): Promise<boolean> {
-    //     return;
-    // }
+    public async update(username: string, email: string, password: string, id: number): Promise<boolean> {
+        try {
+            const result: userResult[] = await api.queryDatabase("UPDATE users SET username = ? email = ? password = ? WHERE id = ?", [username, email, password, id]) as userResult[];
+            console.log("Succes", result);
+            return true;
+        }
+        catch (reason) {
+            console.error("There has been an error updating these records", reason);
+            return false;
+        }
+    }
 
     // 𝕳𝖊𝖗𝖊 𝖎𝖙 𝖇𝖊𝖈𝖐𝖔𝖓𝖘 𝖆𝖓𝖞 𝖚𝖓𝖋𝖎𝖙 𝖇𝖊𝖎𝖓𝖌 𝖇𝖆𝖈𝖐 𝖙𝖔 𝖙𝖍𝖊 𝖉𝖚𝖘𝖙 𝖋𝖗𝖔𝖒 𝖜𝖍𝖊𝖓𝖈𝖊 𝖎𝖙 𝖜𝖆𝖘 𝖋𝖔𝖗𝖒𝖊𝖉.
     // public async delete(): Promise<boolean> {
