@@ -29,7 +29,7 @@ export class LanguageClass {
                 nl: "Registreren",
             },
             login: {
-                en: "Log in",
+                en: "Login",
                 nl: "Inloggen",
             },
             posts: {
@@ -73,7 +73,7 @@ export class LanguageClass {
                 nl: "Aanmaken",
             },
             loginmessage: {
-                en: "Log in",
+                en: "Login",
                 nl: "Inloggen",
             },
             notmember: {
