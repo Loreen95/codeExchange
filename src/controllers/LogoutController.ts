@@ -1,14 +1,11 @@
-import { session } from "@hboictcloud/api";
-import UserInterfaceClass from "../views/interface";
-const UI: UserInterfaceClass = new UserInterfaceClass();
-
 export class LogoutClass {
-    public async logoutFunction(): Promise<void> {
+    public logoutFunction(): void {
         try {
-            if (await session.get("session")) {
-                session.remove("session");
-                UI.adjustPageToLoginStatus(false);
-                window.location.href = "http://localhost:3000/landingspagina.html";
+            if (sessionStorage.getItem("session")) {
+                if (confirm("Proceed with logout?")) {
+                    sessionStorage.removeItem("session");
+                    window.location.href = "http://localhost:3000/landingspagina.html";
+                }
             }
             else {
                 console.error("Fout met uitloggen");
