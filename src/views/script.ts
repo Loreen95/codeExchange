@@ -68,15 +68,18 @@ if (passwordEyeButtonAgain) {
 }
 
 const languageController: LanguageClass = new LanguageClass();
-
-const currentLanguage: string | null = languageController.getLanguage();
+const translateBttn: HTMLLinkElement | null = document.querySelector("#translateBttn");
+// Zet de standaardtaal bij het laden van de pagina
+languageController.setLanguage(languageController.getLanguage());
 languageController.translatePage();
 
-const translateBttn: HTMLLinkElement | null = document.querySelector("#icon");
 if (translateBttn) {
-    if (currentLanguage) {
-        const newLang: string = currentLanguage === "en" ? "nl" : "en";
+    translateBttn.addEventListener("click", () => {
+        // Haal de huidige taal op en wissel naar de andere taal
+        const currentLang: string = languageController.getLanguage();
+        const newLang: string = currentLang === "en" ? "nl" : "en";
+        // Update de taal en vertaal de pagina
         languageController.setLanguage(newLang);
         languageController.translatePage();
-    }
+    });
 }
