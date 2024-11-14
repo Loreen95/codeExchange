@@ -74,7 +74,7 @@ languageController.translatePage();
 
 const translateBttn: HTMLLinkElement | null = document.querySelector("#icon");
 if (translateBttn) {
-    if (currentLanguage || currentLanguage === "nl" || currentLanguage === "en") {
+    if (currentLanguage) {
         const newLang: string = currentLanguage === "en" ? "nl" : "en";
         languageController.setLanguage(newLang);
         languageController.translatePage();
