@@ -1,10 +1,12 @@
-import { utils } from "@hboictcloud/api";
+// Hellogain individual whose alledgidly a human being, this here file houses stuff every page needs as a default
+// This links this file to all other files it needs to interact with. ANd instanciates a few objects(classes).
+import { LogoutClass } from "../controllers/LogoutController";
 import UserInterfaceClass from "./interface";
-const UI: UserInterfaceClass = new UserInterfaceClass();
+import { utils } from "@hboictcloud/api";
 import { User } from "../models/User";
+const UI: UserInterfaceClass = new UserInterfaceClass();
 const userModel: User = new User("", "", "", 0);
 const logout: LogoutClass = new LogoutClass();
-import { LogoutClass } from "../controllers/LogoutController";
 
 const isolatedNodelistElement: NodeList = await utils.fetchAndParseHtml("../../default.html");
 const arraybasic: string[] = Array.from(isolatedNodelistElement).map(element => (element as HTMLElement).outerHTML);
