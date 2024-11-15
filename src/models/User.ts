@@ -8,17 +8,17 @@ import { userResult } from "../views/types";
  */
 export class User {
     private _id: number;
-    private _username: string;
     private _email: string;
     private _password: string;
+    private _username: string;
 
     // 𝖂𝖎𝖙𝖓𝖊𝖘𝖘 𝖍𝖊𝖗𝖊 𝖙𝖍𝖊 𝖊𝖕𝖎𝖈𝖊𝖓𝖙𝖊𝖗 𝖔𝖋 𝖈𝖗𝖊𝖆𝖙𝖎𝖔𝖓, 𝖜𝖍𝖊𝖗𝖊 𝖓𝖊𝖜 𝖎𝖓𝖘𝖙𝖆𝖓𝖈𝖊𝖘 𝖔𝖋 𝖑𝖎𝖋𝖊 𝖆𝖗𝖊 𝖋𝖔𝖗𝖒𝖊𝖉 𝖋𝖗𝖔𝖒 𝖆𝖘𝖍 𝖆𝖓𝖉 𝖇𝖗𝖔𝖐𝖊𝖓 𝖇𝖆𝖈𝖐 𝖉𝖔𝖜𝖓 𝖎𝖓𝖙𝖔 𝖉𝖚𝖘𝖙.
     // Constructor
-    public constructor(username: string, email: string, password: string, id: number = 0) {
+    public constructor(id: number = 0, email: string, password: string, username: string) {
         this._id = id;
-        this._username = username;
         this._email = email;
         this._password = password;
+        this._username = username;
     }
 
     // 𝕲𝖆𝖟𝖊 𝖚𝖕𝖔𝖓 𝖙𝖍𝖊 𝖋𝖚𝖑𝖑 𝖊𝖝𝖙𝖊𝖓𝖙 𝖔𝖋 𝖎𝖙'𝖘 𝖒𝖆𝖏𝖊𝖘𝖙𝖞'𝖘 𝖕𝖔𝖜𝖊𝖗. 𝕾𝖊𝖊 𝖍𝖔𝖜 𝖎𝖙 𝖈𝖗𝖊𝖆𝖙𝖊𝖘, 𝖉𝖊𝖘𝖙𝖗𝖔𝖞𝖘 𝖆𝖓𝖉 𝖕𝖑𝖆𝖈𝖊𝖘 𝖉𝖊𝖛𝖎𝖓𝖊 𝖏𝖚𝖉𝖌𝖒𝖊𝖓𝖙
@@ -77,7 +77,7 @@ export class User {
         try {
             const result: userResult[] = await api.queryDatabase("SELECT * from user WHERE id = ?", [id]) as userResult[];
             if (result.length > 0) {
-                return new User(result[0].username, result[0].email, result[0].password, result[0].id);
+                return new User(result[0].id, result[0].username, result[0].email, result[0].password);
             }
             else {
                 return undefined;
@@ -98,9 +98,10 @@ export class User {
      */
     public async getUserByEmailAndPassword(email: string, password: string): Promise<User | undefined> {
         try {
-            const result: userResult[] = await api.queryDatabase("SELECT * FROM user WHERE email = ? AND password = ?", email, password) as userResult[];
+            const result: userResult[] = await api.queryDatabase(
+                "SELECT * FROM user WHERE email = ? AND password = ?", email, password) as userResult[];
             if (result.length > 0) {
-                return new User(result[0].username, result[0].email, result[0].password, result[0].id);
+                return new User(result[0].id, result[0].username, result[0].email, result[0].password);
             }
             else {
                 return undefined;
@@ -167,19 +168,19 @@ export class User {
         this._email = email;
     }
 
-    public getUserName(): string {
-        return this._username;
-    }
-
-    public setUserName(username: string): void {
-        this._username = username;
-    }
-
     public getPassword(): string {
         return this._password;
     }
 
     public setPassword(password: string): void {
         this._password = password;
+    }
+
+    public getUserName(): string {
+        return this._username;
+    }
+
+    public setUserName(username: string): void {
+        this._username = username;
     }
 }

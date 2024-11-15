@@ -6,18 +6,28 @@ export class LanguageClass {
         this.setTranslation();
     }
 
+    /**
+     * This function fetches the stored language from sessionStorage
+     * @returns Returns the language which is being stored in sessionStorage
+     */
     public getLanguage(): string {
         const getLang: string | null = sessionStorage.getItem("lang") || "en";
         return getLang;
     }
 
+    /**
+     * This function sets the website to the desired language
+     * @param lang Uses the lang-parameter to set the desired language
+     */
     public setLanguage(lang: string): void {
         sessionStorage.setItem("lang", lang);
         localization.switchLanguage(lang);
-        // Pas de vertalingen toe op de pagina
         this.translatePage();
     }
 
+    /**
+     * This function sets the proper translation on the website (list)
+     */
     private setTranslation(): void {
         localization.setTranslations({
             profile: {

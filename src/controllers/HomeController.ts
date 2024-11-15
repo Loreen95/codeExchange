@@ -3,6 +3,9 @@ import UserInterfaceClass from "../views/interface";
 const UI: UserInterfaceClass = new UserInterfaceClass();
 
 export class HomeClass {
+    /**
+     * This function searches for an existing session and adjust the UI accordingly.
+     */
     public async getSession(): Promise<void> {
         try {
             if (!await session.get("session")) {

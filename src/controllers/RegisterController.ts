@@ -9,8 +9,8 @@ class RegistrationClass {
     private _neededInformation: string = ""; // Information needed
 
     /* This function evaluates a password for it's strength and provides needed information if it's too weak to survive
-    *  The only argument it receives is the provided password.
-    *  And the return value is a boolean as a failing or passing grade.
+     *  The only argument it receives is the provided password.
+     *  And the return value is a boolean as a failing or passing grade.
     */
     private passChecker(givenPassword: string): boolean {
         // This returns a failing grade if the password is too small and pitifull
@@ -53,9 +53,9 @@ class RegistrationClass {
     }
 
     /**
-        This here function contains an else if chain that goes through each individual input,
-        and spits out an error with some information on the html page if somethings wrong with them
-        It also activates the
+     * This here function contains an else if chain that goes through each individual input,
+     * and spits out an error with some information on the html page if somethings wrong with them
+     * It also activates the
      * Arguments include the three user inputs: username, password, and email
      * The return value is a void (nothing) because it's just supposed to process and directly display information
     */
