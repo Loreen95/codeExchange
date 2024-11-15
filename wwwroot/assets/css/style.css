@@ -152,6 +152,10 @@ body {
     transition: ease 0.1s;
 }
 
+.corporateSeals {
+    background-color: brown;
+}
+
 /* Main */
 .barka {
     display: flex;
