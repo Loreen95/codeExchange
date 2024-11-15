@@ -72,6 +72,9 @@ class RegistrationClass {
         if (!userInputName) {
             errorMessage.innerText = "You must provide a name";
         }
+        else if (String(await userModel.doesUserExistForUsername(userInputName)) === "true") {
+            errorMessage.innerText = "This Username is already in use";
+        }
         else if (!userInputEmail) {
             errorMessage.innerText = "you must provide an email";
         }
