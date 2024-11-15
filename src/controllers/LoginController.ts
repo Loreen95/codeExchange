@@ -2,7 +2,7 @@
 
 // Collect seperate files and instanciate needed objects.
 import { User } from "../models/User";
-const userModel: User = new User("", "", "", 0);
+const userModel: User = new User(0, "", "", "");
 import UserInterfaceClass from "../views/interface";
 const UI: UserInterfaceClass = new UserInterfaceClass();
 

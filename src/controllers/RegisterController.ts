@@ -1,6 +1,6 @@
 // This links this controller to the almightu User Model.
 import { User } from "../models/User";
-const userModel: User = new User("", "", "", 0);
+const userModel: User = new User(0, "", "", "");
 
 // This is where every mayor process takes place right here in this class.
 class RegistrationClass {

@@ -7,7 +7,7 @@ import { User } from "../models/User";
 import { LanguageClass } from "../controllers/LanguageController";
 
 const UI: UserInterfaceClass = new UserInterfaceClass();
-const userModel: User = new User("", "", "", 0);
+const userModel: User = new User(0, "", "", "");
 const logout: LogoutClass = new LogoutClass();
 
 // this collects all information from the defaut html page and malforms it into a horrific nodelist for later use
