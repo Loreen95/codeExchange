@@ -77,7 +77,7 @@ export class User {
         try {
             const result: userResult[] = await api.queryDatabase("SELECT * from user WHERE id = ?", [id]) as userResult[];
             if (result.length > 0) {
-                return new User(result[0].id, result[0].username, result[0].email, result[0].password);
+                return new User(result[0].id, result[0].email, result[0].password, result[0].username);
             }
             else {
                 return undefined;
@@ -101,7 +101,7 @@ export class User {
             const result: userResult[] = await api.queryDatabase(
                 "SELECT * FROM user WHERE email = ? AND password = ?", email, password) as userResult[];
             if (result.length > 0) {
-                return new User(result[0].id, result[0].username, result[0].email, result[0].password);
+                return new User(result[0].id, result[0].email, result[0].password, result[0].username);
             }
             else {
                 return undefined;

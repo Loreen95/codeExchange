@@ -33,6 +33,9 @@ const loggedUser: string | null = sessionStorage.getItem("session");
 if (loggedUser) {
     UI.adjustPageToLoginStatus(true);
 }
+else if (!loggedUser) {
+    UI.adjustPageToLoginStatus(false);
+}
 else {
     UI.adjustPageToLoginStatus(false);
 }
