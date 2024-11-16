@@ -75,8 +75,12 @@ export class LanguageClass {
                 nl: "Wachtwoord",
             },
             email: {
-                en: "Email addres",
+                en: "Email",
                 nl: "E-mailadres",
+            },
+            emailuser: {
+                en: "Email or username",
+                nl: "E-mail of gebruikersnaam",
             },
             createaccount: {
                 en: "Create",
