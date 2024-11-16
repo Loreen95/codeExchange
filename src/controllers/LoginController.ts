@@ -10,28 +10,49 @@ export class LoginClass {
     // Clear error message
     private _errorMessage: string = "";
 
+    /**
+     * This function determines whether someone put in an email address or a username.
+     * @param input It takes the input existing of username or email.
+     * @returns True or false based off the reg-ex match. (True for email, false for username);
+     */
+    public isEmail(input: string): boolean {
+        const emailRegex: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        console.log(emailRegex.test(input));
+        return emailRegex.test(input);
+    }
+
     /* This assesses given credentials to find out wich use is trying to log in.
     *  It receives an email and password as arguments
     *  And the function promises returns an object with the custom User datatype or nothing at all
     */
-    public async checkRecords(givenEmail: string, givenPassword: string): Promise<User | undefined> {
-        const resultEmailPassword: User | undefined = await userModel.getUserByEmailAndPassword(givenEmail, givenPassword);
-
+    public async checkRecords(givenUsernameOrEmail: string, givenPassword: string): Promise<User | undefined> {
+        let resultRecords: User | undefined;
+        if (this.isEmail(givenUsernameOrEmail)) {
+            console.log("The user used an email address.");
+            resultRecords = await userModel.getUserByEmailAndPassword(givenUsernameOrEmail, givenPassword);
+        }
+        else {
+            console.log("The user used a username.");
+            resultRecords = await userModel.getUserByUsernameAndPassword(givenUsernameOrEmail, givenPassword);
+        }
         // This determines if there is a connection to the user from the comibnation of the email and password
-        if (!resultEmailPassword) {
-            // this._errorMessage = "De gebruiker bestaat niet!";
-            this._errorMessage = "Incorrect password";
+        if (!resultRecords) {
+            this._errorMessage = "This user does not exist!";
             return undefined;
         }
-        if (resultEmailPassword.getEmail() !== givenEmail) {
-            this._errorMessage = "De emailadressen komen niet overeen!";
+        else if (this.isEmail(givenUsernameOrEmail) && resultRecords.getEmail() !== givenUsernameOrEmail) {
+            this._errorMessage = "The email does not match our records!";
             return undefined;
         }
-        if (resultEmailPassword.getPassword() !== givenPassword) {
-            this._errorMessage = "De wachtwoorden komen niet overeen!";
+        else if (this.isEmail(givenUsernameOrEmail) && resultRecords.getUserName() !== givenUsernameOrEmail) {
+            this._errorMessage = "The email or username does not match our records!";
             return undefined;
         }
-        return resultEmailPassword; // retourneert het User object als alle checks kloppen
+        else if (resultRecords.getPassword() !== givenPassword) {
+            this._errorMessage = "The password does not match our records!";
+            return undefined;
+        }
+        return resultRecords; // retourneert het User object als alle checks kloppen
     }
 
     /* This function determines if the credentials exist, and are valid before logging you in
@@ -48,10 +69,6 @@ export class LoginClass {
             if (!givenEmail) {
                 // errorMessage.innerText = "Je moet een e-mailadres opgeven";
                 errorMessage.innerText = "you must provide an email";
-            }
-            else if (!givenEmail.match(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)) {
-                // errorMessage.innerText = "Het opgegeven e-mailadres is ongeldig";
-                errorMessage.innerText = "The provided email is invalid";
             }
             else if (!givenPassword) {
                 // errorMessage.innerText = "Je moet een wachtwoord opgeven";

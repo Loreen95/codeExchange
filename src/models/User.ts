@@ -113,6 +113,29 @@ export class User {
         }
     }
 
+    /**
+     * This function will return an ID based off the user username and password.
+     * @param username requires the email to find a match in the database.
+     * @param password requires the password to find a match in the database.
+     * @returns the ID of the entry which matches to the parameters above.
+     */
+    public async getUserByUsernameAndPassword(username: string, password: string): Promise<User | undefined> {
+        try {
+            const result: userResult[] = await api.queryDatabase(
+                "SELECT * FROM user WHERE username = ? AND password = ?", username, password) as userResult[];
+            if (result.length > 0) {
+                return new User(result[0].id, result[0].email, result[0].password, result[0].username);
+            }
+            else {
+                return undefined;
+            }
+        }
+        catch (reason) {
+            console.error("Er is een fout met het opzoeken van de gegevens", reason);
+            return undefined;
+        }
+    }
+
     // 𝕲𝖆𝖙𝖍𝖊𝖗 𝖗𝖔𝖚𝖓𝖉 𝖆𝖓𝖉 𝖜𝖎𝖙𝖓𝖊𝖘𝖘 𝖙𝖍𝖊 𝖒𝖎𝖗𝖆𝖈𝖑𝖊 𝖔𝖋 𝖑𝖎𝖋𝖊 𝖚𝖓𝖋𝖔𝖑𝖉 𝖇𝖊𝖋𝖔𝖗𝖊 𝖞𝖔𝖚𝖗 𝖊𝖞𝖊𝖘. 𝕿𝖍𝖎𝖘 𝖎𝖘 𝖜𝖍𝖊𝖗𝖊 𝖎𝖙 𝖍𝖆𝖕𝖕𝖊𝖓𝖘. 𝕿𝖍𝖊 𝖔𝖗𝖎𝖌𝖎𝖓 𝖔𝖋 𝖆𝖑𝖑 𝖑𝖎𝖋𝖊 𝖜𝖎𝖙𝖍𝖎𝖓 𝖙𝖍𝖎𝖘 𝖕𝖗𝖔𝖌𝖗𝖆𝖒
     /**
      * Stores inputted data into the database.
