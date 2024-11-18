@@ -16,7 +16,7 @@ export class HomeClass {
             }
         }
         catch (reason) {
-            console.error("Fout met ophalen sessie", reason);
+            console.error("Error fetching session", reason);
         }
     }
 }

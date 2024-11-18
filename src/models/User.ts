@@ -41,7 +41,7 @@ export class User {
             }
         }
         catch (reason) {
-            console.error("Er is een fout met het opzoeken van het emailadres", reason);
+            console.error("An error occurred while searching for the email.", reason);
             return undefined;
         }
     }
@@ -63,7 +63,7 @@ export class User {
             }
         }
         catch (reason) {
-            console.error("Er is een fout met het opzoeken van de gebruikersnaam", reason);
+            console.error("An error has occurred while searching for the username.", reason);
             return undefined;
         }
     }
@@ -84,7 +84,7 @@ export class User {
             }
         }
         catch (reason) {
-            console.error("Er is een fout met het opzoeken van de gebruiker", reason);
+            console.error("An error occurred while searching for the user.", reason);
             return undefined;
         }
     }
@@ -108,7 +108,7 @@ export class User {
             }
         }
         catch (reason) {
-            console.error("Er is een fout met het opzoeken van de gegevens", reason);
+            console.error("An error occurred while searching these records.", reason);
             return undefined;
         }
     }
@@ -131,7 +131,7 @@ export class User {
             }
         }
         catch (reason) {
-            console.error("Er is een fout met het opzoeken van de gegevens", reason);
+            console.error("An error occurred while searching these records.", reason);
             return undefined;
         }
     }
@@ -154,7 +154,7 @@ export class User {
             return true;
         }
         catch (reason) {
-            console.error("Er is een fout met het aanmaken van gebruikers", reason);
+            console.error("An error occurred while creating a new database entry.", reason);
             return false;
         }
     }

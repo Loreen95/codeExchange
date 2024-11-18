@@ -76,7 +76,7 @@ class RegistrationClass {
             errorMessage.innerText = "This Username is already in use";
         }
         else if (!userInputEmail) {
-            errorMessage.innerText = "you must provide an email";
+            errorMessage.innerText = "You must provide an email";
         }
         else if (!userInputEmail.match(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)) {
             errorMessage.innerText = "The email is invalid";
@@ -85,7 +85,7 @@ class RegistrationClass {
             errorMessage.innerText = "This email is already being used";
         }
         else if (!userInputPassword) {
-            errorMessage.innerText = "you must provide a password";
+            errorMessage.innerText = "You must provide a password";
         }
         // This here calls forth the password examination and displays appropreate errors and info when a failure occurs
         else if (!this.passChecker(userInputPassword)) {
@@ -97,9 +97,6 @@ class RegistrationClass {
             errorMessage.innerHTML = "";
             infoMessage.innerText = "Success!";
             await userModel.create(userInputName, userInputEmail, userInputPassword);
-
-            // sessionStorage.setItem("session", userId);
-
             window.location.href = "http://localhost:3000/login.html";
         }
     }

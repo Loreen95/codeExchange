@@ -59,24 +59,24 @@ export class LoginClass {
     *  It receives all necceseary login credentials as arguments
     *  And promises to return nothing
     */
-    public async onClickLogin(givenEmail: string, givenPassword: string): Promise<void> {
+    public async onClickLogin(givenUsernameOrEmail: string, givenPassword: string): Promise<void> {
         try {
             // access error field on html and clear it
             const errorMessage: HTMLParagraphElement = document.querySelector("#errMsg")!;
             errorMessage.innerHTML = "";
 
             // These errors should explain what every part does
-            if (!givenEmail) {
+            if (!givenUsernameOrEmail) {
                 // errorMessage.innerText = "Je moet een e-mailadres opgeven";
-                errorMessage.innerText = "you must provide an email";
+                errorMessage.innerText = "You must provide an email or username";
             }
             else if (!givenPassword) {
                 // errorMessage.innerText = "Je moet een wachtwoord opgeven";
-                errorMessage.innerText = "you must provide a password";
+                errorMessage.innerText = "You must provide a password";
             }
             // This activates the check reccords function and logs the user in if it succseeds the checks
             else {
-                const user: User | undefined = await this.checkRecords(givenEmail, givenPassword);
+                const user: User | undefined = await this.checkRecords(givenUsernameOrEmail, givenPassword);
                 if (user) {
                     const userId: number | string = user.getId().toString();
                     sessionStorage.setItem("session", userId);

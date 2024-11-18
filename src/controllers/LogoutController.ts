@@ -11,11 +11,11 @@ export class LogoutClass {
             }
             // This shouldn't be possible because the session needs to exist before you have access to the logout button
             else {
-                console.error("Fout met uitloggen");
+                console.error("Error logging out");
             }
         }
         catch (reason) {
-            console.error("Er is een fout opgetreden met het zoeken van de sessie", reason);
+            console.error("Error fetching session", reason);
         }
     }
 }
