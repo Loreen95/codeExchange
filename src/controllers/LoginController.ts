@@ -82,7 +82,6 @@ export class LoginClass {
                     sessionStorage.setItem("session", userId);
                     sessionStorage.setItem("lang", "en");
                     window.location.href = "http://localhost:3000/landingspagina.html";
-                    UI.adjustPageToLoginStatus(true);
                 }
                 else {
                     errorMessage.innerText = this._errorMessage;

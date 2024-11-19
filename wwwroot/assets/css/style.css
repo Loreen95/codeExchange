@@ -207,6 +207,11 @@ body {
     margin: 0;
 }
 
+::placeholder {
+    color: rgb(198, 252, 252);
+    opacity: 1; /* Firefox */
+  }
+
 .defaultInputBox input {
     border: 3px solid rgb(58, 58, 58);
     background-color: rgb(87, 94, 100);
