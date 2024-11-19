@@ -3,8 +3,8 @@
 // Collect seperate files and instanciate needed objects.
 import { User } from "../models/User";
 const userModel: User = new User(0, "", "", "");
-import UserInterfaceClass from "../views/interface";
-const UI: UserInterfaceClass = new UserInterfaceClass();
+// import UserInterfaceClass from "../views/interface";
+// const UI: UserInterfaceClass = new UserInterfaceClass();
 
 export class LoginClass {
     // Clear error message
