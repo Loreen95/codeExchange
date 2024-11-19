@@ -23,6 +23,19 @@ class UserInterfaceClass {
         }
     }
 
+    public unleashTheErrorPopup(shouldIActivate: boolean): void {
+        // This gatheres the needed Html elements to display warnings and information about the provided credentials
+        const errorPopupContainer: HTMLDivElement = document.querySelector(".errorPopup")!;
+        if (shouldIActivate) {
+            errorPopupContainer.style.right = "0";
+            errorPopupContainer.style.backgroundColor = "rgba(207, 31, 25, 0.174)";
+            // errorPopupContainer.style.opacity = "21%";
+        }
+        else {
+            errorPopupContainer.style.right = "-550PX";
+        }
+    };
+
     // this method opens the foldnav. And it can close it too
     private _opened: boolean = false;
     public shutterSlide(): void {
