@@ -1,7 +1,8 @@
 // This links this controller to the almightu User Model.
 import { User } from "../models/User";
 const userModel: User = new User(0, "", "", "");
-
+import { LoginClass } from "./LoginController";
+const login: LoginClass = new LoginClass();
 // This is where every mayor process takes place right here in this class.
 class RegistrationClass {
     // this resets the popup information (error and info tab)
@@ -109,9 +110,20 @@ class RegistrationClass {
         else {
             errorMessage.innerHTML = "";
             infoMessage.innerText = "Success!";
-            await userModel.create(userInputName, userInputEmail, userInputPassword);
-
-            window.location.href = "http://localhost:3000/login.html";
+            try {
+                // Gebruiker aanmaken
+                const createdUser: boolean = await userModel.create(userInputName, userInputEmail, userInputPassword);
+                console.log("Aangemaakte gebruiker:", createdUser);
+                // 5MS Wachten
+                await new Promise(resolve => setTimeout(resolve, 500));
+                // Check of de gebruiker succesvol kan inloggen
+                await login.onClickLogin(userInputEmail, userInputPassword);
+            }
+            catch (reason) {
+                console.error("Fout tijdens registratie en inloggen:", reason);
+                console.log("Detail van de fout:", JSON.stringify(reason, null, 2));
+                errorMessage.innerHTML = "Er is een fout opgetreden. Probeer het opnieuw.";
+            }
         }
     }
 }
