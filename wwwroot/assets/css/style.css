@@ -218,6 +218,7 @@ body {
     outline: none;
     width: 79%;
     align-self: center;
+    transition: all 0.3s;
 }
 
 .defaultInputBox input:focus {
@@ -253,7 +254,6 @@ body {
 #password {
     margin-bottom: 0;
     width: 90%;
-    border-radius: 0 0 0 14px;
     border: none;
 }
 
@@ -309,7 +309,7 @@ body {
     font-family: 'Trebuchet MS', sans-serif;
     color: rgb(234, 40, 22);
     text-align: center;
-    font-size: 30px;
+    font-size: 25px;
     margin: 10px 0 10px 0;
     transition: all 0.4s;
 }
@@ -320,6 +320,18 @@ body {
     font-size: 15px;
     color: rgb(140, 140, 140);
     margin: 0;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    background-color: rgb(58, 58, 58);
+    align-items: center;
+    justify-content: center;
+    top: 30vh;
+    width: 500px;
+    height: 300px;
+
 }
 
 /* Footer */

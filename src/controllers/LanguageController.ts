@@ -79,7 +79,7 @@ export class LanguageClass {
                 nl: "E-mailadres",
             },
             emailuser: {
-                en: "Email or username",
+                en: "Email or Username",
                 nl: "E-mail of gebruikersnaam",
             },
             createaccount: {

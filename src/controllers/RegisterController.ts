@@ -63,34 +63,47 @@ class RegistrationClass {
         // This gatheres the needed Html elements to display warnings and information about the provided credentials
         const errorMessage: HTMLParagraphElement = document.querySelector("#errMsg")!;
         const infoMessage: HTMLParagraphElement = document.querySelector("#infoMsg")!;
+        // And this calls in the input fields so I can make them red later.
+        const emailAdressUserInput: HTMLInputElement = document.querySelector("#emailInput")!;
+        const nameUserInput: HTMLInputElement = document.querySelector("#userName")!;
+        const passwordUserInput: HTMLInputElement = document.querySelector(".passPhrase")!;
 
         // This resets the info fields everytime this method is used
         errorMessage.innerHTML = "";
         infoMessage.innerText = "";
-
+        nameUserInput.style.border = "solid rgb(58, 58, 58)";
+        emailAdressUserInput.style.border = "solid rgb(58, 58, 58)";
+        passwordUserInput.style.border = "solid rgb(58, 58, 58)";
         // Theese assess the received credentials. I trust the error messages themselves are self explanatory
         if (!userInputName) {
-            errorMessage.innerText = "You must provide a name";
+            errorMessage.innerText += "You must provide a name\n";
+            nameUserInput.style.border = "solid rgb(168, 32, 32) 2px";
         }
         else if (String(await userModel.doesUserExistForUsername(userInputName)) === "true") {
-            errorMessage.innerText = "This Username is already in use";
+            errorMessage.innerText += "Provided Username is already in use\n";
+            nameUserInput.style.border = "solid rgb(168, 32, 32) 2px";
         }
-        else if (!userInputEmail) {
-            errorMessage.innerText = "You must provide an email";
+        if (!userInputEmail) {
+            errorMessage.innerText += "You must provide an email\n";
+            emailAdressUserInput.style.border = "solid rgb(168, 32, 32) 2px";
         }
         else if (!userInputEmail.match(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)) {
-            errorMessage.innerText = "The email is invalid";
+            errorMessage.innerText += "The email is invalid\n";
+            emailAdressUserInput.style.border = "solid rgb(168, 32, 32) 2px";
         }
         else if (await userModel.doesUserExistForEmail(userInputEmail)) {
-            errorMessage.innerText = "This email is already being used";
+            errorMessage.innerText += "This email is already being used\n";
+            emailAdressUserInput.style.border = "solid rgb(168, 32, 32) 2px";
         }
-        else if (!userInputPassword) {
-            errorMessage.innerText = "You must provide a password";
+        if (!userInputPassword) {
+            errorMessage.innerText += "You must provide a password\n";
+            passwordUserInput.style.border = "solid rgb(168, 32, 32) 2px";
         }
         // This here calls forth the password examination and displays appropreate errors and info when a failure occurs
         else if (!this.passChecker(userInputPassword)) {
-            errorMessage.innerText = String(this._whyItIsNotGoodEnough);
-            infoMessage.innerText = String(this._neededInformation);
+            errorMessage.innerText += String(this._whyItIsNotGoodEnough);
+            infoMessage.innerText += String(this._neededInformation);
+            passwordUserInput.style.border = "solid rgb(168, 32, 32) 2px";
         }
         // And finally when all is checked and double checked and no faults where found. The user will actually be created
         else {
