@@ -312,10 +312,10 @@ body {
 
 #errMsg {
     font-family: 'Trebuchet MS', sans-serif;
-    color: rgb(234, 40, 22);
+    color: rgb(207, 31, 25);
     text-align: center;
     font-size: 25px;
-    margin: 10px 0 10px 0;
+    margin: 0;
     transition: all 0.4s;
 }
 
@@ -323,20 +323,38 @@ body {
     font-family: 'Courier New', monospace;
     text-align: center;
     font-size: 15px;
-    color: rgb(140, 140, 140);
+    color: rgb(153, 149, 149);
     margin: 0;
+    padding: 10px;
 }
 
-.popup {
-    display: none;
+.errorPopup {
+    border: solid rgb(207, 31, 25) 5px;
+    border-radius: 100px;
+    display: flex;
     position: fixed;
-    background-color: rgb(58, 58, 58);
+    background-color: rgb(66, 66, 66);
     align-items: center;
-    justify-content: center;
-    top: 30vh;
+    justify-content: space-around;
+    flex-direction: row;
+    margin: 20px;
+    bottom: 0;
+    right: -550px;
     width: 500px;
-    height: 300px;
+    height: fit-content;
+    transition: all 0.2s;
+}
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px rgb(97, 123, 148) inset !important;
+}
+
+.errPopupInfo {
+    display: flex;
+    flex-direction: column;
 }
 
 /* Footer */
