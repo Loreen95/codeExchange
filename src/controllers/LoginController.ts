@@ -40,16 +40,24 @@ export class LoginClass {
             this._errorMessage = "This user does not exist!";
             return undefined;
         }
-        else if (this.isEmail(givenUsernameOrEmail) && resultRecords.getEmail() !== givenUsernameOrEmail) {
-            this._errorMessage = "The email does not match our records!";
-            return undefined;
+        if (this.isEmail(givenUsernameOrEmail)) {
+            if (resultRecords.getEmail() !== givenUsernameOrEmail) {
+                this._errorMessage = "The email does not match our records!";
+                console.log("Email Check Failed:", resultRecords);
+                return undefined;
+            }
         }
-        else if (this.isEmail(givenUsernameOrEmail) && resultRecords.getUserName() !== givenUsernameOrEmail) {
-            this._errorMessage = "The email or username does not match our records!";
-            return undefined;
+        else {
+            if (resultRecords.getUserName() !== givenUsernameOrEmail) {
+                this._errorMessage = "The email or username does not match our records!";
+                console.log("Username Check:", resultRecords);
+                return undefined;
+            }
         }
-        else if (resultRecords.getPassword() !== givenPassword) {
+
+        if (resultRecords.getPassword() !== givenPassword) {
             this._errorMessage = "The password does not match our records!";
+            console.log("Wachtwoord Check:", resultRecords);
             return undefined;
         }
         return resultRecords; // retourneert het User object als alle checks kloppen
