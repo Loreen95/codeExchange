@@ -68,45 +68,57 @@ class RegistrationClass {
         const nameUserInput: HTMLInputElement = document.querySelector("#userName")!;
         const passwordUserInput: HTMLInputElement = document.querySelector(".passPhrase")!;
 
-        // This resets the info fields everytime this method is used
+        // This resets everything everytime this method is used.
         errorMessage.innerHTML = "";
         infoMessage.innerText = "";
         nameUserInput.style.border = "solid rgb(58, 58, 58)";
         emailAdressUserInput.style.border = "solid rgb(58, 58, 58)";
         passwordUserInput.style.border = "solid rgb(58, 58, 58)";
-        // Theese assess the received credentials. I trust the error messages themselves are self explanatory
+
+        // and this boolean gets set to false if any error occurs. If it remains true the user will be created
+        let allIsInOrder: boolean = true;
+
+        // this list of else if, assesses the received credentials. I trust the error messages themselves are self explanatory
         if (!userInputName) {
             errorMessage.innerText += "You must provide a name\n";
             nameUserInput.style.border = "solid rgb(168, 32, 32) 2px";
+            allIsInOrder = false;
         }
         else if (String(await userModel.doesUserExistForUsername(userInputName)) === "true") {
             errorMessage.innerText += "Provided Username is already in use\n";
             nameUserInput.style.border = "solid rgb(168, 32, 32) 2px";
+            allIsInOrder = false;
         }
         if (!userInputEmail) {
             errorMessage.innerText += "You must provide an email\n";
             emailAdressUserInput.style.border = "solid rgb(168, 32, 32) 2px";
+            allIsInOrder = false;
         }
         else if (!userInputEmail.match(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)) {
             errorMessage.innerText += "The email is invalid\n";
             emailAdressUserInput.style.border = "solid rgb(168, 32, 32) 2px";
+            allIsInOrder = false;
         }
         else if (await userModel.doesUserExistForEmail(userInputEmail)) {
             errorMessage.innerText += "This email is already being used\n";
             emailAdressUserInput.style.border = "solid rgb(168, 32, 32) 2px";
+            allIsInOrder = false;
         }
         if (!userInputPassword) {
             errorMessage.innerText += "You must provide a password\n";
             passwordUserInput.style.border = "solid rgb(168, 32, 32) 2px";
+            allIsInOrder = false;
         }
         // This here calls forth the password examination and displays appropreate errors and info when a failure occurs
         else if (!this.passChecker(userInputPassword)) {
             errorMessage.innerText += String(this._whyItIsNotGoodEnough);
             infoMessage.innerText += String(this._neededInformation);
             passwordUserInput.style.border = "solid rgb(168, 32, 32) 2px";
+            allIsInOrder = false;
         }
+
         // And finally when all is checked and double checked and no faults where found. The user will actually be created
-        else {
+        if (allIsInOrder) {
             errorMessage.innerHTML = "";
             infoMessage.innerText = "Success!";
             await userModel.create(userInputName, userInputEmail, userInputPassword);
