@@ -3,8 +3,8 @@
 // Collect seperate files and instanciate needed objects.
 import { User } from "../models/User";
 const userModel: User = new User(0, "", "", "");
-// import UserInterfaceClass from "../views/interface";
-// const UI: UserInterfaceClass = new UserInterfaceClass();
+import UserInterfaceClass from "../views/interface";
+const UI: UserInterfaceClass = new UserInterfaceClass();
 
 export class LoginClass {
     // Clear error message
@@ -77,15 +77,18 @@ export class LoginClass {
             if (!givenUsernameOrEmail) {
                 // errorMessage.innerText = "Je moet een e-mailadres opgeven";
                 errorMessage.innerText = "You must provide an email or username";
+                UI.unleashTheErrorPopup(true);
             }
             else if (!givenPassword) {
                 // errorMessage.innerText = "Je moet een wachtwoord opgeven";
                 errorMessage.innerText = "You must provide a password";
+                UI.unleashTheErrorPopup(true);
             }
             // This activates the check reccords function and logs the user in if it succseeds the checks
             else {
                 const user: User | undefined = await this.checkRecords(givenUsernameOrEmail, givenPassword);
                 if (user) {
+                    UI.unleashTheErrorPopup(false);
                     const userId: number | string = user.getId().toString();
                     sessionStorage.setItem("session", userId);
                     sessionStorage.setItem("lang", "en");
@@ -93,6 +96,7 @@ export class LoginClass {
                 }
                 else {
                     errorMessage.innerText = this._errorMessage;
+                    UI.unleashTheErrorPopup(true);
                 }
             }
         }

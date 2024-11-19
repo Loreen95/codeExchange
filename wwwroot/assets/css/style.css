@@ -131,7 +131,7 @@ body {
     color: rgb(241, 255, 240);
     padding: 12px;
     /* background-image: linear-gradient(to bottom right, rgb(0, 160, 209), rgb(0, 160, 209)); */
-    background-image: linear-gradient(to bottom right, #2fb29e, #29a18f);
+    background-image: linear-gradient(to bottom right, #1e1e1e, #000000);
     border-radius: 3px;
 }
 
@@ -193,7 +193,7 @@ body {
 }
 
 .defaultInputBox {
-    transition: all 0.4s;
+    transition: all 0.3s;
     display: flex;
     flex-direction: column;
     border-radius: 4px;
@@ -323,32 +323,37 @@ body {
     font-size: 25px;
     margin: 0;
     transition: all 0.4s;
+    text-align: left;
 }
 
 #infoMsg {
+    display: none;
     font-family: 'Courier New', monospace;
     text-align: center;
     font-size: 15px;
     color: rgb(153, 149, 149);
     margin: 0;
     padding: 10px;
+    text-align: left;
 }
 
 .errorPopup {
     border: solid rgb(207, 31, 25) 5px;
-    border-radius: 100px;
+    border-radius: 40px;
     display: flex;
     position: fixed;
     background-color: rgb(66, 66, 66);
-    align-items: center;
-    justify-content: space-around;
+    align-items: flex-start;
+    justify-content: space-between;
     flex-direction: row;
     margin: 20px;
     bottom: 0;
-    right: -550px;
+    right: -570px;
     width: 500px;
     height: fit-content;
-    transition: all 0.2s;
+    transition: all 0.3s;
+    padding: 15px;
+    z-index: 10000;
 }
 
 input:-webkit-autofill,
@@ -361,6 +366,23 @@ input:-webkit-autofill:active{
 .errPopupInfo {
     display: flex;
     flex-direction: column;
+
+    /* border-left: 2px solid red; */
+    padding-left: 20px;
+    /* background-color: #29a18f; */
+    align-self: center;
+    flex-grow: 1;
+}
+
+.errPopupIcon {
+    display: flex;
+    align-items: flex-start;
+    /* background-color: green; */
+}
+
+.errPopupIcon i {
+    font-size: 40px;
+    color: rgb(207, 31, 25);
 }
 
 /* Footer */

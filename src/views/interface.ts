@@ -28,7 +28,7 @@ class UserInterfaceClass {
         const errorPopupContainer: HTMLDivElement = document.querySelector(".errorPopup")!;
         if (shouldIActivate) {
             errorPopupContainer.style.right = "0";
-            errorPopupContainer.style.backgroundColor = "rgba(207, 31, 25, 0.174)";
+            errorPopupContainer.style.backgroundColor = "#391a19";
             // errorPopupContainer.style.opacity = "21%";
         }
         else {
@@ -41,7 +41,7 @@ class UserInterfaceClass {
     public shutterSlide(): void {
         const slideoutMenu: HTMLDivElement = document.querySelector(".foldopenMenu")!;
         if (this._opened) {
-            slideoutMenu.style.right = "-320px";
+            slideoutMenu.style.right = "-570px";
             this._opened = false;
         }
         else {
