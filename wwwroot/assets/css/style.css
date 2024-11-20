@@ -384,20 +384,10 @@ body {
     z-index: 10000;
 }
 
-input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus, 
-input:-webkit-autofill:active{
-    -webkit-box-shadow: 0 0 0 30px rgb(97, 123, 148) inset !important;
-}
-
 .errPopupInfo {
     display: flex;
     flex-direction: column;
-
-    /* border-left: 2px solid red; */
     padding-left: 20px;
-    /* background-color: #29a18f; */
     align-self: center;
     flex-grow: 1;
 }
@@ -411,6 +401,55 @@ input:-webkit-autofill:active{
 .errPopupIcon i {
     font-size: 40px;
     color: rgb(207, 31, 25);
+}
+
+.successPopup {
+    border: solid rgb(28, 207, 25) 5px;
+    border-radius: 40px;
+    display: flex;
+    position: fixed;
+    background-color: rgb(66, 66, 66);
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-direction: row;
+    margin: 20px;
+    bottom: 0;
+    right: -570px;
+    width: 500px;
+    height: fit-content;
+    transition: all 0.3s;
+    padding: 15px;
+    z-index: 10000;
+}
+
+.successIcon {
+    font-size: 40px;
+    color: rgb(28, 207, 25);
+}
+
+.successPopupInfo { 
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+    align-self: center;
+    flex-grow: 1;
+}
+
+#successMsg {
+    font-family: 'Trebuchet MS', sans-serif;
+    color: rgb(28, 207, 25);
+    text-align: center;
+    font-size: 25px;
+    margin: 0;
+    transition: all 0.4s;
+    text-align: left;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px rgb(97, 123, 148) inset !important;
 }
 
 /* Footer */

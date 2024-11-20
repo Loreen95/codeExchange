@@ -34,7 +34,18 @@ class UserInterfaceClass {
         else {
             errorPopupContainer.style.right = "-550PX";
         }
-    };
+    }
+
+    public successMessagePopup(activate: boolean): void {
+        const successPopupContainer: HTMLDivElement = document.querySelector(".successPopup")!;
+        if (activate) {
+            successPopupContainer.style.right = "0";
+            successPopupContainer.style.backgroundColor = "green";
+        }
+        else {
+            successPopupContainer.style.right = "-550PX";
+        }
+    }
 
     // this method opens the foldnav. And it can close it too
     private _opened: boolean = false;

@@ -71,8 +71,10 @@ export class LoginClass {
         try {
             // access error field on html and clear it
             const errorMessage: HTMLParagraphElement = document.querySelector("#errMsg")!;
-            errorMessage.innerHTML = "";
+            const successMessage: HTMLParagraphElement = document.querySelector("#successMsg")!;
 
+            errorMessage.innerHTML = "";
+            successMessage.innerHTML = "";
             // These errors should explain what every part does
             if (!givenUsernameOrEmail) {
                 // errorMessage.innerText = "Je moet een e-mailadres opgeven";
@@ -92,7 +94,9 @@ export class LoginClass {
                     const userId: number | string = user.getId().toString();
                     sessionStorage.setItem("session", userId);
                     sessionStorage.setItem("lang", "en");
-                    window.location.href = "http://localhost:3000/landingspagina.html";
+                    successMessage.innerText += "You have logged in";
+                    UI.successMessagePopup(true);
+                    // window.location.href = "http://localhost:3000/landingspagina.html";
                 }
                 else {
                     errorMessage.innerText = this._errorMessage;
