@@ -21,8 +21,6 @@ Aan het eind van project Code Exchange, hoop ik zowel mijn smart als reguliere d
 
 ## Team member 2
 
-
-
 ## Personal information
 Full name: Nice try officer.  
 Age: None of your damm buisness.
@@ -30,14 +28,8 @@ place of residence: At home.
 And I'm not saying a word untill my lawyer gets here.
 Previous education: MBO-4 Software Developer.
 
-
-
 ### Dokkie
-
 Aah yes.. I remember this project very fondly. Twas where I was introduced to some of the wonderful peers that made up my group. They made the beginning of this study a joy to experience. And alongside them I familiarized myself with the basics of typescript and tried to improve upon my CSS. 
 
-
-
 ### Code Exchange
-
 I have been excised from my former group much to my chagrin. But I hope to master the basics of OOP
