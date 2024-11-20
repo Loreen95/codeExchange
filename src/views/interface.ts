@@ -29,7 +29,6 @@ class UserInterfaceClass {
         if (shouldIActivate) {
             errorPopupContainer.style.right = "0";
             errorPopupContainer.style.backgroundColor = "#391a19";
-            // errorPopupContainer.style.opacity = "21%";
         }
         else {
             errorPopupContainer.style.right = "-550PX";
@@ -40,7 +39,7 @@ class UserInterfaceClass {
         const successPopupContainer: HTMLDivElement = document.querySelector(".successPopup")!;
         if (activate) {
             successPopupContainer.style.right = "0";
-            successPopupContainer.style.backgroundColor = "green";
+            successPopupContainer.style.backgroundColor = "#19391b";
         }
         else {
             successPopupContainer.style.right = "-550PX";

@@ -66,7 +66,7 @@ class RegistrationClass {
         // This gatheres the needed Html elements to display warnings and information about the provided credentials
         const errorMessage: HTMLParagraphElement = document.querySelector("#errMsg")!;
         const infoMessage: HTMLParagraphElement = document.querySelector("#infoMsg")!;
-        const successMessage: HTMLParagraphElement = document.querySelector("#successMsg");
+        const successMessage: HTMLParagraphElement = document.querySelector("#successMsg")!;
         // And this calls in the input fields so I can make them red later.
         const emailAdressUserInput: HTMLInputElement = document.querySelector("#emailInput")!;
         const nameUserInput: HTMLInputElement = document.querySelector("#userName")!;

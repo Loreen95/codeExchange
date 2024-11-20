@@ -395,7 +395,6 @@ body {
 .errPopupIcon {
     display: flex;
     align-items: flex-start;
-    /* background-color: green; */
 }
 
 .errPopupIcon i {
@@ -408,7 +407,7 @@ body {
     border-radius: 40px;
     display: flex;
     position: fixed;
-    background-color: rgb(66, 66, 66);
+    /* background-color: rgb(66, 66, 66); */
     align-items: flex-start;
     justify-content: space-between;
     flex-direction: row;
