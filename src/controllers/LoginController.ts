@@ -94,9 +94,11 @@ export class LoginClass {
                     const userId: number | string = user.getId().toString();
                     sessionStorage.setItem("session", userId);
                     sessionStorage.setItem("lang", "en");
-                    successMessage.innerText += "You have logged in";
+                    successMessage.innerText += "You have logged in, redirecting to homepage.";
                     UI.successMessagePopup(true);
-                    // window.location.href = "http://localhost:3000/landingspagina.html";
+                    setTimeout(() => {
+                        window.location.href = "http://localhost:3000/landingspagina.html";
+                    }, 1300);
                 }
                 else {
                     errorMessage.innerText = this._errorMessage;
