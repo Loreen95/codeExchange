@@ -76,12 +76,12 @@ export class LoginClass {
             // These errors should explain what every part does
             if (!givenUsernameOrEmail) {
                 // errorMessage.innerText = "Je moet een e-mailadres opgeven";
-                errorMessage.innerText = "You must provide an email or username";
+                errorMessage.innerText += "You must provide an email or username\n";
                 UI.unleashTheErrorPopup(true);
             }
-            else if (!givenPassword) {
+            if (!givenPassword) {
                 // errorMessage.innerText = "Je moet een wachtwoord opgeven";
-                errorMessage.innerText = "You must provide a password";
+                errorMessage.innerText += "You must provide a password\n";
                 UI.unleashTheErrorPopup(true);
             }
             // This activates the check reccords function and logs the user in if it succseeds the checks

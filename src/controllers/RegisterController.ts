@@ -19,7 +19,7 @@ class RegistrationClass {
         // This returns a failing grade if the password is too small and pitifull
         if (givenPassword.length < 7) {
             this._whyItIsNotGoodEnough = "your password is too short.";
-            this._neededInformation = "Note: Use at least 7 caracters";
+            this._neededInformation = "Note: Use at least 7 caracters.";
             return false;
         }
         // This returns a failing grade if the password is too large. (we don't have an infinite amount of storage).
@@ -84,32 +84,32 @@ class RegistrationClass {
 
         // this list of else if, assesses the received credentials. I trust the error messages themselves are self explanatory
         if (!userInputName) {
-            errorMessage.innerText += "You must provide a name\n";
+            errorMessage.innerText += "You must provide a name.\n";
             nameUserInput.style.border = "solid rgb(168, 32, 32) 3px";
             allIsInOrder = false;
         }
         else if (String(await userModel.doesUserExistForUsername(userInputName)) === "true") {
-            errorMessage.innerText += "Provided Username is already in use\n";
+            errorMessage.innerText += "Provided Username is already in use.\n";
             nameUserInput.style.border = "solid rgb(168, 32, 32) 3px";
             allIsInOrder = false;
         }
         if (!userInputEmail) {
-            errorMessage.innerText += "You must provide an email\n";
+            errorMessage.innerText += "You must provide an email.\n";
             emailAdressUserInput.style.border = "solid rgb(168, 32, 32) 3px";
             allIsInOrder = false;
         }
         else if (!userInputEmail.match(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)) {
-            errorMessage.innerText += "The email is invalid\n";
+            errorMessage.innerText += "The email is invalid.\n";
             emailAdressUserInput.style.border = "solid rgb(168, 32, 32) 3px";
             allIsInOrder = false;
         }
         else if (await userModel.doesUserExistForEmail(userInputEmail)) {
-            errorMessage.innerText += "This email is already being used\n";
+            errorMessage.innerText += "This email is already being used.\n";
             emailAdressUserInput.style.border = "solid rgb(168, 32, 32) 3px";
             allIsInOrder = false;
         }
         if (!userInputPassword) {
-            errorMessage.innerText += "You must provide a password\n";
+            errorMessage.innerText += "You must provide a password.\n";
             passwordUserInput.style.border = "solid rgb(168, 32, 32) 3px";
             allIsInOrder = false;
         }
