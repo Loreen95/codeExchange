@@ -96,5 +96,5 @@ class Post {
 }
 
 const postmodel: Post = new Post(0, 0, "", "", 0, "");
-const listOfPosts: Post = postmodel.getAllPosts();
+const listOfPosts: Promise<Post[] | undefined> = postmodel.getAllPosts();
 console.log(listOfPosts);
