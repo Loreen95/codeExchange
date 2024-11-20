@@ -66,6 +66,7 @@ class RegistrationClass {
         // This gatheres the needed Html elements to display warnings and information about the provided credentials
         const errorMessage: HTMLParagraphElement = document.querySelector("#errMsg")!;
         const infoMessage: HTMLParagraphElement = document.querySelector("#infoMsg")!;
+        const successMessage: HTMLParagraphElement = document.querySelector("#successMsg");
         // And this calls in the input fields so I can make them red later.
         const emailAdressUserInput: HTMLInputElement = document.querySelector("#emailInput")!;
         const nameUserInput: HTMLInputElement = document.querySelector("#userName")!;
@@ -127,10 +128,13 @@ class RegistrationClass {
             UI.unleashTheErrorPopup(false);
             errorMessage.innerHTML = "";
             infoMessage.innerText = "Success!";
+            successMessage.innerText = "";
             try {
                 // Gebruiker aanmaken
                 const createdUser: boolean = await userModel.create(userInputName, userInputEmail, userInputPassword);
                 console.log("Aangemaakte gebruiker:", createdUser);
+                successMessage.innerText += "Hoi";
+                UI.successMessagePopup(true);
                 // 5MS Wachten
                 await new Promise(resolve => setTimeout(resolve, 500));
                 // Check of de gebruiker succesvol kan inloggen
