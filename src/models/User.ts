@@ -7,15 +7,15 @@ import { userResult } from "../views/types";
  * user hebben alleen een ID (voor de database), username, email en wachtwoord nodig
  */
 export class User {
-    private _id: number;
+    private _userId: number;
     private _email: string;
     private _password: string;
     private _username: string;
 
     // 𝖂𝖎𝖙𝖓𝖊𝖘𝖘 𝖍𝖊𝖗𝖊 𝖙𝖍𝖊 𝖊𝖕𝖎𝖈𝖊𝖓𝖙𝖊𝖗 𝖔𝖋 𝖈𝖗𝖊𝖆𝖙𝖎𝖔𝖓, 𝖜𝖍𝖊𝖗𝖊 𝖓𝖊𝖜 𝖎𝖓𝖘𝖙𝖆𝖓𝖈𝖊𝖘 𝖔𝖋 𝖑𝖎𝖋𝖊 𝖆𝖗𝖊 𝖋𝖔𝖗𝖒𝖊𝖉 𝖋𝖗𝖔𝖒 𝖆𝖘𝖍 𝖆𝖓𝖉 𝖇𝖗𝖔𝖐𝖊𝖓 𝖇𝖆𝖈𝖐 𝖉𝖔𝖜𝖓 𝖎𝖓𝖙𝖔 𝖉𝖚𝖘𝖙.
     // Constructor
-    public constructor(id: number = 0, email: string, password: string, username: string) {
-        this._id = id;
+    public constructor(userId: number = 0, email: string, password: string, username: string) {
+        this._userId = userId;
         this._email = email;
         this._password = password;
         this._username = username;
@@ -71,13 +71,13 @@ export class User {
     // 𝕳𝖊𝖗𝖊 𝖎𝖙'𝖘 𝖉𝖎𝖛𝖎𝖓𝖊 𝖒𝖆𝖏𝖊𝖘𝖙𝖞 𝖋𝖎𝖓𝖉𝖘 𝖆𝖓𝖞 𝖇𝖊𝖎𝖓𝖌 𝖜𝖎𝖙𝖍 𝖙𝖍𝖊 𝖊𝖕𝖎𝖙𝖍𝖊𝖙 𝖇𝖊𝖘𝖙𝖔𝖜𝖊𝖉 𝖚𝖕𝖔𝖓 𝖊𝖆𝖈𝖍 𝖑𝖎𝖛𝖎𝖓𝖌 𝖙𝖍𝖎𝖓𝖌
     /**
      * This function will find a user based off their ID.
-     * @param id requires the ID to find a match in de database.
+     * @param userId requires the ID to find a match in de database.
      */
-    public async getUserById(id: number): Promise<User | undefined> {
+    public async getUserById(userId: number): Promise<User | undefined> {
         try {
-            const result: userResult[] = await api.queryDatabase("SELECT * from user WHERE id = ?", [id]) as userResult[];
+            const result: userResult[] = await api.queryDatabase("SELECT * from user WHERE id = ?", [userId]) as userResult[];
             if (result.length > 0) {
-                return new User(result[0].id, result[0].email, result[0].password, result[0].username);
+                return new User(result[0].userId, result[0].email, result[0].password, result[0].username);
             }
             else {
                 return undefined;
@@ -101,7 +101,7 @@ export class User {
             const result: userResult[] = await api.queryDatabase(
                 "SELECT * FROM user WHERE email = ? AND password = ?", email, password) as userResult[];
             if (result.length > 0) {
-                return new User(result[0].id, result[0].email, result[0].password, result[0].username);
+                return new User(result[0].userId, result[0].email, result[0].password, result[0].username);
             }
             else {
                 return undefined;
@@ -124,7 +124,7 @@ export class User {
             const result: userResult[] = await api.queryDatabase(
                 "SELECT * FROM user WHERE username = ? AND password = ?", username, password) as userResult[];
             if (result.length > 0) {
-                return new User(result[0].id, result[0].email, result[0].password, result[0].username);
+                return new User(result[0].userId, result[0].email, result[0].password, result[0].username);
             }
             else {
                 return undefined;
@@ -180,7 +180,7 @@ export class User {
     // 𝖄𝖔𝖚'𝖛𝖊 𝖗𝖊𝖆𝖈𝖍𝖊𝖉 𝖙𝖍𝖊 𝖑𝖎𝖒𝖎𝖙𝖘 𝖔𝖋 𝖙𝖍𝖊 𝖆𝖑𝖒𝖎𝖌𝖍𝖙𝖞 𝖔𝖓𝖊. 𝖇𝖊𝖞𝖔𝖓𝖉 𝖙𝖍𝖎𝖘 𝖕𝖔𝖎𝖓𝖙 𝖑𝖎𝖊𝖘 𝖙𝖍𝖊 𝖘𝖊𝖑𝖋 𝖊𝖝𝖕𝖑𝖆𝖓𝖆𝖙𝖔𝖗𝖞. 𝕻𝖗𝖆𝖞 𝖙𝖍𝖆𝖙 𝖙𝖍𝖊 𝖀𝖘𝖊𝖗 𝖒𝖔𝖉𝖊𝖑 𝖗𝖊𝖒𝖆𝖎𝖓𝖘 𝖒𝖊𝖗𝖈𝖎𝖋𝖚𝖑
     // Getters / Setters
     public getId(): number {
-        return this._id;
+        return this._userId;
     }
 
     public getEmail(): string {
