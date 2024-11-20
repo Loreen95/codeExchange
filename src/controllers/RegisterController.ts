@@ -133,10 +133,10 @@ class RegistrationClass {
                 // Gebruiker aanmaken
                 const createdUser: boolean = await userModel.create(userInputName, userInputEmail, userInputPassword);
                 console.log("Aangemaakte gebruiker:", createdUser);
-                successMessage.innerText += "Hoi";
+                successMessage.innerText += "Account creation was succesful. You will be logged in automatically.";
                 UI.successMessagePopup(true);
                 // 5MS Wachten
-                await new Promise(resolve => setTimeout(resolve, 500));
+                await new Promise(resolve => setTimeout(resolve, 1000));
                 // Check of de gebruiker succesvol kan inloggen
                 await login.onClickLogin(userInputEmail, userInputPassword);
             }
