@@ -2,7 +2,7 @@ import "../hicConfig";
 import { api } from "@hboictcloud/api";
 import { postResult } from "../views/types";
 
-class Post {
+export class Post {
     private _postId: number;
     private _authorId: number;
     private _title: string;
@@ -50,6 +50,21 @@ class Post {
         catch (reason) {
             console.error("An error occurred while searching for this post.", reason);
             return undefined;
+        }
+    }
+
+    public async create(authorId: number, title: string, content: string, rating: number, date: string): Promise<boolean> {
+        try {
+            const result: postResult[] = await api.queryDatabase(
+                "INSERT INTO post (authorID, title, content, rating, date) VALUES (?, ?, ?, ?, ?)", authorId, title, content, rating, date
+            ) as postResult[];
+
+            console.log("Success", result);
+            return true;
+        }
+        catch (reason) {
+            console.error("An error occurred while creating a new database entry.", reason);
+            return false;
         }
     }
 

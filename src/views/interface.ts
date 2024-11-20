@@ -31,7 +31,7 @@ class UserInterfaceClass {
             errorPopupContainer.style.backgroundColor = "#391a19";
         }
         else {
-            errorPopupContainer.style.right = "-550PX";
+            errorPopupContainer.style.right = "-570PX";
         }
     }
 
@@ -42,7 +42,7 @@ class UserInterfaceClass {
             successPopupContainer.style.backgroundColor = "#19391b";
         }
         else {
-            successPopupContainer.style.right = "-550PX";
+            successPopupContainer.style.right = "-570PX";
         }
     }
 
