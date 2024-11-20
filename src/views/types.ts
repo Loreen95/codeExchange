@@ -4,3 +4,12 @@ export type userResult = {
     email: string;
     password: string;
 };
+
+export type postResult = {
+    postId: number;
+    authorId: number;
+    title: string;
+    content: string;
+    rating: number;
+    date: string;
+};
