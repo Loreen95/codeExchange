@@ -98,6 +98,14 @@ export class LanguageClass {
                 en: "Already have an account?",
                 nl: "Heb je al een account?",
             },
+            company: {
+                en: "Company",
+                nl: "Bedrijf",
+            },
+            careers: {
+                en: "Careers",
+                nl: "Vacatures",
+            },
         });
     }
 
