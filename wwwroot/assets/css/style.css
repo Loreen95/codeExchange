@@ -321,27 +321,99 @@ body {
     flex-direction: column;
 }
 
+.textside {
+    display: flex;
+    flex-direction: column;
+    /* background-color: chocolate; */
+}
+
 .pageTitle {
     display: flex;
     justify-content: space-between;
-    background-color: rgb(183, 54, 54);
-    margin-top: 100px;
-    padding-left: 1%;
+    align-items: flex-end;
+    background-image: linear-gradient(to bottom right, #a22929, #711a1a);
+    padding: 100px 2% 20px 3%;
+    margin-bottom: 20px;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+.pageTitle h1 {
+    font-size: 60px;
+    margin: 0;
+    color: aliceblue;
+}
+
+.pageTitle p {
+    margin: 0;
+    color: #ffffff;
+    opacity: 52%;
+    margin-left: 12px;
+}
+
+.pageTitle button {
+    border: none;
+    background-image: linear-gradient(to bottom right, #171616, #0f121a);
+    color: aliceblue;
+    border-radius: 100px;
+    height: fit-content;
+    font-size: 20px;
+    padding: 15px;
+    cursor: pointer;
 }
 
 .posts {
     display: flex;
-    justify-content: flex-end;
-    background-color: #000000;
+    align-items: flex-end;
+    flex-direction: column;
+    /* background-color: #000000; */
     height: 800px;
 }
 
-.question {
-    background-color: #1e1e1e;
-    height: 200px;
+.questionContent {
+    display: flex;
+    flex-direction: column;
+    background-color: #080808;
     border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.question a {
+    margin: 0;
+}
+
+.question {
+    font-family: Tahoma, sans-serif;
+    padding: 0 15px 0;
+    height: fit-content;
     width: 80%;
-    margin: 20px 0 20px 0;
+    margin: 0 30px 0;
+}
+
+.questionContent  h1 {
+    margin: 0;
+    color: rgb(207, 62, 62);
+}
+
+.questionContent  p {
+    color: #e0dcdc;
+}
+
+.messageIcon {
+    text-align: end;
+    margin: 5PX 10PX 0;
+}
+
+#usersname {
+    color: #7a7a7a;
+    margin: 0 0 4px;
+    padding-left: 12px;
+}
+
+#datetime {
+    align-self: flex-end;
+    margin: 0;
+    color: #505050;
 }
 
 #errMsg {
@@ -559,7 +631,7 @@ input:-webkit-autofill:active{
         width: 75%;
     }
     .copyRightNonsense {
-        margin-bottom: 250px;
+        margin-bottom: 170px;
         align-self: center;
         width: 100%;
     }
@@ -590,6 +662,17 @@ input:-webkit-autofill:active{
 
     .question {
         border-radius: 0;
+        margin: 15px 0 0;
+        width: 100%;
+        padding: 0 10px 0;
+    }
+
+    .questionContent  h1 {
+       font-size: 15px;
+    }
+    
+    .questionContent  p {
+        font-size: 12px;
     }
 
     .logoImage h1 {
@@ -598,5 +681,41 @@ input:-webkit-autofill:active{
 
     .buttonRow {
         flex-direction: column;
+    }
+
+    .pageTitle {
+        flex-direction: column;
+        align-items: center;
+        padding: 100px 0 20px;
+    }
+
+    .textside {
+        align-self: flex-start;
+        margin-left: 10px;
+        margin-bottom: 10px;
+    }
+
+    .pageTitle button {
+        align-self: flex-end;
+        margin-right: 10px;
+    }
+
+    .pageTitle h1 {
+        font-size: 30px;
+    }
+
+    .barka {
+        rotate: 45deg;
+        left: -300px;
+        bottom: -75px;
+    }
+
+    .barka button {
+        bottom: 50px;
+        right: -20px;
+    }
+
+    .posts {
+        justify-content: center;
     }
 }

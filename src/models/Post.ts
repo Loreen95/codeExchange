@@ -2,7 +2,7 @@ import "../hicConfig";
 import { api } from "@hboictcloud/api";
 import { postResult } from "../views/types";
 
-class Post {
+export class Post {
     private _postId: number;
     private _authorId: number;
     private _title: string;
