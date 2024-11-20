@@ -19,13 +19,17 @@ Ik vond het een leuk en leerzaam project.
 ### Code Exchange
 Aan het eind van project Code Exchange, hoop ik zowel mijn smart als reguliere doelen te behalen.
 
-## Teamlid 2
+## Team member 2
 
-## Persoonlijke Informatie
-_Korte beschrijving over jezelf. Vind je het lastig over jezelf te vertellen, beantwoord dan bijvoorbeeld de vraag waarom je voor deze opleiding hebt gekozen._
+## Personal information
+Full name: Nice try officer.  
+Age: None of your damm buisness.
+place of residence: At home.
+And I'm not saying a word untill my lawyer gets here.
+Previous education: MBO-4 Software Developer.
 
 ### Dokkie
-_Reflecteer heel kort op hoe project Dokkie je afging. Wat heb je geleerd? Waar heb je nog moeite mee wat je mee wat je voor je gevoel wel zou moeten kunnen?_
+Aah yes.. I remember this project very fondly. Twas where I was introduced to some of the wonderful peers that made up my group. They made the beginning of this study a joy to experience. And alongside them I familiarized myself with the basics of typescript and tried to improve upon my CSS. 
 
 ### Code Exchange
-_Beschrijf wat je hoopt te kunnen zeggen over je ontwikkeling als programmeur aan het eind van dit project. Hoe wil je dat gaan bereiken? Wat is daarvoor nodig?_
+I have been excised from my former group much to my chagrin. But I hope to master the basics of OOP
