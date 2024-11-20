@@ -43,8 +43,8 @@ else {
 // This places the username wherever it should appear.
 const userNameOnPage: NodeListOf<HTMLElement> = document.querySelectorAll("#injectUsernameHere");
 for (let l: number = 0; l < userNameOnPage.length; l++) {
-    const usersName: string | undefined = (await userModel.getUserById(Number(sessionStorage.getItem("session"))))?.getUserName();
-    userNameOnPage[l].innerHTML = `${usersName}`;
+    const userName: string | undefined = (await userModel.getUserById(Number(sessionStorage.getItem("session"))))?.getUserName();
+    userNameOnPage[l].innerHTML = `${userName}`;
 }
 
 // this exists to allow the foldout menu to work.

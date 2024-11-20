@@ -75,7 +75,7 @@ export class User {
      */
     public async getUserById(userId: number): Promise<User | undefined> {
         try {
-            const result: userResult[] = await api.queryDatabase("SELECT * from user WHERE id = ?", [userId]) as userResult[];
+            const result: userResult[] = await api.queryDatabase("SELECT * from user WHERE userId = ?", [userId]) as userResult[];
             if (result.length > 0) {
                 return new User(result[0].userId, result[0].email, result[0].password, result[0].username);
             }
@@ -162,7 +162,7 @@ export class User {
     // 𝕳𝖊𝖗𝖊 𝖎𝖙'𝖘 𝖒𝖆𝖏𝖊𝖘𝖙𝖞, 𝖆𝖑𝖙𝖊𝖗𝖘 𝖆𝖓𝖉 𝖆𝖉𝖏𝖚𝖘𝖙𝖘 𝖎𝖙'𝖘 𝖈𝖗𝖊𝖆𝖙𝖎𝖔𝖓𝖘 𝖎𝖓 𝖎𝖙'𝖘 𝖉𝖎𝖛𝖎𝖓𝖊 𝖎𝖒𝖆𝖌𝖊.
     public async update(username: string, email: string, password: string, id: number): Promise<boolean> {
         try {
-            const result: userResult[] = await api.queryDatabase("UPDATE users SET username = ? email = ? password = ? WHERE id = ?", [username, email, password, id]) as userResult[];
+            const result: userResult[] = await api.queryDatabase("UPDATE users SET username = ? email = ? password = ? WHERE userId = ?", [username, email, password, id]) as userResult[];
             console.log("Succes", result);
             return true;
         }
