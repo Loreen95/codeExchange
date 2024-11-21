@@ -23,7 +23,7 @@ export class Post {
     // CRUD methods:
     public async getAllPosts(): Promise<Post[] | undefined> {
         try {
-            const result: postResult[] = await api.queryDatabase("Select * from post") as postResult[];
+            const result: postResult[] = await api.queryDatabase("Select * from post ORDER BY date DESC") as postResult[];
             if (result.length > 0) {
                 return result.map(post => new Post(post.postId, post.authorId, post.title, post.content, post.rating, post.date));
             }

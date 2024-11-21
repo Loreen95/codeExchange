@@ -3,4 +3,9 @@
 import { PostClass } from "../controllers/PostController";
 const post: PostClass = new PostClass();
 
-await post.renderPosts();
+const insertPostsHere: HTMLDivElement = document.querySelector(".posts")!;
+
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+if (insertPostsHere) {
+    await post.renderPosts();
+}

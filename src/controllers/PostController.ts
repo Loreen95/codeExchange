@@ -5,11 +5,11 @@ const userModel: User = new User(0, "", "", "");
 
 export class PostClass {
     public async renderPosts(): Promise<void> {
-        console.log("Hark 2!!!!");
         const postList: Post[] | undefined = await postModel.getAllPosts();
-
+        document.querySelector("#totalQquestionAmount")!.innerHTML = `(${postList?.length})`;
         if (postList) {
             const insertPostsHere: HTMLDivElement = document.querySelector(".posts")!;
+            let postIndex: number = 0;
             postList.forEach(async post => {
                 // console.log(`Post ID: ${post.getPostId()}, Author ID: ${post.getAuthorId()}, Title: ${post.getTitle()}, Content: ${post.getContent()}`);
                 let titleOfPost: string = "";
@@ -36,7 +36,7 @@ export class PostClass {
                 insertPostsHere.insertAdjacentHTML("beforeend", `
                     <div class="question">
                         <p id="usersname">${userName} asks:</p>
-                        <a id="">
+                        <a id="postNr${postIndex}">
                             <div class="questionContent">
                                 <h1>${titleOfPost}</h1>
                                 <p>${contentOfPost}</p>
@@ -51,6 +51,14 @@ export class PostClass {
                         </a>                        
                     </div>
                 `);
+
+                // This makes every edit icon into a button that gives the index of the selected entry to a function
+                insertPostsHere.querySelector(`#postNr${postIndex}`)!.addEventListener("click", () => {
+                    sessionStorage.setItem("post_Nr", String(post.getPostId()));
+                    window.location.href = "http://localhost:3000/post.html";
+                });
+
+                postIndex++;
 
                 console.log(`
                         helo 
