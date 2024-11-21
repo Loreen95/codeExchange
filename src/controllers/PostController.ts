@@ -16,7 +16,7 @@ export class PostClass {
                 let contentOfPost: string = "";
                 const userName: string | undefined = (await userModel.getUserById(Number(post.getAuthorId())))?.getUserName();
                 const stringedTimeAndDate: string = String(post.getDate()).slice(0, 10) + " | " + String(post.getDate()).slice(11, 19);
-                // when comments are implimented make this show amount of comments of post
+                // when comments are implimented update this
                 const amountOfComments: number = 0;
 
                 if (post.getTitle().length > 60) {

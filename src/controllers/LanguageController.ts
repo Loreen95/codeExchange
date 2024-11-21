@@ -138,6 +138,10 @@ export class LanguageClass {
                 en: "All rights reserved",
                 nl: "Alle rechten voorbehouden",
             },
+            wakingWorld: {
+                en: "Wake up",
+                nl: "word wakker",
+            },
         });
     }
 
