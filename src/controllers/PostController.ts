@@ -20,7 +20,7 @@ export class PostClass {
                 let contentOfPost: string = "";
                 const userName: string | undefined = (await userModel.getUserById(Number(post.getAuthorId())))?.getUserName();
                 const stringedTimeAndDate: string = String(post.getDate()).slice(0, 10) + " | " + String(post.getDate()).slice(11, 19);
-                const commentList: Comment[] | undefined = await commentModel.getCommentsByMessageId(post.getPostId());
+                const commentList: number | undefined = post.getPostId();
 
                 if (post.getTitle().length > 60) {
                     titleOfPost = post.getTitle().slice(0, 60).concat("...");
@@ -46,7 +46,7 @@ export class PostClass {
                                 <div class="bottrow">
                                     <div class="iconrow">
                                         <p class="messageIcon"><i class="fa-solid fa-thumbs-up"></i> ${post.getRating()}</p>
-                                        <p class="messageIcon"><i class="fa-sharp fa-solid fa-message"></i> ${commentList?.length}</p>
+                                        <p class="messageIcon"><i class="fa-sharp fa-solid fa-message"></i> ${commentList}</p>
                                     </div>
                                     <p id="datetime">${stringedTimeAndDate}</p>
                                 </div>                                
