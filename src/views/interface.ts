@@ -23,6 +23,22 @@ class UserInterfaceClass {
         }
     }
 
+    public adjustPageToOwnerStatus(isOwnerOfContent: boolean): void {
+        const ownerExclusive: NodeListOf<HTMLElement> = document.querySelectorAll("#isTheOwner");
+        const nonOwnerExclusive: NodeListOf<HTMLElement> = document.querySelectorAll("#notTheOwner");
+
+        if (isOwnerOfContent) {
+            for (let l: number = 0; l < ownerExclusive.length; l++) {
+                ownerExclusive[l].style.display = "flex";
+            }
+        }
+        else {
+            for (let l: number = 0; l < nonOwnerExclusive.length; l++) {
+                nonOwnerExclusive[l].style.display = "flex";
+            }
+        }
+    }
+
     public unleashTheErrorPopup(shouldIActivate: boolean): void {
         // This gatheres the needed Html elements to display warnings and information about the provided credentials
         const errorPopupContainer: HTMLDivElement = document.querySelector(".errorPopup")!;

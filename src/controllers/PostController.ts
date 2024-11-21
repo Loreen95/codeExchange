@@ -1,12 +1,16 @@
 import { Post } from "../models/Post";
 const postModel: Post = new Post(0, 0, "", "", 0, "");
+import { Comment } from "../models/Comment";
+const commentModel: Comment = new Comment(0, 0, 0, "", "", 0, "");
 import { User } from "../models/User";
 const userModel: User = new User(0, "", "", "");
 
 export class PostClass {
     public async renderPosts(): Promise<void> {
         const postList: Post[] | undefined = await postModel.getAllPosts();
-        document.querySelector("#totalQquestionAmount")!.innerHTML = `(${postList?.length})`;
+        if (document.querySelector("#totalQquestionAmount")) {
+            document.querySelector("#totalQquestionAmount")!.innerHTML = `(${postList?.length})`;
+        }
         if (postList) {
             const insertPostsHere: HTMLDivElement = document.querySelector(".posts")!;
             let postIndex: number = 0;
@@ -16,8 +20,7 @@ export class PostClass {
                 let contentOfPost: string = "";
                 const userName: string | undefined = (await userModel.getUserById(Number(post.getAuthorId())))?.getUserName();
                 const stringedTimeAndDate: string = String(post.getDate()).slice(0, 10) + " | " + String(post.getDate()).slice(11, 19);
-                // when comments are implimented update this
-                const amountOfComments: number = 0;
+                const commentList: Comment[] | undefined = await commentModel.getCommentsByMessageId(post.getPostId());
 
                 if (post.getTitle().length > 60) {
                     titleOfPost = post.getTitle().slice(0, 60).concat("...");
@@ -43,7 +46,7 @@ export class PostClass {
                                 <div class="bottrow">
                                     <div class="iconrow">
                                         <p class="messageIcon"><i class="fa-solid fa-thumbs-up"></i> ${post.getRating()}</p>
-                                        <p class="messageIcon"><i class="fa-sharp fa-solid fa-message"></i> ${amountOfComments}</p>
+                                        <p class="messageIcon"><i class="fa-sharp fa-solid fa-message"></i> ${commentList?.length}</p>
                                     </div>
                                     <p id="datetime">${stringedTimeAndDate}</p>
                                 </div>                                
@@ -67,6 +70,17 @@ export class PostClass {
         }
         else {
             console.log("something is wrong");
+        }
+    }
+
+    public async isLoggedInUserResponsibleForThisPost(usersId: number, vieuwingPostId: number): Promise<boolean> {
+        const currentpost: Post | undefined = await postModel.getPostById(vieuwingPostId);
+        console.log(currentpost!.getAuthorId());
+        if (usersId === currentpost!.getAuthorId()) {
+            return true;
+        }
+        else {
+            return false;
         }
     }
 }
