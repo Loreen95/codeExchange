@@ -1,6 +1,6 @@
-import { Post } from "../models/Post";
-const postModel: Post = new Post(0, 0, "", "", 0, "");
+// import { Post } from "../models/Post";
+// const postModel: Post = new Post(0, 0, "", "", 0, "");
+import { PostClass } from "../controllers/PostController";
+const post: PostClass = new PostClass();
 
-await postModel.getAllPosts();
-
-console.log("Hark Hark!");
+await post.renderPosts();

@@ -111,20 +111,20 @@ export class Post {
 }
 
 // Asynchrone functie
-async function logPosts(): Promise <void> {
-    const postmodel: Post = new Post(0, 0, "", "", 0, "");
-    const listOfPosts: Post[] | undefined = await postmodel.getAllPosts();
+// async function logPosts(): Promise <void> {
+//     const postmodel: Post = new Post(0, 0, "", "", 0, "");
+//     const listOfPosts: Post[] | undefined = await postmodel.getAllPosts();
 
-    // Controleer of de data is opgehaald
-    if (listOfPosts) {
-        listOfPosts.forEach(post => {
-            console.log(`Post ID: ${post.getPostId()}, Author ID: ${post.getAuthorId()}, Title: ${post.getTitle()}, Content: ${post.getContent()}`);
-        });
-    }
-    else {
-        console.log("Geen posts gevonden");
-    }
-}
+//     // Controleer of de data is opgehaald
+//     if (listOfPosts) {
+//         listOfPosts.forEach(post => {
+//             console.log(`Post ID: ${post.getPostId()}, Author ID: ${post.getAuthorId()}, Title: ${post.getTitle()}, Content: ${post.getContent()}`);
+//         });
+//     }
+//     else {
+//         console.log("Geen posts gevonden");
+//     }
+// }
 
 // Aanroepen van de functie
-await logPosts();
+// await logPosts();
