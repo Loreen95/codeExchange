@@ -106,6 +106,38 @@ export class LanguageClass {
                 en: "Careers",
                 nl: "Vacatures",
             },
+            contact: {
+                en: "Contact",
+                nl: "Contact",
+            },
+            press: {
+                en: "Press",
+                nl: "Pers",
+            },
+            support: {
+                en: "Costumer service",
+                nl: "Klantenservice",
+            },
+            products: {
+                en: "Products",
+                nl: "Producten",
+            },
+            about: {
+                en: "About",
+                nl: "Over",
+            },
+            faq: {
+                en: "Frequently asked questions",
+                nl: "Veel gestelde vragen",
+            },
+            copyright: {
+                en: "© 2027 - Burnout Alliance",
+                nl: "© 2027 - Burnout Alliance",
+            },
+            copyrighttext: {
+                en: "All rights reserved",
+                nl: "Alle rechten voorbehouden",
+            },
         });
     }
 
