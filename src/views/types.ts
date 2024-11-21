@@ -13,3 +13,13 @@ export type postResult = {
     rating: number;
     date: string;
 };
+
+export type commentResult = {
+    commentId: number;
+    userId: number;
+    messageId: number;
+    title: string;
+    content: string;
+    rating: number;
+    date: string;
+};

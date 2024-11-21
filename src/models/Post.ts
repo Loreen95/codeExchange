@@ -39,7 +39,7 @@ export class Post {
 
     public async getPostById(id: number): Promise<Post | undefined> {
         try {
-            const result: postResult[] = await api.queryDatabase("SELECT * from post WHERE postID = ?", [id]) as postResult[];
+            const result: postResult[] = await api.queryDatabase("SELECT * from post WHERE postId = ?", [id]) as postResult[];
             if (result.length > 0) {
                 return new Post(result[0].postId, result[0].authorId, result[0].title, result[0].content, result[0].rating, result[0].date);
             }
