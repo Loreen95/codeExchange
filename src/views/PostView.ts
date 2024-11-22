@@ -11,7 +11,13 @@ const currentpost: Post | undefined = await postModel.getPostById(Number(session
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 if (insertPostsHere) {
     await post.renderPosts();
-    console.log("trigger1");
+}
+
+const insertCommenthere: HTMLDivElement = document.querySelector(".awnsers")!;
+
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+if (insertCommenthere) {
+    await post.renderComments();
 }
 
 if (await post.isLoggedInUserResponsibleForThisPost(Number(sessionStorage.getItem("session")), Number(sessionStorage.getItem("post_Nr")))) {
@@ -22,7 +28,35 @@ else {
 }
 
 const insertQuestionNameHere: HTMLHeadElement = document.querySelector("#insertQuestionNameHere")!;
-insertQuestionNameHere.innerText = String(currentpost!.getTitle());
+const questionInfoBits: HTMLParagraphElement = document.querySelector(".questionstats")!;
+const ratingCounter: HTMLParagraphElement = document.querySelector(".insertRatingHere")!;
+const contentOfPost: HTMLDivElement = document.querySelector(".contentPart")!;
+const awnseramount: HTMLHeadElement = document.querySelector("#injectawnseramountHere")!;
+
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+if (insertQuestionNameHere) {
+    insertQuestionNameHere.innerText = String(currentpost!.getTitle());
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+if (questionInfoBits) {
+    questionInfoBits.innerText = `${await post.getUserName(currentpost!.getAuthorId())}  ${String(currentpost!.getDate()).slice(0, 10) + " | " + String(currentpost!.getDate()).slice(11, 19)}`;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+if (ratingCounter) {
+    ratingCounter.innerText = String(currentpost!.getRating());
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+if (contentOfPost) {
+    contentOfPost.innerHTML = post.encodeContentForVieuwingPurposes(currentpost!.getContent());
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+if (awnseramount) {
+    awnseramount.innerHTML = String(await post.getCommentAmount());
+}
 
 const titleUserInput: HTMLInputElement = document.querySelector("#titleInput")!;
 const contentInput: HTMLInputElement = document.querySelector("#contentInput")!;
@@ -35,6 +69,5 @@ if (createBtn) {
     });
 }
 
-const awnseramount: HTMLHeadElement = document.querySelector("#injectawnseramountHere")!;
-
-awnseramount.innerHTML = String(await post.getCommentAmount());
+// get this method to work
+// hljs.highlightAll();

@@ -9,6 +9,11 @@ const UI: UserInterfaceClass = new UserInterfaceClass();
 export class PostClass {
     // private _errorMessage: string = "";
 
+    public async getUserName(ID: number): Promise<string> {
+        const userName: string | undefined = (await userModel.getUserById(Number(ID)))?.getUserName();
+        return String(userName);
+    }
+
     public async getCommentAmount(): Promise<number | undefined> {
         const totalComments: number = (await commentModel.getCommentsByMessageId(Number(sessionStorage.getItem("post_Nr")))).length;
         return totalComments;
@@ -28,6 +33,10 @@ export class PostClass {
                 let contentOfPost: string = "";
                 const userName: string | undefined = (await userModel.getUserById(Number(post.getAuthorId())))?.getUserName();
                 const stringedTimeAndDate: string = String(post.getDate()).slice(0, 10) + " | " + String(post.getDate()).slice(11, 19);
+                let rating: number = 0;
+                if (post.getRating()) {
+                    rating = post.getRating();
+                }
 
                 // Verkort titel en content indien nodig
                 titleOfPost = post.getTitle().length > 60 ? post.getTitle().slice(0, 60).concat("...") : post.getTitle();
@@ -47,7 +56,7 @@ export class PostClass {
                                 <p>${contentOfPost}</p>
                                 <div class="bottrow">
                                     <div class="iconrow">
-                                        <p class="messageIcon"><i class="fa-solid fa-thumbs-up"></i> ${post.getRating()}</p>
+                                        <p class="messageIcon"><i class="fa-solid fa-thumbs-up"></i> ${rating}</p>
                                         <p class="messageIcon"><i class="fa-sharp fa-solid fa-message"></i> ${totalComments}</p>
                                     </div>
                                     <p id="datetime">${stringedTimeAndDate}</p>
@@ -69,6 +78,27 @@ export class PostClass {
         else {
             console.log("something is wrong");
         }
+    }
+
+    public async renderComments(): Promise<void> {
+        const insertCommenthere: HTMLDivElement = document.querySelector(".awnsers")!;
+        const commentList: Comment[] | undefined = await commentModel.getCommentsByMessageId(Number(sessionStorage.getItem("post_Nr")));
+
+        commentList.forEach(async _comment => {
+            insertCommenthere.insertAdjacentHTML("beforeend", `
+                    <h1 class="awnserTitle">${(await userModel.getUserById(Number(_comment.getUserId())))?.getUserName()}</h1>
+                <div class="indivAwnser">
+                    <div class="ratingPart">
+                        <i class="fa-solid fa-thumbs-up"></i>
+                        <p class="insertRatingHere">${_comment.getRating()}</p>
+                        <i class="fa-solid fa-thumbs-down"></i>
+                    </div>
+                    <div class="contentPart contentPartComment">${_comment.getContent()}</div>
+                </div>
+                <p class="bottomDate">${String(_comment.getDate()).slice(0, 10) + " | " + String(_comment.getDate()).slice(11, 19)}</p>
+                <hr>
+            `);
+        });
     }
 
     public async isLoggedInUserResponsibleForThisPost(usersId: number, viewingPostId: number): Promise<boolean> {
@@ -134,6 +164,14 @@ export class PostClass {
             errorMessage.innerHTML = "An unexpected error occurred.";
             UI.unleashTheErrorPopup(true);
         }
+    }
+
+    public encodeContentForVieuwingPurposes(content: string): string {
+        let content2: string = content;
+        content2 = content2.replaceAll("[code]", "<Pre>\n<code class=\"hljs language-bash\">");
+        content2 = content2.replaceAll("[/code]", "</code>\n</Pre>");
+        console.log(content2);
+        return content2.replaceAll("\n", "<br>");
     }
 }
 
