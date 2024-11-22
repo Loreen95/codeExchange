@@ -14,28 +14,22 @@ export class PostClass {
         if (postList) {
             const insertPostsHere: HTMLDivElement = document.querySelector(".posts")!;
             let postIndex: number = 0;
+
             postList.forEach(async post => {
-                // console.log(`Post ID: ${post.getPostId()}, Author ID: ${post.getAuthorId()}, Title: ${post.getTitle()}, Content: ${post.getContent()}`);
                 let titleOfPost: string = "";
                 let contentOfPost: string = "";
                 const userName: string | undefined = (await userModel.getUserById(Number(post.getAuthorId())))?.getUserName();
                 const stringedTimeAndDate: string = String(post.getDate()).slice(0, 10) + " | " + String(post.getDate()).slice(11, 19);
-                const commentList: number | undefined = post.getPostId();
 
-                if (post.getTitle().length > 60) {
-                    titleOfPost = post.getTitle().slice(0, 60).concat("...");
-                }
-                else {
-                    titleOfPost = post.getTitle();
-                }
+                // Verkort titel en content indien nodig
+                titleOfPost = post.getTitle().length > 60 ? post.getTitle().slice(0, 60).concat("...") : post.getTitle();
+                contentOfPost = post.getContent().length > 240 ? post.getContent().slice(0, 240).concat("...") : post.getContent();
 
-                if (post.getContent().length > 240) {
-                    contentOfPost = post.getContent().slice(0, 240).concat("...");
-                }
-                else {
-                    contentOfPost = post.getContent();
-                }
+                // Ophalen van het aantal comments voor deze post
+                const comments: Comment[] = await commentModel.getCommentsByMessageId(post.getPostId());
+                const totalComments: number = comments.length;
 
+                // HTML-injectie
                 insertPostsHere.insertAdjacentHTML("beforeend", `
                     <div class="question">
                         <p id="usersname">${userName} asks:</p>
@@ -46,7 +40,7 @@ export class PostClass {
                                 <div class="bottrow">
                                     <div class="iconrow">
                                         <p class="messageIcon"><i class="fa-solid fa-thumbs-up"></i> ${post.getRating()}</p>
-                                        <p class="messageIcon"><i class="fa-sharp fa-solid fa-message"></i> ${commentList}</p>
+                                        <p class="messageIcon"><i class="fa-sharp fa-solid fa-message"></i> ${totalComments}</p>
                                     </div>
                                     <p id="datetime">${stringedTimeAndDate}</p>
                                 </div>                                
@@ -55,17 +49,13 @@ export class PostClass {
                     </div>
                 `);
 
-                // This makes every edit icon into a button that gives the index of the selected entry to a function
+                // Klikfunctionaliteit toevoegen aan de post
                 insertPostsHere.querySelector(`#postNr${postIndex}`)!.addEventListener("click", () => {
                     sessionStorage.setItem("post_Nr", String(post.getPostId()));
                     window.location.href = "http://localhost:3000/post.html";
                 });
 
                 postIndex++;
-
-                console.log(`
-                        helo 
-                `);
             });
         }
         else {

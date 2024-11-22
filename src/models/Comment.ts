@@ -23,19 +23,27 @@ export class Comment {
     }
 
     // CRUD methods:
-    public async getCommentsByMessageId(id: number): Promise<Comment | undefined> {
+    public async getCommentsByMessageId(id: number): Promise<Comment[]> {
         try {
-            const result: commentResult[] = await api.queryDatabase("SELECT * from comment WHERE messageId = ?", [id]) as commentResult[];
+            const result: commentResult[] = await api.queryDatabase(
+                "SELECT * FROM comment WHERE messageId = ?",
+                [id]
+            ) as commentResult[];
+
+            // Controleer of er resultaten zijn
             if (result.length > 0) {
-                return new Comment(result[0].commentId, result[0].userId, result[0].messageId, result[0].title, result[0].content, result[0].rating, result[0].date);
+                // Map de resultaten naar een lijst van Comment-objecten
+                return result.map(row =>
+                    new Comment(row.commentId, row.userId, row.messageId, row.title, row.content, row.rating, row.date)
+                );
             }
-            else {
-                return undefined;
-            }
+
+            // Als er geen resultaten zijn, retourneer een lege array
+            return [];
         }
         catch (reason) {
-            console.error("An error occurred while searching for this comment.", reason);
-            return undefined;
+            console.error("An error occurred while searching for comments.", reason);
+            return [];
         }
     }
 
