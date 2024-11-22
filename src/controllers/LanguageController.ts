@@ -158,6 +158,10 @@ export class LanguageClass {
                 en: "Wake up",
                 nl: "word wakker",
             },
+            asks: {
+                en: "asks",
+                nl: "vraagt",
+            },
         });
     }
 
