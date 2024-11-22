@@ -23,7 +23,7 @@ export class Post {
     // CRUD methods:
     public async getAllPosts(): Promise<Post[] | undefined> {
         try {
-            const result: postResult[] = await api.queryDatabase("Select * from post") as postResult[];
+            const result: postResult[] = await api.queryDatabase("Select * from post ORDER BY date DESC") as postResult[];
             if (result.length > 0) {
                 return result.map(post => new Post(post.postId, post.authorId, post.title, post.content, post.rating, post.date));
             }
@@ -39,7 +39,7 @@ export class Post {
 
     public async getPostById(id: number): Promise<Post | undefined> {
         try {
-            const result: postResult[] = await api.queryDatabase("SELECT * from post WHERE postID = ?", [id]) as postResult[];
+            const result: postResult[] = await api.queryDatabase("SELECT * from post WHERE postId = ?", [id]) as postResult[];
             if (result.length > 0) {
                 return new Post(result[0].postId, result[0].authorId, result[0].title, result[0].content, result[0].rating, result[0].date);
             }
@@ -111,20 +111,20 @@ export class Post {
 }
 
 // Asynchrone functie
-async function logPosts(): Promise <void> {
-    const postmodel: Post = new Post(0, 0, "", "", 0, "");
-    const listOfPosts: Post[] | undefined = await postmodel.getAllPosts();
+// async function logPosts(): Promise <void> {
+//     const postmodel: Post = new Post(0, 0, "", "", 0, "");
+//     const listOfPosts: Post[] | undefined = await postmodel.getAllPosts();
 
-    // Controleer of de data is opgehaald
-    if (listOfPosts) {
-        listOfPosts.forEach(post => {
-            console.log(`Post ID: ${post.getPostId()}, Author ID: ${post.getAuthorId()}, Title: ${post.getTitle()}, Content: ${post.getContent()}`);
-        });
-    }
-    else {
-        console.log("Geen posts gevonden");
-    }
-}
+//     // Controleer of de data is opgehaald
+//     if (listOfPosts) {
+//         listOfPosts.forEach(post => {
+//             console.log(`Post ID: ${post.getPostId()}, Author ID: ${post.getAuthorId()}, Title: ${post.getTitle()}, Content: ${post.getContent()}`);
+//         });
+//     }
+//     else {
+//         console.log("Geen posts gevonden");
+//     }
+// }
 
 // Aanroepen van de functie
-await logPosts();
+// await logPosts();

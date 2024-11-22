@@ -154,6 +154,10 @@ export class LanguageClass {
                 en: "Content",
                 nl: "Bericht",
             },
+            wakingWorld: {
+                en: "Wake up",
+                nl: "word wakker",
+            },
         });
     }
 
