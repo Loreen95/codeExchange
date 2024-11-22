@@ -195,6 +195,16 @@ body {
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
+#icon { 
+    color: white;
+    text-decoration: none;
+}
+
+#icon:hover {
+    color: red;
+    transition: all 0.3s;
+}
+
 .defaultInputBox {
     transition: all 0.3s;
     display: flex;
@@ -248,6 +258,79 @@ body {
     align-self: center;
 }
 
+.defaultInputBox textarea {
+    font-family: 'Trebuchet MS', sans-serif;
+    margin-bottom: 7px;
+    letter-spacing: 0.05em;
+    width: 80%;
+    align-self: center;    
+    border: 3px solid rgb(58, 58, 58);
+    background-color: rgb(87, 94, 100);
+}
+
+.defaultMessageInputBox {
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    border-radius: 4px;
+    height: 600px;
+    border: solid rgb(168, 32, 32) 2px;
+    margin-top: 170px;
+    margin-bottom: 70px;
+    width: 50%;
+    padding: 20px;
+    background-image: linear-gradient(to bottom right, rgb(14, 14, 14), rgb(11, 21, 31));
+}
+
+.defaultMessageInputBox h1 {
+    font-family: Arial, sans-serif;
+    align-self: center;
+    font-size: 50px;
+    margin: 0;
+}
+
+::placeholder {
+    color: rgb(198, 252, 252);
+    opacity: 1; /* Firefox */
+  }
+
+.defaultMessageInputBox input {
+    border: 3px solid rgb(58, 58, 58);
+    background-color: rgb(87, 94, 100);
+    padding: 5px;
+    border-radius: 1px;
+    margin-bottom: 20px;
+    color: aliceblue;
+    font-size: 20px;
+    outline: none;
+    width: 79%;
+    align-self: center;
+    transition: all 0.3s;
+}
+
+.defaultMessageInputBox input:focus {
+    border: 3px solid rgb(210, 210, 210);
+    transition: all 0.2s;
+}
+
+.defaultMessageInputBox label {
+    font-family: 'Trebuchet MS', sans-serif;
+    margin-bottom: 7px;
+    letter-spacing: 0.05em;
+    width: 80%;
+    align-self: center;
+}
+
+.defaultMessageInputBox textarea {
+    font-family: 'Trebuchet MS', sans-serif;
+    margin-bottom: 7px;
+    letter-spacing: 0.05em;
+    width: 80%;
+    align-self: center;    
+    border: 3px solid rgb(58, 58, 58);
+    background-color: rgb(87, 94, 100);
+}
+
 .hideBttn {
     cursor: pointer;
     align-self: center;
@@ -293,12 +376,12 @@ body {
     cursor: pointer;
 }
 
-.registerNewUser, .loginUser {
+.registerNewUser, .loginUser, .createPost {
     background-image: linear-gradient(to bottom right, rgb(211, 40, 40), rgb(158, 39, 39));
     padding: 15px 40px 15px 40px;
 }
 
-.registerNewUser:hover, .loginUser:hover {
+.registerNewUser:hover, .loginUser:hover, .createPost:hover {
     background-image: linear-gradient(to bottom right, rgb(211, 40, 40), rgb(200, 22, 22));
     transition: ease 0.3s;
 }

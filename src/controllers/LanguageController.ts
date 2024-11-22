@@ -138,6 +138,22 @@ export class LanguageClass {
                 en: "All rights reserved",
                 nl: "Alle rechten voorbehouden",
             },
+            postmessage: {
+                en: "Create post",
+                nl: "Bericht maken",
+            },
+            title: {
+                en: "Title",
+                nl: "Titel",
+            },
+            createpost: {
+                en: "Create post",
+                nl: "Bericht aamaken",
+            },
+            content: {
+                en: "Content",
+                nl: "Bericht",
+            },
             wakingWorld: {
                 en: "Wake up",
                 nl: "word wakker",

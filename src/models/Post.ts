@@ -53,10 +53,10 @@ export class Post {
         }
     }
 
-    public async create(authorId: number, title: string, content: string, rating: number, date: string): Promise<boolean> {
+    public async create(authorId: number, title: string, content: string, date: string): Promise<boolean> {
         try {
             const result: postResult[] = await api.queryDatabase(
-                "INSERT INTO post (authorID, title, content, rating, date) VALUES (?, ?, ?, ?, ?)", authorId, title, content, rating, date
+                "INSERT INTO post (authorID, title, content, date) VALUES (?, ?, ?, ?, ?)", authorId, title, content, date
             ) as postResult[];
 
             console.log("Success", result);
