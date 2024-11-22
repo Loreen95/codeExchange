@@ -741,6 +741,92 @@ input:-webkit-autofill:active{
     padding: 0;
 }
 
+.questionsectionContainer {
+    display: flex;
+    /* background-color: #000000; */
+    height: fit-content;
+    width: 80%;
+    align-self: flex-start;
+    margin-left: 3%;
+}
+
+.contentPart {
+    /* background-color: brown; */
+    width: 100%;
+    padding: 15px 15px 15px;
+    font-family: Tahoma, sans-serif;
+    border: solid 5px rgba(62, 62, 62, 0.773); 
+    border-radius: 10px;
+}
+
+
+
+.contentPart p {
+    margin: 0;
+    letter-spacing: 0.07em;
+    padding-left: 0.5%;
+}
+
+pre {
+    margin: 0;
+    padding: 0;
+}
+
+code {
+    border-radius: 2px;
+}
+
+.ratingPart {
+    display: flex;
+    flex-direction: column;
+    /* background-color: rgb(21, 69, 53); */
+    align-items: center;
+    justify-content: flex-start;
+    width: fit-content;
+    padding: 20px 15px 15px;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 18px;
+}
+
+.ratingPart P {
+    font-size: 23px;
+}
+
+.awnsersHeader {
+    /* background-color: cadetblue; */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 72%;
+    align-self: left;
+    font-family: 'Trebuchet MS', sans-serif;
+    margin-left:9%;
+    margin-top: 10px;
+}
+
+.awnserRow {
+    display: flex;
+    gap: 15px;
+}
+
+.awnsersHeader h2 {
+    display: flex;
+
+    margin: 0;
+    font-size: 45px;
+}
+
+.awnsersHeader button {
+    border: none;
+    background-image: linear-gradient(to bottom right, rgb(181, 36, 36), rgb(125, 25, 25));
+    font-size: 18px;
+    padding: 15px;
+    height: fit-content;
+    border-radius: 5px;
+    color: aliceblue;
+}
+
 /* Responsive */
 @media (max-width: 630px) {
     .defaultInputBox {
@@ -801,7 +887,7 @@ input:-webkit-autofill:active{
 
     .pageTitle {
         flex-direction: column;
-        align-items: center;
+        align-items: flex-start;
         padding: 100px 0 20px;
     }
 
@@ -809,11 +895,20 @@ input:-webkit-autofill:active{
         align-self: flex-start;
         margin-left: 10px;
         margin-bottom: 10px;
+        text-align: left;
+    }
+
+    .pageTitle {
+        padding-bottom: 5px;
     }
 
     .pageTitle button {
-        align-self: flex-end;
-        margin-right: 10px;
+        align-self: flex-start;
+        margin: 0;
+       
+        height: fit-content;
+        font-size: 15px;
+        padding: 12px;
     }
 
     .pageTitle h1 {
@@ -834,4 +929,30 @@ input:-webkit-autofill:active{
     .posts {
         justify-content: center;
     }
+
+    .questionsectionContainer {
+        flex-direction: column-reverse;
+    }
+
+    .ratingPart {
+        flex-direction: row;
+        gap: 12px;
+        padding: 0;
+        margin: 5px 15px 5px;
+       
+        
+    }
+
+    .ratingPart p {
+        margin: 0;
+    }
+
+    /* .contentPart p {
+        text-align: center;
+    } */
+
+    #insertQuestionNameHere {
+        font-size: 20px;
+    }
+
 }

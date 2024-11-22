@@ -28,6 +28,13 @@ const titleUserInput: HTMLInputElement = document.querySelector("#titleInput")!;
 const contentInput: HTMLInputElement = document.querySelector("#contentInput")!;
 const createBtn: HTMLButtonElement = document.querySelector(".createPost")!;
 
-createBtn.addEventListener("click", async () => {
-    await post.onClickCreate(titleUserInput.value.trim(), contentInput.value.trim());
-});
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+if (createBtn) {
+    createBtn.addEventListener("click", async () => {
+        await post.onClickCreate(titleUserInput.value.trim(), contentInput.value.trim());
+    });
+}
+
+const awnseramount: HTMLHeadElement = document.querySelector("#injectawnseramountHere")!;
+
+awnseramount.innerHTML = String(await post.getCommentAmount());

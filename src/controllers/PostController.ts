@@ -8,6 +8,12 @@ import UserInterfaceClass from "../views/interface";
 const UI: UserInterfaceClass = new UserInterfaceClass();
 export class PostClass {
     // private _errorMessage: string = "";
+
+    public async getCommentAmount(): Promise<number | undefined> {
+        const totalComments: number = (await commentModel.getCommentsByMessageId(Number(sessionStorage.getItem("post_Nr")))).length;
+        return totalComments;
+    }
+
     public async renderPosts(): Promise<void> {
         const postList: Post[] | undefined = await postModel.getAllPosts();
         if (document.querySelector("#totalQquestionAmount")) {
