@@ -9,6 +9,7 @@ const passwordUserInput: HTMLInputElement = document.querySelector("#password")!
 
 // And this initiates the registration process,
 const registerBttn: HTMLButtonElement = document.querySelector(".registerNewUser")!;
+
 registerBttn.addEventListener("click", async () => {
     await Registration.onClickRegister(nameUserInput.value, emailAdressUserInput.value, passwordUserInput.value);
 });

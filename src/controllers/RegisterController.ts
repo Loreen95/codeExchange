@@ -143,7 +143,7 @@ class RegistrationClass {
             catch (reason) {
                 console.error("Fout tijdens registratie en inloggen:", reason);
                 console.log("Detail van de fout:", JSON.stringify(reason, null, 2));
-                errorMessage.innerHTML = "Er is een fout opgetreden. Probeer het opnieuw.";
+                errorMessage.innerHTML = "An error occurred. Please try again later.";
             }
         }
         else {

@@ -6,32 +6,41 @@ import { User } from "../models/User";
 const userModel: User = new User(0, "", "", "");
 import UserInterfaceClass from "../views/interface";
 const UI: UserInterfaceClass = new UserInterfaceClass();
+
 export class PostClass {
     // private _errorMessage: string = "";
     public async renderPosts(): Promise<void> {
         const postList: Post[] | undefined = await postModel.getAllPosts();
-        if (document.querySelector("#totalQquestionAmount")) {
-            document.querySelector("#totalQquestionAmount")!.innerHTML = `(${postList?.length})`;
+        const totalQquestionAmount: Element | null = document.querySelector("#totalQquestionAmount");
+
+        if (totalQquestionAmount) {
+            totalQquestionAmount.innerHTML = `(${postList?.length})`;
         }
+
         if (postList) {
-            const insertPostsHere: HTMLDivElement = document.querySelector(".posts")!;
+            const insertPostsHere: HTMLDivElement | null = document.querySelector(".posts");
+            if (!insertPostsHere) {
+                console.error("Element .posts not found");
+                return;
+            }
+
+            insertPostsHere.innerHTML = ""; // Maak de lijst leeg voordat we nieuwe posts renderen
+
             let postIndex: number = 0;
 
-            postList.forEach(async post => {
+            // Render alle posts
+            for (const post of postList) {
                 let titleOfPost: string = "";
                 let contentOfPost: string = "";
                 const userName: string | undefined = (await userModel.getUserById(Number(post.getAuthorId())))?.getUserName();
                 const stringedTimeAndDate: string = String(post.getDate()).slice(0, 10) + " | " + String(post.getDate()).slice(11, 19);
 
-                // Verkort titel en content indien nodig
                 titleOfPost = post.getTitle().length > 60 ? post.getTitle().slice(0, 60).concat("...") : post.getTitle();
                 contentOfPost = post.getContent().length > 240 ? post.getContent().slice(0, 240).concat("...") : post.getContent();
 
-                // Ophalen van het aantal comments voor deze post
                 const comments: Comment[] = await commentModel.getCommentsByMessageId(post.getPostId());
                 const totalComments: number = comments.length;
 
-                // HTML-injectie
                 insertPostsHere.insertAdjacentHTML("beforeend", `
                     <div class="question">
                         <p id="usersname">${userName} asks:</p>
@@ -51,17 +60,22 @@ export class PostClass {
                     </div>
                 `);
 
-                // Klikfunctionaliteit toevoegen aan de post
-                insertPostsHere.querySelector(`#postNr${postIndex}`)!.addEventListener("click", () => {
-                    sessionStorage.setItem("post_Nr", String(post.getPostId()));
-                    window.location.href = "http://localhost:3000/post.html";
-                });
+                const postElement: Element | null = insertPostsHere.querySelector(`#postNr${postIndex}`);
+                if (postElement) {
+                    postElement.addEventListener("click", () => {
+                        sessionStorage.setItem("post_Nr", String(post.getPostId()));
+                        window.location.href = "http://localhost:3000/post.html";
+                    });
+                }
+                else {
+                    console.error(`Element #postNr${postIndex} not found`);
+                }
 
                 postIndex++;
-            });
+            }
         }
         else {
-            console.log("something is wrong");
+            console.log("Something is wrong, postList is undefined");
         }
     }
 
@@ -77,60 +91,77 @@ export class PostClass {
     }
 
     public async onClickCreate(title: string, content: string): Promise<void> {
-        const errorMessage: HTMLParagraphElement = document.querySelector("#errMsg")!;
-        const successMessage: HTMLParagraphElement = document.querySelector("#successMsg")!;
-
-        // Clear any existing messages
-        errorMessage.innerHTML = "";
-        successMessage.innerHTML = "";
-
         try {
-            // Validate title and content
-            if (!title || !content) {
-                errorMessage.innerHTML = "You must add a title and message!";
-                UI.unleashTheErrorPopup(true);
+            const errorMessage: HTMLParagraphElement | null = document.querySelector("#errMsg");
+            const successMessage: HTMLParagraphElement | null = document.querySelector("#successMsg");
+
+            if (!errorMessage || !successMessage) {
+                console.error("Error and success message elements not found.");
                 return;
             }
 
+            // Clear any existing messages
+            errorMessage.innerHTML = "";
+            successMessage.innerHTML = "";
+
+            // Validate title and content
+            if (!title || !content) {
+                errorMessage.innerHTML += "You must add a title and message!";
+                UI.unleashTheErrorPopup(true); // Assuming UI.unleashTheErrorPopup handles visibility
+                return; // Stop execution if validation fails
+            }
+
             // Validate session
-            const userId: string | null = sessionStorage.getItem("Session");
+            const userId: string | null = sessionStorage.getItem("session");
             if (!userId) {
-                errorMessage.innerHTML = "You must be logged in!";
+                errorMessage.innerHTML += "You must be logged in!";
                 UI.unleashTheErrorPopup(true);
-                return;
+                return; // Stop execution if user is not logged in
             }
 
             // Fetch user
             const user: User | undefined = await userModel.getUserById(Number(userId));
             if (!user) {
-                errorMessage.innerHTML = "User not found!";
+                errorMessage.innerHTML += "User not found!";
                 UI.unleashTheErrorPopup(true);
-                return;
+                return; // Stop execution if user is not found
             }
 
-            // Log user details
+            // Log user details (for debugging)
             console.log(`Author ID: ${userId}`);
             console.log(`Author Name: ${user.getUserName()}`);
 
+            // Get the current date and format it
+            const date: Date = new Date();
+            const formattedDate: string = date.toISOString().slice(0, 19).replace("T", " ");
+
             // Create the post
-            const success: boolean = await postModel.create(Number(userId), title, content, new Date().toISOString());
-            if (success) {
+            const isPostCreated: boolean = await postModel.create(Number(userId), title, content, formattedDate);
+
+            if (isPostCreated) {
+                // Post creation was successful
                 successMessage.innerHTML = "Post created successfully!";
-                UI.unleashTheErrorPopup(false);
+                UI.unleashTheErrorPopup(false); // Hide error popup if successful
+                await this.renderPosts(); // Render posts after creation
             }
             else {
-                errorMessage.innerHTML = "Failed to create the post!";
+                // Post creation failed
+                errorMessage.innerHTML += "Failed to create the post!";
                 UI.unleashTheErrorPopup(true);
             }
         }
         catch (reason) {
             console.error("Error creating post!", reason);
-            errorMessage.innerHTML = "An unexpected error occurred.";
-            UI.unleashTheErrorPopup(true);
+
+            // Show error message in case of an exception
+            const errorMessage: HTMLParagraphElement | null = document.querySelector("#errMsg");
+            if (errorMessage) {
+                errorMessage.innerHTML = "An error occurred while creating the post.";
+                UI.unleashTheErrorPopup(true);
+            }
         }
     }
 }
-
 // async function logPosts(): Promise <void> {
 //     const postmodel: Post = new Post(0, 0, "", "", 0, "");
 //     const listOfPosts: Post[] | undefined = await postmodel.getAllPosts();
