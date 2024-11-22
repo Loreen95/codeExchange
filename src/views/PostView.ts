@@ -5,14 +5,6 @@ const post: PostClass = new PostClass();
 import UserInterfaceClass from "./interface";
 const UI: UserInterfaceClass = new UserInterfaceClass();
 
-const titleUserInput: HTMLInputElement = document.querySelector("#titleInput")!;
-const contentInput: HTMLInputElement = document.querySelector("#contentInput")!;
-
-const createBtn: HTMLButtonElement = document.querySelector(".createPost")!;
-createBtn.addEventListener("click", async () => {
-    await post.onClickCreate(titleUserInput.value, contentInput.value);
-});
-
 const insertPostsHere: HTMLDivElement = document.querySelector(".posts")!;
 const currentpost: Post | undefined = await postModel.getPostById(Number(sessionStorage.getItem("post_Nr")));
 
@@ -31,3 +23,11 @@ else {
 
 const insertQuestionNameHere: HTMLHeadElement = document.querySelector("#insertQuestionNameHere")!;
 insertQuestionNameHere.innerText = String(currentpost!.getTitle());
+
+const titleUserInput: HTMLInputElement = document.querySelector("#titleInput")!;
+const contentInput: HTMLInputElement = document.querySelector("#contentInput")!;
+const createBtn: HTMLButtonElement = document.querySelector(".createPost")!;
+
+createBtn.addEventListener("click", async () => {
+    await post.onClickCreate(titleUserInput.value.trim(), contentInput.value.trim());
+});

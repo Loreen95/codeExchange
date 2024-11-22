@@ -80,31 +80,53 @@ export class PostClass {
         const errorMessage: HTMLParagraphElement = document.querySelector("#errMsg")!;
         const successMessage: HTMLParagraphElement = document.querySelector("#successMsg")!;
 
+        // Clear any existing messages
         errorMessage.innerHTML = "";
         successMessage.innerHTML = "";
+
         try {
+            // Validate title and content
             if (!title || !content) {
-                errorMessage.innerHTML += "You must add a title and message!\n";
+                errorMessage.innerHTML = "You must add a title and message!";
                 UI.unleashTheErrorPopup(true);
-                const userId: string | null = sessionStorage.getItem("Session");
-                if (!userId) {
-                    errorMessage.innerHTML += "You must be logged in!\n";
-                    UI.unleashTheErrorPopup(true);
-                    // Optioneel: Haal meer gegevens van de gebruiker op
-                    const user: User | undefined = await userModel.getUserById(Number(userId));
-                    if (user) {
-                        console.log(`Author ID: ${userId}`);
-                        console.log(`Author Name: ${user.getUserName()}`);
-                    }
-                    else {
-                        errorMessage.innerHTML += "User not found!";
-                        UI.unleashTheErrorPopup(true);
-                    }
-                }
+                return;
+            }
+
+            // Validate session
+            const userId: string | null = sessionStorage.getItem("Session");
+            if (!userId) {
+                errorMessage.innerHTML = "You must be logged in!";
+                UI.unleashTheErrorPopup(true);
+                return;
+            }
+
+            // Fetch user
+            const user: User | undefined = await userModel.getUserById(Number(userId));
+            if (!user) {
+                errorMessage.innerHTML = "User not found!";
+                UI.unleashTheErrorPopup(true);
+                return;
+            }
+
+            // Log user details
+            console.log(`Author ID: ${userId}`);
+            console.log(`Author Name: ${user.getUserName()}`);
+
+            // Create the post
+            const success: boolean = await postModel.create(Number(userId), title, content, new Date().toISOString());
+            if (success) {
+                successMessage.innerHTML = "Post created successfully!";
+                UI.unleashTheErrorPopup(false);
+            }
+            else {
+                errorMessage.innerHTML = "Failed to create the post!";
+                UI.unleashTheErrorPopup(true);
             }
         }
         catch (reason) {
-        console.error("Error creating post!", reason);
+            console.error("Error creating post!", reason);
+            errorMessage.innerHTML = "An unexpected error occurred.";
+            UI.unleashTheErrorPopup(true);
         }
     }
 }
