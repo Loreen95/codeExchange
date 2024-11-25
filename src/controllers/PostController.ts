@@ -184,7 +184,8 @@ export class PostClass {
             if (isPostCreated) {
                 // Post creation was successful
                 successMessage.innerHTML = "Post created successfully!";
-                UI.unleashTheErrorPopup(false); // Hide error popup if successful
+                UI.unleashTheErrorPopup(false);
+                UI.successMessagePopup(true);
                 await this.renderPosts(); // Render posts after creation
             }
             else {
