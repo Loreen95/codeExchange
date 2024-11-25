@@ -5,6 +5,7 @@ const commentModel: Comment = new Comment(0, 0, 0, "", "", 0, "");
 import { User } from "../models/User";
 const userModel: User = new User(0, "", "", "");
 import UserInterfaceClass from "../views/interface";
+import hljs from "highlight.js";
 const UI: UserInterfaceClass = new UserInterfaceClass();
 
 export class PostClass {
@@ -51,7 +52,13 @@ export class PostClass {
                 }
 
                 titleOfPost = post.getTitle().length > 60 ? post.getTitle().slice(0, 60).concat("...") : post.getTitle();
-                contentOfPost = post.getContent().length > 240 ? post.getContent().slice(0, 240).concat("...") : post.getContent();
+                if (post.getContent().includes("[code]")) {
+                    const cutoffValue: number = post.getContent().indexOf("[code]");
+                    contentOfPost = post.getContent().slice(0, cutoffValue);
+                }
+                else {
+                    contentOfPost = post.getContent().length > 240 ? post.getContent().slice(0, 240).concat("...") : post.getContent();
+                }
 
                 const comments: Comment[] = await commentModel.getCommentsByMessageId(post.getPostId());
                 const totalComments: number = comments.length;
@@ -107,7 +114,7 @@ export class PostClass {
                         <p class="insertRatingHere">${_comment.getRating()}</p>
                         <i class="fa-solid fa-thumbs-down"></i>
                     </div>
-                    <div class="contentPart contentPartComment">${_comment.getContent()}</div>
+                    <div class="contentPart contentPartComment">${this.encodeContentForVieuwingPurposes(_comment.getContent())}</div>
                 </div>
                 <p class="bottomDate">${String(_comment.getDate()).slice(0, 10) + " | " + String(_comment.getDate()).slice(11, 19)}</p>
                 <hr>
@@ -198,12 +205,23 @@ export class PostClass {
         }
     }
 
+    // public encodeContentForVieuwingPurposes(content: string): string {
+    //     let content2: string = content;
+    //     content2 = content2.replaceAll("[code]", "<Pre>\n<code>");
+    //     content2 = content2.replaceAll("[/code]", "</code>\n</Pre>");
+    //     console.log(content2);
+    //     return content2.replaceAll("\n", "<br>");
+    // }
+
     public encodeContentForVieuwingPurposes(content: string): string {
-        let content2: string = content;
-        content2 = content2.replaceAll("[code]", "<Pre>\n<code class=\"hljs language-bash\">");
-        content2 = content2.replaceAll("[/code]", "</code>\n</Pre>");
-        console.log(content2);
-        return content2.replaceAll("\n", "<br>");
+        if (content.includes("[code]")) {
+            content = content.replaceAll(/\[code\]((?:.|\s)*?)\[\/code\]/g, codeBlock => {
+                codeBlock = codeBlock.replaceAll("[code]", "");
+                codeBlock = codeBlock.replaceAll("[/code]", "");
+                return "<Pre>\n<code>" + hljs.highlightAuto(codeBlock).value + "</code>\n</Pre>";
+            });
+        }
+        return content.replaceAll("\n", "<br>");
     }
 }
 // async function logPosts(): Promise <void> {

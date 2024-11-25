@@ -4,12 +4,14 @@ import { PostClass } from "../controllers/PostController";
 const post: PostClass = new PostClass();
 import UserInterfaceClass from "./interface";
 const UI: UserInterfaceClass = new UserInterfaceClass();
+import hljs from "highlight.js";
 
 const insertPostsHere: HTMLDivElement = document.querySelector(".posts")!;
 const currentpost: Post | undefined = await postModel.getPostById(Number(sessionStorage.getItem("post_Nr")));
 
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 if (insertPostsHere) {
+    console.log("trigger1");
     await post.renderPosts();
 }
 
@@ -71,5 +73,4 @@ if (createBtn) {
     });
 }
 
-// get this method to work
-// hljs.highlightAll();
+hljs.highlightAll();

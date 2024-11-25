@@ -817,8 +817,8 @@ code {
     width: 72%;
     align-self: left;
     font-family: 'Trebuchet MS', sans-serif;
-    margin-left:9%;
-    margin-top: 10px;
+    margin-left:6.5%;
+    margin-top: 30px;
     margin-bottom: 20px;
 }
 
@@ -852,13 +852,17 @@ code {
 
 .awnsers hr {
     width: 92%;
-    margin-left: 6.9%;
+    margin-left: 6%;
+}
+
+code {
+    padding: 0;
 }
 
 .bottomDate {
     font-family: Tahoma, sans-serif;
     margin: 0;
-    margin-left: 7%;
+    margin-left: 5.9%;
     color: #505050;
 }
 
