@@ -32,7 +32,6 @@ export class PostClass {
         if (postList) {
             const insertPostsHere: HTMLDivElement | null = document.querySelector(".posts");
             if (!insertPostsHere) {
-                console.error("Element .posts not found");
                 return;
             }
 
@@ -109,14 +108,16 @@ export class PostClass {
             insertCommenthere.insertAdjacentHTML("beforeend", `
                     <h1 class="awnserTitle">${(await userModel.getUserById(Number(_comment.getUserId())))?.getUserName()}</h1>
                 <div class="indivAwnser">
+                    <div class="contentPart contentPartComment">${this.encodeContentForVieuwingPurposes(_comment.getContent())}</div>
+                </div>
+                <div class="dateAndRating">
+                    <p class="bottomDate">${String(_comment.getDate()).slice(0, 10) + " | " + String(_comment.getDate()).slice(11, 19)}</p>
                     <div class="ratingPart">
                         <i class="fa-solid fa-thumbs-up"></i>
                         <p class="insertRatingHere">${_comment.getRating()}</p>
                         <i class="fa-solid fa-thumbs-down"></i>
                     </div>
-                    <div class="contentPart contentPartComment">${this.encodeContentForVieuwingPurposes(_comment.getContent())}</div>
-                </div>
-                <p class="bottomDate">${String(_comment.getDate()).slice(0, 10) + " | " + String(_comment.getDate()).slice(11, 19)}</p>
+                </div>                
                 <hr>
             `);
         });

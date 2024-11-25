@@ -451,7 +451,7 @@ body {
     color: aliceblue;
 }
 
-.pageTitle p {
+.questionstats {
     margin: 0;
     color: #ffffff;
     opacity: 52%;
@@ -746,8 +746,8 @@ input:-webkit-autofill:active{
     /* background-color: #000000; */
     height: fit-content;
     width: 80%;
-    align-self: flex-start;
-    margin-left: 3%;
+    align-self: flex-end;
+    margin-right: 3%;
 }
 
 .contentPart {
@@ -761,11 +761,12 @@ input:-webkit-autofill:active{
 
 .contentPartComment {
     border: none;
-    padding-left: 25px;
+    padding-left: 6%;
 }
 
 .awnsers {
-    margin-left: 3%;
+    align-self: flex-end;
+    margin-right: 3%;
     width: 80%;
 }
 
@@ -774,7 +775,7 @@ input:-webkit-autofill:active{
     font-size: 35px;
     font-family: Arial, sans-serif;
     margin-bottom: 0;
-    margin-left: 6.5%;
+    margin-left: 6%;
 }
 
 .contentPart p {
@@ -792,20 +793,50 @@ code {
     border-radius: 2px;
 }
 
-.ratingPart {
+.ratingPartMain {
+    font-family: 'Trebuchet MS', sans-serif;
     display: flex;
     flex-direction: column;
+    padding: 20px;
+    font-size: 20px;
+}
+
+.noAwnsersFound {
+    display: flex;
+    width: 74%;
+    align-self: flex-end;
+    margin-right: 4.5%;
+    justify-content: space-between;
+    font-family: 'Trebuchet MS', sans-serif;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.ratingPart {
+    display: flex;
+    flex-direction: row;
     /* background-color: rgb(21, 69, 53); */
     align-items: center;
     justify-content: flex-start;
     width: fit-content;
-    padding: 20px 15px 15px;
+    padding: 0;
     font-family: 'Trebuchet MS', sans-serif;
     font-size: 18px;
+    gap: 10px;
+}
+
+.dateAndRating {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 92%;
+    margin: 0;
+    margin-left: 6%;
 }
 
 .ratingPart P {
     font-size: 23px;
+    margin: 0;
 }
 
 .awnsersHeader {
@@ -814,10 +845,10 @@ code {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 72%;
-    align-self: left;
+    width: 76%;
+    align-self: flex-end;
     font-family: 'Trebuchet MS', sans-serif;
-    margin-left:6.5%;
+    margin-right: 3%;
     margin-top: 30px;
     margin-bottom: 20px;
 }
@@ -835,12 +866,11 @@ code {
 
 .awnsersHeader h2 {
     display: flex;
-
     margin: 0;
     font-size: 45px;
 }
 
-.awnsersHeader button {
+.basicButton {
     border: none;
     background-image: linear-gradient(to bottom right, rgb(181, 36, 36), rgb(125, 25, 25));
     font-size: 18px;
@@ -862,7 +892,6 @@ code {
 .bottomDate {
     font-family: Tahoma, sans-serif;
     margin: 0;
-    margin-left: 5.9%;
     color: #505050;
 }
 
@@ -971,6 +1000,8 @@ code {
 
     .questionsectionContainer {
         flex-direction: column-reverse;
+        align-self: flex-start;
+        margin-left: 3%;
     }
 
     .contentPartComment {
@@ -981,7 +1012,28 @@ code {
         flex-direction: row;
         gap: 12px;
         padding: 0;
-        margin: 5px 20px 5px;
+        margin: 5px 5px 0;
+    }
+
+    .ratingPartMain {
+        justify-content: flex-start;
+        flex-direction: row;
+        gap: 10px;
+    }
+    .ratingPartMain p {
+        margin: 0;
+    }
+
+    .noAwnsersFound {
+        flex-direction: column;
+        align-items: flex-start;
+        align-self: flex-start;
+        margin-left: 4.5%;
+    }
+
+    .awnsers {
+            align-self: flex-start;
+            margin-left: 3%;
     }
 
     .awnserTitle {
@@ -995,6 +1047,8 @@ code {
     .awnsersHeader {
         flex-direction: column;
         align-items: flex-start;
+        align-self: flex-start;
+        margin-left: 3%;
     }
 
     #insertQuestionNameHere {
@@ -1003,5 +1057,13 @@ code {
 
     .indivAwnser {
         flex-direction: column-reverse;
+    }
+
+    .dateAndRating {
+        flex-direction: column;
+    }
+
+    .questionstats {
+        margin-left: 0;
     }
 }
