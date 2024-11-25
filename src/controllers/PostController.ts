@@ -125,7 +125,6 @@ export class PostClass {
 
     public async isLoggedInUserResponsibleForThisPost(usersId: number, viewingPostId: number): Promise<boolean> {
         const currentpost: Post | undefined = await postModel.getPostById(viewingPostId);
-        console.log(currentpost!.getAuthorId());
         if (usersId === currentpost!.getAuthorId()) {
             return true;
         }

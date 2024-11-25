@@ -11,7 +11,6 @@ const currentpost: Post | undefined = await postModel.getPostById(Number(session
 
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 if (insertPostsHere) {
-    console.log("trigger1");
     await post.renderPosts();
 }
 const titleUserInput: HTMLInputElement = document.querySelector("#titleInput")!;
@@ -60,7 +59,12 @@ if (questionInfoBits) {
 
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 if (ratingCounter) {
-    ratingCounter.innerText = String(currentpost!.getRating());
+    if (String(currentpost!.getRating()) === String(null)) {
+        ratingCounter.innerText = "0";
+    }
+    else {
+        ratingCounter.innerText = String(currentpost!.getRating());
+    }
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition

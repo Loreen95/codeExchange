@@ -721,6 +721,10 @@ input:-webkit-autofill:active{
     width: 80%;
     align-self: flex-end;
     text-align: center;
+    margin: 0 0 20px;
+}
+
+.copyRightNonsense p {
     margin: 0;
 }
 
@@ -803,9 +807,9 @@ code {
 
 .noAwnsersFound {
     display: flex;
-    width: 74%;
+    width: 76%;
     align-self: flex-end;
-    margin-right: 4.5%;
+    margin-right: 3%;
     justify-content: space-between;
     font-family: 'Trebuchet MS', sans-serif;
     align-items: center;
@@ -883,6 +887,12 @@ code {
 .awnsers hr {
     width: 92%;
     margin-left: 6%;
+}
+
+.rightAlignedSepirator {
+    width: 75%;
+    align-self: flex-end;
+    margin: 0 3.4% 0 0;
 }
 
 code {
