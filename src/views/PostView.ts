@@ -12,6 +12,14 @@ const currentpost: Post | undefined = await postModel.getPostById(Number(session
 if (insertPostsHere) {
     await post.renderPosts();
 }
+const titleUserInput: HTMLInputElement = document.querySelector("#titleInput")!;
+const contentInput: HTMLInputElement = document.querySelector("#contentInput")!;
+const createBtn: HTMLButtonElement = document.querySelector(".createPost")!;
+
+createBtn.addEventListener("click", async () => {
+    console.log("Button clicked");
+    await post.onClickCreate(titleUserInput.value.trim(), contentInput.value.trim());
+});
 
 const insertCommenthere: HTMLDivElement = document.querySelector(".awnsers")!;
 
@@ -60,16 +68,14 @@ if (awnseramount) {
     awnseramount.innerHTML = String(await post.getCommentAmount());
 }
 
-const titleUserInput: HTMLInputElement = document.querySelector("#titleInput")!;
-const contentInput: HTMLInputElement = document.querySelector("#contentInput")!;
-const createBtn: HTMLButtonElement = document.querySelector(".createPost")!;
+// const titleUserInput: HTMLInputElement = document.querySelector("#titleInput")!;
+// const contentInput: HTMLInputElement = document.querySelector("#contentInput")!;
+// const createBtn: HTMLButtonElement = document.querySelector(".createPost")!;
 
-// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-if (createBtn) {
-    createBtn.addEventListener("click", async () => {
-        await post.onClickCreate(titleUserInput.value.trim(), contentInput.value.trim());
-    });
-}
+// createBtn.addEventListener("click", async () => {
+//     console.log("Button clicked");
+//     await post.onClickCreate(titleUserInput.value.trim(), contentInput.value.trim());
+// });
 
 // get this method to work
 // hljs.highlightAll();
