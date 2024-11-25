@@ -41,11 +41,28 @@ else {
 }
 
 // This places the username wherever it should appear.
-const userNameOnPage: NodeListOf<HTMLElement> = document.querySelectorAll("#injectUsernameHere");
+const userNameOnPage: NodeListOf<HTMLLinkElement> = document.querySelectorAll("#injectUsernameHere");
+const urlToProfile: HTMLLinkElement = document.querySelector("#addUrlHere")!;
 for (let l: number = 0; l < userNameOnPage.length; l++) {
-    const userName: string | undefined = (await userModel.getUserById(Number(sessionStorage.getItem("session"))))?.getUserName();
-    userNameOnPage[l].innerHTML = `${userName}`;
+    // Ophalen van de elementen
+    // Ophalen van gebruikersinformatie
+    const user: User | undefined = await userModel.getUserById(Number(sessionStorage.getItem("session")));
+    const userName: string | undefined = user?.getUserName();
+    const userId: number | undefined = user?.getId();
+    if (userName && userId) {
+        userNameOnPage[l].innerHTML = userName;
+        urlToProfile.href = `profile?userId=${userId}`;
+    }
+    else {
+        console.error("Gebruiker niet gevonden of gebruikersinformatie ontbreekt.");
+    }
 }
+
+// const userNameOnPage: NodeListOf<HTMLElement> = document.querySelectorAll("#injectUsernameHere");
+// for (let l: number = 0; l < userNameOnPage.length; l++) {
+//     const userName: string | undefined = (await userModel.getUserById(Number(sessionStorage.getItem("session"))))?.getUserName();
+//     userNameOnPage[l].innerHTML = `${userName}`;
+// }
 
 // this exists to allow the foldout menu to work.
 const boLeftButtn: HTMLButtonElement = document.querySelector("#foldoutBttn")!;

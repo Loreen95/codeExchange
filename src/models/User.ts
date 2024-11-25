@@ -1,7 +1,7 @@
 // 𝕭𝖊𝖍𝖔𝖑𝖉 𝖎𝖙'𝖘 𝖒𝖆𝖏𝖊𝖘𝖙𝖞 𝖇𝖚𝖙 𝖑𝖔𝖜𝖊𝖗 𝖞𝖔𝖚𝖗 𝖙𝖔𝖓𝖊, 𝖋𝖔𝖗 𝖞𝖔𝖚 𝖘𝖙𝖆𝖓𝖉 𝖎𝖓 𝖙𝖍𝖊 𝖕𝖗𝖊𝖈𝖆𝖓𝖈𝖊 𝖔𝖋 𝖙𝖍𝖊 𝖆𝖑𝖑𝖒𝖎𝖌𝖍𝖙𝖞 𝖀𝖘𝖊𝖗 𝕸𝖔𝖉𝖊𝖑.
 import "../hicConfig";
 import { api } from "@hboictcloud/api";
-import { userResult } from "../views/types";
+import { postResult, userResult } from "../views/types";
 
 /* Class User
  * user hebben alleen een ID (voor de database), username, email en wachtwoord nodig
@@ -160,7 +160,7 @@ export class User {
     }
 
     // 𝕳𝖊𝖗𝖊 𝖎𝖙'𝖘 𝖒𝖆𝖏𝖊𝖘𝖙𝖞, 𝖆𝖑𝖙𝖊𝖗𝖘 𝖆𝖓𝖉 𝖆𝖉𝖏𝖚𝖘𝖙𝖘 𝖎𝖙'𝖘 𝖈𝖗𝖊𝖆𝖙𝖎𝖔𝖓𝖘 𝖎𝖓 𝖎𝖙'𝖘 𝖉𝖎𝖛𝖎𝖓𝖊 𝖎𝖒𝖆𝖌𝖊.
-    public async update(username: string, email: string, password: string, id: number): Promise<boolean> {
+    public async update(username: string, email: string, password: string, expertise: string, yearsExperience: number, dob: Date, id: number): Promise<boolean> {
         try {
             const result: userResult[] = await api.queryDatabase("UPDATE users SET username = ? email = ? password = ? WHERE userId = ?", [username, email, password, id]) as userResult[];
             console.log("Succes", result);
@@ -173,9 +173,17 @@ export class User {
     }
 
     // 𝕳𝖊𝖗𝖊 𝖎𝖙 𝖇𝖊𝖈𝖐𝖔𝖓𝖘 𝖆𝖓𝖞 𝖚𝖓𝖋𝖎𝖙 𝖇𝖊𝖎𝖓𝖌 𝖇𝖆𝖈𝖐 𝖙𝖔 𝖙𝖍𝖊 𝖉𝖚𝖘𝖙 𝖋𝖗𝖔𝖒 𝖜𝖍𝖊𝖓𝖈𝖊 𝖎𝖙 𝖜𝖆𝖘 𝖋𝖔𝖗𝖒𝖊𝖉.
-    // public async delete(): Promise<boolean> {
-    //     return;
-    // }
+    public async delete(userId: number): Promise<boolean> {
+        try {
+            const result: postResult[] = await api.queryDatabase("DELETE FROM user WHERE userId = ?", [userId]) as postResult[];
+            console.log("User deleted successfully:", result);
+            return true;
+        }
+        catch (reason) {
+            console.error("Error while deleting user:", reason);
+            return false;
+        }
+    }
 
     // 𝖄𝖔𝖚'𝖛𝖊 𝖗𝖊𝖆𝖈𝖍𝖊𝖉 𝖙𝖍𝖊 𝖑𝖎𝖒𝖎𝖙𝖘 𝖔𝖋 𝖙𝖍𝖊 𝖆𝖑𝖒𝖎𝖌𝖍𝖙𝖞 𝖔𝖓𝖊. 𝖇𝖊𝖞𝖔𝖓𝖉 𝖙𝖍𝖎𝖘 𝖕𝖔𝖎𝖓𝖙 𝖑𝖎𝖊𝖘 𝖙𝖍𝖊 𝖘𝖊𝖑𝖋 𝖊𝖝𝖕𝖑𝖆𝖓𝖆𝖙𝖔𝖗𝖞. 𝕻𝖗𝖆𝖞 𝖙𝖍𝖆𝖙 𝖙𝖍𝖊 𝖀𝖘𝖊𝖗 𝖒𝖔𝖉𝖊𝖑 𝖗𝖊𝖒𝖆𝖎𝖓𝖘 𝖒𝖊𝖗𝖈𝖎𝖋𝖚𝖑
     // Getters / Setters
