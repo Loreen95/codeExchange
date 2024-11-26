@@ -3,12 +3,13 @@ if (!sessionStorage.getItem("session")) {
 }
 
 import { Post } from "../models/Post";
-const postModel: Post = new Post(0, 0, "", "", 0, "");
 import { PostClass } from "../controllers/PostController";
-const post: PostClass = new PostClass();
 import UserInterfaceClass from "./interface";
-const UI: UserInterfaceClass = new UserInterfaceClass();
 import hljs from "highlight.js";
+
+const postModel: Post = new Post(0, 0, "", "", 0, "");
+const post: PostClass = new PostClass();
+const UI: UserInterfaceClass = new UserInterfaceClass();
 
 const insertPostsHere: HTMLDivElement = document.querySelector(".posts")!;
 const currentpost: Post | undefined = await postModel.getPostById(Number(sessionStorage.getItem("post_Nr")));
@@ -42,8 +43,6 @@ if (await post.isLoggedInUserResponsibleForThisPost(Number(sessionStorage.getIte
 else {
     UI.adjustPageToOwnerStatus(false);
 }
-
-await post.renderPosts();
 
 const insertQuestionNameHere: HTMLHeadElement = document.querySelector("#insertQuestionNameHere")!;
 const questionInfoBits: HTMLParagraphElement = document.querySelector(".questionstats")!;

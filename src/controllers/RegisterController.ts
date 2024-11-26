@@ -1,12 +1,20 @@
 // This links this controller to the almightu User Model.
 import { User } from "../models/User";
-const userModel: User = new User(0, "", "", "");
 import { LoginClass } from "./LoginController";
-const login: LoginClass = new LoginClass();
 import UserInterfaceClass from "../views/interface";
-const UI: UserInterfaceClass = new UserInterfaceClass();
+
 // This is where every mayor process takes place right here in this class.
 class RegistrationClass {
+    private _userModel: User;
+    private _login: LoginClass;
+    private _UI: UserInterfaceClass;
+
+    public constructor() {
+        this._userModel = new User(0, "", "", "");
+        this._login = new LoginClass();
+        this._UI = new UserInterfaceClass();
+    }
+
     // this resets the popup information (error and info tab)
     private _whyItIsNotGoodEnough: string = ""; // Error messages
     private _neededInformation: string = ""; // Information needed
@@ -89,7 +97,7 @@ class RegistrationClass {
             nameUserInput.style.border = "solid rgb(168, 32, 32) 3px";
             allIsInOrder = false;
         }
-        else if (String(await userModel.doesUserExistForUsername(userInputName)) === "true") {
+        else if (String(await this._userModel.doesUserExistForUsername(userInputName)) === "true") {
             errorMessage.innerText += "Provided Username is already in use.\n";
             nameUserInput.style.border = "solid rgb(168, 32, 32) 3px";
             allIsInOrder = false;
@@ -104,7 +112,7 @@ class RegistrationClass {
             emailAdressUserInput.style.border = "solid rgb(168, 32, 32) 3px";
             allIsInOrder = false;
         }
-        else if (await userModel.doesUserExistForEmail(userInputEmail)) {
+        else if (await this._userModel.doesUserExistForEmail(userInputEmail)) {
             errorMessage.innerText += "This email is already being used.\n";
             emailAdressUserInput.style.border = "solid rgb(168, 32, 32) 3px";
             allIsInOrder = false;
@@ -125,20 +133,20 @@ class RegistrationClass {
 
         // And finally when all is checked and double checked and no faults where found. The user will actually be created
         if (allIsInOrder) {
-            UI.unleashTheErrorPopup(false);
+            this._UI.unleashTheErrorPopup(false);
             errorMessage.innerHTML = "";
             infoMessage.innerText = "Success!";
             successMessage.innerText = "";
             try {
                 // Gebruiker aanmaken
-                const createdUser: boolean = await userModel.create(userInputName, userInputEmail, userInputPassword);
+                const createdUser: boolean = await this._userModel.create(userInputName, userInputEmail, userInputPassword);
                 console.log("Aangemaakte gebruiker:", createdUser);
                 successMessage.innerText += "Account creation was succesful. You will be logged in automatically.";
-                UI.successMessagePopup(true);
+                this._UI.successMessagePopup(true);
                 // 5MS Wachten
                 await new Promise(resolve => setTimeout(resolve, 1000));
                 // Check of de gebruiker succesvol kan inloggen
-                await login.onClickLogin(userInputEmail, userInputPassword);
+                await this._login.onClickLogin(userInputEmail, userInputPassword);
             }
             catch (reason) {
                 console.error("Fout tijdens registratie en inloggen:", reason);
@@ -147,7 +155,7 @@ class RegistrationClass {
             }
         }
         else {
-            UI.unleashTheErrorPopup(true);
+            this._UI.unleashTheErrorPopup(true);
         }
     }
 }

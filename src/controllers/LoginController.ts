@@ -2,11 +2,16 @@
 
 // Collect seperate files and instanciate needed objects.
 import { User } from "../models/User";
-const userModel: User = new User(0, "", "", "");
 import UserInterfaceClass from "../views/interface";
-const UI: UserInterfaceClass = new UserInterfaceClass();
 
 export class LoginClass {
+    private _userModel: User;
+    private _UI: UserInterfaceClass;
+    public constructor() {
+        this._userModel = new User(0, "", "", "");
+        this._UI = new UserInterfaceClass();
+    }
+
     // Clear error message
     private _errorMessage: string = "";
 
@@ -29,11 +34,11 @@ export class LoginClass {
         let resultRecords: User | undefined;
         if (this.isEmail(givenUsernameOrEmail)) {
             console.log("The user used an email address.");
-            resultRecords = await userModel.getUserByEmailAndPassword(givenUsernameOrEmail, givenPassword);
+            resultRecords = await this._userModel.getUserByEmailAndPassword(givenUsernameOrEmail, givenPassword);
         }
         else {
             console.log("The user used a username.");
-            resultRecords = await userModel.getUserByUsernameAndPassword(givenUsernameOrEmail, givenPassword);
+            resultRecords = await this._userModel.getUserByUsernameAndPassword(givenUsernameOrEmail, givenPassword);
         }
         // This determines if there is a connection to the user from the comibnation of the email and password
         if (!resultRecords) {
@@ -79,30 +84,30 @@ export class LoginClass {
             if (!givenUsernameOrEmail) {
                 // errorMessage.innerText = "Je moet een e-mailadres opgeven";
                 errorMessage.innerText += "You must provide an email or username\n";
-                UI.unleashTheErrorPopup(true);
+                this._UI.unleashTheErrorPopup(true);
             }
             if (!givenPassword) {
                 // errorMessage.innerText = "Je moet een wachtwoord opgeven";
                 errorMessage.innerText += "You must provide a password\n";
-                UI.unleashTheErrorPopup(true);
+                this._UI.unleashTheErrorPopup(true);
             }
             // This activates the check reccords function and logs the user in if it succseeds the checks
             else {
                 const user: User | undefined = await this.checkRecords(givenUsernameOrEmail, givenPassword);
                 if (user) {
-                    UI.unleashTheErrorPopup(false);
+                    this._UI.unleashTheErrorPopup(false);
                     const userId: number | string = user.getId().toString();
                     sessionStorage.setItem("session", userId);
                     sessionStorage.setItem("lang", "en");
                     successMessage.innerText += "You have logged in, redirecting to homepage.";
-                    UI.successMessagePopup(true);
+                    this._UI.successMessagePopup(true);
                     setTimeout(() => {
                         window.location.href = "http://localhost:3000/landingspagina.html";
                     }, 1300);
                 }
                 else {
                     errorMessage.innerText = this._errorMessage;
-                    UI.unleashTheErrorPopup(true);
+                    this._UI.unleashTheErrorPopup(true);
                 }
             }
         }

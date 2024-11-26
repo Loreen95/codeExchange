@@ -1,28 +1,36 @@
 import { Post } from "../models/Post";
-const postModel: Post = new Post(0, 0, "", "", 0, "");
 import { Comment } from "../models/Comment";
-const commentModel: Comment = new Comment(0, 0, 0, "", "", 0, "");
 import { User } from "../models/User";
-const userModel: User = new User(0, "", "", "");
 import UserInterfaceClass from "../views/interface";
 import hljs from "highlight.js";
-const UI: UserInterfaceClass = new UserInterfaceClass();
 
 export class PostClass {
+    private _postModel: Post;
+    private _commentModel: Comment;
+    private _userModel: User;
+    private _UI: UserInterfaceClass;
+
+    public constructor() {
+        this._postModel = new Post(0, 0, "", "", 0, "");
+        this._userModel = new User(0, "", "", "");
+        this._commentModel = new Comment(0, 0, 0, "", "", 0, "");
+        this._UI = new UserInterfaceClass();
+    }
+
     // private _errorMessage: string = "";
 
     public async getUserName(ID: number): Promise<string> {
-        const userName: string | undefined = (await userModel.getUserById(Number(ID)))?.getUserName();
+        const userName: string | undefined = (await this._userModel.getUserById(Number(ID)))?.getUserName();
         return String(userName);
     }
 
     public async getCommentAmount(): Promise<number | undefined> {
-        const totalComments: number = (await commentModel.getCommentsByMessageId(Number(sessionStorage.getItem("post_Nr")))).length;
+        const totalComments: number = (await this._commentModel.getCommentsByMessageId(Number(sessionStorage.getItem("post_Nr")))).length;
         return totalComments;
     }
 
     public async renderPosts(): Promise<void> {
-        const postList: Post[] | undefined = await postModel.getAllPosts();
+        const postList: Post[] | undefined = await this._postModel.getAllPosts();
         const totalQquestionAmount: Element | null = document.querySelector("#totalQquestionAmount");
 
         if (totalQquestionAmount) {
@@ -43,7 +51,7 @@ export class PostClass {
             for (const post of postList) {
                 let titleOfPost: string = "";
                 let contentOfPost: string = "";
-                const userName: string | undefined = (await userModel.getUserById(Number(post.getAuthorId())))?.getUserName();
+                const userName: string | undefined = (await this._userModel.getUserById(Number(post.getAuthorId())))?.getUserName();
                 const stringedTimeAndDate: string = String(post.getDate()).slice(0, 10) + " | " + String(post.getDate()).slice(11, 19);
                 let rating: number = 0;
                 if (post.getRating()) {
@@ -59,7 +67,7 @@ export class PostClass {
                     contentOfPost = post.getContent().length > 240 ? post.getContent().slice(0, 240).concat("...") : post.getContent();
                 }
 
-                const comments: Comment[] = await commentModel.getCommentsByMessageId(post.getPostId());
+                const comments: Comment[] = await this._commentModel.getCommentsByMessageId(post.getPostId());
                 const totalComments: number = comments.length;
 
                 insertPostsHere.insertAdjacentHTML("beforeend", `
@@ -102,7 +110,7 @@ export class PostClass {
 
     public async renderComments(): Promise<void> {
         const insertCommenthere: HTMLDivElement = document.querySelector(".awnsers")!;
-        const commentList: Comment[] | undefined = await commentModel.getCommentsByMessageId(Number(sessionStorage.getItem("post_Nr")));
+        const commentList: Comment[] | undefined = await this._commentModel.getCommentsByMessageId(Number(sessionStorage.getItem("post_Nr")));
 
         commentList.forEach(async _comment => {
             let rating: number = 0;
@@ -110,7 +118,7 @@ export class PostClass {
                 rating = _comment.getRating();
             }
             insertCommenthere.insertAdjacentHTML("beforeend", `
-                    <h1 class="awnserTitle">${(await userModel.getUserById(Number(_comment.getUserId())))?.getUserName()}</h1>
+                    <h1 class="awnserTitle">${(await this._userModel.getUserById(Number(_comment.getUserId())))?.getUserName()}</h1>
                 <div class="indivAwnser">
                     <div class="contentPart contentPartComment">${this.encodeContentForVieuwingPurposes(_comment.getContent())}</div>
                 </div>
@@ -128,7 +136,7 @@ export class PostClass {
     }
 
     public async isLoggedInUserResponsibleForThisPost(usersId: number, viewingPostId: number): Promise<boolean> {
-        const currentpost: Post | undefined = await postModel.getPostById(viewingPostId);
+        const currentpost: Post | undefined = await this._postModel.getPostById(viewingPostId);
         if (usersId === currentpost!.getAuthorId()) {
             return true;
         }
@@ -154,7 +162,7 @@ export class PostClass {
             // Validate title and content
             if (!title || !content) {
                 errorMessage.innerHTML += "You must add a title and message!";
-                UI.unleashTheErrorPopup(true); // Assuming UI.unleashTheErrorPopup handles visibility
+                this._UI.unleashTheErrorPopup(true); // Assuming UI.unleashTheErrorPopup handles visibility
                 return; // Stop execution if validation fails
             }
 
@@ -162,15 +170,15 @@ export class PostClass {
             const userId: string | null = sessionStorage.getItem("session");
             if (!userId) {
                 errorMessage.innerHTML += "You must be logged in!";
-                UI.unleashTheErrorPopup(true);
+                this._UI.unleashTheErrorPopup(true);
                 return; // Stop execution if user is not logged in
             }
 
             // Fetch user
-            const user: User | undefined = await userModel.getUserById(Number(userId));
+            const user: User | undefined = await this._userModel.getUserById(Number(userId));
             if (!user) {
                 errorMessage.innerHTML += "User not found!";
-                UI.unleashTheErrorPopup(true);
+                this._UI.unleashTheErrorPopup(true);
                 return; // Stop execution if user is not found
             }
 
@@ -183,19 +191,19 @@ export class PostClass {
             const formattedDate: string = date.toISOString().slice(0, 19).replace("T", " ");
 
             // Create the post
-            const isPostCreated: boolean = await postModel.create(Number(userId), title, content, formattedDate);
+            const isPostCreated: boolean = await this._postModel.create(Number(userId), title, content, formattedDate);
 
             if (isPostCreated) {
                 // Post creation was successful
                 successMessage.innerHTML = "Post created successfully!";
-                UI.unleashTheErrorPopup(false);
-                UI.successMessagePopup(true);
+                this._UI.unleashTheErrorPopup(false);
+                this._UI.successMessagePopup(true);
                 await this.renderPosts(); // Render posts after creation
             }
             else {
                 // Post creation failed
                 errorMessage.innerHTML += "Failed to create the post!";
-                UI.unleashTheErrorPopup(true);
+                this._UI.unleashTheErrorPopup(true);
             }
         }
         catch (reason) {
@@ -205,7 +213,7 @@ export class PostClass {
             const errorMessage: HTMLParagraphElement | null = document.querySelector("#errMsg");
             if (errorMessage) {
                 errorMessage.innerHTML = "An error occurred while creating the post.";
-                UI.unleashTheErrorPopup(true);
+                this._UI.unleashTheErrorPopup(true);
             }
         }
     }
@@ -230,8 +238,8 @@ export class PostClass {
     }
 }
 // async function logPosts(): Promise <void> {
-//     const postmodel: Post = new Post(0, 0, "", "", 0, "");
-//     const listOfPosts: Post[] | undefined = await postmodel.getAllPosts();
+//     const _postmodel: Post = new Post(0, 0, "", "", 0, "");
+//     const listOfPosts: Post[] | undefined = await _postmodel.getAllPosts();
 
 //     // Controleer of de data is opgehaald
 //     if (listOfPosts) {
