@@ -105,6 +105,10 @@ export class PostClass {
         const commentList: Comment[] | undefined = await commentModel.getCommentsByMessageId(Number(sessionStorage.getItem("post_Nr")));
 
         commentList.forEach(async _comment => {
+            let rating: number = 0;
+            if (String(_comment.getRating()) !== String(null)) {
+                rating = _comment.getRating();
+            }
             insertCommenthere.insertAdjacentHTML("beforeend", `
                     <h1 class="awnserTitle">${(await userModel.getUserById(Number(_comment.getUserId())))?.getUserName()}</h1>
                 <div class="indivAwnser">
@@ -114,7 +118,7 @@ export class PostClass {
                     <p class="bottomDate">${String(_comment.getDate()).slice(0, 10) + " | " + String(_comment.getDate()).slice(11, 19)}</p>
                     <div class="ratingPart">
                         <i class="fa-solid fa-thumbs-up"></i>
-                        <p class="insertRatingHere">${_comment.getRating()}</p>
+                        <p class="insertRatingHere">${rating}</p>
                         <i class="fa-solid fa-thumbs-down"></i>
                     </div>
                 </div>                

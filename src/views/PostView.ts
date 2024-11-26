@@ -1,3 +1,7 @@
+if (!sessionStorage.getItem("session")) {
+    window.location.href = "http://localhost:3000/login.html";
+}
+
 import { Post } from "../models/Post";
 const postModel: Post = new Post(0, 0, "", "", 0, "");
 import { PostClass } from "../controllers/PostController";

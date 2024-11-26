@@ -217,6 +217,7 @@ body {
     margin-bottom: 70px;
     width: 30%;
     padding: 20px;
+    align-self: center;
     background-image: linear-gradient(to bottom right, rgb(14, 14, 14), rgb(11, 21, 31));
 }
 
