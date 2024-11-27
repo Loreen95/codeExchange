@@ -37,6 +37,22 @@ export class Post {
         }
     }
 
+    public async getAllPostsByUserId(id: number): Promise<Post[] | undefined> {
+        try {
+            const result: postResult[] = await api.queryDatabase("SELECT * FROM `post` WHERE authorId = ? ORDER BY date DESC", [id]) as postResult[];
+            if (result.length > 0) {
+                return result.map(post => new Post(post.postId, post.authorId, post.title, post.content, post.rating, post.date));
+            }
+            else {
+                return undefined;
+            }
+        }
+        catch (reason) {
+            console.error("An error occurred while gathering all posts by user id.", reason);
+            return undefined;
+        }
+    }
+
     public async getPostById(id: number): Promise<Post | undefined> {
         try {
             const result: postResult[] = await api.queryDatabase("SELECT * from post WHERE postId = ?", [id]) as postResult[];
