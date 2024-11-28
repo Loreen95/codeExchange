@@ -17,8 +17,6 @@ export class PostClass {
         this._UI = new UserInterfaceClass();
     }
 
-    // private _errorMessage: string = "";
-
     public async getUserName(ID: number): Promise<string> {
         const userName: string | undefined = (await this._userModel.getUserById(Number(ID)))?.getUserName();
         return String(userName);
@@ -218,14 +216,6 @@ export class PostClass {
         }
     }
 
-    // public encodeContentForVieuwingPurposes(content: string): string {
-    //     let content2: string = content;
-    //     content2 = content2.replaceAll("[code]", "<Pre>\n<code>");
-    //     content2 = content2.replaceAll("[/code]", "</code>\n</Pre>");
-    //     console.log(content2);
-    //     return content2.replaceAll("\n", "<br>");
-    // }
-
     public encodeContentForVieuwingPurposes(content: string): string {
         if (content.includes("[code]")) {
             content = content.replaceAll(/\[code\]((?:.|\s)*?)\[\/code\]/g, codeBlock => {
@@ -237,17 +227,3 @@ export class PostClass {
         return content.replaceAll("\n", "<br>");
     }
 }
-// async function logPosts(): Promise <void> {
-//     const _postmodel: Post = new Post(0, 0, "", "", 0, "");
-//     const listOfPosts: Post[] | undefined = await _postmodel.getAllPosts();
-
-//     // Controleer of de data is opgehaald
-//     if (listOfPosts) {
-//         listOfPosts.forEach(post => {
-//             console.log(`Post ID: ${post.getPostId()}, Author ID: ${post.getAuthorId()}, Title: ${post.getTitle()}, Content: ${post.getContent()}`);
-//         });
-//     }
-//     else {
-//         console.log("Geen posts gevonden");
-//     }
-// }
