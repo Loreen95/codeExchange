@@ -171,6 +171,47 @@ body {
 }
 
 /* Main */
+.landingsPageContnetBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    height: fit-content;
+    margin: 80px 0 80px;
+}
+
+.theSideWithTheText {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.theSideWithTheText h1 {
+    margin: 50px 50px 0;
+    font-size: 130px;
+    color: #da2626;
+    font-family: 'Trebuchet MS', sans-serif;
+    border-bottom: solid 3.5px #4b4b4b;
+}
+
+.theSideWithTheText p {
+    font-size: 19px;
+    font-family: 'Courier New', monospace;
+    margin: 20px 5px 0;
+    background-color: #000000;
+    width: 600px;
+    align-self: center;
+}
+
+.theSideWithTheStats {
+    background-color: cadetblue;
+    /* height: fit-content; */
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 23px;
+    padding: 15px;
+    text-align: left;
+    letter-spacing: 0.03em;
+}
+
 .barka {
     display: flex;
     align-items: center;

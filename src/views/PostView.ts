@@ -80,13 +80,4 @@ if (awnseramount) {
     awnseramount.innerHTML = String(await post.getCommentAmount());
 }
 
-// const titleUserInput: HTMLInputElement = document.querySelector("#titleInput")!;
-// const contentInput: HTMLInputElement = document.querySelector("#contentInput")!;
-// const createBtn: HTMLButtonElement = document.querySelector(".createPost")!;
-
-// createBtn.addEventListener("click", async () => {
-//     console.log("Button clicked");
-//     await post.onClickCreate(titleUserInput.value.trim(), contentInput.value.trim());
-// });
-
 hljs.highlightAll();
