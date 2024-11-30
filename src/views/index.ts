@@ -1,22 +1,19 @@
-import { HomeView } from "../views/HomeView";
-import { HomeController } from "../controllers/HomeController";
+import { UserView } from "./UserView";
+import { UserController } from "../controllers/UserController";
 
-// Maak een HTML element aan voor de homepagina
-const homeViewElement: HTMLDivElement = document.createElement("div");
-homeViewElement.id = "Home View"; // Stel een ID in voor de view
+// Haal de UserView op via de static initialize methode
+UserView.initialize()
+    .then((userView: UserView) => {
+        console.log("UserView initialized:", userView); // Debugging: controleer of de view juist is geïnitialiseerd
+        const userController: UserController = new UserController(userView);
 
-// Maak een instantie van HomeView met dit element
-const homeView: HomeView = new HomeView(homeViewElement);
-
-// Maak een instantie van HomeController en geef de HomeView door
-const homeController: HomeController = new HomeController(homeView);
-
-// Roep de renderHomePage methode aan om de homepagina te renderen
-homeController.renderHomePage().then(() => {
-    console.log("Home page rendering complete.");
-}).catch((error: unknown) => {
-    console.error("An error occurred while rendering the home page:", error);
-});
-
-// Voeg de home view toe aan de DOM (bijvoorbeeld aan de body van de pagina)
-document.body.appendChild(homeViewElement);
+        // Render de gebruiker
+        userController.renderUser().then(() => {
+            console.log("User page rendering complete.");
+        }).catch((error: unknown) => {
+            console.error("An error occurred while rendering the profile page:", error);
+        });
+    })
+    .catch((error: unknown) => {
+        console.error("Error initializing UserView:", error);
+    });

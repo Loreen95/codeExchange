@@ -8,24 +8,24 @@ export class Post {
     private _title: string;
     private _content: string;
     private _rating: number;
-    private _date: string;
+    private _createdAt: string;
 
     // constructor:
-    public constructor(postId: number = 0, authorId: number, title: string, content: string, rating: number, date: string) {
+    public constructor(postId: number = 0, authorId: number, title: string, content: string, rating: number, createdAt: string) {
         this._postId = postId;
         this._authorId = authorId;
         this._title = title;
         this._content = content;
         this._rating = rating;
-        this._date = date;
+        this._createdAt = createdAt;
     }
 
     // CRUD methods:
     public async getAllPosts(): Promise<Post[] | undefined> {
         try {
-            const result: postResult[] = await api.queryDatabase("Select * from post ORDER BY date DESC") as postResult[];
+            const result: postResult[] = await api.queryDatabase("Select * from post ORDER BY createdAt DESC") as postResult[];
             if (result.length > 0) {
-                return result.map(post => new Post(post.postId, post.authorId, post.title, post.content, post.rating, post.date));
+                return result.map(post => new Post(post.postId, post.authorId, post.title, post.content, post.rating, post.createdAt));
             }
             else {
                 return undefined;
@@ -39,9 +39,9 @@ export class Post {
 
     public async getAllPostsByUserId(id: number): Promise<Post[] | undefined> {
         try {
-            const result: postResult[] = await api.queryDatabase("SELECT * FROM `post` WHERE authorId = ? ORDER BY date DESC", [id]) as postResult[];
+            const result: postResult[] = await api.queryDatabase("SELECT * FROM `post` WHERE authorId = ? ORDER BY createdAt DESC", [id]) as postResult[];
             if (result.length > 0) {
-                return result.map(post => new Post(post.postId, post.authorId, post.title, post.content, post.rating, post.date));
+                return result.map(post => new Post(post.postId, post.authorId, post.title, post.content, post.rating, post.createdAt));
             }
             else {
                 return undefined;
@@ -57,7 +57,7 @@ export class Post {
         try {
             const result: postResult[] = await api.queryDatabase("SELECT * from post WHERE postId = ?", [id]) as postResult[];
             if (result.length > 0) {
-                return new Post(result[0].postId, result[0].authorId, result[0].title, result[0].content, result[0].rating, result[0].date);
+                return new Post(result[0].postId, result[0].authorId, result[0].title, result[0].content, result[0].rating, result[0].createdAt);
             }
             else {
                 return undefined;
@@ -69,11 +69,11 @@ export class Post {
         }
     }
 
-    public async create(authorId: number, title: string, content: string, date: string): Promise<boolean> {
+    public async create(authorId: number, title: string, content: string, createdAt: string): Promise<boolean> {
         try {
             const result: postResult[] = await api.queryDatabase(
-                "INSERT INTO post (authorID, title, content, date) VALUES (?, ?, ?, ?)",
-                authorId, title, content, date
+                "INSERT INTO post (authorID, title, content, createdAt) VALUES (?, ?, ?, ?)",
+                authorId, title, content, createdAt
             ) as postResult[];
 
             console.log("Success", result);
@@ -106,8 +106,8 @@ export class Post {
         return this._rating;
     }
 
-    public getDate(): string {
-        return this._date;
+    public getcreatedAt(): string {
+        return this._createdAt;
     }
 
     public setTitle(newTitle: string): void {
@@ -122,7 +122,7 @@ export class Post {
         this._rating = newRating;
     }
 
-    public setDate(newDate: string): void {
-        this._date = newDate;
+    public setcreatedAt(newcreatedAt: string): void {
+        this._createdAt = newcreatedAt;
     }
 }

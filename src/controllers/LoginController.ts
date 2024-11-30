@@ -8,7 +8,7 @@ export class LoginClass {
     private _userModel: User;
     private _UI: UserInterfaceClass;
     public constructor() {
-        this._userModel = new User(0, "", "", "");
+        this._userModel = new User(0, "", "", "", "", new Date(0), 0, new Date(0));
         this._UI = new UserInterfaceClass();
     }
 

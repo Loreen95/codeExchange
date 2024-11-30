@@ -57,9 +57,8 @@ if (insertQuestionNameHere) {
 
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 if (questionInfoBits) {
-    questionInfoBits.innerText = `${await post.getUserName(currentpost!.getAuthorId())}  ${String(currentpost!.getDate()).slice(0, 10) + " | " + String(currentpost!.getDate()).slice(11, 19)}`;
+    questionInfoBits.innerText = `${await post.getUserName(currentpost!.getAuthorId())}  ${String(currentpost!.getcreatedAt()).slice(8, 10) + "-" + String(currentpost!.getcreatedAt()).slice(5, 7) + "-" + String(currentpost!.getcreatedAt()).slice(0, 4) + " | " + String(currentpost!.getcreatedAt()).slice(11, 19)}`;
 }
-
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 if (ratingCounter) {
     if (String(currentpost!.getRating()) === String(null)) {

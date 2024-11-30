@@ -7,7 +7,7 @@ import { User } from "../models/User";
 import { LanguageClass } from "../controllers/LanguageController";
 
 const UI: UserInterfaceClass = new UserInterfaceClass();
-const userModel: User = new User(0, "", "", "");
+const userModel: User = new User(0, "", "", "", "", new Date(0), 0, new Date(0));
 const logout: LogoutClass = new LogoutClass();
 
 // this collects all information from the defaut html page and malforms it into a horrific nodelist for later use
@@ -51,7 +51,7 @@ for (let l: number = 0; l < userNameOnPage.length; l++) {
     const userId: number | undefined = user?.getId();
     if (userName && userId) {
         userNameOnPage[l].innerHTML = userName;
-        urlToProfile.href = `profile?userId=${userId}`;
+        urlToProfile.href = `profile?user=${userId}`;
     }
     else {
         console.error("Gebruiker niet gevonden of gebruikersinformatie ontbreekt.");

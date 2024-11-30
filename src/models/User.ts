@@ -11,14 +11,22 @@ export class User {
     private _email: string;
     private _password: string;
     private _username: string;
+    private _expertise: string;
+    private _dob: Date;
+    private _yearsExperience: number;
+    private _createdAt: Date;
 
     // 𝖂𝖎𝖙𝖓𝖊𝖘𝖘 𝖍𝖊𝖗𝖊 𝖙𝖍𝖊 𝖊𝖕𝖎𝖈𝖊𝖓𝖙𝖊𝖗 𝖔𝖋 𝖈𝖗𝖊𝖆𝖙𝖎𝖔𝖓, 𝖜𝖍𝖊𝖗𝖊 𝖓𝖊𝖜 𝖎𝖓𝖘𝖙𝖆𝖓𝖈𝖊𝖘 𝖔𝖋 𝖑𝖎𝖋𝖊 𝖆𝖗𝖊 𝖋𝖔𝖗𝖒𝖊𝖉 𝖋𝖗𝖔𝖒 𝖆𝖘𝖍 𝖆𝖓𝖉 𝖇𝖗𝖔𝖐𝖊𝖓 𝖇𝖆𝖈𝖐 𝖉𝖔𝖜𝖓 𝖎𝖓𝖙𝖔 𝖉𝖚𝖘𝖙.
     // Constructor
-    public constructor(userId: number = 0, email: string, password: string, username: string) {
+    public constructor(userId: number = 0, email: string, password: string, username: string, expertise: string, dob: Date, yearsExperience: number, createdAt: Date) {
         this._userId = userId;
         this._email = email;
         this._password = password;
         this._username = username;
+        this._expertise = expertise;
+        this._dob = dob;
+        this._yearsExperience = yearsExperience;
+        this._createdAt = createdAt;
     }
 
     // 𝕲𝖆𝖟𝖊 𝖚𝖕𝖔𝖓 𝖙𝖍𝖊 𝖋𝖚𝖑𝖑 𝖊𝖝𝖙𝖊𝖓𝖙 𝖔𝖋 𝖎𝖙'𝖘 𝖒𝖆𝖏𝖊𝖘𝖙𝖞'𝖘 𝖕𝖔𝖜𝖊𝖗. 𝕾𝖊𝖊 𝖍𝖔𝖜 𝖎𝖙 𝖈𝖗𝖊𝖆𝖙𝖊𝖘, 𝖉𝖊𝖘𝖙𝖗𝖔𝖞𝖘 𝖆𝖓𝖉 𝖕𝖑𝖆𝖈𝖊𝖘 𝖉𝖊𝖛𝖎𝖓𝖊 𝖏𝖚𝖉𝖌𝖒𝖊𝖓𝖙
@@ -77,7 +85,7 @@ export class User {
         try {
             const result: userResult[] = await api.queryDatabase("SELECT * from user WHERE userId = ?", [userId]) as userResult[];
             if (result.length > 0) {
-                return new User(result[0].userId, result[0].email, result[0].password, result[0].username);
+                return new User(result[0].userId, result[0].email, result[0].password, result[0].username, result[0].expertise, result[0].dob, result[0].yearsExperience, result[0].createdAt);
             }
             else {
                 return undefined;
@@ -101,7 +109,7 @@ export class User {
             const result: userResult[] = await api.queryDatabase(
                 "SELECT * FROM user WHERE email = ? AND password = ?", email, password) as userResult[];
             if (result.length > 0) {
-                return new User(result[0].userId, result[0].email, result[0].password, result[0].username);
+                return new User(result[0].userId, result[0].email, result[0].password, result[0].username, result[0].expertise, result[0].dob, result[0].yearsExperience, result[0].createdAt);
             }
             else {
                 return undefined;
@@ -124,7 +132,7 @@ export class User {
             const result: userResult[] = await api.queryDatabase(
                 "SELECT * FROM user WHERE username = ? AND password = ?", username, password) as userResult[];
             if (result.length > 0) {
-                return new User(result[0].userId, result[0].email, result[0].password, result[0].username);
+                return new User(result[0].userId, result[0].email, result[0].password, result[0].username, result[0].expertise, result[0].dob, result[0].yearsExperience, result[0].createdAt);
             }
             else {
                 return undefined;
@@ -162,7 +170,7 @@ export class User {
     // 𝕳𝖊𝖗𝖊 𝖎𝖙'𝖘 𝖒𝖆𝖏𝖊𝖘𝖙𝖞, 𝖆𝖑𝖙𝖊𝖗𝖘 𝖆𝖓𝖉 𝖆𝖉𝖏𝖚𝖘𝖙𝖘 𝖎𝖙'𝖘 𝖈𝖗𝖊𝖆𝖙𝖎𝖔𝖓𝖘 𝖎𝖓 𝖎𝖙'𝖘 𝖉𝖎𝖛𝖎𝖓𝖊 𝖎𝖒𝖆𝖌𝖊.
     public async update(username: string, email: string, password: string, expertise: string, yearsExperience: number, dob: Date, id: number): Promise<boolean> {
         try {
-            const result: userResult[] = await api.queryDatabase("UPDATE users SET username = ? email = ? password = ? WHERE userId = ?", [username, email, password, id]) as userResult[];
+            const result: userResult[] = await api.queryDatabase("UPDATE users SET username = ? email = ? password = ? expertise = ? yearsExperience = ? dob = ? WHERE userId = ?", [username, email, password, expertise, yearsExperience, dob, id]) as userResult[];
             console.log("Succes", result);
             return true;
         }
@@ -213,5 +221,33 @@ export class User {
 
     public setUserName(username: string): void {
         this._username = username;
+    }
+
+    public getExpertise(): string {
+        return this._expertise;
+    }
+
+    public setExpertise(expertise: string): void {
+        this._expertise = expertise;
+    }
+
+    public getDob(): Date {
+        return this._dob;
+    }
+
+    public setDob(dob: Date): void {
+        this._dob = dob;
+    }
+
+    public getExperience(): number {
+        return this._yearsExperience;
+    }
+
+    public setExperience(experience: number): void {
+        this._yearsExperience = experience;
+    }
+
+    public getCreatedAt(): Date {
+        return this._createdAt;
     }
 }

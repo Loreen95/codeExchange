@@ -3,6 +3,10 @@ export type userResult = {
     username: string;
     email: string;
     password: string;
+    expertise: string;
+    dob: Date;
+    yearsExperience: number;
+    createdAt: Date;
 };
 
 export type postResult = {
@@ -11,7 +15,7 @@ export type postResult = {
     title: string;
     content: string;
     rating: number;
-    date: string;
+    createdAt: string;
 };
 
 export type commentResult = {
@@ -21,5 +25,5 @@ export type commentResult = {
     title: string;
     content: string;
     rating: number;
-    date: string;
+    createdAt: string;
 };

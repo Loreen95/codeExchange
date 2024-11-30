@@ -688,6 +688,7 @@ input:-webkit-autofill:active{
 /* Footer */
 .tempitem {
     display: flex;
+    margin-top: 4%;
     justify-content: center;
     background-color: transparent;
     flex-direction: column;
