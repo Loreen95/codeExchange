@@ -71,7 +71,7 @@ export class PostClass {
 
                 insertPostsHere.insertAdjacentHTML("beforeend", `
                     <div class="question">
-                        <a href="profile.html?user=${userId}" class="navLink"><p id="usersname">${userName}</a> asks:</p>
+                        <a href="profile.html?user=${userId}" class="navLink">${userName}: </a>
                         <a id="postNr${postIndex}">
                             <div class="questionContent">
                                 <h1>${titleOfPost}</h1>
@@ -110,7 +110,6 @@ export class PostClass {
     public async renderComments(): Promise<void> {
         const insertCommenthere: HTMLDivElement = document.querySelector(".awnsers")!;
         const commentList: Comment[] | undefined = await this._commentModel.getCommentsByMessageId(Number(sessionStorage.getItem("post_Nr")));
-
         commentList.forEach(async _comment => {
             let rating: number = 0;
             if (String(_comment.getRating()) !== String(null)) {
