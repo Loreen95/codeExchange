@@ -1,14 +1,11 @@
-// The file name should be pretty self explanatory as to the contents of this file.
-
 // Collect seperate files and instanciate needed objects.
 import { User } from "../models/User";
 import UserInterfaceClass from "../views/interface";
 
-export class LoginClass {
-    private _userModel: User;
+export class LoginController {
+    private _userModel: User | undefined;
     private _UI: UserInterfaceClass;
     public constructor() {
-        this._userModel = new User(0, "", "", "", "", new Date(0), 0, new Date(0));
         this._UI = new UserInterfaceClass();
     }
 
@@ -31,6 +28,7 @@ export class LoginClass {
     *  And the function promises returns an object with the custom User datatype or nothing at all
     */
     public async checkRecords(givenUsernameOrEmail: string, givenPassword: string): Promise<User | undefined> {
+        this._userModel = new User(0, givenUsernameOrEmail, givenUsernameOrEmail, givenPassword);
         let resultRecords: User | undefined;
         if (this.isEmail(givenUsernameOrEmail)) {
             console.log("The user used an email address.");
@@ -46,21 +44,21 @@ export class LoginClass {
             return undefined;
         }
         if (this.isEmail(givenUsernameOrEmail)) {
-            if (resultRecords.getEmail() !== givenUsernameOrEmail) {
+            if (resultRecords.email !== givenUsernameOrEmail) {
                 this._errorMessage = "The email does not match our records!";
                 console.log("Email Check Failed:", resultRecords);
                 return undefined;
             }
         }
         else {
-            if (resultRecords.getUserName() !== givenUsernameOrEmail) {
+            if (resultRecords.userName !== givenUsernameOrEmail) {
                 this._errorMessage = "The email or username does not match our records!";
                 console.log("Username Check:", resultRecords);
                 return undefined;
             }
         }
 
-        if (resultRecords.getPassword() !== givenPassword) {
+        if (resultRecords.password !== givenPassword) {
             this._errorMessage = "The password does not match our records!";
             console.log("Wachtwoord Check:", resultRecords);
             return undefined;
@@ -94,7 +92,7 @@ export class LoginClass {
                 const user: User | undefined = await this.checkRecords(givenUsernameOrEmail, givenPassword);
                 if (user) {
                     this._UI.unleashTheErrorPopup(false);
-                    const userId: number | string = user.getId().toString();
+                    const userId: number | string = String(user.userId);
                     sessionStorage.setItem("session", userId);
                     sessionStorage.setItem("lang", "en");
                     successMessage.innerText += "You have logged in, redirecting to homepage.";

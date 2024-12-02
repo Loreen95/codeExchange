@@ -7,7 +7,7 @@ import { User } from "../models/User";
 import { LanguageClass } from "../controllers/LanguageController";
 
 const UI: UserInterfaceClass = new UserInterfaceClass();
-const userModel: User = new User(0, "", "", "", "", new Date(0), 0, new Date(0));
+const userModel: User = new User(0, "", "", "");
 const logout: LogoutClass = new LogoutClass();
 
 // this collects all information from the defaut html page and malforms it into a horrific nodelist for later use
@@ -47,8 +47,8 @@ for (let l: number = 0; l < userNameOnPage.length; l++) {
     // Ophalen van de elementen
     // Ophalen van gebruikersinformatie
     const user: User | undefined = await userModel.getUserById(Number(sessionStorage.getItem("session")));
-    const userName: string | undefined = user?.getUserName();
-    const userId: number | undefined = user?.getId();
+    const userName: string | undefined = user?.userName;
+    const userId: number | undefined = user?.userId;
     if (userName && userId) {
         userNameOnPage[l].innerHTML = userName;
         urlToProfile.href = `profile?user=${userId}`;
@@ -57,12 +57,6 @@ for (let l: number = 0; l < userNameOnPage.length; l++) {
         console.error("Gebruiker niet gevonden of gebruikersinformatie ontbreekt.");
     }
 }
-
-// const userNameOnPage: NodeListOf<HTMLElement> = document.querySelectorAll("#injectUsernameHere");
-// for (let l: number = 0; l < userNameOnPage.length; l++) {
-//     const userName: string | undefined = (await userModel.getUserById(Number(sessionStorage.getItem("session"))))?.getUserName();
-//     userNameOnPage[l].innerHTML = `${userName}`;
-// }
 
 // this exists to allow the foldout menu to work.
 const boLeftButtn: HTMLButtonElement = document.querySelector("#foldoutBttn")!;

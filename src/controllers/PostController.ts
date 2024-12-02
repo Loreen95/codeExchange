@@ -12,13 +12,13 @@ export class PostClass {
 
     public constructor() {
         this._postModel = new Post(0, 0, "", "", 0, "");
-        this._userModel = new User(0, "", "", "", "", new Date(0), 0, new Date(0));
+        this._userModel = new User(0, "", "", "");
         this._commentModel = new Comment(0, 0, 0, "", "", 0, "");
         this._UI = new UserInterfaceClass();
     }
 
     public async getUserName(ID: number): Promise<string> {
-        const userName: string | undefined = (await this._userModel.getUserById(Number(ID)))?.getUserName();
+        const userName: number | undefined = (await this._userModel.getUserById(Number(ID)))?.userId;
         return String(userName);
     }
 
@@ -55,8 +55,8 @@ export class PostClass {
             for (const post of postList) {
                 let titleOfPost: string = "";
                 let contentOfPost: string = "";
-                const userName: string | undefined = (await this._userModel.getUserById(Number(post.getAuthorId())))?.getUserName();
-                const userId: number | undefined = (await this._userModel.getUserById(Number(post.getAuthorId())))?.getId();
+                const userName: string | undefined = (await this._userModel.getUserById(Number(post.getAuthorId())))?.userName;
+                const userId: number | undefined = post.getAuthorId();
                 const stringedTimeAndDate: string = String(post.getcreatedAt()).slice(8, 10) + "-" + String(post.getcreatedAt()).slice(5, 7) + "-" + String(post.getcreatedAt()).slice(0, 4) + " | " + String(post.getcreatedAt()).slice(11, 19);
                 let rating: number = 0;
                 if (post.getRating()) {
@@ -77,7 +77,7 @@ export class PostClass {
 
                 insertPostsHere.insertAdjacentHTML("beforeend", `
                     <div class="question">
-                        <a href="profile.html?user=${userId}" class="navLink"><p id="usersname">${userName}</a> asks:</p>
+                        <a href="profile.html?user=${userId}" class="navLink">${userName}: </a>
                         <a id="postNr${postIndex}">
                             <div class="questionContent">
                                 <h1>${titleOfPost}</h1>
@@ -116,19 +116,18 @@ export class PostClass {
     public async renderComments(): Promise<void> {
         const insertCommenthere: HTMLDivElement = document.querySelector(".awnsers")!;
         const commentList: Comment[] | undefined = await this._commentModel.getCommentsByMessageId(Number(sessionStorage.getItem("post_Nr")));
-
         commentList.forEach(async _comment => {
             let rating: number = 0;
             if (String(_comment.getRating()) !== String(null)) {
                 rating = _comment.getRating();
             }
             insertCommenthere.insertAdjacentHTML("beforeend", `
-                    <h1 class="awnserTitle">${(await this._userModel.getUserById(Number(_comment.getUserId())))?.getUserName()}</h1>
+                    <h1 class="awnserTitle">${(await this._userModel.getUserById(Number(_comment.getUserId())))?.userName}</h1>
                 <div class="indivAwnser">
                     <div class="contentPart contentPartComment">${this.encodeContentForVieuwingPurposes(_comment.getContent())}</div>
                 </div>
                 <div class="dateAndRating">
-                    <p class="bottomDate">${String(_comment.getcreatedAt()).slice(8, 10) + "-" + String(_comment.getcreatedAt()).slice(5, 7) + "-" + String(_comment.getcreatedAt()).slice(0, 4) + " | " + String(_comment.getcreatedAt()).slice(11, 19)}</p>
+                    <p class="bottomDate">${String(this._commentModel.getcreatedAt()).slice(8, 10) + "-" + String(this._commentModel.getcreatedAt()).slice(5, 7) + "-" + String(this._commentModel.getcreatedAt()).slice(0, 4) + " | " + String(this._commentModel.getcreatedAt()).slice(11, 19)}</p>
                     <div class="ratingPart">
                         <i class="fa-solid fa-thumbs-up"></i>
                         <p class="insertRatingHere">${rating}</p>
@@ -189,7 +188,7 @@ export class PostClass {
 
             // Log user details (for debugging)
             console.log(`Author ID: ${userId}`);
-            console.log(`Author Name: ${user.getUserName()}`);
+            console.log(`Author Name: ${user.userName}`);
 
             // Get the current date and format it
             const date: Date = new Date();

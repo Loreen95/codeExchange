@@ -874,6 +874,10 @@ input:-webkit-autofill:active{
     align-self: center;
 }
 
+#profileInfo {
+    margin-left: 5%;
+}
+
 .footer {
     display: flex;
     flex-direction: column;

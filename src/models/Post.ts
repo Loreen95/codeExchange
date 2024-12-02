@@ -3,7 +3,7 @@ import { api } from "@hboictcloud/api";
 import { postResult } from "../views/types";
 
 export class Post {
-    private _postId: number;
+    private _postId: number = 0;
     private _authorId: number;
     private _title: string;
     private _content: string;
@@ -11,7 +11,7 @@ export class Post {
     private _createdAt: string;
 
     // constructor:
-    public constructor(postId: number = 0, authorId: number, title: string, content: string, rating: number, createdAt: string) {
+    public constructor(postId: number, authorId: number, title: string, content: string, rating: number, createdAt: string) {
         this._postId = postId;
         this._authorId = authorId;
         this._title = title;
