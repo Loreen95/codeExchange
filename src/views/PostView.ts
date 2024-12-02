@@ -1,7 +1,3 @@
-if (!sessionStorage.getItem("session")) {
-    window.location.href = "http://localhost:3000/login.html";
-}
-
 import { Post } from "../models/Post";
 import { PostClass } from "../controllers/PostController";
 import UserInterfaceClass from "./interface";

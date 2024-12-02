@@ -1,6 +1,6 @@
 /* Global Styling */
 body {
-    background-color: rgb(25, 25, 25);
+    background-color: #191919;
     color: aliceblue;
     padding: 0;
     margin: 0;
@@ -171,12 +171,23 @@ body {
 }
 
 /* Main */
+.mostRecentPosts {
+    background-color: #191919;
+    color: rgb(188, 35, 21);
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 25px;
+}
+
+.mostRecentPosts h1 {
+    margin: 0 0 50px 7%;
+}
+
 .landingsPageContnetBox {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     height: fit-content;
-    margin: 80px 0 80px;
+    margin: 80px 0 10px;
 }
 
 .theSideWithTheText {
@@ -186,37 +197,69 @@ body {
 }
 
 .theSideWithTheText h1 {
-    margin: 50px 50px 0;
-    font-size: 130px;
+    margin: 5px 30px 0 35px;
+    font-size: 190px;
     color: #da2626;
+    letter-spacing: 0.04em;
     font-family: 'Trebuchet MS', sans-serif;
-    border-bottom: solid 3.5px #4b4b4b;
+    /* border-bottom: solid 3.5px #4b4b4b; */
+    text-shadow: 1px 1px #ae0101;
 }
 
 .theSideWithTheText p {
-    font-size: 19px;
+    font-size: 25px;
     font-family: 'Courier New', monospace;
-    margin: 20px 5px 0;
-    background-color: #000000;
-    width: 600px;
+    margin: 0 5px 0;
+    /* background-color: #000000; */
+    width: 875px;
     align-self: center;
+    text-align: right;
 }
 
 .theSideWithTheStats {
-    background-color: cadetblue;
-    /* height: fit-content; */
     font-family: 'Trebuchet MS', sans-serif;
-    font-size: 23px;
-    padding: 15px;
+    font-size: 35px;
     text-align: left;
     letter-spacing: 0.03em;
+    margin: 40px 8% 0 0;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 25px;
+    width: fit-content;
+    background-image: linear-gradient(to bottom right, #2e2d2d, #2b2a2a);
+    background-color: #2e2d2d;
+    color: aliceblue;
+}
+
+.theStats p {
+    margin: 10px 0 0;
+}
+
+.alignRow {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    margin: 0;
+}
+
+.boldCont {
+    font-size: 45px;
+    color: #811b0e;
+    margin: 0;
+}
+
+.begoneMargin {
+    margin: 0 0 6px;
 }
 
 .barka {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-image: linear-gradient(to bottom right, rgb(211, 40, 40), rgb(67, 1, 1));
+    background-image: linear-gradient(to bottom right, #d32828, #430101);
     border-top: 10px rgb(218, 218, 218) solid;
     height: 200px;
     width: 600px;
@@ -931,6 +974,21 @@ code {
     color: aliceblue;
 }
 
+.basicButton:hover {
+    background-image: linear-gradient(to bottom right, #9a1515, #621111);
+    transition: all 0.7s;
+}
+
+.joinUsButton {
+    border: none;
+    background-image: linear-gradient(to bottom right, rgb(181, 36, 36), rgb(125, 25, 25));
+    font-size: 25px;
+    padding: 20px;
+    height: fit-content;
+    border-radius: 100px;
+    color: aliceblue;
+}
+
 .awnsers hr {
     width: 92%;
     margin-left: 6%;
@@ -946,10 +1004,24 @@ code {
     padding: 0;
 }
 
+.centeredHr {
+    width: 97%;
+    align-self: center;
+    border: 2px solid #4b4b4b;
+}
+
 .bottomDate {
     font-family: Tahoma, sans-serif;
     margin: 0;
     color: #505050;
+}
+
+#phoneFormatContnet {
+    display: none;
+}
+
+#desktopFormatContent {
+    display: block;
 }
 
 /* Responsive */
@@ -1122,5 +1194,42 @@ code {
 
     .questionstats {
         margin-left: 0;
+    }
+
+    .theSideWithTheText h1 {
+        font-size: 60px;
+        align-self: center;
+        border: none;
+        margin: 30px 0 20px;
+    }
+
+    .theSideWithTheText p {
+        font-size: 20px;
+        width: 100%;
+        text-align: center;
+        margin: 0 0 30px;
+    }
+
+    .landingsPageContnetBox {
+        flex-direction: column;
+    }
+
+    .theSideWithTheStats {
+        font-size: 20px;
+        flex-direction: column-reverse;
+        background-color: transparent;
+        text-align: center;
+    }
+
+    .joinUsButton {
+        margin-bottom: 25px;
+    }
+
+    #phoneFormatContnet {
+        display: block;
+    }
+
+    #desktopFormatContent {
+        display: none;
     }
 }
