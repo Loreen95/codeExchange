@@ -12,7 +12,7 @@ export class PostClass {
 
     public constructor() {
         this._postModel = new Post(0, 0, "", "", 0, "");
-        this._userModel = new User(0, "", "", "");
+        this._userModel = new User(0, "", "", "", "", new Date(0), 0, new Date(0));
         this._commentModel = new Comment(0, 0, 0, "", "", 0, "");
         this._UI = new UserInterfaceClass();
     }
@@ -50,7 +50,8 @@ export class PostClass {
                 let titleOfPost: string = "";
                 let contentOfPost: string = "";
                 const userName: string | undefined = (await this._userModel.getUserById(Number(post.getAuthorId())))?.getUserName();
-                const stringedTimeAndDate: string = String(post.getDate()).slice(0, 10) + " | " + String(post.getDate()).slice(11, 19);
+                const userId: number | undefined = (await this._userModel.getUserById(Number(post.getAuthorId())))?.getId();
+                const stringedTimeAndDate: string = String(post.getcreatedAt()).slice(8, 10) + "-" + String(post.getcreatedAt()).slice(5, 7) + "-" + String(post.getcreatedAt()).slice(0, 4) + " | " + String(post.getcreatedAt()).slice(11, 19);
                 let rating: number = 0;
                 if (post.getRating()) {
                     rating = post.getRating();
@@ -70,7 +71,7 @@ export class PostClass {
 
                 insertPostsHere.insertAdjacentHTML("beforeend", `
                     <div class="question">
-                        <p id="usersname">${userName} asks:</p>
+                        <a href="profile.html?user=${userId}" class="navLink"><p id="usersname">${userName}</a> asks:</p>
                         <a id="postNr${postIndex}">
                             <div class="questionContent">
                                 <h1>${titleOfPost}</h1>
@@ -121,7 +122,7 @@ export class PostClass {
                     <div class="contentPart contentPartComment">${this.encodeContentForVieuwingPurposes(_comment.getContent())}</div>
                 </div>
                 <div class="dateAndRating">
-                    <p class="bottomDate">${String(_comment.getDate()).slice(0, 10) + " | " + String(_comment.getDate()).slice(11, 19)}</p>
+                    <p class="bottomDate">${String(_comment.getcreatedAt()).slice(8, 10) + "-" + String(_comment.getcreatedAt()).slice(5, 7) + "-" + String(_comment.getcreatedAt()).slice(0, 4) + " | " + String(_comment.getcreatedAt()).slice(11, 19)}</p>
                     <div class="ratingPart">
                         <i class="fa-solid fa-thumbs-up"></i>
                         <p class="insertRatingHere">${rating}</p>

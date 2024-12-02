@@ -9,17 +9,17 @@ export class Comment {
     private _title: string;
     private _content: string;
     private _rating: number;
-    private _date: string;
+    private _createdAt: string;
 
     // constructor:
-    public constructor(commentId: number = 0, userId: number, messageId: number, title: string, content: string, rating: number, date: string) {
+    public constructor(commentId: number = 0, userId: number, messageId: number, title: string, content: string, rating: number, createdAt: string) {
         this._commentId = commentId;
         this._userId = userId;
         this._messageId = messageId;
         this._title = title;
         this._content = content;
         this._rating = rating;
-        this._date = date;
+        this._createdAt = createdAt;
     }
 
     // CRUD methods:
@@ -34,7 +34,7 @@ export class Comment {
             if (result.length > 0) {
                 // Map de resultaten naar een lijst van Comment-objecten
                 return result.map(row =>
-                    new Comment(row.commentId, row.userId, row.messageId, row.title, row.content, row.rating, row.date)
+                    new Comment(row.commentId, row.userId, row.messageId, row.title, row.content, row.rating, row.createdAt)
                 );
             }
 
@@ -47,10 +47,10 @@ export class Comment {
         }
     }
 
-    public async create(userId: number, messageId: number, title: string, content: string, rating: number, date: string): Promise<boolean> {
+    public async create(userId: number, messageId: number, title: string, content: string, rating: number, createdAt: string): Promise<boolean> {
         try {
             const result: commentResult[] = await api.queryDatabase(
-                "INSERT INTO comment (userId, messageId, title, content, rating, date) VALUES (?, ?, ?, ?, ?, ?)", userId, messageId, title, content, rating, date
+                "INSERT INTO comment (userId, messageId, title, content, rating, createdAt) VALUES (?, ?, ?, ?, ?, ?)", userId, messageId, title, content, rating, createdAt
             ) as commentResult[];
 
             console.log("Success", result);
@@ -87,8 +87,8 @@ export class Comment {
         return this._rating;
     }
 
-    public getDate(): string {
-        return this._date;
+    public getcreatedAt(): string {
+        return this._createdAt;
     }
 
     public setTitle(newTitle: string): void {
@@ -103,7 +103,7 @@ export class Comment {
         this._rating = newRating;
     }
 
-    public setDate(newDate: string): void {
-        this._date = newDate;
+    public setcreatedAt(newcreatedAt: string): void {
+        this._createdAt = newcreatedAt;
     }
 }

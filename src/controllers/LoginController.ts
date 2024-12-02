@@ -8,7 +8,7 @@ export class LoginClass {
     private _userModel: User;
     private _UI: UserInterfaceClass;
     public constructor() {
-        this._userModel = new User(0, "", "", "");
+        this._userModel = new User(0, "", "", "", "", new Date(0), 0, new Date(0));
         this._UI = new UserInterfaceClass();
     }
 
@@ -82,12 +82,10 @@ export class LoginClass {
             successMessage.innerHTML = "";
             // These errors should explain what every part does
             if (!givenUsernameOrEmail) {
-                // errorMessage.innerText = "Je moet een e-mailadres opgeven";
                 errorMessage.innerText += "You must provide an email or username\n";
                 this._UI.unleashTheErrorPopup(true);
             }
             if (!givenPassword) {
-                // errorMessage.innerText = "Je moet een wachtwoord opgeven";
                 errorMessage.innerText += "You must provide a password\n";
                 this._UI.unleashTheErrorPopup(true);
             }
