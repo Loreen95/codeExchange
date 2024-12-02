@@ -27,8 +27,14 @@ export class PostClass {
         return totalComments;
     }
 
-    public async renderPosts(): Promise<void> {
-        const postList: Post[] | undefined = await this._postModel.getAllPosts();
+    public async renderPosts(selectionMethod?: string, possibleUserId?: number): Promise<void> {
+        let postList: Post[] | undefined = await this._postModel.getAllPosts();
+        if (selectionMethod === "user spesific") {
+            if (possibleUserId) {
+                postList = await this._postModel.getAllPostsByUserId(possibleUserId);
+            }
+        }
+
         const totalQquestionAmount: Element | null = document.querySelector("#totalQquestionAmount");
 
         if (totalQquestionAmount) {

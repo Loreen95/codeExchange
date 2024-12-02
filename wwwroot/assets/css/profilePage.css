@@ -1,0 +1,16 @@
+.questionContent {
+    display: flex;
+    flex-direction: column;
+    background-color: #080808;
+    border-radius: 5px;
+    padding: 10px 20px 10px;
+    cursor: pointer;
+}
+
+.question {
+    font-family: Tahoma, sans-serif;
+    padding: 0 15px 0;
+    height: fit-content;
+    width: calc(100% - 350px);
+    margin: 0 20px 20px;
+}

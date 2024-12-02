@@ -2,12 +2,13 @@
 <html lang="en">
 
 <head>
-    <!-- http://localhost:3000/landingspagina.html -->
+    <!-- http://localhost:3000/profile.html -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="icon" type="image/x-icon" href="/assets/img/apatureFavicon.ico">
     <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/profilePage.css" />
     <title>Code Exhange - Home</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/atom-one-dark.min.css">
 </head>
@@ -18,9 +19,52 @@
     <section class="vagabondElements"></section>
 
     <main class="tempitem">
+        <section class="userInfoSidebar">
+            <figure class="profilePicture">
+                <i class="fa-regular fa-circle-user"></i>
+            </figure>
+            <aside class="userInformation">
+                <h3>Huagma Jahera</h3>
+                <h3>emai.ill@emai.eme</h3>
+                <p>14/22/2201</p>                
+            </aside>
+        </section>
+
+        <section class="profileStats">
+            <aside class="theActualProfileStetistics">
+                <p>Member since: 09/31/1609</p>
+                <div class="profilestatisticsStatsBottom">
+                    <h2>Questions asked: 12</h2>
+                    <h2>Awnsers given: 34</h2>
+                </div>
+            </aside>
+            <aside class="totalRating">
+                <div class="ratingTotalCenterContainer">
+                    <h1>Total rating</h1>
+                    <p>348</p>
+                </div>
+            </aside>
+        </section>
+
+        <section class="userBiography">
+            <h1>Biography</h1>
+
+            <p>
+                Hello there I have been attached to this timeline for about 20 years now, and I'm statring to get used to the cenery here. I've 5 years of experience complaining about stuff and about 11 years of experience on the piano.
+            </p>
+        </section>
+
+        <hr class="rightAlignedSepirator">
+        <section class="defaultTitleStyling">
+                <h2>abdull</h2>
+                <h2>'s Posts:</h2>
+        </section>
+       
+        <section class="posts"></section>
+
         <div id="profileInfo">
 
-        </div>
+        </div>        
     </main>
 
     <section class="footerFilin"></section>
@@ -30,10 +74,7 @@
     <script src="/src/views/interface.ts" type="module"></script>
     <!-- <script src="/src/views/UserView.ts" type="module"></script> -->
     <script src="/src/views/index.ts" type="module"></script>
-    <!-- <script src="/src/models/Post.ts" type="module"></script> -->
-    <!-- <script src="/src/views/PostView.ts" type="module"></script> -->
-    <!-- <script src="/src/controllers/PostController.ts" type="module"></script> -->
-    <!-- <script src="/src/views/index.ts" type="module"></script> -->
+    <script src="/src/views/profileVieuw.ts" type="module"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
     <script>hljs.highlightAll();</script>
 </body>
