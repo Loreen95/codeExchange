@@ -1,17 +1,16 @@
 // This links this controller to the almightu User Model.
 import { User } from "../models/User";
-import { LoginClass } from "./LoginController";
+import { LoginController } from "./LoginController";
 import UserInterfaceClass from "../views/interface";
 
 // This is where every mayor process takes place right here in this class.
 class RegistrationClass {
-    private _userModel: User;
-    private _login: LoginClass;
+    private _userModel: User | undefined;
+    private _login: LoginController;
     private _UI: UserInterfaceClass;
 
     public constructor() {
-        this._userModel = new User(0, "", "", "", "", new Date(0), 0, new Date(0));
-        this._login = new LoginClass();
+        this._login = new LoginController();
         this._UI = new UserInterfaceClass();
     }
 
@@ -71,6 +70,7 @@ class RegistrationClass {
      * The return value is a void (nothing) because it's just supposed to process and directly display information
     */
     public async onClickRegister(userInputName: string, userInputEmail: string, userInputPassword: string): Promise<void> {
+        this._userModel = new User(0, userInputEmail, userInputName, userInputPassword);
         // This gatheres the needed Html elements to display warnings and information about the provided credentials
         const errorMessage: HTMLParagraphElement = document.querySelector("#errMsg")!;
         const infoMessage: HTMLParagraphElement = document.querySelector("#infoMsg")!;

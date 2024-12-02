@@ -3,7 +3,7 @@ import { api } from "@hboictcloud/api";
 import { commentResult } from "../views/types";
 
 export class Comment {
-    private _commentId: number;
+    private _commentId: number = 0;
     private _userId: number;
     private _messageId: number;
     private _title: string;
@@ -12,7 +12,7 @@ export class Comment {
     private _createdAt: string;
 
     // constructor:
-    public constructor(commentId: number = 0, userId: number, messageId: number, title: string, content: string, rating: number, createdAt: string) {
+    public constructor(commentId: number, userId: number, messageId: number, title: string, content: string, rating: number, createdAt: string) {
         this._commentId = commentId;
         this._userId = userId;
         this._messageId = messageId;

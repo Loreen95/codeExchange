@@ -1,6 +1,5 @@
 import { UserInfo } from "../controllers/UserController";
 import { User } from "../models/User";
-const userModel: User = new User(0, "", "", "", "", new Date(0), 0, new Date(0));
 
 export class UserView {
     public view!: HTMLElement; // ! means always initialize (temp solution)
@@ -19,11 +18,13 @@ export class UserView {
 
     public static async initialize(): Promise<UserView> {
         const userUrl: URLSearchParams = new URLSearchParams(window.location.search);
+        const userModel: User = new User(0, "", "", "");
         const username: string | null = userUrl.get("user");
         if (!username) {
             throw new Error("Username is required in the URL.");
         }
         const user: User | undefined = await userModel.getUserById(Number(username));
+        console.log(user);
         if (!user) {
             throw new Error("User not found.");
         }
