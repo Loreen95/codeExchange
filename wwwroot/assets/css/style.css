@@ -923,7 +923,9 @@ input:-webkit-autofill:active{
     font-family: 'Trebuchet MS', sans-serif;
 }
 
-.footerFillerItem p, .footerFillerItem a, .foldopenMenu a {
+.footerFillerItem p, 
+.footerFillerItem a, 
+.foldopenMenu a {
     font-family: Verdana, sans-serif;
     margin: 0 0 5px 0;
     letter-spacing: 0.05em;
@@ -1178,7 +1180,7 @@ code {
     display: block;
 }
 
-/* Responsive */
+/* this query chainges the content to fit the screen of a phonre */
 @media (max-width: 630px) {
     .defaultInputBox {
         width: 75%;
