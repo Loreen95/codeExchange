@@ -41,7 +41,6 @@ body {
     height: 80px;
     overflow: hidden;
     z-index: 1;
-    box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
 }
 
 .navLinks {
@@ -124,7 +123,7 @@ body {
     top: 0;
     height: 100vh;
     width: 311px;
-    background-color: rgb(41, 42, 44);
+    background-color: #292a2c;
     z-index: 2;
     border-left: solid 1px rgb(28, 28, 28);
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -171,6 +170,140 @@ body {
 }
 
 /* Main */
+.userInfoSidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #292a2c;
+    width: 278px;
+    height: 100%;
+    position: fixed;
+    top: 80px;
+    left: 0;
+}
+
+.userInfoSidebar h3 {
+    margin: 15px 30px 0;
+    font-family: Arial, sans-serif;
+    font-size: 24px;
+}
+
+.userInfoSidebar p {
+    color: #878787;
+    margin: 15px 30px 0;
+    font-size: 20px;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+.profilePicture {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #454545;
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
+    margin: 20px 20px 0;
+    font-size: 120px;
+}
+
+.userInformation {
+    /* background-color: #0f121a; */
+    text-align: left;
+    margin: 20px 0 0;
+}
+
+.profileStats {
+    width: calc(100% - 350px);
+    align-self: flex-end;
+    margin: 100px 30px 20px;
+    background-image: linear-gradient(to bottom right, #c40e0e, #ae0101);
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+}
+
+.theActualProfileStetistics {
+    font-family: 'Trebuchet MS', sans-serif;
+    flex-grow: 1;
+
+    /* background-color: brown; */
+}
+
+.theActualProfileStetistics p {
+    margin: 12px 20px 30px;
+}
+
+.profilestatisticsStatsBottom h2 {
+    margin: 0;
+}
+
+.profilestatisticsStatsBottom {
+    margin: 0 20px 20px;
+}
+
+.totalRating {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    flex-grow: 1;
+
+    font-family: 'Trebuchet MS', sans-serif;
+    color: #2d2d2d;
+}
+
+.ratingTotalCenterContainer {
+    /* background-color: #000000; */
+    margin-right: 20px;
+    text-align: center;
+}
+
+.totalRating h1 {
+
+    font-size: 45px;
+    margin: 0;
+    
+}
+
+.totalRating p {
+
+    margin: 0;
+    font-size: 50px;
+    font-weight: bold;
+    letter-spacing: -0.05em;
+}
+
+.defaultTitleStyling {
+    width: 76%;
+    align-self: flex-end;
+    font-family: 'Trebuchet MS', sans-serif;
+    margin-right: 3%;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+}
+
+.defaultTitleStyling h2 { 
+    font-size: 45px;
+    margin: 0;
+}
+
+.userBiography {
+    background-color: #2d2b2b;
+    width: calc(100% - 386px);
+    align-self: flex-end;
+    margin: 0 30px 30px;
+    border-radius: 5px;
+    font-family: 'Trebuchet MS', sans-serif;
+    padding: 20px;
+}
+
+.userBiography h1 {
+    margin: 0;
+}
+
 .mostRecentPosts {
     background-color: #191919;
     color: rgb(188, 35, 21);
@@ -198,7 +331,7 @@ body {
 
 .theSideWithTheText h1 {
     margin: 5px 30px 0 35px;
-    font-size: 190px;
+    font-size: 12vw;
     color: #da2626;
     letter-spacing: 0.04em;
     font-family: 'Trebuchet MS', sans-serif;
@@ -234,15 +367,29 @@ body {
     color: aliceblue;
 }
 
-.theStats p {
+/* .theStats p {
     margin: 10px 0 0;
-}
+} */
 
 .alignRow {
     display: flex;
     flex-direction: row;
     align-items: flex-end;
     margin: 0;
+}
+
+.alignRow2 {
+    display: flex;
+    flex-direction: row;
+}
+
+.alignRow2 p {
+    margin: 0;
+}
+
+.secondPElementInAlignrow {
+    padding-left: 10px;
+    letter-spacing: -0.001em;
 }
 
 .boldCont {
@@ -267,6 +414,7 @@ body {
     position: fixed;
     left: -200px;
     bottom: -75px;
+    z-index: 5;
 }
 
 .barka button {
@@ -731,7 +879,7 @@ input:-webkit-autofill:active{
 /* Footer */
 .tempitem {
     display: flex;
-    margin-top: 10px;
+    margin-top: 0;
     justify-content: center;
     background-color: transparent;
     flex-direction: column;
@@ -990,8 +1138,9 @@ code {
     font-size: 25px;
     padding: 20px;
     height: fit-content;
-    border-radius: 100px;
+    border-radius: 10px;
     color: aliceblue;
+    margin-top: 20px;
 }
 
 .awnsers hr {

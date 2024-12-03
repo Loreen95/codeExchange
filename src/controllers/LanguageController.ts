@@ -156,11 +156,59 @@ export class LanguageClass {
             },
             wakingWorld: {
                 en: "Wake up",
-                nl: "word wakker",
+                nl: "Word wakker",
             },
             asks: {
                 en: "asks",
                 nl: "vraagt",
+            },
+            welcome: {
+                en: "Welcome",
+                nl: "Welkom",
+            },
+            members: {
+                en: "Members",
+                nl: "Leden",
+            },
+            questions: {
+                en: "Questions",
+                nl: "Vragen",
+            },
+            answers: {
+                en: "Answers",
+                nl: "Antwoorden",
+            },
+            recent: {
+                en: "Most recent posts",
+                nl: "Meest recente berichten",
+            },
+            join: {
+                en: "Join the community",
+                nl: "Word lid van de community",
+            },
+            translate_service: {
+                en: "Translate services",
+                nl: "Vertaal service",
+            },
+            education: {
+                en: "Education",
+                nl: "Lessen",
+            },
+            all_questions: {
+                en: "All Questions",
+                nl: "Alle Vragen",
+            },
+            create_answer: {
+                en: "Add answer",
+                nl: "Antwoord toevoegen",
+            },
+            own_question: {
+                en: "Ask your own question",
+                nl: "Stel een eigen vraag",
+            },
+            not_found: {
+                en: "Didn't find what you were looking for?",
+                nl: "Niet gevonden wat je zocht?",
             },
         });
     }

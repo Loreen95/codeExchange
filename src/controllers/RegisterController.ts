@@ -36,7 +36,7 @@ class RegistrationClass {
             return false;
         }
         else {
-            // This is the final exam that checks the afinnity and strength of the password.
+            // This is the final exam that checks the affinity and strength of the password.
             if (givenPassword.match(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()]).{8,}$/)) {
                 return true;
             }
