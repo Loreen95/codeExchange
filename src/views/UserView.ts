@@ -39,8 +39,16 @@ export class UserView {
             <p>Email: ${userInfo.userEmail}</p>
             <p>Birthday: ${userInfo.dob}</p>
             <p>Experience: ${userInfo.experience}</p>
-            <p>Expertise: ${userInfo.expertise}</p>
+            <p>Expertise: ${userInfo.bio}</p>
             <p>Member since: ${userInfo.stringedTimeAndDate} </p>
         `;
+        const inserUsernamesHere: NodeListOf<HTMLHeadingElement> = document.querySelectorAll("#insertNameHere");
+        for (let i: number = 0; i < inserUsernamesHere.length; i++) {
+            inserUsernamesHere[i].innerText = String(userInfo.userName);
+        }
+        document.querySelector("#insertBirthdayHere")!.innerHTML = String(userInfo.dob);
+        document.querySelector("#insertEmailHere")!.innerHTML = String(userInfo.userEmail);
+        document.querySelector("#insertBiographyHere")!.innerHTML = String(userInfo.bio);
+        // document.querySelector("#insert")!.innerHTML = String(userInfo.);
     }
 }

@@ -77,7 +77,7 @@ export class PostClass {
 
                 insertPostsHere.insertAdjacentHTML("beforeend", `
                     <div class="question">
-                        <a href="profile.html?user=${userId}" class="navLink">${userName}: </a>
+                        <a href="profile.html?user=${userId}" class="navLink" id="whoAsked">${userName}: <p data-translate="asks"></p></a>
                         <a id="postNr${postIndex}">
                             <div class="questionContent">
                                 <h1>${titleOfPost}</h1>

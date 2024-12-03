@@ -27,7 +27,7 @@ export class UserController extends Controller {
         const userName: string = this.userView.userModel.userName;
         const dob: string = String(this.userView.userModel.dob).slice(8, 10) + "-" + String(this.userView.userModel.dob).slice(5, 7) + "-" + String(this.userView.userModel.dob).slice(0, 4);
         const experience: number = (Number(this.userView.userModel.experience));
-        const expertise: string | undefined = this.userView.userModel.expertise;
+        const bio: string | undefined = this.userView.userModel.bio;
         const stringedTimeAndDate: string = String(this.userView.userModel.createdAt).slice(8, 10) + "-" + String(this.userView.userModel.createdAt).slice(5, 7) + "-" + String(this.userView.userModel.createdAt).slice(0, 4) + " | " + String(this.userView.userModel.createdAt).slice(11, 19);
         return {
             userId,
@@ -35,7 +35,7 @@ export class UserController extends Controller {
             userName,
             dob,
             experience,
-            expertise,
+            bio,
             stringedTimeAndDate,
         };
     }

@@ -10,7 +10,7 @@ export class User {
     private _email: string;
     private _password: string;
     private _username: string;
-    private _expertise: string | undefined;
+    private _bio: string | undefined;
     private _dob: Date | undefined;
     private _yearsExperience: number | undefined;
     private _createdAt: Date | undefined;
@@ -75,7 +75,7 @@ export class User {
             const result: userResult[] = await api.queryDatabase("SELECT * from user WHERE userId = ?", [userId]) as userResult[];
             if (result.length > 0) {
                 const user: User = new User(result[0].userId, result[0].email, result[0].username, result[0].password);
-                user.expertise = result[0].expertise;
+                user.bio = result[0].bio;
                 user.dob = result[0].dob;
                 user.experience = result[0].yearsExperience;
                 user.createdAt = result[0].createdAt;
@@ -158,9 +158,9 @@ export class User {
         }
     }
 
-    public async update(username: string, email: string, password: string, expertise: string, yearsExperience: number, dob: Date, id: number): Promise<boolean> {
+    public async update(username: string, email: string, password: string, bio: string, yearsExperience: number, dob: Date, id: number): Promise<boolean> {
         try {
-            const result: userResult[] = await api.queryDatabase("UPDATE users SET username = ? email = ? password = ? expertise = ? yearsExperience = ? dob = ? WHERE userId = ?", [username, email, password, expertise, yearsExperience, dob, id]) as userResult[];
+            const result: userResult[] = await api.queryDatabase("UPDATE users SET username = ? email = ? password = ? bio = ? yearsExperience = ? dob = ? WHERE userId = ?", [username, email, password, bio, yearsExperience, dob, id]) as userResult[];
             console.log("Succes", result);
             return true;
         }
@@ -211,12 +211,12 @@ export class User {
         this._username = username;
     }
 
-    public get expertise(): string | undefined {
-        return this._expertise;
+    public get bio(): string | undefined {
+        return this._bio;
     }
 
-    public set expertise(expertise: string) {
-        this._expertise = expertise;
+    public set bio(bio: string) {
+        this._bio = bio;
     }
 
     public get dob(): Date | undefined {
