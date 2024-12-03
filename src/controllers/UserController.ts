@@ -1,15 +1,6 @@
 import { Controller } from "./Controller";
 import { UserView } from "../views/UserView";
-
-export interface UserInfo {
-    userId: number;
-    userEmail: string;
-    userName: string;
-    dob: string;
-    expertise: string | undefined;
-    experience: number;
-    stringedTimeAndDate: string;
-}
+import { UserInfo } from "../views/types";
 
 export class UserController extends Controller {
     public userView: UserView;
@@ -17,6 +8,17 @@ export class UserController extends Controller {
     public constructor(userView: UserView) {
         super(userView.view);
         this.userView = userView;
+    }
+
+    public async renderUser(): Promise<void> {
+        try {
+            const userInfo: UserInfo = this.getUserInfo();
+            this.userView.render(userInfo);
+            await this.render();
+        }
+        catch (reason) {
+            console.error("Error rendering Userpage: ", reason);
+        }
     }
 
     public getUserInfo(): UserInfo {
@@ -36,16 +38,5 @@ export class UserController extends Controller {
             expertise,
             stringedTimeAndDate,
         };
-    }
-
-    public async renderUser(): Promise<void> {
-        try {
-            const userInfo: UserInfo = this.getUserInfo();
-            this.userView.render(userInfo);
-            await this.render();
-        }
-        catch (reason) {
-            console.error("Error rendering Userpage: ", reason);
-        }
     }
 }

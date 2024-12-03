@@ -27,3 +27,13 @@ export type commentResult = {
     rating: number;
     createdAt: string;
 };
+
+export interface UserInfo {
+    userId: number;
+    userEmail: string;
+    userName: string;
+    dob: string;
+    expertise: string | undefined;
+    experience: number;
+    stringedTimeAndDate: string;
+}

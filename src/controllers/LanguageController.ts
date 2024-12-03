@@ -210,6 +210,14 @@ export class LanguageClass {
                 en: "Didn't find what you were looking for?",
                 nl: "Niet gevonden wat je zocht?",
             },
+            text1: {
+                en: "You have just arrived in the home of many many developers And like why are you still reading this, you weren't supposed to do that. Now you know this text only exists for deccoration and the illusion is ruined.",
+                nl: "Je bent zojuist aangekomen in het 'thuis' van vele ontwikkelaars. En waarom lees je dit nog? Dit moest je helemaal niet doen. En nu weet je dat deze tekst enkel decoratief is en is de illusie geruineerd.",
+            },
+            text2: {
+                en: "Join thousands of other developers on our wonderfull platform or something. So um. your screen is pretty thin huh?",
+                nl: "Kom bij de duizenden andere ontwikkelaars op ons geweldige platform. En eh, je scherm is best dun huh",
+            },
         });
     }
 
