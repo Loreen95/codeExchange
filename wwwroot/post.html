@@ -24,7 +24,7 @@
                     <p class="questionstats"></p>
                 </div>
                 <a id="notTheOwner"><button data-translate="createpost"></button></a>
-                <a id="isTheOwner"><button>Edit question</button></a>
+                <a id="isTheOwner"><button data-translate="edit"></button></a>
             </section>
            
             <section class="questionsectionContainer">
@@ -42,16 +42,15 @@
                     <h2 id="injectawnseramountHere">0</h2>
                 </div>
         
-                <button class="basicButton" data-translate="create_answer"></button>
+                <button class="basicButton" data-translate="create_answer" id="createAnswer"></button>
             </section>
             <hr class="rightAlignedSepirator">
             <!-- This section tag class awnsers is where the comments will be injected -->
             <section class="awnsers"></section>
             <!-- This is where the awnsers will be injected -->
             <section class="noAwnsersFound">
-                    <h2 data-translate="not_found"></h2>
-                
-                <button class="basicButton" data-translate="own_question"></button>
+                <h2 data-translate="not_found"></h2>
+                <a href="createPost.html" class="basicButton navLink" data-translate="own_question"></a>
             </section>
         </main>    
 
@@ -62,8 +61,4 @@
     <script src="/src/views/interface.ts" type="module"></script>
     <script src="/src/views/PostView.ts" type="module"></script>
     <script src="/src/controllers/PostController.ts" type="module"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
-    <script></script> -->
-    <!-- <script src="../node_modules/highlight.js/"></script>
-    <script>hljs.highlightAll();</script> -->
 </body>

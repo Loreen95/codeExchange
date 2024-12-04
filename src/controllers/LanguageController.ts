@@ -31,8 +31,8 @@ export class LanguageClass {
     private setTranslation(): void {
         localization.setTranslations({
             profile: {
-                en: "Profile",
-                nl: "Profiel",
+                en: "Edit profile",
+                nl: "Profiel aanpassen",
             },
             register: {
                 en: "Register",
@@ -150,6 +150,10 @@ export class LanguageClass {
                 en: "Create post",
                 nl: "Bericht aamaken",
             },
+            commentmessage: {
+                en: "Create answer",
+                nl: "Schrijf een reactie",
+            },
             content: {
                 en: "Content",
                 nl: "Bericht",
@@ -217,6 +221,22 @@ export class LanguageClass {
             text2: {
                 en: "Join thousands of other developers on our wonderfull platform or something. So um. your screen is pretty thin huh?",
                 nl: "Kom bij de duizenden andere ontwikkelaars op ons geweldige platform. En eh, je scherm is best dun huh",
+            },
+            memberSince: {
+                en: "Member since:",
+                nl: "Lid sinds:",
+            },
+            dob: {
+                en: "Date of birth",
+                nl: "Geboortedatum",
+            },
+            edit: {
+                en: "Edit",
+                nl: "Wijzigen",
+            },
+            createcomment: {
+                en: "Submit Answer",
+                nl: "Stuur antwoord",
             },
         });
     }

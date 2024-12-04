@@ -2,12 +2,15 @@
 <html lang="en">
 
 <head>
+    <!-- http://localhost:3000/profile.html -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="icon" type="image/x-icon" href="/assets/img/apatureFavicon.ico">
     <link rel="stylesheet" href="/assets/css/style.css" />
-    <title>Code Exhange</title>
+    <link rel="stylesheet" href="/assets/css/profilePage.css" />
+    <title>Code Exhange - Edit rofile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/atom-one-dark.min.css">
 </head>
 
 <body>
@@ -16,26 +19,16 @@
     <section class="vagabondElements"></section>
 
     <main class="tempitem">
-        <section class="defaultInputBox">
-            <h1 data-translate="postmessage"> </h1>
-            <label for="title" data-translate="title"> </label>
-            <input id="titleInput" type="text" name="title" placeholder="Title...">
-            <label for="content" data-translate="content"> </label>
-            <textarea id="contentInput"></textarea>
-            <section class="buttonRow">
-                <button class="createPost" data-translate="createpost"> </button>
-            </section>       
-        </section>
+        
     </main>
 
     <section class="footerFilin"></section>
 
     <script src="https://kit.fontawesome.com/d5a758504d.js" crossorigin="anonymous"></script>
     <script src="/src/views/script.ts" type="module"></script>
-    <script src="/src/views/RegisterView.ts" type="module"></script>
-    <script src="/src/views/PostView.ts" type="module"></script>
     <script src="/src/views/interface.ts" type="module"></script>
-
+    <script src="/src/views/index.ts" type="module"></script>
+    <script src="/src/views/profileVieuw.ts" type="module"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
 </body>
-
-</html>

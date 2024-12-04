@@ -62,6 +62,23 @@ export class Comment {
         }
     }
 
+    public async countTotalComments(): Promise<number | undefined> {
+        try {
+            const result: commentResult[] = await api.queryDatabase("SELECT COUNT(*) as count FROM comment") as commentResult[];
+            if (result.length > 0) {
+                return result[0].count;
+            }
+            else {
+                console.error("Geen resultaten gevonden in de query.");
+                return undefined;
+            }
+        }
+        catch (reason) {
+            console.error("Error fetching result", reason);
+            return undefined;
+        }
+    }
+
     // getters and setters:
     public getCommentId(): number {
         return this._commentId;
@@ -87,7 +104,7 @@ export class Comment {
         return this._rating;
     }
 
-    public getcreatedAt(): string {
+    public getCreatedAt(): string {
         return this._createdAt;
     }
 

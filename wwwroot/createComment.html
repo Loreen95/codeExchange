@@ -16,14 +16,15 @@
     <section class="vagabondElements"></section>
 
     <main class="tempitem">
-        <section class="defaultInputBox">
-            <h1 data-translate="postmessage"> </h1>
-            <label for="title" data-translate="title"> </label>
-            <input id="titleInput" type="text" name="title" placeholder="Title...">
+        <form class="defaultInputBox">
+            <section class="questionsectionContainer">
+                <section class="contentPart"></section>
+            </section>
+            <h1 data-translate="commentmessage"> </h1>
             <label for="content" data-translate="content"> </label>
             <textarea id="contentInput"></textarea>
             <section class="buttonRow">
-                <button class="createPost" data-translate="createpost"> </button>
+                <button class="createComment" data-translate="createcomment"> </button>
             </section>       
         </section>
     </main>
@@ -35,7 +36,6 @@
     <script src="/src/views/RegisterView.ts" type="module"></script>
     <script src="/src/views/PostView.ts" type="module"></script>
     <script src="/src/views/interface.ts" type="module"></script>
-
 </body>
 
 </html>

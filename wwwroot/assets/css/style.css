@@ -169,110 +169,6 @@ body {
     background-color: brown;
 }
 
-/* Main */
-.userInfoSidebar {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #292a2c;
-    width: 278px;
-    height: 100%;
-    position: fixed;
-    top: 80px;
-    left: 0;
-}
-
-.userInfoSidebar h3 {
-    margin: 15px 30px 0;
-    font-family: Arial, sans-serif;
-    font-size: 24px;
-}
-
-.userInfoSidebar p {
-    color: #878787;
-    margin: 15px 30px 0;
-    font-size: 20px;
-    font-family: 'Trebuchet MS', sans-serif;
-}
-
-.profilePicture {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #454545;
-    border-radius: 50%;
-    height: 150px;
-    width: 150px;
-    margin: 20px 20px 0;
-    font-size: 120px;
-}
-
-.userInformation {
-    /* background-color: #0f121a; */
-    text-align: left;
-    margin: 20px 0 0;
-}
-
-.profileStats {
-    width: calc(100% - 350px);
-    align-self: flex-end;
-    margin: 100px 30px 20px;
-    background-image: linear-gradient(to bottom right, #c40e0e, #ae0101);
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-}
-
-.theActualProfileStetistics {
-    font-family: 'Trebuchet MS', sans-serif;
-    flex-grow: 1;
-
-    /* background-color: brown; */
-}
-
-.theActualProfileStetistics p {
-    margin: 12px 20px 30px;
-}
-
-.profilestatisticsStatsBottom h2 {
-    margin: 0;
-}
-
-.profilestatisticsStatsBottom {
-    margin: 0 20px 20px;
-}
-
-.totalRating {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    justify-content: center;
-    flex-grow: 1;
-
-    font-family: 'Trebuchet MS', sans-serif;
-    color: #2d2d2d;
-}
-
-.ratingTotalCenterContainer {
-    /* background-color: #000000; */
-    margin-right: 20px;
-    text-align: center;
-}
-
-.totalRating h1 {
-
-    font-size: 45px;
-    margin: 0;
-    
-}
-
-.totalRating p {
-
-    margin: 0;
-    font-size: 50px;
-    font-weight: bold;
-    letter-spacing: -0.05em;
-}
 
 .defaultTitleStyling {
     width: 76%;
@@ -332,10 +228,6 @@ body {
     color: #505050;
 }
 
-#profileInfo {
-    margin: 400px 0 0;
-}
-
 .landingsPageContnetBox {
     display: flex;
     flex-direction: row;
@@ -375,7 +267,7 @@ body {
     font-size: 35px;
     text-align: left;
     letter-spacing: 0.03em;
-    margin: 40px 8% 0 0;
+    margin: 40px 8% 0 5%;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
@@ -399,19 +291,34 @@ body {
     margin: 0;
 }
 
-.alignRow2 {
-    display: flex;
-    flex-direction: row;
-}
-
-.alignRow2 p {
-    margin: 0;
-}
-
 .secondPElementInAlignrow {
     padding-left: 10px;
     letter-spacing: -0.001em;
 }
+
+.alignRow2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-left: 50%;
+}
+
+.alignRow2 p {
+    margin: 0 0 0 10px;
+}
+
+.statValue {
+    color: #da2626;;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+/* #memberStats,
+#questionStats,
+#answerStats {
+    color: #811b0e;
+} */
 
 .boldCont {
     font-size: 45px;
@@ -635,12 +542,12 @@ body {
     cursor: pointer;
 }
 
-.registerNewUser, .loginUser, .createPost {
+.registerNewUser, .loginUser, .createPost, .createComment {
     background-image: linear-gradient(to bottom right, rgb(211, 40, 40), rgb(158, 39, 39));
     padding: 15px 40px 15px 40px;
 }
 
-.registerNewUser:hover, .loginUser:hover, .createPost:hover {
+.registerNewUser:hover, .loginUser:hover, .createPost:hover, .createComment:hover {
     background-image: linear-gradient(to bottom right, rgb(211, 40, 40), rgb(200, 22, 22));
     transition: ease 0.3s;
 }
@@ -907,10 +814,6 @@ input:-webkit-autofill:active{
     height: fit-content;
     width: 100%;
     align-self: center;
-}
-
-#profileInfo {
-    margin-left: 5%;
 }
 
 .footer {
@@ -1201,8 +1104,20 @@ code {
     display: block;
 }
 
-/* this query chainges the content to fit the screen of a phonre */
+pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  max-width: 100%;
+  overflow: auto;
+}
+
+
+/* this query chainges the content to fit the screen of a phone */
 @media (max-width: 630px) {
+    pre {
+        max-width: 100%;            /* Ensures it doesn't overflow */
+        overflow-x: auto;           /* Horizontal scrolling for large content */
+    }
     .defaultInputBox {
         width: 75%;
     }

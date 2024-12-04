@@ -44,8 +44,6 @@ else {
 const userNameOnPage: NodeListOf<HTMLLinkElement> = document.querySelectorAll("#injectUsernameHere");
 const urlToProfile: HTMLLinkElement = document.querySelector("#addUrlHere")!;
 for (let l: number = 0; l < userNameOnPage.length; l++) {
-    // Ophalen van de elementen
-    // Ophalen van gebruikersinformatie
     const user: User | undefined = await userModel.getUserById(Number(sessionStorage.getItem("session")));
     const userName: string | undefined = user?.userName;
     const userId: number | undefined = user?.userId;
@@ -56,6 +54,13 @@ for (let l: number = 0; l < userNameOnPage.length; l++) {
     else {
         console.error("Gebruiker niet gevonden of gebruikersinformatie ontbreekt.");
     }
+}
+
+const insertProfileURL: HTMLLinkElement = document.querySelector("#profileURL")!;
+const user: User | undefined = await userModel.getUserById(Number(sessionStorage.getItem("session")));
+const userId: number | undefined = user?.userId;
+if (userId) {
+    insertProfileURL.href = `editProfile?user=${userId}`;
 }
 
 // this exists to allow the foldout menu to work.

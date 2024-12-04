@@ -2,10 +2,15 @@ import { Post } from "../models/Post";
 import { PostClass } from "../controllers/PostController";
 import UserInterfaceClass from "./interface";
 import hljs from "highlight.js";
+import { User } from "../models/User";
+import { Comment } from "../models/Comment";
 
 const postModel: Post = new Post(0, 0, "", "", 0, "");
 const post: PostClass = new PostClass();
 const UI: UserInterfaceClass = new UserInterfaceClass();
+
+const userModel: User = new User(0, "", "", "");
+const commentModel: Comment = new Comment(0, 0, 0, "", "", 0, "");
 
 const insertPostsHere: HTMLDivElement = document.querySelector(".posts")!;
 const currentpost: Post | undefined = await postModel.getPostById(Number(sessionStorage.getItem("post_Nr")));
@@ -76,3 +81,22 @@ if (awnseramount) {
 }
 
 hljs.highlightAll();
+
+const questionStatsDisplay: HTMLParagraphElement = document.querySelector("#questionStats")!;
+const answerStatsDisplay: HTMLParagraphElement = document.querySelector("#answerStats")!;
+const memberStatsDisplay: HTMLParagraphElement = document.querySelector("#memberStats")!;
+
+const questionStats: number | undefined = await postModel.countTotalPosts();
+const answerStats: number | undefined = await commentModel.countTotalComments();
+const memberStats: number | undefined = await userModel.countTotalUsers();
+
+if (!questionStats || !answerStats || !memberStats) {
+    questionStatsDisplay.innerHTML = "0";
+    answerStatsDisplay.innerHTML = "0";
+    memberStatsDisplay.innerHTML = "0";
+}
+else {
+    questionStatsDisplay.innerHTML = `${questionStats}`;
+    answerStatsDisplay.innerHTML = `${answerStats}`;
+    memberStatsDisplay.innerHTML = `${memberStats}`;
+}

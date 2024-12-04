@@ -5,8 +5,10 @@ export type userResult = {
     password: string;
     expertise: string;
     dob: Date;
+    bio: string;
     yearsExperience: number;
     createdAt: Date;
+    count: number;
 };
 
 export type postResult = {
@@ -16,6 +18,7 @@ export type postResult = {
     content: string;
     rating: number;
     createdAt: string;
+    count: number;
 };
 
 export type commentResult = {
@@ -26,6 +29,7 @@ export type commentResult = {
     content: string;
     rating: number;
     createdAt: string;
+    count: number;
 };
 
 export interface UserInfo {
@@ -33,7 +37,7 @@ export interface UserInfo {
     userEmail: string;
     userName: string;
     dob: string;
-    expertise: string | undefined;
     experience: number;
     stringedTimeAndDate: string;
+    bio: string;
 }

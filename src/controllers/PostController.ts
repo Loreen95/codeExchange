@@ -97,8 +97,9 @@ export class PostClass {
                 const postElement: Element | null = insertPostsHere.querySelector(`#postNr${postIndex}`);
                 if (postElement) {
                     postElement.addEventListener("click", () => {
-                        sessionStorage.setItem("post_Nr", String(post.getPostId()));
-                        window.location.href = "http://localhost:3000/post.html";
+                        const postId: number = post.getPostId();
+                        sessionStorage.setItem("post_Nr", String(postId));
+                        window.location.href = `http://localhost:3000/post?post=${postId}`;
                     });
                 }
                 else {
@@ -127,7 +128,7 @@ export class PostClass {
                     <div class="contentPart contentPartComment">${this.encodeContentForVieuwingPurposes(_comment.getContent())}</div>
                 </div>
                 <div class="dateAndRating">
-                    <p class="bottomDate">${String(this._commentModel.getcreatedAt()).slice(8, 10) + "-" + String(this._commentModel.getcreatedAt()).slice(5, 7) + "-" + String(this._commentModel.getcreatedAt()).slice(0, 4) + " | " + String(this._commentModel.getcreatedAt()).slice(11, 19)}</p>
+                    <p class="bottomDate">${String(_comment.getCreatedAt()).slice(8, 10) + "-" + String(_comment.getCreatedAt()).slice(5, 7) + "-" + String(_comment.getCreatedAt()).slice(0, 4) + " | " + String(_comment.getCreatedAt()).slice(11, 19)}</p>
                     <div class="ratingPart">
                         <i class="fa-solid fa-thumbs-up"></i>
                         <p class="insertRatingHere">${rating}</p>
@@ -137,6 +138,17 @@ export class PostClass {
                 <hr>
             `);
         });
+
+        const answerBttn: HTMLElement | null = document.querySelector("#createAnswer");
+        if (answerBttn) {
+            answerBttn.addEventListener("click", () => {
+                const postId: number = Number(sessionStorage.getItem("post_Nr"));
+                window.location.href = `http://localhost:3000/createComment?comment=${postId}`;
+            });
+        }
+        else {
+            console.error(`Element #postNr${answerBttn} not found`);
+        }
     }
 
     public async isLoggedInUserResponsibleForThisPost(usersId: number, viewingPostId: number): Promise<boolean> {
@@ -231,5 +243,49 @@ export class PostClass {
             });
         }
         return content.replaceAll("\n", "<br>");
+    }
+
+    public async onClickSubmit(content: string): Promise<void> {
+        try {
+            const errorMessage: HTMLParagraphElement | null = document.querySelector("#errMsg");
+            const successMessage: HTMLParagraphElement | null = document.querySelector("#successMsg");
+            if (!errorMessage || !successMessage) {
+                console.error("Error and success message elements not found.");
+                return;
+            }
+
+            // Clear any existing messages
+            errorMessage.innerHTML = "";
+            successMessage.innerHTML = "";
+
+            // Validate title and content
+            if (!content) {
+                errorMessage.innerHTML += "You must add a title and message!";
+                this._UI.unleashTheErrorPopup(true); // Assuming UI.unleashTheErrorPopup handles visibility
+                return; // Stop execution if validation fails
+            }
+            // Validate session
+            const userId: string | null = sessionStorage.getItem("session");
+            if (!userId) {
+                errorMessage.innerHTML += "You must be logged in!";
+                this._UI.unleashTheErrorPopup(true);
+                return; // Stop execution if user is not logged in
+            }
+
+            // Fetch user
+            const user: User | undefined = await this._userModel.getUserById(Number(userId));
+            if (!user) {
+                errorMessage.innerHTML += "User not found!";
+                this._UI.unleashTheErrorPopup(true);
+                return; // Stop execution if user is not found
+            }
+
+            // Log user details (for debugging)
+            console.log(`Author ID: ${userId}`);
+            console.log(`Author Name: ${user.userName}`);
+        }
+        catch (reason) {
+            console.error("Error submitting comment", reason);
+        }
     }
 }

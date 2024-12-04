@@ -14,3 +14,118 @@
     width: calc(100% - 350px);
     margin: 0 20px 20px;
 }
+
+.profilePicture {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #454545;
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
+    margin: 20px 20px 0;
+    font-size: 120px;
+}
+
+/* Main */
+.userInfoSidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #292a2c;
+    width: 278px;
+    height: 100%;
+    position: fixed;
+    top: 80px;
+    left: 0;
+}
+
+.userInfoSidebar h3 {
+    margin: 15px 30px 0;
+    font-family: Arial, sans-serif;
+    font-size: 24px;
+}
+
+.userInfoSidebar p {
+    color: #878787;
+    margin: 15px 30px 0;
+    font-size: 20px;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+.userInformation {
+    text-align: left;
+    margin: 20px 0 0;
+}
+
+.profileStats {
+    width: calc(100% - 350px);
+    align-self: flex-end;
+    margin: 100px 30px 20px;
+    background-image: linear-gradient(to bottom right, #c40e0e, #ae0101);
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+}
+
+.theActualProfileStetistics {
+    font-family: 'Trebuchet MS', sans-serif;
+    flex-grow: 1;
+}
+
+.theActualProfileStetistics p {
+    margin: 12px 20px 30px;
+}
+
+.profilestatisticsStatsBottom h2 {
+    margin: 0;
+}
+
+.profilestatisticsStatsBottom {
+    margin: 0 20px 20px;
+}
+.totalRating {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    flex-grow: 1;
+
+    font-family: 'Trebuchet MS', sans-serif;
+    color: #2d2d2d;
+}
+
+.ratingTotalCenterContainer {
+    /* background-color: #000000; */
+    margin-right: 20px;
+    text-align: center;
+}
+
+.totalRating h1 {
+
+    font-size: 45px;
+    margin: 0;
+    
+}
+
+.totalRating p {
+
+    margin: 0;
+    font-size: 50px;
+    font-weight: bold;
+    letter-spacing: -0.05em;
+}
+.userBiography {
+    background-color: #2d2b2b;
+    width: calc(100% - 386px);
+    align-self: flex-end;
+    margin: 0 30px 30px;
+    border-radius: 5px;
+    font-family: 'Trebuchet MS', sans-serif;
+    padding: 20px;
+}
+
+.userBiography h1 {
+    margin: 0;
+    color: #9c1818;
+}

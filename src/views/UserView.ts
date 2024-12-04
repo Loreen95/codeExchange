@@ -1,4 +1,4 @@
-import { UserInfo } from "../controllers/UserController";
+import { UserInfo } from "../views/types";
 import { User } from "../models/User";
 
 export class UserView {
@@ -46,9 +46,10 @@ export class UserView {
         for (let i: number = 0; i < inserUsernamesHere.length; i++) {
             inserUsernamesHere[i].innerText = String(userInfo.userName);
         }
-        document.querySelector("#insertBirthdayHere")!.innerHTML = String(userInfo.dob);
-        document.querySelector("#insertEmailHere")!.innerHTML = String(userInfo.userEmail);
-        document.querySelector("#insertBiographyHere")!.innerHTML = String(userInfo.bio);
+        document.querySelector("#memberSince")!.innerHTML = userInfo.stringedTimeAndDate;
+        document.querySelector("#insertBirthdayHere")!.innerHTML = userInfo.dob;
+        document.querySelector("#insertEmailHere")!.innerHTML = userInfo.userEmail;
+        document.querySelector("#insertBiographyHere")!.innerHTML = userInfo.bio;
         // document.querySelector("#insert")!.innerHTML = String(userInfo.);
     }
 }

@@ -85,6 +85,23 @@ export class Post {
         }
     }
 
+    public async countTotalPosts(): Promise<number | undefined> {
+        try {
+            const result: postResult[] = await api.queryDatabase("SELECT COUNT(*) as count FROM post") as postResult[];
+            if (result.length > 0) {
+                return result[0].count;
+            }
+            else {
+                console.error("Geen resultaten gevonden in de query.");
+                return undefined;
+            }
+        }
+        catch (reason) {
+            console.error("Error fetching result", reason);
+            return undefined;
+        }
+    }
+
     // getters and setters:
     public getPostId(): number {
         return this._postId;

@@ -22,8 +22,6 @@ export class User {
         this._password = password;
     }
 
-    // CRUD functions
-
     /**
      * This function determines whether an email adress exists.
      * @param email requires the emailadress for the data-query.
@@ -179,6 +177,23 @@ export class User {
         catch (reason) {
             console.error("Error while deleting user:", reason);
             return false;
+        }
+    }
+
+    public async countTotalUsers(): Promise<number | undefined> {
+        try {
+            const result: userResult[] = await api.queryDatabase("SELECT COUNT(*) as count FROM user") as userResult[];
+            if (result.length > 0) {
+                return result[0].count;
+            }
+            else {
+                console.error("Geen resultaten gevonden in de query.");
+                return undefined;
+            }
+        }
+        catch (reason) {
+            console.error("Error fetching result", reason);
+            return undefined;
         }
     }
 
