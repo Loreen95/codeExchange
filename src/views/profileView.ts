@@ -1,10 +1,9 @@
 import { PostClass } from "../controllers/PostController";
 const post: PostClass = new PostClass();
+const insertPostsHere: HTMLElement | null = document.querySelector(".posts");
 
-const insertPostsHere: HTMLDivElement = document.querySelector(".posts")!;
-
-// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 if (insertPostsHere) {
     const userUrl: URLSearchParams = new URLSearchParams(window.location.search);
-    await post.renderPosts("user specific", Number(userUrl.get("user")));
+    const userId: string | null = userUrl.get("user");
+    await post.renderPosts("userSpecific", Number(userId));
 }

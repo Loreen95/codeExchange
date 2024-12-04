@@ -37,30 +37,29 @@
             <aside class="theActualProfileStetistics">
                 <p data-translate="memberSince"> <p id="memberSince"></p></p>
                 <div class="profilestatisticsStatsBottom">
-                    <h2>Questions asked: 12</h2>
-                    <h2>Awnsers given: 34</h2>
+                    <h2 data-translate="totalpost"></h2> <h2 id="totalPosts"></h2>
+                    <h2 data-translate="totalanswer"></h2> <h2 id="totalComments"></h2>
                 </div>
             </aside>
             <aside class="totalRating">
                 <div class="ratingTotalCenterContainer">
-                    <h1>Total rating</h1>
-                    <p>348</p>
+                    <h1 data-translate="totalrating"></h1>
+                    <p id="totalRating"></p>
                 </div>
             </aside>
         </section>
 
         <section class="userBiography">
-            <h1>Biography</h1>
-
+            <h1 data-translate="biography"></h1>
             <p id="insertBiographyHere"> 
-                Hello there I have been attached to this timeline for about 20 years now, and I'm statring to get used to the cenery here. I've 5 years of experience complaining about stuff and about 11 years of experience on the piano.
+                
             </p>
         </section>
 
         <hr class="rightAlignedSepirator">
         <section class="defaultTitleStyling">
-                <h2 id="insertNameHere">nobody</h2>
-                <h2>'s Posts:</h2>
+                <h2 id="insertNameHere"></h2>
+                <h2 id="space">'s </h2> <h2 class="spacing" data-translate="posts"></h2>
         </section>
        
         <section class="posts"></section>
@@ -76,7 +75,7 @@
     <script src="/src/views/script.ts" type="module"></script>
     <script src="/src/views/interface.ts" type="module"></script>
     <script src="/src/views/index.ts" type="module"></script>
-    <script src="/src/views/profileVieuw.ts" type="module"></script>
+    <script src="/src/views/profileView.ts" type="module"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
     <script>hljs.highlightAll();</script>
 </body>

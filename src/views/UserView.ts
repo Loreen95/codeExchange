@@ -1,9 +1,11 @@
 import { UserInfo } from "../views/types";
 import { User } from "../models/User";
+import { Post } from "../models/Post";
+import { Comment } from "../models/Comment";
 
 export class UserView {
-    public view!: HTMLElement; // ! means always initialize (temp solution)
-    public userModel!: User; // ! means always initialize (temp solution)
+    public view!: HTMLElement;
+    public userModel!: User;
 
     private constructor(userModel: User) {
         const mainElement: HTMLElement | null = document.querySelector("#profileInfo");
@@ -19,37 +21,61 @@ export class UserView {
     public static async initialize(): Promise<UserView> {
         const userUrl: URLSearchParams = new URLSearchParams(window.location.search);
         const userModel: User = new User(0, "", "", "");
-        const username: string | null = userUrl.get("user");
-        if (!username) {
+        const userId: string | null = userUrl.get("user");
+        if (!userId) {
             throw new Error("Username is required in the URL.");
         }
-        const user: User | undefined = await userModel.getUserById(Number(username));
-        console.log(user);
+        const user: User | undefined = await userModel.getUserById(Number(userId));
+
         if (!user) {
             throw new Error("User not found.");
         }
-        return new UserView(user);
+        const userView: UserView = new UserView(user);
+        return userView;
     }
 
-    public render(userInfo: UserInfo): void {
-        // Gebruik de userInfo parameter om de gegevens daadwerkelijk weer te geven
-        this.view.innerHTML = `
-            <h1>Welcome, ${userInfo.userName}!</h1>
-            <p>Your ID is ${userInfo.userId}.</p>
-            <p>Email: ${userInfo.userEmail}</p>
-            <p>Birthday: ${userInfo.dob}</p>
-            <p>Experience: ${userInfo.experience}</p>
-            <p>Expertise: ${userInfo.bio}</p>
-            <p>Member since: ${userInfo.stringedTimeAndDate} </p>
-        `;
-        const inserUsernamesHere: NodeListOf<HTMLHeadingElement> = document.querySelectorAll("#insertNameHere");
-        for (let i: number = 0; i < inserUsernamesHere.length; i++) {
-            inserUsernamesHere[i].innerText = String(userInfo.userName);
+    // Fix the return type of the countPost method
+    public async countPost(): Promise<number> {
+        const postModel: Post = new Post(0, 0, "", "", 0, "");
+        const userUrl: URLSearchParams = new URLSearchParams(window.location.search);
+        const userId: string | null = userUrl.get("user");
+        const postCount: number | undefined = await postModel.countTotalPostsByUserId(Number(userId));
+        return postCount || 0; // Return 0 if no posts found
+    }
+
+    public async countComments(): Promise<number> {
+        const commentModel: Comment = new Comment(0, 0, 0, "", "", 0, "");
+        const userUrl: URLSearchParams = new URLSearchParams(window.location.search);
+        const userId: string | null = userUrl.get("user");
+        const commentCount: number | undefined = await commentModel.countTotalCommentsByUserId(Number(userId));
+        return commentCount || 0;
+    }
+
+    public async countRating(): Promise<number> {
+        const postModel: Post = new Post(0, 0, "", "", 0, "");
+        const commentModel: Comment = new Comment(0, 0, 0, "", "", 0, "");
+        const userUrl: URLSearchParams = new URLSearchParams(window.location.search);
+        const userId: string | null = userUrl.get("user");
+        const ratingPost: number | undefined = await postModel.countTotalRatingByUserId(Number(userId));
+        const ratingComment: number | undefined = await commentModel.countTotalRatingByUserId(Number(userId));
+        const totalRating: number = (ratingPost ?? 0) + (ratingComment ?? 0);
+        return totalRating || 0;
+    }
+
+    public async render(userInfo: UserInfo): Promise<void> {
+        const postCount: number = await this.countPost();
+        const commentCount: number = await this.countComments();
+        const ratingCount: number = await this.countRating();
+        const insertUsernamesHere: NodeListOf<HTMLHeadingElement> = document.querySelectorAll("#insertNameHere");
+        for (let i: number = 0; i < insertUsernamesHere.length; i++) {
+            insertUsernamesHere[i].innerText = String(userInfo.userName);
         }
         document.querySelector("#memberSince")!.innerHTML = userInfo.stringedTimeAndDate;
         document.querySelector("#insertBirthdayHere")!.innerHTML = userInfo.dob;
         document.querySelector("#insertEmailHere")!.innerHTML = userInfo.userEmail;
         document.querySelector("#insertBiographyHere")!.innerHTML = userInfo.bio;
-        // document.querySelector("#insert")!.innerHTML = String(userInfo.);
+        document.querySelector("#totalPosts")!.innerHTML = String(postCount);
+        document.querySelector("#totalComments")!.innerHTML = String(commentCount);
+        document.querySelector("#totalRating")!.innerHTML = String(ratingCount);
     }
 }

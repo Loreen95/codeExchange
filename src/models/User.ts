@@ -187,7 +187,7 @@ export class User {
                 return result[0].count;
             }
             else {
-                console.error("Geen resultaten gevonden in de query.");
+                console.error("No results found");
                 return undefined;
             }
         }

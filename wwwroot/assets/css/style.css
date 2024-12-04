@@ -186,6 +186,10 @@ body {
     margin: 0;
 }
 
+#space {
+    margin-right: 1%;
+}
+
 .userBiography {
     background-color: #2d2b2b;
     width: calc(100% - 386px);
