@@ -13,7 +13,7 @@ export class UserController extends Controller {
     public async renderUser(): Promise<void> {
         try {
             const userInfo: UserInfo = this.getUserInfo();
-            this.userView.render(userInfo);
+            await this.userView.render(userInfo);
             await this.render();
         }
         catch (reason) {
