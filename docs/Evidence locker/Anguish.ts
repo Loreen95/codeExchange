@@ -20,63 +20,61 @@ abstract class Pakagin {
 }
 
 class Flask extends Pakagin {
-    private amontOfFlasks: number;
-    private maxvolumeInCubicTons: number;
-    private volumeInCubicTons: number = 0;
+    private  static amontOfFlasks: number = 1;
+    private maxVolumeInML: number;
+    private volumeInML: number = 0;
 
-    public constructor(maxvolumeInCubicTons1: number, amontOfFlasks1: number) {
+    public constructor(maxVolumeInML1: number) {
         super(MATEREAL.PLASTIC);
-        this.maxvolumeInCubicTons = maxvolumeInCubicTons1;
-        this.amontOfFlasks = amontOfFlasks1;
+        this.maxVolumeInML = maxVolumeInML1;
     }
 
     public getAmountOfContainers(): number {
-        return this.amontOfFlasks;
+        return Flask.amontOfFlasks;
     }
 
-    public fill(cubicTons: number): void {
-        if (cubicTons > this.maxvolumeInCubicTons) {
-            console.log(`${cubicTons - this.maxvolumeInCubicTons} Spilled out`);
-            cubicTons = this.maxvolumeInCubicTons;
+    public fill(milliLiters: number): void {
+        if (milliLiters > this.maxVolumeInML) {
+            console.log(`${milliLiters - this.maxVolumeInML} Spilled out`);
+            this.maxVolumeInML = milliLiters;
             return;
         }
-        this.volumeInCubicTons += cubicTons;
+        this.volumeInML += milliLiters;
     }
 
-    public remove(cubicTons: number): void {
-        if (this.volumeInCubicTons - cubicTons < 0) {
-            this.volumeInCubicTons = 0;
-            console.log(`you only receive ${cubicTons - this.volumeInCubicTons} from the flask before it dries up`);
+    public remove(milliLiters: number): void {
+        if (this.volumeInML - milliLiters < 0) {
+            this.volumeInML = 0;
+            console.log(`you only receive ${milliLiters - this.volumeInML} from the flask before it dries up`);
             return;
         }
-        this.volumeInCubicTons -= cubicTons;
+        this.volumeInML -= milliLiters;
     }
 
     public toString(): string {
         return `
             Flask info:
             amount of flasks: ${this.amontOfFlasks}
-            volume of each individual flask: ${this.maxvolumeInCubicTons}
-            The contents of this flask: ${this.volumeInCubicTons}
-
+            volume of each individual flask: ${this.maxVolumeInML}
+            The contents of this flask: ${this.volumeInML}
         `;
     }
 }
 
-class cowFlask extends Pakagin {
-    private maxvolumeInCubicTons: number;
-    private volumeInCubicTons: number = 0;
+class MilkFlask extends Pakagin {
+    private maxVolumeInLiters: number;
+    private volumeInLiters: number = 0;
 
-    public constructor(maxvolumeInCubicTons1: number) {
+    public constructor(maxVolumeInMiliLiters: number) {
         super(MATEREAL.DUST);
-        this.maxvolumeInCubicTons = maxvolumeInCubicTons1;
+        this.maxVolumeInLiters = (maxVolumeInMiliLiters / 1000);
     }
 
     public toString(): string {
         return `
-            Cowflask class:
-            volume of each individual cow flask: ${this.maxvolumeInCubicTons}
-            The contents of this cow flask: ${this.volumeInCubicTons}
+            Milkflask class:
+            volume of each individual cow flask: ${this.maxVolumeInLiters}
+            The contents of this cow flask: ${this.volumeInLiters}
         `;
     }
 }
@@ -97,12 +95,12 @@ class Crate extends Pakagin {
     }
 }
 
-const abern: Flask = new Flask(5000, 3);
+const abern: Flask = new Flask(5000);
 console.log(abern.toString());
 abern.fill(3);
 
 const nathy: Crate = new Crate(173);
 console.log(nathy.toString());
 
-const kanthy: cowFlask = new cowFlask(12);
+const kanthy: MilkFlask = new MilkFlask(12);
 console.log(kanthy.toString());
