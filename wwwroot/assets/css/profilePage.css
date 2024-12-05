@@ -43,7 +43,7 @@
 .userInfoSidebar h3 {
     margin: 15px 30px 0;
     font-family: Arial, sans-serif;
-    font-size: 24px;
+    font-size: 20px;
 }
 
 .userInfoSidebar p {
@@ -54,8 +54,7 @@
 }
 
 .userInformation {
-    text-align: left;
-    margin: 20px 0 0;
+    text-align: center;
 }
 
 .profileStats {
