@@ -238,6 +238,22 @@ export class LanguageClass {
                 en: "Submit Answer",
                 nl: "Stuur antwoord",
             },
+            totalpost: {
+                en: "Total questions",
+                nl: "Totaal aantal vragen",
+            },
+            totalanswer: {
+                en: "Total answers",
+                nl: "Totaal aantal antwoorden",
+            },
+            biography: {
+                en: "Biography",
+                nl: "Biografie",
+            },
+            totalrating: {
+                en: "Total rating",
+                nl: "Totaal aantal stemmen",
+            },
         });
     }
 

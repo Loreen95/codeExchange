@@ -69,7 +69,41 @@ export class Comment {
                 return result[0].count;
             }
             else {
-                console.error("Geen resultaten gevonden in de query.");
+                console.error("No results found");
+                return undefined;
+            }
+        }
+        catch (reason) {
+            console.error("Error fetching result", reason);
+            return undefined;
+        }
+    }
+
+    public async countTotalCommentsByUserId(userId: number): Promise<number | undefined> {
+        try {
+            const result: commentResult[] = await api.queryDatabase("SELECT COUNT(*) as count FROM comment WHERE userId = ?", [userId]) as commentResult[];
+            if (result.length > 0) {
+                return result[0].count;
+            }
+            else {
+                console.error("No results found");
+                return undefined;
+            }
+        }
+        catch (reason) {
+            console.error("Error fetching result", reason);
+            return undefined;
+        }
+    }
+
+    public async countTotalRatingByUserId(userId: number): Promise<number | undefined> {
+        try {
+            const result: commentResult[] = await api.queryDatabase("SELECT SUM(rating) as count FROM comment WHERE userId = ?", [userId]) as commentResult[];
+            if (result.length > 0) {
+                return result[0].count;
+            }
+            else {
+                console.error("No results found");
                 return undefined;
             }
         }

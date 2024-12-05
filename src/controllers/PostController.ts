@@ -29,7 +29,7 @@ export class PostClass {
 
     public async renderPosts(selectionMethod?: string, possibleUserId?: number): Promise<void> {
         let postList: Post[] | undefined = await this._postModel.getAllPosts();
-        if (selectionMethod === "user spesific") {
+        if (selectionMethod === "userSpecific") {
             if (possibleUserId) {
                 postList = await this._postModel.getAllPostsByUserId(possibleUserId);
             }

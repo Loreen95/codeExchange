@@ -5,10 +5,14 @@ import UserInterfaceClass from "./interface";
 import { utils } from "@hboictcloud/api";
 import { User } from "../models/User";
 import { LanguageClass } from "../controllers/LanguageController";
+import { Post } from "../models/Post";
+import { Comment } from "../models/Comment";
 
 const UI: UserInterfaceClass = new UserInterfaceClass();
 const userModel: User = new User(0, "", "", "");
 const logout: LogoutClass = new LogoutClass();
+const commentModel: Comment = new Comment(0, 0, 0, "", "", 0, "");
+const postModel: Post = new Post(0, 0, "", "", 0, "");
 
 // this collects all information from the defaut html page and malforms it into a horrific nodelist for later use
 const isolatedNodelistElement: NodeList = await utils.fetchAndParseHtml("../../default.html");
@@ -101,4 +105,23 @@ if (translateBttn) {
         languageController.setLanguage(newLang);
         languageController.translatePage();
     });
+}
+
+const questionStatsDisplay: HTMLParagraphElement = document.querySelector("#questionStats")!;
+const answerStatsDisplay: HTMLParagraphElement = document.querySelector("#answerStats")!;
+const memberStatsDisplay: HTMLParagraphElement = document.querySelector("#memberStats")!;
+
+const questionStats: number | undefined = await postModel.countTotalPosts();
+const answerStats: number | undefined = await commentModel.countTotalComments();
+const memberStats: number | undefined = await userModel.countTotalUsers();
+
+if (!questionStats || !answerStats || !memberStats) {
+    questionStatsDisplay.innerHTML = "0";
+    answerStatsDisplay.innerHTML = "0";
+    memberStatsDisplay.innerHTML = "0";
+}
+else {
+    questionStatsDisplay.innerHTML = `${questionStats}`;
+    answerStatsDisplay.innerHTML = `${answerStats}`;
+    memberStatsDisplay.innerHTML = `${memberStats}`;
 }

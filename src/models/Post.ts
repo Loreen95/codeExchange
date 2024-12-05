@@ -102,6 +102,40 @@ export class Post {
         }
     }
 
+    public async countTotalPostsByUserId(authorId: number): Promise<number | undefined> {
+        try {
+            const result: postResult[] = await api.queryDatabase("SELECT COUNT(*) as count FROM post WHERE authorId = ?", [authorId]) as postResult[];
+            if (result.length > 0) {
+                return result[0].count;
+            }
+            else {
+                console.error("Geen resultaten gevonden in de query.");
+                return undefined;
+            }
+        }
+        catch (reason) {
+            console.error("Error fetching result", reason);
+            return undefined;
+        }
+    }
+
+    public async countTotalRatingByUserId(userId: number): Promise<number | undefined> {
+        try {
+            const result: postResult[] = await api.queryDatabase("SELECT SUM(rating) as count FROM post WHERE authorId = ?", [userId]) as postResult[];
+            if (result.length > 0) {
+                return result[0].count;
+            }
+            else {
+                console.error("No results found");
+                return undefined;
+            }
+        }
+        catch (reason) {
+            console.error("Error fetching result", reason);
+            return undefined;
+        }
+    }
+
     // getters and setters:
     public getPostId(): number {
         return this._postId;

@@ -41,3 +41,9 @@ export interface UserInfo {
     stringedTimeAndDate: string;
     bio: string;
 }
+
+export interface PostInfo {
+    postId: number;
+    title: string;
+    content: string;
+}
