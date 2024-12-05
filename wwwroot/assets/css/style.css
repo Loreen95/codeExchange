@@ -79,6 +79,10 @@ body {
     transition: ease 0.3s;
 }
 
+#questionStats {
+    margin: 0;
+}
+
 .menu {
     border-top: 10px rgb(218, 218, 218) solid;
     background-image: linear-gradient(to bottom right, rgb(211, 40, 40), rgb(67, 1, 1));
