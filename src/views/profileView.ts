@@ -7,3 +7,5 @@ if (insertPostsHere) {
     const userId: string | null = userUrl.get("user");
     await post.renderPosts("userSpecific", Number(userId));
 }
+
+post.revealAndHideContentToLoginStatus();

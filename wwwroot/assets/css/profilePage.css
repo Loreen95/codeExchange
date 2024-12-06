@@ -83,6 +83,7 @@
 .profilestatisticsStatsBottom {
     margin: 0 20px 20px;
 }
+
 .totalRating {
     display: flex;
     flex-direction: column;
@@ -149,4 +150,138 @@
 #delete {
     background-image: linear-gradient(to bottom right, rgb(211, 40, 40), rgb(158, 39, 39));
     padding: 15px 40px 15px 40px;
+}
+
+.rowAlign {
+    display: flex;
+}
+
+.rowAlign2 {
+    display: flex;
+    margin-left: 10px;
+}
+
+
+#whoAsked {
+    display: none;
+}
+
+@media (max-width: 630px) {
+    .userInfoSidebar {
+        position: unset;
+        top: unset;
+        left: unset;
+        width: 100%;
+        padding: 100px 0 20px;
+    }
+
+    .profileStats {
+        width: 100%;
+        align-self: center;
+        margin: 0 30px 0;
+        border-radius: unset;
+        flex-direction: column;
+        padding-bottom: 10px;
+    }
+
+    .profilestatisticsStatsBottom h2 {
+        margin: 0 10px 0;
+    }
+
+    .totalRating {
+        align-items: flex-start;
+    }
+
+    .ratingTotalCenterContainer {
+        display: flex;
+        flex-direction: row;
+    }
+
+    #totalRating {
+        margin-left: 5px;
+    }
+
+    .rowAlign2 {
+        margin: 5px;
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .rowAlign2 h1 {
+        margin: 0 5px 0;
+    }
+
+    .rowAlign2 p {
+        margin: 0 5px 0;
+    }
+
+    .rowAlign {
+        margin: 0;
+        /* display: flex;
+        flex-direction: column;
+        align-items: center; */
+    }
+
+    .profilestatisticsStatsBottom {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin: 0;
+    }
+
+    .totalRating h1 {
+
+        font-size: 35px;
+        margin: 0;
+        margin-left: 10px;        
+    }
+    
+    .totalRating p {
+    
+        margin: 0;
+        font-size: 40px;
+        font-weight: bold;
+        letter-spacing: -0.03em;
+    }
+
+    .userBiography {
+        background-color: #2d2b2b;
+        width: 100%;
+        align-self: center;
+        margin: 0;
+        border-radius: unset;
+        padding: 0;
+    }
+
+    .userBiography h1 {
+        margin: 5px 10px 0;
+    }
+
+    #insertBiographyHere {
+        margin: 12px 10px 20px;
+    }
+
+    .defaultTitleStyling {
+        align-self: flex-start;
+        margin-left: 10px;
+    }
+
+    .question {
+        padding: 0 2px 0;
+        height: fit-content;
+        width: 100%;
+        margin: 0;
+    }
+
+    .questionContent {
+        border-radius: unset;
+    }
+
+    .rightAlignedSepirator {
+        display: none;
+    }
+
+    .footer {
+        margin-top: 20px;
+    }
 }
