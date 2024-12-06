@@ -20,8 +20,16 @@ const createBtn: HTMLButtonElement = document.querySelector(".createPost")!;
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 if (createBtn) {
     createBtn.addEventListener("click", async () => {
-        console.log("Button clicked");
         await post.onClickCreate(titleUserInput.value.trim(), contentInput.value.trim());
+    });
+}
+
+const submitBtn: HTMLButtonElement | null = document.querySelector(".createComment");
+
+if (submitBtn) {
+    submitBtn.addEventListener("click", async (e: Event) => {
+        e.preventDefault();
+        await post.onClickSubmit(contentInput.value.trim());
     });
 }
 

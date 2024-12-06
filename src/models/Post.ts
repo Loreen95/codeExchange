@@ -3,7 +3,7 @@ import { api } from "@hboictcloud/api";
 import { postResult } from "../views/types";
 
 export class Post {
-    private _postId: number = 0;
+    private _postId: number;
     private _authorId: number;
     private _title: string;
     private _content: string;

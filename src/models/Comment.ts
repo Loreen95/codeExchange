@@ -3,7 +3,7 @@ import { api } from "@hboictcloud/api";
 import { commentResult } from "../views/types";
 
 export class Comment {
-    private _commentId: number = 0;
+    private _commentId: number;
     private _userId: number;
     private _messageId: number;
     private _content: string;
@@ -42,10 +42,10 @@ export class Comment {
         }
     }
 
-    public async create(userId: number, messageId: number, title: string, content: string, rating: number, createdAt: string): Promise<boolean> {
+    public async create(userId: number, messageId: number, content: string): Promise<boolean> {
         try {
             const result: commentResult[] = await api.queryDatabase(
-                "INSERT INTO comment (userId, messageId, title, content, rating, createdAt) VALUES (?, ?, ?, ?, ?, ?)", userId, messageId, title, content, rating, createdAt
+                "INSERT INTO comment (userId, messageId, content) VALUES (?, ?, ?)", userId, messageId, content
             ) as commentResult[];
 
             console.log("Success", result);

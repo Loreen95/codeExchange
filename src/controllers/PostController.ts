@@ -6,6 +6,7 @@ import hljs from "highlight.js";
 
 export class PostController {
     private _postModel: Post | undefined;
+    private _commentModel: Comment | undefined;
     private _UI: UserInterfaceClass;
 
     public constructor() {
@@ -166,50 +167,39 @@ export class PostController {
                 return;
             }
 
-            // Clear any existing messages
             errorMessage.innerHTML = "";
             successMessage.innerHTML = "";
 
-            // Validate title and content
             if (!title || !content) {
                 errorMessage.innerHTML += "You must add a title and message!";
-                this._UI.unleashTheErrorPopup(true); // Assuming UI.unleashTheErrorPopup handles visibility
-                return; // Stop execution if validation fails
+                this._UI.unleashTheErrorPopup(true);
+                return;
             }
 
-            // Validate session
             const userId: string | null = sessionStorage.getItem("session");
             if (!userId) {
                 errorMessage.innerHTML += "You must be logged in!";
                 this._UI.unleashTheErrorPopup(true);
-                return; // Stop execution if user is not logged in
+                return;
             }
 
-            // Fetch user
             const user: User | undefined = await User.getUserById(Number(userId));
             if (!user) {
                 errorMessage.innerHTML += "User not found!";
                 this._UI.unleashTheErrorPopup(true);
-                return; // Stop execution if user is not found
+                return;
             }
 
-            // Log user details (for debugging)
-            console.log(`Author ID: ${userId}`);
-            console.log(`Author Name: ${user.userName}`);
-
-            // Create the post
             this._postModel = new Post(0, Number(userId), title, content);
             const isPostCreated: boolean = await this._postModel.create(Number(userId), title, content);
 
             if (isPostCreated) {
-                // Post creation was successful
                 successMessage.innerHTML = "Post created successfully!";
                 this._UI.unleashTheErrorPopup(false);
                 this._UI.successMessagePopup(true);
                 await this.renderPosts(); // Render posts after creation
             }
             else {
-                // Post creation failed
                 errorMessage.innerHTML += "Failed to create the post!";
                 this._UI.unleashTheErrorPopup(true);
             }
@@ -217,7 +207,6 @@ export class PostController {
         catch (reason) {
             console.error("Error creating post!", reason);
 
-            // Show error message in case of an exception
             const errorMessage: HTMLParagraphElement | null = document.querySelector("#errMsg");
             if (errorMessage) {
                 errorMessage.innerHTML = "An error occurred while creating the post.";
@@ -241,43 +230,67 @@ export class PostController {
         try {
             const errorMessage: HTMLParagraphElement | null = document.querySelector("#errMsg");
             const successMessage: HTMLParagraphElement | null = document.querySelector("#successMsg");
+
             if (!errorMessage || !successMessage) {
                 console.error("Error and success message elements not found.");
                 return;
             }
 
-            // Clear any existing messages
             errorMessage.innerHTML = "";
             successMessage.innerHTML = "";
 
-            // Validate title and content
             if (!content) {
-                errorMessage.innerHTML += "You must add a title and message!";
-                this._UI.unleashTheErrorPopup(true); // Assuming UI.unleashTheErrorPopup handles visibility
-                return; // Stop execution if validation fails
-            }
-            // Validate session
-            const userId: string | null = sessionStorage.getItem("session");
-            if (!userId) {
-                errorMessage.innerHTML += "You must be logged in!";
+                errorMessage.innerHTML = "You must add a message!";
                 this._UI.unleashTheErrorPopup(true);
-                return; // Stop execution if user is not logged in
+                return;
             }
 
-            // Fetch user
-            const user: User | undefined = await User.getUserById(Number(userId));
+            const session: string | null = sessionStorage.getItem("session");
+            if (!session) {
+                errorMessage.innerHTML = "You must be logged in!";
+                this._UI.unleashTheErrorPopup(true);
+                return;
+            }
+
+            const user: User | undefined = await User.getUserById(Number(sessionStorage.getItem("session")));
             if (!user) {
-                errorMessage.innerHTML += "User not found!";
+                errorMessage.innerHTML = "User not found!";
                 this._UI.unleashTheErrorPopup(true);
-                return; // Stop execution if user is not found
+                return;
             }
 
-            // Log user details (for debugging)
-            console.log(`Author ID: ${userId}`);
-            console.log(`Author Name: ${user.userName}`);
+            const postUrl: URLSearchParams = new URLSearchParams(window.location.search);
+            const postId: string | null = postUrl.get("comment");
+            const post: Post | undefined = await Post.getPostById(Number(postId));
+            if (!post) {
+                errorMessage.innerHTML = "Error finding original post!";
+                this._UI.unleashTheErrorPopup(true);
+                return;
+            }
+
+            this._commentModel = new Comment(0, user.userId, post.postId, content);
+            const isCommentCreated: boolean = await this._commentModel.create(user.userId, post.postId, content);
+
+            if (isCommentCreated) {
+                successMessage.innerHTML = "Comment created successfully!";
+                this._UI.unleashTheErrorPopup(false);
+                this._UI.successMessagePopup(true);
+                await this.renderPosts();
+            }
+            else {
+                errorMessage.innerHTML += "Failed to create the post!";
+                this._UI.unleashTheErrorPopup(true);
+            }
+            successMessage.innerHTML = "Comment submitted successfully!";
+            this._UI.unleashTheErrorPopup(false);
         }
         catch (reason) {
-            console.error("Error submitting comment", reason);
+            console.error("Error submitting comment:", reason);
+            const errorMessage: HTMLParagraphElement | null = document.querySelector("#errMsg");
+            if (errorMessage) {
+                errorMessage.innerHTML = "An unexpected error occurred. Please try again.";
+            }
+            this._UI.unleashTheErrorPopup(true);
         }
     }
 }
