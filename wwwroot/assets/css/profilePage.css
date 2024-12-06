@@ -128,3 +128,25 @@
     margin: 0;
     color: #9c1818;
 }
+
+.userLinks {
+    width: 100%;
+    align-self: center;
+    position: relative;
+    top: 2%;
+    right: 8%;
+    border-radius: 5px;
+    font-family: 'Trebuchet MS', sans-serif;
+    padding: 20px;
+    font-size: 19px;
+}
+
+#edit {   
+    background-image: linear-gradient(to bottom right, rgb(47, 45, 49), rgb(46, 46, 46));
+    padding: 15px 40px 15px 40px;
+}
+
+#delete {
+    background-image: linear-gradient(to bottom right, rgb(211, 40, 40), rgb(158, 39, 39));
+    padding: 15px 40px 15px 40px;
+}

@@ -97,7 +97,7 @@ class RegistrationClass {
             nameUserInput.style.border = "solid rgb(168, 32, 32) 3px";
             allIsInOrder = false;
         }
-        else if (String(await this._userModel.doesUserExistForUsername(userInputName)) === "true") {
+        else if (String(await User.doesUserExistForUsername(userInputName)) === "true") {
             errorMessage.innerText += "Provided Username is already in use.\n";
             nameUserInput.style.border = "solid rgb(168, 32, 32) 3px";
             allIsInOrder = false;
@@ -112,7 +112,7 @@ class RegistrationClass {
             emailAdressUserInput.style.border = "solid rgb(168, 32, 32) 3px";
             allIsInOrder = false;
         }
-        else if (await this._userModel.doesUserExistForEmail(userInputEmail)) {
+        else if (await User.doesUserExistForEmail(userInputEmail)) {
             errorMessage.innerText += "This email is already being used.\n";
             emailAdressUserInput.style.border = "solid rgb(168, 32, 32) 3px";
             allIsInOrder = false;

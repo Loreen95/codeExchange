@@ -20,12 +20,11 @@ export class UserView {
 
     public static async initialize(): Promise<UserView> {
         const userUrl: URLSearchParams = new URLSearchParams(window.location.search);
-        const userModel: User = new User(0, "", "", "");
         const userId: string | null = userUrl.get("user");
         if (!userId) {
             throw new Error("Username is required in the URL.");
         }
-        const user: User | undefined = await userModel.getUserById(Number(userId));
+        const user: User | undefined = await User.getUserById(Number(userId));
 
         if (!user) {
             throw new Error("User not found.");
@@ -34,30 +33,25 @@ export class UserView {
         return userView;
     }
 
-    // Fix the return type of the countPost method
     public async countPost(): Promise<number> {
-        const postModel: Post = new Post(0, 0, "", "", 0, "");
         const userUrl: URLSearchParams = new URLSearchParams(window.location.search);
         const userId: string | null = userUrl.get("user");
-        const postCount: number | undefined = await postModel.countTotalPostsByUserId(Number(userId));
-        return postCount || 0; // Return 0 if no posts found
+        const postCount: number | undefined = await Post.countTotalPostsByUserId(Number(userId));
+        return postCount || 0;
     }
 
     public async countComments(): Promise<number> {
-        const commentModel: Comment = new Comment(0, 0, 0, "", "", 0, "");
         const userUrl: URLSearchParams = new URLSearchParams(window.location.search);
         const userId: string | null = userUrl.get("user");
-        const commentCount: number | undefined = await commentModel.countTotalCommentsByUserId(Number(userId));
+        const commentCount: number | undefined = await Comment.countTotalCommentsByUserId(Number(userId));
         return commentCount || 0;
     }
 
     public async countRating(): Promise<number> {
-        const postModel: Post = new Post(0, 0, "", "", 0, "");
-        const commentModel: Comment = new Comment(0, 0, 0, "", "", 0, "");
         const userUrl: URLSearchParams = new URLSearchParams(window.location.search);
         const userId: string | null = userUrl.get("user");
-        const ratingPost: number | undefined = await postModel.countTotalRatingByUserId(Number(userId));
-        const ratingComment: number | undefined = await commentModel.countTotalRatingByUserId(Number(userId));
+        const ratingPost: number | undefined = await Post.countTotalRatingByUserId(Number(userId));
+        const ratingComment: number | undefined = await Comment.countTotalRatingByUserId(Number(userId));
         const totalRating: number = (ratingPost ?? 0) + (ratingComment ?? 0);
         return totalRating || 0;
     }
@@ -77,5 +71,8 @@ export class UserView {
         document.querySelector("#totalPosts")!.innerHTML = String(postCount);
         document.querySelector("#totalComments")!.innerHTML = String(commentCount);
         document.querySelector("#totalRating")!.innerHTML = String(ratingCount);
+
+        const editLink: HTMLLinkElement = document.querySelector("#edit")!;
+        editLink.href = `editProfile?user=${userInfo.userId}`;
     }
 }

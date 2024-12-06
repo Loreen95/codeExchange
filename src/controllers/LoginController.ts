@@ -3,13 +3,11 @@ import { User } from "../models/User";
 import UserInterfaceClass from "../views/interface";
 
 export class LoginController {
-    private _userModel: User | undefined;
     private _UI: UserInterfaceClass;
     public constructor() {
         this._UI = new UserInterfaceClass();
     }
 
-    // Clear error message
     private _errorMessage: string = "";
 
     /**
@@ -28,15 +26,15 @@ export class LoginController {
     *  And the function promises returns an object with the custom User datatype or nothing at all
     */
     public async checkRecords(givenUsernameOrEmail: string, givenPassword: string): Promise<User | undefined> {
-        this._userModel = new User(0, givenUsernameOrEmail, givenUsernameOrEmail, givenPassword);
+        // const user: User = new User(0, givenUsernameOrEmail, givenUsernameOrEmail, givenPassword);
         let resultRecords: User | undefined;
         if (this.isEmail(givenUsernameOrEmail)) {
             console.log("The user used an email address.");
-            resultRecords = await this._userModel.getUserByEmailAndPassword(givenUsernameOrEmail, givenPassword);
+            resultRecords = await User.getUserByEmailAndPassword(givenUsernameOrEmail, givenPassword);
         }
         else {
             console.log("The user used a username.");
-            resultRecords = await this._userModel.getUserByUsernameAndPassword(givenUsernameOrEmail, givenPassword);
+            resultRecords = await User.getUserByUsernameAndPassword(givenUsernameOrEmail, givenPassword);
         }
         // This determines if there is a connection to the user from the comibnation of the email and password
         if (!resultRecords) {

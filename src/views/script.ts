@@ -9,10 +9,7 @@ import { Post } from "../models/Post";
 import { Comment } from "../models/Comment";
 
 const UI: UserInterfaceClass = new UserInterfaceClass();
-const userModel: User = new User(0, "", "", "");
 const logout: LogoutClass = new LogoutClass();
-const commentModel: Comment = new Comment(0, 0, 0, "", "", 0, "");
-const postModel: Post = new Post(0, 0, "", "", 0, "");
 
 // this collects all information from the defaut html page and malforms it into a horrific nodelist for later use
 const isolatedNodelistElement: NodeList = await utils.fetchAndParseHtml("../../default.html");
@@ -48,7 +45,7 @@ else {
 const userNameOnPage: NodeListOf<HTMLLinkElement> = document.querySelectorAll("#injectUsernameHere");
 const urlToProfile: HTMLLinkElement = document.querySelector("#addUrlHere")!;
 for (let l: number = 0; l < userNameOnPage.length; l++) {
-    const user: User | undefined = await userModel.getUserById(Number(sessionStorage.getItem("session")));
+    const user: User | undefined = await User.getUserById(Number(sessionStorage.getItem("session")));
     const userName: string | undefined = user?.userName;
     const userId: number | undefined = user?.userId;
     if (userName && userId) {
@@ -61,7 +58,7 @@ for (let l: number = 0; l < userNameOnPage.length; l++) {
 }
 
 const insertProfileURL: HTMLLinkElement = document.querySelector("#profileURL")!;
-const user: User | undefined = await userModel.getUserById(Number(sessionStorage.getItem("session")));
+const user: User | undefined = await User.getUserById(Number(sessionStorage.getItem("session")));
 const userId: number | undefined = user?.userId;
 if (userId) {
     insertProfileURL.href = `editProfile?user=${userId}`;
@@ -111,9 +108,9 @@ const questionStatsDisplay: HTMLParagraphElement = document.querySelector("#ques
 const answerStatsDisplay: HTMLParagraphElement = document.querySelector("#answerStats")!;
 const memberStatsDisplay: HTMLParagraphElement = document.querySelector("#memberStats")!;
 
-const questionStats: number | undefined = await postModel.countTotalPosts();
-const answerStats: number | undefined = await commentModel.countTotalComments();
-const memberStats: number | undefined = await userModel.countTotalUsers();
+const questionStats: number | undefined = await Post.countTotalPosts();
+const answerStats: number | undefined = await Comment.countTotalComments();
+const memberStats: number | undefined = await User.countTotalUsers();
 
 if (!questionStats || !answerStats || !memberStats) {
     questionStatsDisplay.innerHTML = "0";

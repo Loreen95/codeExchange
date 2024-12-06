@@ -4,34 +4,29 @@ import { User } from "../models/User";
 import UserInterfaceClass from "../views/interface";
 import hljs from "highlight.js";
 
-export class PostClass {
-    private _postModel: Post;
-    private _commentModel: Comment;
-    private _userModel: User;
+export class PostController {
+    private _postModel: Post | undefined;
     private _UI: UserInterfaceClass;
 
     public constructor() {
-        this._postModel = new Post(0, 0, "", "", 0, "");
-        this._userModel = new User(0, "", "", "");
-        this._commentModel = new Comment(0, 0, 0, "", "", 0, "");
         this._UI = new UserInterfaceClass();
     }
 
     public async getUserName(ID: number): Promise<string> {
-        const userName: number | undefined = (await this._userModel.getUserById(Number(ID)))?.userId;
+        const userName: number | undefined = (await User.getUserById(Number(ID)))?.userId;
         return String(userName);
     }
 
     public async getCommentAmount(): Promise<number | undefined> {
-        const totalComments: number = (await this._commentModel.getCommentsByMessageId(Number(sessionStorage.getItem("post_Nr")))).length;
+        const totalComments: number = (await Comment.getCommentsByMessageId(Number(sessionStorage.getItem("post_Nr")))).length;
         return totalComments;
     }
 
     public async renderPosts(selectionMethod?: string, possibleUserId?: number): Promise<void> {
-        let postList: Post[] | undefined = await this._postModel.getAllPosts();
+        let postList: Post[] | undefined = await Post.getAllPosts();
         if (selectionMethod === "userSpecific") {
             if (possibleUserId) {
-                postList = await this._postModel.getAllPostsByUserId(possibleUserId);
+                postList = await Post.getAllPostsByUserId(possibleUserId);
             }
         }
 
@@ -55,24 +50,24 @@ export class PostClass {
             for (const post of postList) {
                 let titleOfPost: string = "";
                 let contentOfPost: string = "";
-                const userName: string | undefined = (await this._userModel.getUserById(Number(post.getAuthorId())))?.userName;
-                const userId: number | undefined = post.getAuthorId();
-                const stringedTimeAndDate: string = String(post.getcreatedAt()).slice(8, 10) + "-" + String(post.getcreatedAt()).slice(5, 7) + "-" + String(post.getcreatedAt()).slice(0, 4) + " | " + String(post.getcreatedAt()).slice(11, 19);
+                const userName: string | undefined = (await User.getUserById(Number(post.authorId)))?.userName;
+                const userId: number | undefined = post.authorId;
+                const stringedTimeAndDate: string = String(post.createdAt).slice(8, 10) + "-" + String(post.createdAt).slice(5, 7) + "-" + String(post.createdAt).slice(0, 4) + " | " + String(post.createdAt).slice(11, 19);
                 let rating: number = 0;
-                if (post.getRating()) {
-                    rating = post.getRating();
+                if (post.rating) {
+                    rating = post.rating;
                 }
 
-                titleOfPost = post.getTitle().length > 60 ? post.getTitle().slice(0, 60).concat("...") : post.getTitle();
-                if (post.getContent().includes("[code]")) {
-                    const cutoffValue: number = post.getContent().indexOf("[code]");
-                    contentOfPost = post.getContent().slice(0, cutoffValue);
+                titleOfPost = post.title.length > 60 ? post.title.slice(0, 60).concat("...") : post.title;
+                if (post.content.includes("[code]")) {
+                    const cutoffValue: number = post.content.indexOf("[code]");
+                    contentOfPost = post.content.slice(0, cutoffValue);
                 }
                 else {
-                    contentOfPost = post.getContent().length > 240 ? post.getContent().slice(0, 240).concat("...") : post.getContent();
+                    contentOfPost = post.content.length > 240 ? post.content.slice(0, 240).concat("...") : post.content;
                 }
 
-                const comments: Comment[] = await this._commentModel.getCommentsByMessageId(post.getPostId());
+                const comments: Comment[] = await Comment.getCommentsByMessageId(post.postId);
                 const totalComments: number = comments.length;
 
                 insertPostsHere.insertAdjacentHTML("beforeend", `
@@ -97,7 +92,7 @@ export class PostClass {
                 const postElement: Element | null = insertPostsHere.querySelector(`#postNr${postIndex}`);
                 if (postElement) {
                     postElement.addEventListener("click", () => {
-                        const postId: number = post.getPostId();
+                        const postId: number = post.postId;
                         sessionStorage.setItem("post_Nr", String(postId));
                         window.location.href = `http://localhost:3000/post?post=${postId}`;
                     });
@@ -116,19 +111,19 @@ export class PostClass {
 
     public async renderComments(): Promise<void> {
         const insertCommenthere: HTMLDivElement = document.querySelector(".awnsers")!;
-        const commentList: Comment[] | undefined = await this._commentModel.getCommentsByMessageId(Number(sessionStorage.getItem("post_Nr")));
+        const commentList: Comment[] | undefined = await Comment.getCommentsByMessageId(Number(sessionStorage.getItem("post_Nr")));
         commentList.forEach(async _comment => {
-            let rating: number = 0;
-            if (String(_comment.getRating()) !== String(null)) {
-                rating = _comment.getRating();
+            let rating: number | undefined = 0;
+            if (String(_comment.rating) !== String(null)) {
+                rating = _comment.rating;
             }
             insertCommenthere.insertAdjacentHTML("beforeend", `
-                    <h1 class="awnserTitle">${(await this._userModel.getUserById(Number(_comment.getUserId())))?.userName}</h1>
+                    <h1 class="awnserTitle">${(await User.getUserById(Number(_comment.userId)))?.userName}</h1>
                 <div class="indivAwnser">
-                    <div class="contentPart contentPartComment">${this.encodeContentForVieuwingPurposes(_comment.getContent())}</div>
+                    <div class="contentPart contentPartComment">${this.encodeContentForVieuwingPurposes(_comment.content)}</div>
                 </div>
                 <div class="dateAndRating">
-                    <p class="bottomDate">${String(_comment.getCreatedAt()).slice(8, 10) + "-" + String(_comment.getCreatedAt()).slice(5, 7) + "-" + String(_comment.getCreatedAt()).slice(0, 4) + " | " + String(_comment.getCreatedAt()).slice(11, 19)}</p>
+                    <p class="bottomDate">${String(_comment.createdAt).slice(8, 10) + "-" + String(_comment.createdAt).slice(5, 7) + "-" + String(_comment.createdAt).slice(0, 4) + " | " + String(_comment.createdAt).slice(11, 19)}</p>
                     <div class="ratingPart">
                         <i class="fa-solid fa-thumbs-up"></i>
                         <p class="insertRatingHere">${rating}</p>
@@ -152,8 +147,8 @@ export class PostClass {
     }
 
     public async isLoggedInUserResponsibleForThisPost(usersId: number, viewingPostId: number): Promise<boolean> {
-        const currentpost: Post | undefined = await this._postModel.getPostById(viewingPostId);
-        if (usersId === currentpost!.getAuthorId()) {
+        const currentpost: Post | undefined = await Post.getPostById(viewingPostId);
+        if (usersId === currentpost!.authorId) {
             return true;
         }
         else {
@@ -191,7 +186,7 @@ export class PostClass {
             }
 
             // Fetch user
-            const user: User | undefined = await this._userModel.getUserById(Number(userId));
+            const user: User | undefined = await User.getUserById(Number(userId));
             if (!user) {
                 errorMessage.innerHTML += "User not found!";
                 this._UI.unleashTheErrorPopup(true);
@@ -202,12 +197,9 @@ export class PostClass {
             console.log(`Author ID: ${userId}`);
             console.log(`Author Name: ${user.userName}`);
 
-            // Get the current date and format it
-            const date: Date = new Date();
-            const formattedDate: string = date.toISOString().slice(0, 19).replace("T", " ");
-
             // Create the post
-            const isPostCreated: boolean = await this._postModel.create(Number(userId), title, content, formattedDate);
+            this._postModel = new Post(0, Number(userId), title, content);
+            const isPostCreated: boolean = await this._postModel.create(Number(userId), title, content);
 
             if (isPostCreated) {
                 // Post creation was successful
@@ -273,7 +265,7 @@ export class PostClass {
             }
 
             // Fetch user
-            const user: User | undefined = await this._userModel.getUserById(Number(userId));
+            const user: User | undefined = await User.getUserById(Number(userId));
             if (!user) {
                 errorMessage.innerHTML += "User not found!";
                 this._UI.unleashTheErrorPopup(true);

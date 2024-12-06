@@ -6,39 +6,34 @@ export class Comment {
     private _commentId: number = 0;
     private _userId: number;
     private _messageId: number;
-    private _title: string;
     private _content: string;
-    private _rating: number;
-    private _createdAt: string;
+    private _rating: number | undefined;
+    private _createdAt: string | undefined;
 
     // constructor:
-    public constructor(commentId: number, userId: number, messageId: number, title: string, content: string, rating: number, createdAt: string) {
+    public constructor(commentId: number, userId: number, messageId: number, content: string) {
         this._commentId = commentId;
         this._userId = userId;
         this._messageId = messageId;
-        this._title = title;
         this._content = content;
-        this._rating = rating;
-        this._createdAt = createdAt;
     }
 
     // CRUD methods:
-    public async getCommentsByMessageId(id: number): Promise<Comment[]> {
+    public static async getCommentsByMessageId(id: number): Promise<Comment[]> {
         try {
             const result: commentResult[] = await api.queryDatabase(
                 "SELECT * FROM comment WHERE messageId = ?",
                 [id]
             ) as commentResult[];
-
-            // Controleer of er resultaten zijn
             if (result.length > 0) {
-                // Map de resultaten naar een lijst van Comment-objecten
-                return result.map(row =>
-                    new Comment(row.commentId, row.userId, row.messageId, row.title, row.content, row.rating, row.createdAt)
-                );
+                const comments: Comment[] = result.map(comment => {
+                    const newComment: Comment = new Comment(0, comment.commentId, comment.userId, comment.content);
+                    newComment.rating = comment.rating;
+                    newComment.createdAt = comment.createdAt;
+                    return newComment;
+                });
+                return comments;
             }
-
-            // Als er geen resultaten zijn, retourneer een lege array
             return [];
         }
         catch (reason) {
@@ -62,7 +57,7 @@ export class Comment {
         }
     }
 
-    public async countTotalComments(): Promise<number | undefined> {
+    public static async countTotalComments(): Promise<number | undefined> {
         try {
             const result: commentResult[] = await api.queryDatabase("SELECT COUNT(*) as count FROM comment") as commentResult[];
             if (result.length > 0) {
@@ -79,7 +74,7 @@ export class Comment {
         }
     }
 
-    public async countTotalCommentsByUserId(userId: number): Promise<number | undefined> {
+    public static async countTotalCommentsByUserId(userId: number): Promise<number | undefined> {
         try {
             const result: commentResult[] = await api.queryDatabase("SELECT COUNT(*) as count FROM comment WHERE userId = ?", [userId]) as commentResult[];
             if (result.length > 0) {
@@ -96,7 +91,7 @@ export class Comment {
         }
     }
 
-    public async countTotalRatingByUserId(userId: number): Promise<number | undefined> {
+    public static async countTotalRatingByUserId(userId: number): Promise<number | undefined> {
         try {
             const result: commentResult[] = await api.queryDatabase("SELECT SUM(rating) as count FROM comment WHERE userId = ?", [userId]) as commentResult[];
             if (result.length > 0) {
@@ -114,47 +109,39 @@ export class Comment {
     }
 
     // getters and setters:
-    public getCommentId(): number {
+    public get commentId(): number {
         return this._commentId;
     }
 
-    public getUserId(): number {
+    public get userId(): number {
         return this._userId;
     }
 
-    public getMessageId(): number {
+    public get messageId(): number {
         return this._messageId;
     }
 
-    public getTitle(): string {
-        return this._title;
-    }
-
-    public getContent(): string {
+    public get content(): string {
         return this._content;
     }
 
-    public getRating(): number {
+    public get rating(): number | undefined {
         return this._rating;
     }
 
-    public getCreatedAt(): string {
+    public get createdAt(): string | undefined {
         return this._createdAt;
     }
 
-    public setTitle(newTitle: string): void {
-        this._title = newTitle;
-    }
-
-    public setContent(newContent: string): void {
+    public set content(newContent: string) {
         this._content = newContent;
     }
 
-    public setRating(newRating: number): void {
+    public set rating(newRating: number) {
         this._rating = newRating;
     }
 
-    public setcreatedAt(newcreatedAt: string): void {
+    public set createdAt(newcreatedAt: string) {
         this._createdAt = newcreatedAt;
     }
 }

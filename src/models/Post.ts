@@ -7,25 +7,29 @@ export class Post {
     private _authorId: number;
     private _title: string;
     private _content: string;
-    private _rating: number;
-    private _createdAt: string;
+    private _rating: number | undefined;
+    private _createdAt: string | undefined;
 
     // constructor:
-    public constructor(postId: number, authorId: number, title: string, content: string, rating: number, createdAt: string) {
+    public constructor(postId: number, authorId: number, title: string, content: string) {
         this._postId = postId;
         this._authorId = authorId;
         this._title = title;
         this._content = content;
-        this._rating = rating;
-        this._createdAt = createdAt;
     }
 
     // CRUD methods:
-    public async getAllPosts(): Promise<Post[] | undefined> {
+    public static async getAllPosts(): Promise<Post[] | undefined> {
         try {
             const result: postResult[] = await api.queryDatabase("Select * from post ORDER BY createdAt DESC") as postResult[];
             if (result.length > 0) {
-                return result.map(post => new Post(post.postId, post.authorId, post.title, post.content, post.rating, post.createdAt));
+                const posts: Post[] = result.map(post => {
+                    const newPost: Post = new Post(post.postId, post.authorId, post.title, post.content);
+                    newPost.rating = post.rating;
+                    newPost.createdAt = post.createdAt;
+                    return newPost;
+                });
+                return posts;
             }
             else {
                 return undefined;
@@ -37,11 +41,17 @@ export class Post {
         }
     }
 
-    public async getAllPostsByUserId(id: number): Promise<Post[] | undefined> {
+    public static async getAllPostsByUserId(id: number): Promise<Post[] | undefined> {
         try {
             const result: postResult[] = await api.queryDatabase("SELECT * FROM `post` WHERE authorId = ? ORDER BY createdAt DESC", [id]) as postResult[];
             if (result.length > 0) {
-                return result.map(post => new Post(post.postId, post.authorId, post.title, post.content, post.rating, post.createdAt));
+                const posts: Post[] = result.map(post => {
+                    const newPost: Post = new Post(post.postId, post.authorId, post.title, post.content);
+                    newPost.rating = post.rating;
+                    newPost.createdAt = post.createdAt;
+                    return newPost;
+                });
+                return posts;
             }
             else {
                 return undefined;
@@ -53,11 +63,14 @@ export class Post {
         }
     }
 
-    public async getPostById(id: number): Promise<Post | undefined> {
+    public static async getPostById(id: number): Promise<Post | undefined> {
         try {
             const result: postResult[] = await api.queryDatabase("SELECT * from post WHERE postId = ?", [id]) as postResult[];
             if (result.length > 0) {
-                return new Post(result[0].postId, result[0].authorId, result[0].title, result[0].content, result[0].rating, result[0].createdAt);
+                const post: Post = new Post(result[0].postId, result[0].authorId, result[0].title, result[0].content);
+                post.rating = result[0].rating;
+                post.createdAt = result[0].createdAt;
+                return post;
             }
             else {
                 return undefined;
@@ -69,11 +82,11 @@ export class Post {
         }
     }
 
-    public async create(authorId: number, title: string, content: string, createdAt: string): Promise<boolean> {
+    public async create(authorId: number, title: string, content: string): Promise<boolean> {
         try {
             const result: postResult[] = await api.queryDatabase(
-                "INSERT INTO post (authorID, title, content, createdAt) VALUES (?, ?, ?, ?)",
-                authorId, title, content, createdAt
+                "INSERT INTO post (authorID, title, content, createdAt) VALUES (?, ?, ?)",
+                authorId, title, content
             ) as postResult[];
 
             console.log("Success", result);
@@ -85,7 +98,7 @@ export class Post {
         }
     }
 
-    public async countTotalPosts(): Promise<number | undefined> {
+    public static async countTotalPosts(): Promise<number | undefined> {
         try {
             const result: postResult[] = await api.queryDatabase("SELECT COUNT(*) as count FROM post") as postResult[];
             if (result.length > 0) {
@@ -102,7 +115,7 @@ export class Post {
         }
     }
 
-    public async countTotalPostsByUserId(authorId: number): Promise<number | undefined> {
+    public static async countTotalPostsByUserId(authorId: number): Promise<number | undefined> {
         try {
             const result: postResult[] = await api.queryDatabase("SELECT COUNT(*) as count FROM post WHERE authorId = ?", [authorId]) as postResult[];
             if (result.length > 0) {
@@ -119,7 +132,7 @@ export class Post {
         }
     }
 
-    public async countTotalRatingByUserId(userId: number): Promise<number | undefined> {
+    public static async countTotalRatingByUserId(userId: number): Promise<number | undefined> {
         try {
             const result: postResult[] = await api.queryDatabase("SELECT SUM(rating) as count FROM post WHERE authorId = ?", [userId]) as postResult[];
             if (result.length > 0) {
@@ -136,44 +149,43 @@ export class Post {
         }
     }
 
-    // getters and setters:
-    public getPostId(): number {
+    public get postId(): number {
         return this._postId;
     }
 
-    public getAuthorId(): number {
+    public get authorId(): number {
         return this._authorId;
     }
 
-    public getTitle(): string {
+    public get title(): string {
         return this._title;
     }
 
-    public getContent(): string {
+    public get content(): string {
         return this._content;
     }
 
-    public getRating(): number {
+    public get rating(): number | undefined {
         return this._rating;
     }
 
-    public getcreatedAt(): string {
+    public get createdAt(): string | undefined {
         return this._createdAt;
     }
 
-    public setTitle(newTitle: string): void {
+    public set title(newTitle: string) {
         this._title = newTitle;
     }
 
-    public setContent(newContent: string): void {
+    public set content(newContent: string) {
         this._content = newContent;
     }
 
-    public setRating(newRating: number): void {
+    public set rating(newRating: number) {
         this._rating = newRating;
     }
 
-    public setcreatedAt(newcreatedAt: string): void {
+    public set createdAt(newcreatedAt: string) {
         this._createdAt = newcreatedAt;
     }
 }

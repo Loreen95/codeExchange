@@ -1,5 +1,5 @@
-import { PostClass } from "../controllers/PostController";
-const post: PostClass = new PostClass();
+import { PostController } from "../controllers/PostController";
+const post: PostController = new PostController();
 const insertPostsHere: HTMLElement | null = document.querySelector(".posts");
 
 if (insertPostsHere) {

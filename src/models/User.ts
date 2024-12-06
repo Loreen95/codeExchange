@@ -27,7 +27,7 @@ export class User {
      * @param email requires the emailadress for the data-query.
      * @returns true or false based off database data.
      */
-    public async doesUserExistForEmail(email: string): Promise<boolean | undefined> {
+    public static async doesUserExistForEmail(email: string): Promise<boolean | undefined> {
         try {
             const result: userResult[] = await api.queryDatabase("SELECT email FROM user WHERE email = ?", [email]) as userResult[];
             if (result.length > 0) {
@@ -48,7 +48,7 @@ export class User {
      * @param username requires username for the data-query.
      * @returns true or false based off database data.
      */
-    public async doesUserExistForUsername(username: string): Promise<boolean | undefined> {
+    public static async doesUserExistForUsername(username: string): Promise<boolean | undefined> {
         try {
             const result: userResult[] = await api.queryDatabase("SELECT username FROM user WHERE username = ?", [username]) as userResult[];
             if (result.length > 0) {
@@ -68,7 +68,7 @@ export class User {
      * This function will find a user based off their ID.
      * @param userId requires the ID to find a match in de database.
      */
-    public async getUserById(userId: number): Promise<User | undefined> {
+    public static async getUserById(userId: number): Promise<User | undefined> {
         try {
             const result: userResult[] = await api.queryDatabase("SELECT * from user WHERE userId = ?", [userId]) as userResult[];
             if (result.length > 0) {
@@ -95,7 +95,7 @@ export class User {
      * @param password requires the password to find a match in the database.
      * @returns the ID of the entry which matches to the parameters above.
      */
-    public async getUserByEmailAndPassword(email: string, password: string): Promise<User | undefined> {
+    public static async getUserByEmailAndPassword(email: string, password: string): Promise<User | undefined> {
         try {
             const result: userResult[] = await api.queryDatabase(
                 "SELECT * FROM user WHERE email = ? AND password = ?", email, password) as userResult[];
@@ -118,7 +118,7 @@ export class User {
      * @param password requires the password to find a match in the database.
      * @returns the ID of the entry which matches to the parameters above.
      */
-    public async getUserByUsernameAndPassword(username: string, password: string): Promise<User | undefined> {
+    public static async getUserByUsernameAndPassword(username: string, password: string): Promise<User | undefined> {
         try {
             const result: userResult[] = await api.queryDatabase(
                 "SELECT * FROM user WHERE username = ? AND password = ?", username, password) as userResult[];
@@ -180,7 +180,7 @@ export class User {
         }
     }
 
-    public async countTotalUsers(): Promise<number | undefined> {
+    public static async countTotalUsers(): Promise<number | undefined> {
         try {
             const result: userResult[] = await api.queryDatabase("SELECT COUNT(*) as count FROM user") as userResult[];
             if (result.length > 0) {

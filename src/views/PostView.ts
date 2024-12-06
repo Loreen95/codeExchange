@@ -1,14 +1,13 @@
 import { Post } from "../models/Post";
-import { PostClass } from "../controllers/PostController";
+import { PostController } from "../controllers/PostController";
 import UserInterfaceClass from "./interface";
 import hljs from "highlight.js";
 
-const postModel: Post = new Post(0, 0, "", "", 0, "");
-const post: PostClass = new PostClass();
+const post: PostController = new PostController();
 const UI: UserInterfaceClass = new UserInterfaceClass();
 
 const insertPostsHere: HTMLDivElement = document.querySelector(".posts")!;
-const currentpost: Post | undefined = await postModel.getPostById(Number(sessionStorage.getItem("post_Nr")));
+const currentpost: Post | undefined = await Post.getPostById(Number(sessionStorage.getItem("post_Nr")));
 
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 if (insertPostsHere) {
@@ -48,26 +47,26 @@ const awnseramount: HTMLHeadElement = document.querySelector("#injectawnseramoun
 
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 if (insertQuestionNameHere) {
-    insertQuestionNameHere.innerText = String(currentpost!.getTitle());
+    insertQuestionNameHere.innerText = String(currentpost!.title);
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 if (questionInfoBits) {
-    questionInfoBits.innerText = `${await post.getUserName(currentpost!.getAuthorId())}  ${String(currentpost!.getcreatedAt()).slice(8, 10) + "-" + String(currentpost!.getcreatedAt()).slice(5, 7) + "-" + String(currentpost!.getcreatedAt()).slice(0, 4) + " | " + String(currentpost!.getcreatedAt()).slice(11, 19)}`;
+    questionInfoBits.innerText = `${await post.getUserName(currentpost!.authorId)}  ${String(currentpost!.createdAt).slice(8, 10) + "-" + String(currentpost!.createdAt).slice(5, 7) + "-" + String(currentpost!.createdAt).slice(0, 4) + " | " + String(currentpost!.createdAt).slice(11, 19)}`;
 }
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 if (ratingCounter) {
-    if (String(currentpost!.getRating()) === String(null)) {
+    if (String(currentpost!.rating) === String(null)) {
         ratingCounter.innerText = "0";
     }
     else {
-        ratingCounter.innerText = String(currentpost!.getRating());
+        ratingCounter.innerText = String(currentpost!.rating);
     }
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 if (contentOfPost) {
-    contentOfPost.innerHTML = post.encodeContentForVieuwingPurposes(currentpost!.getContent());
+    contentOfPost.innerHTML = post.encodeContentForVieuwingPurposes(currentpost!.content);
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
