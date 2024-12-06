@@ -83,13 +83,8 @@ body {
     margin: 0;
 }
 
-.rowAlign {
-    display: flex;
-}
-
-.rowAlign2 {
-    display: flex;
-    margin-left: 10px;
+#totalComments, #totalPosts {
+    margin-left: 5px;
 }
 
 .menu {
@@ -1340,5 +1335,10 @@ pre {
 
     #desktopFormatContent {
         display: none;
+    }
+
+    #whoAsked {
+        position: relative;
+        left: 20px;
     }
 }

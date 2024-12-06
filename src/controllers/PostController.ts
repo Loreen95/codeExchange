@@ -293,4 +293,22 @@ export class PostController {
             this._UI.unleashTheErrorPopup(true);
         }
     }
+
+    /**
+     * revealAndHideContentToLoginStatus
+     */
+    public revealAndHideContentToLoginStatus(): void {
+        const userUrl: URLSearchParams = new URLSearchParams(window.location.search);
+        const userId: string | null = userUrl.get("user");
+        if (Number(sessionStorage.getItem("session")) === Number(userId)) {
+            console.log("wegotta match");
+        }
+        else {
+            console.log("no match");
+            const onlyShowThisToCorrectUser: NodeListOf<HTMLElement> = document.querySelectorAll(".onlyForOwnerOfAccount");
+            for (let o: number = 0; o < onlyShowThisToCorrectUser.length; o++) {
+                onlyShowThisToCorrectUser[o].style.display = "none";
+            }
+        }
+    }
 }
