@@ -54,7 +54,7 @@ class Flask extends Pakagin {
     public toString(): string {
         return `
             Flask info:
-            amount of flasks: ${this.amontOfFlasks}
+            amount of flasks: ${Flask.amontOfFlasks}
             volume of each individual flask: ${this.maxVolumeInML}
             The contents of this flask: ${this.volumeInML}
         `;
