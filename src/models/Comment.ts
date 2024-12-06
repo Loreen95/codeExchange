@@ -22,7 +22,7 @@ export class Comment {
     public static async getCommentsByMessageId(id: number): Promise<Comment[]> {
         try {
             const result: commentResult[] = await api.queryDatabase(
-                "SELECT * FROM comment WHERE messageId = ?",
+                "SELECT * FROM comment WHERE messageId = ? ORDER BY createdAt DESC",
                 [id]
             ) as commentResult[];
             if (result.length > 0) {
