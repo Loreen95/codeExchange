@@ -88,6 +88,8 @@ const boldBtn: HTMLButtonElement = document.querySelector(".bold")!;
 const italicBtn: HTMLButtonElement = document.querySelector(".italic")!;
 const codeBtn: HTMLButtonElement = document.querySelector(".code")!;
 const linkBtn: HTMLButtonElement = document.querySelector(".link")!;
+const undo: HTMLButtonElement = document.querySelector(".undo")!;
+const redo: HTMLButtonElement = document.querySelector(".redo")!;
 
 boldBtn.addEventListener("click", e => {
     e.preventDefault();
@@ -111,4 +113,14 @@ codeBtn.addEventListener("click", e => {
     e.preventDefault();
     const textarea: HTMLTextAreaElement = document.querySelector("#contentInput")!;
     post.addToField(textarea, "[code]", "[/code]");
+});
+
+undo.addEventListener("click", e => {
+    e.preventDefault();
+    post.undoAction();
+});
+
+redo.addEventListener("click", e => {
+    e.preventDefault();
+    post.redoAction();
 });

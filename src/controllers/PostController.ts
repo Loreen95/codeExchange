@@ -139,9 +139,10 @@ export class PostController {
 
         const answerBttn: HTMLElement | null = document.querySelector("#createAnswer");
         if (answerBttn) {
+            const textarea: Element = document.querySelector("#addOwnAwnser")!;
             answerBttn.addEventListener("click", () => {
-                const postId: number = Number(sessionStorage.getItem("post_Nr"));
-                window.location.href = `http://localhost:3000/createComment?comment=${postId}`;
+                window.location.href = "#contentInput";
+                textarea.scrollIntoView({ behavior: "smooth", block: "start" });
             });
         }
         else {
@@ -347,5 +348,13 @@ export class PostController {
             textarea.selectionEnd = endPosition + start.length;
         }
         textarea.scrollTop = position;
+    }
+
+    public undoAction(): void {
+        document.execCommand("undo", false);
+    }
+
+    public redoAction(): void {
+        document.execCommand("redo", true);
     }
 }
