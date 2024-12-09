@@ -254,6 +254,10 @@ export class LanguageClass {
                 en: "Total rating",
                 nl: "Totaal aantal stemmen",
             },
+            cancel: {
+                en: "Cancel",
+                nl: "Annuleren",
+            },
         });
     }
 

@@ -28,9 +28,9 @@ export class PostController {
         if (selectionMethod === "userSpecific") {
             if (possibleUserId) {
                 postList = await Post.getAllPostsByUserId(possibleUserId);
+                console.log(postList);
             }
         }
-
         const totalQquestionAmount: Element | null = document.querySelector("#totalQquestionAmount");
 
         if (totalQquestionAmount) {
@@ -113,6 +113,7 @@ export class PostController {
     public async renderComments(): Promise<void> {
         const insertCommenthere: HTMLDivElement = document.querySelector(".awnsers")!;
         const commentList: Comment[] | undefined = await Comment.getCommentsByMessageId(Number(sessionStorage.getItem("post_Nr")));
+        console.log(commentList);
         commentList.forEach(async _comment => {
             let rating: number | undefined = 0;
             if (String(_comment.rating) !== String(null)) {
@@ -260,7 +261,7 @@ export class PostController {
             }
 
             const postUrl: URLSearchParams = new URLSearchParams(window.location.search);
-            const postId: string | null = postUrl.get("comment");
+            const postId: string | null = postUrl.get("post");
             const post: Post | undefined = await Post.getPostById(Number(postId));
             if (!post) {
                 errorMessage.innerHTML = "Error finding original post!";
@@ -275,7 +276,7 @@ export class PostController {
                 successMessage.innerHTML = "Comment created successfully!";
                 this._UI.unleashTheErrorPopup(false);
                 this._UI.successMessagePopup(true);
-                await this.renderPosts();
+                await this.renderComments();
             }
             else {
                 errorMessage.innerHTML += "Failed to create the post!";

@@ -24,7 +24,7 @@ if (createBtn) {
     });
 }
 
-const submitBtn: HTMLButtonElement | null = document.querySelector(".createComment");
+const submitBtn: HTMLButtonElement | null = document.querySelector("#postAwnser");
 
 if (submitBtn) {
     submitBtn.addEventListener("click", async (e: Event) => {

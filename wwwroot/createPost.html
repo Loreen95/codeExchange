@@ -7,6 +7,7 @@
     <link rel="icon" type="image/x-icon" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="icon" type="image/x-icon" href="/assets/img/apatureFavicon.ico">
     <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/profilePage.css" />
     <title>Code Exhange</title>
 </head>
 
@@ -16,15 +17,33 @@
     <section class="vagabondElements"></section>
 
     <main class="tempitem">
-        <section class="defaultInputBox">
+        <!-- <section class="defaultInputBox"> -->
+            <section class="addOwnAwnser">
             <h1 data-translate="postmessage"> </h1>
             <label for="title" data-translate="title"> </label>
             <input id="titleInput" type="text" name="title" placeholder="Title...">
             <label for="content" data-translate="content"> </label>
-            <textarea id="contentInput"></textarea>
-            <section class="buttonRow">
-                <button class="createPost" data-translate="createpost"> </button>
-            </section>       
+            <div class="addAwnsersTextEditButtons">
+                <div class="addAwnserLeftSide">
+                    <a class="bold"><i class="fa-solid fa-bold"></i></a>
+                    <a class="italic"><i class="fa-solid fa-italic"></i></a>
+                    <a class="link"><i class="fa-solid fa-link"></i></a>
+                    <a class="quote"><i class="fa-solid fa-quote-right"></i></a>
+                    <a class="code"><i class="fa-solid fa-code"></i></a>
+                    <a class="alignTextRight"><i class="fa-solid fa-align-right"></i></a>
+                    <a class="aligntextCenter"><i class="fa-solid fa-align-center"></i></a>
+                    <a class="alignTextLeft"><i class="fa-solid fa-align-left"></i></a>
+                </div>
+                <div class="addAwnserRightSide">
+                    <a class="undo"><i class="fa-solid fa-rotate-left"></i></a>
+                    <a class="redo"><i class="fa-solid fa-rotate-right"></i></a>
+                </div>
+            </div>
+            <textarea name="addownAwnsertextarea" id="contentInput"></textarea>
+            <div class="ownAwnserCanselOrPost">
+                <button class="basicDarkButton" id="clacelAwnser" data-translate="cancel"></button>
+                <button class="basicDarkButton" id="createPost" data-translate="createpost"></button>
+            </div>      
         </section>
     </main>
 
