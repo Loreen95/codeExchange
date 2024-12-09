@@ -950,7 +950,7 @@ input:-webkit-autofill:active{
 }
 
 .addOwnAwnser {
-    display: flex;
+    display: none;
     flex-direction: column;
     width: 75.5%;
     align-self: flex-end;
@@ -988,8 +988,13 @@ input:-webkit-autofill:active{
 
 #slightMarginForThisX {
     margin-left: 15px;
+    margin-top: 5px;
     color: aliceblue;
     font-size: 20px;
+}
+
+#slightMarginForThisX:hover {
+    color: #292a2c;
 }
 
 .basicDarkButton {
