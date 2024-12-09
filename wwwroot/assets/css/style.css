@@ -1031,7 +1031,6 @@ input:-webkit-autofill:active{
 .ownAwnserCanselOrPost {
     display: flex;
     justify-content: flex-start;
-    /* width: 80%; */
     align-self: flex-start;
 }
 
@@ -1238,6 +1237,14 @@ code {
 }
 
 #desktopFormatContent {
+    display: block;
+}
+
+.phoneFormatContnet {
+    display: none;
+}
+
+.desktopFormatContent {
     display: block;
 }
 
@@ -1463,8 +1470,40 @@ pre {
         display: none;
     }
 
+    .phoneFormatContnet {
+        display: block;
+    }
+
+    .desktopFormatContent {
+        display: none;
+    }
+
     #whoAsked {
         position: relative;
         left: 20px;
+    }
+
+    .addOwnAwnser {
+        width: 100%;
+        align-self: center;
+        margin-right: 0;
+        margin-top: 10px;
+        border-radius: 0;
+    }
+
+    .ownAwnserCanselOrPost {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-self: flex-start;
+    }
+
+    .ownAwnserCanselOrPost p {
+        margin: 13px;
+        margin-top: -3px;
+    }
+
+    #slightMarginForThisX {
+        margin-left: 0px;
     }
 }
