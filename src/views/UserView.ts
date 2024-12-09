@@ -2,6 +2,8 @@ import { UserInfo } from "../views/types";
 import { User } from "../models/User";
 import { Post } from "../models/Post";
 import { Comment } from "../models/Comment";
+import { PostController } from "../controllers/PostController";
+const post: PostController = new PostController();
 
 export class UserView {
     public view!: HTMLElement;
@@ -74,5 +76,13 @@ export class UserView {
 
         const editLink: HTMLLinkElement = document.querySelector("#edit")!;
         editLink.href = `editProfile?user=${userInfo.userId}`;
+
+        const insertPostsHere: HTMLElement | null = document.querySelector(".posts");
+        if (insertPostsHere) {
+            const userUrl: URLSearchParams = new URLSearchParams(window.location.search);
+            const userId: string | null = userUrl.get("user");
+            await post.renderPosts("userSpecific", Number(userId));
+        }
+        post.revealAndHideContentToLoginStatus();
     }
 }

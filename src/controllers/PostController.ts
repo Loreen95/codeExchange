@@ -351,10 +351,12 @@ export class PostController {
     }
 
     public undoAction(): void {
+        // eslint-disable-next-line @typescript-eslint/no-deprecated
         document.execCommand("undo", false);
     }
 
     public redoAction(): void {
+        // eslint-disable-next-line @typescript-eslint/no-deprecated
         document.execCommand("redo", true);
     }
 }
