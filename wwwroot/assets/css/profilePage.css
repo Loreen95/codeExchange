@@ -184,7 +184,7 @@
     background-color: #2d2d2d;
     width: 80%;
     align-self: center;
-    margin-top: 20px;
+    margin-top: 40px;
     border-radius: 4px;
 }
 
@@ -252,7 +252,7 @@
 .thebelowButtonStuffAgain {
     display: flex;
     font-family: 'Trebuchet MS', sans-serif;
-    justify-content: space-between;
+    justify-content: flex-end;
 }
 
 .thebelowButtonStuffAgain button {

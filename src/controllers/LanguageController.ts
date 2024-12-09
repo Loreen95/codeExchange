@@ -131,8 +131,8 @@ export class LanguageClass {
                 nl: "Veel gestelde vragen",
             },
             copyright: {
-                en: "© 2027 - Burnout Alliance",
-                nl: "© 2027 - Burnout Alliance",
+                en: "© 2027 - Burnout Alliance™ | 1603-2025",
+                nl: "© 2027 - Burnout Alliance™ | 1603-2025",
             },
             copyrighttext: {
                 en: "All rights reserved",
@@ -257,6 +257,14 @@ export class LanguageClass {
             cancel: {
                 en: "Cancel",
                 nl: "Annuleren",
+            },
+            deleteAccount: {
+                en: "Delete account",
+                nl: "Account verwijderen",
+            },
+            applyChainges: {
+                en: "Apply chainges",
+                nl: "Aanpassingen toewijzen",
             },
         });
     }
