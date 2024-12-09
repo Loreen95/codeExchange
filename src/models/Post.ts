@@ -85,7 +85,7 @@ export class Post {
     public async create(authorId: number, title: string, content: string): Promise<boolean> {
         try {
             const result: postResult[] = await api.queryDatabase(
-                "INSERT INTO post (authorID, title, content, createdAt) VALUES (?, ?, ?)",
+                "INSERT INTO post (authorID, title, content) VALUES (?, ?, ?)",
                 authorId, title, content
             ) as postResult[];
 
@@ -181,11 +181,11 @@ export class Post {
         this._content = newContent;
     }
 
-    public set rating(newRating: number) {
+    public set rating(newRating: number | undefined) {
         this._rating = newRating;
     }
 
-    public set createdAt(newcreatedAt: string) {
+    public set createdAt(newcreatedAt: string | undefined) {
         this._createdAt = newcreatedAt;
     }
 }

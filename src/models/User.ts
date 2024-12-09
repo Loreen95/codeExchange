@@ -230,7 +230,7 @@ export class User {
         return this._bio;
     }
 
-    public set bio(bio: string) {
+    public set bio(bio: string | undefined) {
         this._bio = bio;
     }
 
@@ -238,7 +238,7 @@ export class User {
         return this._dob;
     }
 
-    public set dob(dob: Date) {
+    public set dob(dob: Date | undefined) {
         this._dob = dob;
     }
 
@@ -246,7 +246,7 @@ export class User {
         return this._yearsExperience;
     }
 
-    public set experience(experience: number) {
+    public set experience(experience: number | undefined) {
         this._yearsExperience = experience;
     }
 
@@ -254,7 +254,7 @@ export class User {
         return this._createdAt;
     }
 
-    public set createdAt(createdAt: Date) {
+    public set createdAt(createdAt: Date | undefined) {
         this._createdAt = createdAt;
     }
 }
