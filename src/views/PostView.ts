@@ -124,3 +124,13 @@ redo.addEventListener("click", e => {
     e.preventDefault();
     post.redoAction();
 });
+
+const unleashCommentPlate: HTMLAnchorElement = document.querySelector("#createAnswer")!;
+unleashCommentPlate.addEventListener("click", () => {
+    post.unleashAddComentPanel();
+});
+
+const closePanelBackUp: HTMLAnchorElement = document.querySelector(".closePanel")!;
+closePanelBackUp.addEventListener("click", () => {
+    post.unleashAddComentPanel();
+});

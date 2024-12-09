@@ -114,7 +114,7 @@ export class PostController {
     public async renderComments(): Promise<void> {
         const insertCommenthere: HTMLDivElement = document.querySelector(".awnsers")!;
         const commentList: Comment[] | undefined = await Comment.getCommentsByMessageId(Number(sessionStorage.getItem("post_Nr")));
-        console.log(commentList);
+        // console.log(commentList);
         commentList.forEach(async _comment => {
             let rating: number | undefined = 0;
             if (String(_comment.rating) !== String(null)) {
@@ -149,6 +149,27 @@ export class PostController {
             console.error(`Element #postNr${answerBttn} not found`);
         }
     }
+
+    /**
+     * unleashAddComentPanel
+     */
+    private _isPanelVisible: boolean = false;
+    public unleashAddComentPanel(): void {
+        const commentMakerPanel: HTMLDivElement = document.querySelector(".addOwnAwnser")!;
+        if (this._isPanelVisible) {
+            this._isPanelVisible = false;
+            commentMakerPanel.style.display = "none";
+            console.log("fuegoFalse");
+        }
+        else {
+            this._isPanelVisible = true;
+            commentMakerPanel.style.display = "flex";
+            console.log("fuegoTrue");
+        }
+    }
+
+    // .addOwnAwnser {
+    //     display: none;
 
     public async isLoggedInUserResponsibleForThisPost(usersId: number, viewingPostId: number): Promise<boolean> {
         const currentpost: Post | undefined = await Post.getPostById(viewingPostId);

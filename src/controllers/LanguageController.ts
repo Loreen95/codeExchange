@@ -55,8 +55,8 @@ export class LanguageClass {
                 nl: "Gebruikers",
             },
             language: {
-                en: "Dutch",
-                nl: "Engels",
+                en: "Translate (NL)",
+                nl: "Vertaalen (EN)",
             },
             logout: {
                 en: "Logout",
@@ -273,6 +273,10 @@ export class LanguageClass {
             applychanges: {
                 en: "Apply changes",
                 nl: "Aanpassingen toewijzen",
+            },
+            birthdate: {
+                en: "Birthdate",
+                nl: "Geboortedatum",
             },
         });
     }

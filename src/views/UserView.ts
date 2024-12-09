@@ -52,10 +52,12 @@ export class UserView {
     public async countRating(): Promise<number> {
         const userUrl: URLSearchParams = new URLSearchParams(window.location.search);
         const userId: string | null = userUrl.get("user");
-        const ratingPost: number | undefined = await Post.countTotalRatingByUserId(Number(userId));
+        // const ratingPost: number | undefined = await Post.countTotalRatingByUserId(Number(userId));
+        // const ratingComment: number | undefined = await Comment.countTotalRatingByUserId(Number(userId));
+        // const totalRating: number = (ratingPost ?? 0) + (ratingComment ?? 0);
+        // return totalRating || 0;
         const ratingComment: number | undefined = await Comment.countTotalRatingByUserId(Number(userId));
-        const totalRating: number = (ratingPost ?? 0) + (ratingComment ?? 0);
-        return totalRating || 0;
+        return ratingComment || 0;
     }
 
     public async render(userInfo: UserInfo): Promise<void> {
@@ -67,9 +69,23 @@ export class UserView {
             insertUsernamesHere[i].innerText = String(userInfo.userName);
         }
         document.querySelector("#memberSince")!.innerHTML = userInfo.stringedTimeAndDate;
-        document.querySelector("#insertBirthdayHere")!.innerHTML = userInfo.dob;
+        if (userInfo.dob === "Niet beschikbaar" || userInfo.dob === "00-00-0000") {
+            const bdaythings: NodeListOf<HTMLParagraphElement> = document.querySelectorAll(".bdaythings");
+            for (let k: number = 0; k < bdaythings.length; k++) {
+                bdaythings[k].style.display = "none";
+            }
+        }
+        else {
+            document.querySelector("#insertBirthdayHere")!.innerHTML = userInfo.dob;
+        }
         document.querySelector("#insertEmailHere")!.innerHTML = userInfo.userEmail;
-        document.querySelector("#insertBiographyHere")!.innerHTML = userInfo.bio;
+        if (userInfo.bio === "Geen biografie beschikbaar") {
+            const biobit: HTMLDivElement = document.querySelector(".userBiography")!;
+            biobit.style.display = "none";
+        }
+        else {
+            document.querySelector("#insertBiographyHere")!.innerHTML = userInfo.bio;
+        }
         document.querySelector("#totalPosts")!.innerHTML = String(postCount);
         document.querySelector("#totalComments")!.innerHTML = String(commentCount);
         document.querySelector("#totalRating")!.innerHTML = String(ratingCount);
