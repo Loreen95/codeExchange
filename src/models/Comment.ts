@@ -137,11 +137,11 @@ export class Comment {
         this._content = newContent;
     }
 
-    public set rating(newRating: number) {
+    public set rating(newRating: number | undefined) {
         this._rating = newRating;
     }
 
-    public set createdAt(newcreatedAt: string) {
+    public set createdAt(newcreatedAt: string | undefined) {
         this._createdAt = newcreatedAt;
     }
 }

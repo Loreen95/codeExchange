@@ -15,7 +15,7 @@ if (insertPostsHere) {
 }
 const titleUserInput: HTMLInputElement = document.querySelector("#titleInput")!;
 const contentInput: HTMLInputElement = document.querySelector("#contentInput")!;
-const createBtn: HTMLButtonElement = document.querySelector(".createPost")!;
+const createBtn: HTMLButtonElement = document.querySelector("#createPost")!;
 
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 if (createBtn) {
@@ -83,3 +83,32 @@ if (awnseramount) {
 }
 
 hljs.highlightAll();
+
+const boldBtn: HTMLButtonElement = document.querySelector(".bold")!;
+const italicBtn: HTMLButtonElement = document.querySelector(".italic")!;
+const codeBtn: HTMLButtonElement = document.querySelector(".code")!;
+const linkBtn: HTMLButtonElement = document.querySelector(".link")!;
+
+boldBtn.addEventListener("click", e => {
+    e.preventDefault();
+    const textarea: HTMLTextAreaElement = document.querySelector("#contentInput")!;
+    post.addToField(textarea, "<b>", "</b>");
+});
+
+italicBtn.addEventListener("click", e => {
+    e.preventDefault();
+    const textarea: HTMLTextAreaElement = document.querySelector("#contentInput")!;
+    post.addToField(textarea, "<i>", "</i>");
+});
+
+linkBtn.addEventListener("click", e => {
+    e.preventDefault();
+    const textarea: HTMLTextAreaElement = document.querySelector("#contentInput")!;
+    post.addToField(textarea, "<a href='", "'></a>");
+});
+
+codeBtn.addEventListener("click", e => {
+    e.preventDefault();
+    const textarea: HTMLTextAreaElement = document.querySelector("#contentInput")!;
+    post.addToField(textarea, "[code]", "[/code]");
+});

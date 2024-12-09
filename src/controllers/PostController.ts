@@ -3,6 +3,7 @@ import { Comment } from "../models/Comment";
 import { User } from "../models/User";
 import UserInterfaceClass from "../views/interface";
 import hljs from "highlight.js";
+import validator from "validator";
 
 export class PostController {
     private _postModel: Post | undefined;
@@ -311,5 +312,40 @@ export class PostController {
                 onlyShowThisToCorrectUser[o].style.display = "none";
             }
         }
+    }
+
+    public addToField(textarea: HTMLTextAreaElement, start: string, end: string): void {
+        const position: number = textarea.scrollTop;
+        const startPosition: number = textarea.selectionStart || 0;
+        const endPosition: number = textarea.selectionEnd || 0;
+        const currentText: string = textarea.value;
+
+        const isEmptySelection: boolean = startPosition === endPosition;
+        const before: string = currentText.substring(0, startPosition);
+        const selection: string = isEmptySelection ? "" : currentText.substring(startPosition, endPosition);
+        const after: string = currentText.substring(endPosition);
+
+        const urlValidationOptions: { protocols: string[]; require_protocol: boolean; require_valid_protocol: boolean;
+            allow_underscores: boolean; validate_length: boolean; } = { protocols: ["http", "https"],
+            require_protocol: true, require_valid_protocol: true, allow_underscores: false, validate_length: true,
+        };
+
+        if (start === "<a href='" && end === "'></a>") {
+            if (!validator.isURL(selection, urlValidationOptions)) {
+                console.error("De geselecteerde tekst is geen geldige URL.");
+                return;
+            }
+        }
+
+        textarea.value = `${before}${start}${selection}${end}${after}`;
+        if (isEmptySelection) {
+            textarea.selectionStart = startPosition + start.length;
+            textarea.selectionEnd = startPosition + start.length;
+        }
+        else {
+            textarea.selectionStart = startPosition + start.length;
+            textarea.selectionEnd = endPosition + start.length;
+        }
+        textarea.scrollTop = position;
     }
 }
