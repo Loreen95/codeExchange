@@ -988,13 +988,15 @@ input:-webkit-autofill:active{
 
 #slightMarginForThisX {
     margin-left: 15px;
+    color: aliceblue;
+    font-size: 20px;
 }
 
 .basicDarkButton {
     border: none;
     color: aliceblue;
     border-radius: 2px;
-    background-image: linear-gradient(to bottom right, #2e2e2e, #1b1b1b);
+    background-image: linear-gradient(to bottom right, #141414, #131313);
     /* background-image: linear-gradient(to bottom right, #2e7cbc, #1f5c8e); */
     font-size: 20px;
     letter-spacing: 0.06em;
@@ -1192,6 +1194,7 @@ code {
 .basicButton:hover {
     background-image: linear-gradient(to bottom right, #9a1515, #621111);
     transition: all 0.7s;
+    color: aliceblue;
 }
 
 .joinUsButton {
