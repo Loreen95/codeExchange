@@ -261,13 +261,13 @@
     font-weight: 500;
     border: none;
     padding: 10px;
-    border-radius: 2px;
     letter-spacing: 0.03em;
     cursor: pointer;
 }
 
 .deleteAccountBttn {
    background-color: #be0a0a;
+   border-radius: 2px;
 }
 
 .deleteAccountBttn:hover {
@@ -277,6 +277,7 @@
 
 .applyChaingesBttn {
     background-color: #0b0b0b;
+    border-radius: 2px;
     margin: 0 0 0 10px;
     flex-grow: 1;
     display: flex;
@@ -417,5 +418,50 @@
 
     .footer {
         margin-top: 20px;
+    }
+
+    .editProfileContainer {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        align-self: center;
+        align-items: center;
+        margin-top: 40px;
+        border-radius: 0;
+    }
+
+    .editAccountInfoSide {
+        display: flex;
+        flex-direction: column;
+        /* background-color: #878787; */
+        width: 100%;
+        padding: 0;
+    }
+
+    .thebelowButtonStuffAgain {
+        display: flex;
+        flex-direction: column-reverse;
+        font-family: 'Trebuchet MS', sans-serif;
+        justify-content: flex-end;
+    }
+
+    .applyChaingesBttn {
+        margin: 0 2% 0;
+        justify-content: center;
+    }
+
+    .editAccountInfoSide label { 
+        align-self: center;
+    }
+
+    .editAccountInfoSide textarea {
+        /* border-radius: 0; */
+        min-height: 20vh;
+        margin: 0 10px 10px;
+    }
+
+    .deleteAccountBttn {
+        width: 96%;
+        align-self: center;
     }
 }
