@@ -81,6 +81,7 @@ body {
 
 #questionStats {
     margin: 0;
+    margin-left: 10px;
 }
 
 #totalComments, #totalPosts {
@@ -279,7 +280,7 @@ body {
     font-size: 35px;
     text-align: left;
     letter-spacing: 0.03em;
-    margin: 40px 8% 0 5%;
+    margin: 20px 8% 0 2%;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
@@ -310,10 +311,10 @@ body {
 
 .alignRow2 {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
+    align-items: flex-start;
     margin-bottom: 10px;
-    margin-left: 50%;
+    /* margin-left: 50%; */
 }
 
 .alignRow2 p {
@@ -1200,6 +1201,11 @@ code {
     margin-top: 20px;
 }
 
+.joinUsButton:hover { 
+    background-image: linear-gradient(to bottom right, rgb(158, 27, 27), rgb(105, 17, 17));
+    color: aliceblue;
+}
+
 .awnsers hr {
     width: 92%;
     margin-left: 6%;
@@ -1450,7 +1456,7 @@ pre {
         font-size: 20px;
         flex-direction: column-reverse;
         background-color: transparent;
-        text-align: center;
+        text-align: left;
     }
 
     .joinUsButton {
