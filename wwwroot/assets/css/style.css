@@ -405,8 +405,8 @@ body {
 }
 
 ::placeholder {
-    color: rgb(198, 252, 252);
-    opacity: 1; /* Firefox */
+    color: rgb(179, 227, 227);
+    opacity: 0.5; /* Firefox */
   }
 
 .defaultInputBox input {
@@ -466,11 +466,6 @@ body {
     font-size: 50px;
     margin: 0;
 }
-
-::placeholder {
-    color: rgb(198, 252, 252);
-    opacity: 1; /* Firefox */
-  }
 
 .defaultMessageInputBox input {
     border: 3px solid rgb(58, 58, 58);
