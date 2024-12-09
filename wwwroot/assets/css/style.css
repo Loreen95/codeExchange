@@ -957,8 +957,9 @@ input:-webkit-autofill:active{
     margin-right: 3.1%;
     /* height: 60px; */
     background-image: linear-gradient(to bottom right, #ae0101, #940808);
+    /* background-image: linear-gradient(to bottom right, #182128, #0c0c0c); */
     margin-top: 20px;
-    
+    border: solid 3px rgb(203, 203, 203);
     border-radius: 5px;
 }
 
@@ -985,19 +986,25 @@ input:-webkit-autofill:active{
     margin-right: 3%!important;
 }
 
+#slightMarginForThisX {
+    margin-left: 15px;
+}
+
 .basicDarkButton {
     border: none;
     color: aliceblue;
     border-radius: 2px;
-    background-image: linear-gradient(to bottom right, #5c5c5c, #4d4d4d);
+    background-image: linear-gradient(to bottom right, #2e2e2e, #1b1b1b);
+    /* background-image: linear-gradient(to bottom right, #2e7cbc, #1f5c8e); */
     font-size: 20px;
-    letter-spacing: 0.07em;
+    letter-spacing: 0.06em;
     font-weight: 300;
     cursor: pointer;
 }
 
 .basicDarkButton:hover {
-    background-image: linear-gradient(to bottom right, #414141, #393838);
+    background-image: linear-gradient(to bottom right, #1a1a1a, #0b0b0b);
+    /* background-image: linear-gradient(to bottom right, #a42020, #8a1515); */
 }
 
 .addOwnAwnser textarea {
@@ -1018,16 +1025,29 @@ input:-webkit-autofill:active{
 
 .addAwnserRightSide {
     display: flex;
+    margin-right: -5px;
 }
 
 .ownAwnserCanselOrPost {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
+    /* width: 80%; */
+    align-self: flex-start;
+}
+
+.ownAwnserCanselOrPost p {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: aliceblue;
+    opacity: 0.6;
+    /* margin-right: 10%; */
+    margin-top: 5px;
 }
 
 .ownAwnserCanselOrPost button {
     margin: 0 12px 10px;
-    padding: 10px 50px 10px;
+    padding: 15px 50px 15px;
+    /* width: 30%; */
 }
 
 /* .addAwnserPopup {
