@@ -161,9 +161,143 @@
     margin-left: 10px;
 }
 
-
 #whoAsked {
     display: none;
+}
+
+.editProfileTitleCardContainer {
+    padding-top: 80px;
+    background-image: linear-gradient(to bottom right, #ca1111, #a01111);
+    font-family: 'Trebuchet MS', sans-serif;
+    color: aliceblue;
+}
+
+.editProfileTitleCardContainer p {
+    margin: 0;
+    padding: 15px;
+    font-weight: 900;
+    font-size: 50px;
+}
+
+.editProfileContainer {
+    display: flex;
+    background-color: #2d2d2d;
+    width: 80%;
+    align-self: center;
+    margin-top: 40px;
+    border-radius: 4px;
+}
+
+.profilePictureInEdit {
+    align-self: center;
+    margin-bottom: 20px;
+}
+
+.editUserInfoSide {
+    display: flex;
+    flex-direction: column;
+    /* background-color: #2d2d2d; */
+    /* flex-grow: 1; */
+    width: fit-content;
+    padding-bottom: 10px;
+}
+
+.editUserInfoSide input {
+    margin: 0 0 10px;
+    width: 80%;
+    align-self: center;
+    border: none;
+    border-radius: 5px;
+    font-size: 20px;
+    padding: 5px;
+    background-color: #444444;
+    color: aliceblue;
+    letter-spacing: 0.03em;
+    font-weight: 400;
+}
+
+.editUserInfoSide input:focus {
+    /* border: solid 2px aliceblue; */
+    border: none;
+    outline: aliceblue;
+}
+
+.editUserInfoSide label {
+    margin-left: 10%;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+.editAccountInfoSide {
+    display: flex;
+    flex-direction: column;
+    /* background-color: #878787; */
+    width: 100%;
+    padding-top: 10px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+}
+
+.editAccountInfoSide textarea {
+    background-color: #393939;
+    border: none;
+    border-radius: 3px;
+    padding: 10px;
+    resize: none;
+    font-family: 'Trebuchet MS', sans-serif;
+    color: aliceblue;
+    height: 100%;
+    margin-bottom: 10px;
+}
+
+.thebelowButtonStuffAgain {
+    display: flex;
+    font-family: 'Trebuchet MS', sans-serif;
+    justify-content: flex-end;
+}
+
+.thebelowButtonStuffAgain button {
+    color: aliceblue;
+    font-size: 20px;
+    font-weight: 500;
+    border: none;
+    padding: 10px;
+    border-radius: 2px;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+}
+
+.deleteAccountBttn {
+   background-color: #be0a0a;
+}
+
+.deleteAccountBttn:hover {
+    transition: all 0.2s;
+    background-color: #a40808;
+ }
+
+.applyChaingesBttn {
+    background-color: #0b0b0b;
+    margin: 0 0 0 10px;
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.applyChaingesBttn:hover {
+    transition: all 0.2s;
+    background-color: #1d1d1d;
+}
+
+.editAccountInfoSide textarea:focus {
+    /* border: solid 2px aliceblue; */
+    border: none;
+    outline: none;
+}
+
+.editAccountInfoSide label { 
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 40px;
+    margin-bottom: 5px;
 }
 
 @media (max-width: 630px) {

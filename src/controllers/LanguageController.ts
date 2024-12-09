@@ -266,6 +266,14 @@ export class LanguageClass {
                 en: "© Copyright Code Exchange™ | 2024-3024, All rights reserved.",
                 nl: "© Copyright Code Exchange™ | 2024-3024, Alle rechten voorbehouden.",
             },
+            deleteaccount: {
+                en: "Delete account",
+                nl: "Account verwijderen",
+            },
+            applychanges: {
+                en: "Apply changes",
+                nl: "Aanpassingen toewijzen",
+            },
         });
     }
 
