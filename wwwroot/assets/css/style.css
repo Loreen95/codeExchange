@@ -49,7 +49,7 @@ body {
     background-image: linear-gradient(to bottom right, rgb(11, 11, 11), rgb(10, 20, 28));
     height: 80px;
     overflow: hidden;
-    z-index: 1;
+    z-index: 2;
 }
 
 .navLinks {
@@ -86,11 +86,6 @@ body {
     text-decoration: none;
     color: rgb(158, 41, 41);
     transition: ease 0.3s;
-}
-
-#questionStats {
-    margin: 0;
-    margin-left: 10px;
 }
 
 #totalComments, #totalPosts {
@@ -254,7 +249,7 @@ body {
     background-color: #202020;
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: center;
     height: calc(100vh - 80px);
     margin: 0 0 10px;
     padding-top: 80px;
@@ -267,36 +262,98 @@ body {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    padding-bottom: 20vh;
-    align-self: center;
+    padding-top: 15vh;
+    align-self: flex-start;
+    /* background-color: #7a7a7a; */
 }
 
 .statisticsForLandingsPage {
-    background-color: #961d1d;
-    flex-grow: 1;
+    /* background-color: #961d1d; */
+    align-self: flex-start;
+    /* flex-grow: 1; */
     margin: 0;
     display: flex;
-    align-items: flex-end;
-    padding-bottom: 20vh;
-    margin-bottom: 16vh;
+    width: fit-content;
+    /* align-items: flex-end; */
+    /* padding-bottom: 20vh; */
+    padding-top: 15vh;
+}
+
+#memberStats {
+    margin: 0 10px 0 10px;
+}
+
+#answerStats {
+    margin: 0 10px 0 10px;
+}
+
+#questionStats {
+    margin: 0;
+    margin: 0 10px 0 10px;
 }
 
 .statisticContainer {
-    background-color: rgb(23, 23, 23);
+    background-color: #171717;
     display: flex;
+    justify-content: center;
     flex-direction: column;
     margin: 0;
     /* height: 340px; */
+    border-radius: 3px;
+    padding: 15px;
+}
+
+.statisticContainer h1 {
+    /* color: rgb(88, 88, 88); */
+    font-family: Tahoma, sans-serif;
+    margin: 0;
+    font-size: 40px;
+}
+
+.statisticContainer h4 {
+    font-family: Tahoma, sans-serif;
+    margin: 0 0 0 15px;
+    position: relative;
+    top: 6px;
+}
+
+.statisticContainer h5 {
+    font-family: Tahoma, sans-serif;
+    margin: 0 0 20px 5px;
+    font-weight: 100;
+    position: relative;
+    opacity: 0.5;
+    font-style: oblique -5deg;
+    bottom: 5px;
+}
+
+.statisticContainer button {
+    position: relative;
+    font-family: Tahoma, sans-serif;
+    left: 10px;
 }
 
 .statisticContainer p {
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 20px;
     margin: 0;
+}
+
+.statisticContainer i {
+    position: relative;
+    top: 2px;
 }
 
 .rowItem {
     display: flex;
 }
 
+.statValue {
+    color: #da2626;;
+    font-weight: bold;
+    /* margin-top: 5px; */
+    margin: 0;
+}
 
 .theSideWithTheText h1 {
     margin: 5px 30px 0 35px;
@@ -316,7 +373,7 @@ body {
     /* background-color: #000000; */
     width: 875px;
     /* align-self: center; */
-    text-align: left;
+    text-align: right;
 }
 
 .belowStatistics {
@@ -324,7 +381,8 @@ body {
     display: flex;
     font-size: 20px;
     opacity: 0.5;
-    margin-left: 4%;
+    margin-right: 4%;
+    align-self: flex-end;
 }
 
 .belowStatistics p {
@@ -378,23 +436,13 @@ body {
     margin: 0 0 0 10px;
 }
 
-.statValue {
-    /* color: #da2626;;
-    font-weight: bold;
-    margin-top: 5px; */
-    margin: 0;
-    margin-left: 5px;
-}
+
 
 /* #memberStats,
 #questionStats,
 #answerStats {
     color: #811b0e;
 } */
-
-#memberStats {
-    margin-left: 5px;
-}
 
 .boldCont {
     font-size: 45px;
@@ -1265,17 +1313,28 @@ code {
     color: aliceblue;
 }
 
+.scortch {
+    background-image: linear-gradient(to bottom right, #070f1b, #0b0b0b)!important;
+    margin: 0!important;
+}
+
+.scortch:hover {
+    background-image: linear-gradient(to bottom right, #0a1627, #060606)!important;
+}
+
 .joinUsButton {
     border: none;
-    background-image: linear-gradient(to bottom right, rgb(181, 36, 36), rgb(125, 25, 25));
+    font-family: Tahoma, sans-serif;
+    background-image: linear-gradient(to bottom right, #b52424, #7d1919);
     font-size: 25px;
     padding: 10px;
     height: fit-content;
     border-radius: 5px;
     color: aliceblue;
     margin-top: 20px;
-    margin-left: 3%;
+    /* margin-left: 3%; */
     width: fit-content;
+    z-index: 1;
 }
 
 .joinUsButton:hover { 
@@ -1302,7 +1361,12 @@ code {
 }
 
 .landingspageButtons {
-    margin-top: 20px;
+    margin-top: 10px;
+    margin-left: 3.7%;
+    display: flex;
+    align-items: flex-end;
+    align-self: center;
+    flex-direction: row;
     font-family: 'Trebuchet MS', sans-serif;
 }
 

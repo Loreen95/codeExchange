@@ -175,16 +175,16 @@ export class LanguageClass {
                 nl: "Zie resente vragen ->",
             },
             members: {
-                en: "Amount of Members:",
-                nl: "Aanltal Leden:",
+                en: "Devellopers signed up",
+                nl: "Aangemelde ontwikkelaars",
             },
             questions: {
-                en: "Questions asked:",
-                nl: "Gestelde vragen:",
+                en: "Asked questions",
+                nl: "Vragen gesteld",
             },
             answers: {
-                en: "Total answers:",
-                nl: "Totaale antwoorden:",
+                en: "Answers given",
+                nl: "Gegeven andwoorden",
             },
             browse: {
                 en: "Browse recent questions >",
@@ -215,8 +215,8 @@ export class LanguageClass {
                 nl: "Antwoord toevoegen",
             },
             own_question: {
-                en: "Ask your own question",
-                nl: "Stel een eigen vraag",
+                en: "Ask a question",
+                nl: "Stel een vraag",
             },
             not_found: {
                 en: "Didn't find what you were looking for?",
