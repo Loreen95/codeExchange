@@ -12,7 +12,7 @@ export class ProfileController {
         try {
             const userInfo: UserInfo = this.getUserInfo();
             this.profileView.render(userInfo);
-            console.log("User page successfully rendered!");
+            // console.log("User page successfully rendered!");
         }
         catch (reason) {
             console.error("Error rendering Userpage: ", reason);

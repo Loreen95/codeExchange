@@ -969,6 +969,10 @@ input:-webkit-autofill:active{
     margin-right: 5px;
 }
 
+.noDiplayNone {
+    display: flex!important;
+}
+
 .addAwnsersTextEditButtons a {
     margin: 6px 7px 2px;
 }
