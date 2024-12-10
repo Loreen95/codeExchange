@@ -246,12 +246,17 @@ body {
 }
 
 .landingsPageContnetBox {
+    background-color: #202020;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     height: calc(100vh - 80px);
-    margin: 80px 0 10px;
+    margin: 0 0 10px;
+    padding-top: 80px;
 }
+
+
+
 
 .theSideWithTheText {
     display: flex;
@@ -261,10 +266,32 @@ body {
     align-self: center;
 }
 
-.logo {
+.statisticsForLandingsPage {
     background-color: #961d1d;
     flex-grow: 1;
+    margin: 0;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 20vh;
+    margin-bottom: 16vh;
 }
+
+.statisticContainer {
+    background-color: rgb(23, 23, 23);
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    /* height: 340px; */
+}
+
+.statisticContainer p {
+    margin: 0;
+}
+
+.rowItem {
+    display: flex;
+}
+
 
 .theSideWithTheText h1 {
     margin: 5px 30px 0 35px;
@@ -1237,19 +1264,41 @@ code {
     border: none;
     background-image: linear-gradient(to bottom right, rgb(181, 36, 36), rgb(125, 25, 25));
     font-size: 25px;
-    padding: 20px;
+    padding: 10px;
     height: fit-content;
-    border-radius: 50px;
+    border-radius: 5px;
     color: aliceblue;
     margin-top: 20px;
     margin-left: 3%;
-    font-family: 'Trebuchet MS', sans-serif;
     width: fit-content;
 }
 
 .joinUsButton:hover { 
-    background-image: linear-gradient(to bottom right, rgb(158, 27, 27), rgb(105, 17, 17));
+    background-image: linear-gradient(to bottom right, #9e1b1b, #691111);
     color: aliceblue;
+}
+
+.visitButton {
+    /* background-image: linear-gradient(to bottom right, #1c1c20, #000000); */
+    font-size: 20px;
+    font-weight: 100;
+    padding: 13.3px;
+    padding-bottom: 12px;
+    height: fit-content;
+    border-radius: 5px;
+    color: aliceblue;
+    text-decoration: none;
+}
+
+.visitButton:hover {
+    transition: ease 0.2s;
+    background-color: #3885de;
+    box-shadow: rgba(176, 225, 255, 0.35) 0px 5px 15px;
+}
+
+.landingspageButtons {
+    margin-top: 20px;
+    font-family: 'Trebuchet MS', sans-serif;
 }
 
 .awnsers hr {
