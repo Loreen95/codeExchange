@@ -167,24 +167,28 @@ export class LanguageClass {
                 nl: "vraagt",
             },
             welcome: {
-                en: "Welcome",
-                nl: "Welkom",
+                en: "Become a part of the exchainge™",
+                nl: "Become a part of the exchainge™",
+            },
+            visit: {
+                en: "See most recent posts ->",
+                nl: "Zie resente vragen ->",
             },
             members: {
-                en: "Members",
-                nl: "Leden",
+                en: "Amount of Members:",
+                nl: "Aanltal Leden:",
             },
             questions: {
-                en: "Questions",
-                nl: "Vragen",
+                en: "Questions asked:",
+                nl: "Aantal vragen:",
             },
             answers: {
-                en: "Answers",
-                nl: "Antwoorden",
+                en: "Questions answered:",
+                nl: "Aantal antwoorden:",
             },
             recent: {
-                en: "Most recent posts",
-                nl: "Meest recente berichten",
+                en: "Most recent posts:",
+                nl: "Meest recente vragen:",
             },
             join: {
                 en: "Join the community",
@@ -215,8 +219,8 @@ export class LanguageClass {
                 nl: "Niet gevonden wat je zocht?",
             },
             text1: {
-                en: "You have just arrived in the home of many many developers And like why are you still reading this, you weren't supposed to do that. Now you know this text only exists for deccoration and the illusion is ruined.",
-                nl: "Je bent zojuist aangekomen in het 'thuis' van vele ontwikkelaars. En waarom lees je dit nog? Dit moest je helemaal niet doen. En nu weet je dat deze tekst enkel decoratief is en is de illusie geruineerd.",
+                en: "You have just arrived in the home of many many developers And like why are you still reading this, you weren't supposed to do that. Now you know this text only exists for deccoration and the illusion is ruined. Just leave",
+                nl: "Je bent zojuist aangekomen in het 'thuis' van vele ontwikkelaars. En waarom lees je dit nog? Dit moest je helemaal niet doen. En nu weet je dat deze tekst enkel decoratief is en is de illusie geruineerd. Ga weg",
             },
             text2: {
                 en: "Join thousands of other developers on our wonderfull platform or something. So um. your screen is pretty thin huh?",

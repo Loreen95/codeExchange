@@ -254,7 +254,7 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    height: fit-content;
+    height: calc(100vh - 80px);
     margin: 80px 0 10px;
 }
 
@@ -262,26 +262,46 @@ body {
     display: flex;
     justify-content: center;
     flex-direction: column;
+    padding-bottom: 20vh;
+    align-self: center;
+}
+
+.logo {
+    background-color: #961d1d;
+    flex-grow: 1;
 }
 
 .theSideWithTheText h1 {
     margin: 5px 30px 0 35px;
-    font-size: 12vw;
-    color: #da2626;
+    font-size: 3.4vw;
+    color: #d91414;
     letter-spacing: 0.04em;
     font-family: 'Trebuchet MS', sans-serif;
     /* border-bottom: solid 3.5px #4b4b4b; */
-    text-shadow: 1px 1px #ae0101;
+    /* text-shadow: 1px 1px #f42d2d; */
 }
 
-.theSideWithTheText p {
+.introText {
     font-size: 25px;
     font-family: 'Courier New', monospace;
     margin: 0 5px 0;
+    margin-left: 3.5%;
     /* background-color: #000000; */
     width: 875px;
-    align-self: center;
-    text-align: right;
+    /* align-self: center; */
+    text-align: left;
+}
+
+.belowStatistics {
+    font-family: 'Courier New', monospace;
+    display: flex;
+    font-size: 20px;
+    opacity: 0.5;
+    margin-left: 4%;
+}
+
+.belowStatistics p {
+    margin: 0;
 }
 
 .theSideWithTheStats {
@@ -289,14 +309,15 @@ body {
     font-size: 35px;
     text-align: left;
     letter-spacing: 0.03em;
-    margin: 20px 8% 0 2%;
-    border-radius: 5px;
+    /* margin: 20px 8% 0 2%; */
+    /* border-radius: 5px; */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
     padding: 25px;
-    width: fit-content;
+    /* width: fit-content;
+    height: fit-content; */
     background-image: linear-gradient(to bottom right, #2e2d2d, #2b2a2a);
     background-color: #2e2d2d;
     color: aliceblue;
@@ -331,9 +352,11 @@ body {
 }
 
 .statValue {
-    color: #da2626;;
+    /* color: #da2626;;
     font-weight: bold;
-    margin-top: 5px;
+    margin-top: 5px; */
+    margin: 0;
+    margin-left: 5px;
 }
 
 /* #memberStats,
@@ -341,6 +364,10 @@ body {
 #answerStats {
     color: #811b0e;
 } */
+
+#memberStats {
+    margin-left: 5px;
+}
 
 .boldCont {
     font-size: 45px;
@@ -1217,9 +1244,12 @@ code {
     font-size: 25px;
     padding: 20px;
     height: fit-content;
-    border-radius: 10px;
+    border-radius: 50px;
     color: aliceblue;
     margin-top: 20px;
+    margin-left: 3%;
+    font-family: 'Trebuchet MS', sans-serif;
+    width: fit-content;
 }
 
 .joinUsButton:hover { 
