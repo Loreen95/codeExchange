@@ -226,6 +226,7 @@ export class PostController {
                 this._UI.successMessagePopup(true);
                 if (postId) {
                     await this.renderPosts();
+                    sessionStorage.setItem("post_Nr", String(postId));
                     setTimeout(() => {
                         window.location.href = `http://localhost:3000/post?post=${postId}`;
                     }, 1500);
