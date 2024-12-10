@@ -1,4 +1,9 @@
 /* Global Styling */
+a {
+    position: relative;
+    z-index: 1;
+}
+
 html {
     scroll-behavior: smooth;
 }

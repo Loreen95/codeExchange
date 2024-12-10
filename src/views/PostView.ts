@@ -60,7 +60,7 @@ if (insertQuestionNameHere) {
 
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 if (questionInfoBits) {
-    questionInfoBits.innerText = `${await post.getUserName(currentpost!.authorId)}  ${String(currentpost!.createdAt).slice(8, 10) + "-" + String(currentpost!.createdAt).slice(5, 7) + "-" + String(currentpost!.createdAt).slice(0, 4) + " | " + String(currentpost!.createdAt).slice(11, 19)}`;
+    questionInfoBits.innerHTML = `<a href="profile.html?user=${currentpost!.authorId}" class="navLink">${await post.getUserName(currentpost!.authorId)}</a>  ${String(currentpost!.createdAt).slice(8, 10) + "-" + String(currentpost!.createdAt).slice(5, 7) + "-" + String(currentpost!.createdAt).slice(0, 4) + " | " + String(currentpost!.createdAt).slice(11, 19)}`;
 }
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 if (ratingCounter) {
@@ -106,7 +106,18 @@ italicBtn.addEventListener("click", e => {
 linkBtn.addEventListener("click", e => {
     e.preventDefault();
     const textarea: HTMLTextAreaElement = document.querySelector("#contentInput")!;
-    post.addToField(textarea, "<a href='", "'></a>");
+
+    // Verkrijg de geselecteerde tekst in de textarea
+    const selection: string = textarea.value.substring(textarea.selectionStart, textarea.selectionEnd).trim();
+    // Als er geen selectie is, vraag de gebruiker om een URL in te voeren
+    const urlToAdd: string = selection;
+    if (urlToAdd) {
+        // Voeg de URL als platte tekst toe in de textarea, zonder de <a> tags
+        post.addToField(textarea, urlToAdd, "");
+    }
+    else {
+        console.error("De ingevoerde tekst is geen geldige URL.");
+    }
 });
 
 codeBtn.addEventListener("click", e => {

@@ -19,6 +19,7 @@ export type postResult = {
     rating: number;
     createdAt: string;
     count: number;
+    insertId: number;
 };
 
 export type commentResult = {

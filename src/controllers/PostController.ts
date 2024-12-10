@@ -15,8 +15,12 @@ export class PostController {
     }
 
     public async getUserName(ID: number): Promise<string> {
-        const userName: number | undefined = (await User.getUserById(Number(ID)))?.userId;
-        return String(userName);
+        const user: User | undefined = await User.getUserById(Number(ID));
+        // Als de gebruiker bestaat, return de username
+        if (user) {
+            return user.userName;
+        }
+        return "";
     }
 
     public async getCommentAmount(): Promise<number | undefined> {
@@ -212,13 +216,24 @@ export class PostController {
             }
 
             this._postModel = new Post(0, Number(userId), title, content);
-            const isPostCreated: boolean = await this._postModel.create(Number(userId), title, content);
+            const isPostCreated: Post | undefined = await this._postModel.create(Number(userId), title, content);
 
             if (isPostCreated) {
-                successMessage.innerHTML = "Post created successfully!";
+                const postId: number = isPostCreated.postId;
+                console.log("Redirecting to post with ID:", postId);
+                successMessage.innerHTML = `Post created successfully! Redirecting to post ${postId}`;
                 this._UI.unleashTheErrorPopup(false);
                 this._UI.successMessagePopup(true);
-                await this.renderPosts(); // Render posts after creation
+                if (postId) {
+                    await this.renderPosts();
+                    setTimeout(() => {
+                        window.location.href = `http://localhost:3000/post?post=${postId}`;
+                    }, 1500);
+                }
+                else {
+                    errorMessage.innerHTML += "Failed to create the post!";
+                    this._UI.unleashTheErrorPopup(true);
+                }
             }
             else {
                 errorMessage.innerHTML += "Failed to create the post!";
@@ -244,7 +259,6 @@ export class PostController {
                 return "<Pre>\n<code>" + hljs.highlightAuto(codeBlock).value + "</code>\n</Pre>";
             });
         }
-        // return content.replaceAll("\n", "<br>");
         return content;
     }
 
@@ -344,20 +358,32 @@ export class PostController {
         const before: string = currentText.substring(0, startPosition);
         const selection: string = isEmptySelection ? "" : currentText.substring(startPosition, endPosition);
         const after: string = currentText.substring(endPosition);
-
         const urlValidationOptions: { protocols: string[]; require_protocol: boolean; require_valid_protocol: boolean;
-            allow_underscores: boolean; validate_length: boolean; } = { protocols: ["http", "https"],
+            allow_underscores: boolean; validate_length: boolean; } = { protocols: ["http", "https", "www"],
             require_protocol: true, require_valid_protocol: true, allow_underscores: false, validate_length: true,
         };
-
         if (start === "<a href='" && end === "'></a>") {
             if (!validator.isURL(selection, urlValidationOptions)) {
                 console.error("De geselecteerde tekst is geen geldige URL.");
                 return;
             }
         }
+        const textToInsert: string = `${before}${start}${selection}${end}${after}`;
+        const urlRegex: RegExp = /(https?:\/\/[^\s]+)/g;
+        const transformedText: string = textToInsert.replace(urlRegex, match => {
+            const url: string = match;
 
-        textarea.value = `${before}${start}${selection}${end}${after}`;
+            const clickableElement: HTMLElement = document.createElement("span");
+            clickableElement.innerText = url;
+            clickableElement.style.color = "blue"; // Zet de linkstijl
+            clickableElement.style.textDecoration = "underline"; // Onderstreping voor de link
+
+            clickableElement.addEventListener("click", () => {
+                window.open(url, "_blank"); // Open de URL in een nieuw tabblad
+            });
+            return clickableElement.outerHTML;
+        });
+        textarea.value = transformedText;
         if (isEmptySelection) {
             textarea.selectionStart = startPosition + start.length;
             textarea.selectionEnd = startPosition + start.length;
