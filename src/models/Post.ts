@@ -82,19 +82,22 @@ export class Post {
         }
     }
 
-    public async create(authorId: number, title: string, content: string): Promise<boolean> {
+    public async create(authorId: number, title: string, content: string): Promise<Post | undefined> {
         try {
-            const result: postResult[] = await api.queryDatabase(
+            const result: { insertId: number } = await api.queryDatabase(
                 "INSERT INTO post (authorID, title, content) VALUES (?, ?, ?)",
                 authorId, title, content
-            ) as postResult[];
+            ) as { insertId: number };
+            if (result.insertId) {
+                console.log("Post created with postId:", result.insertId);
 
-            console.log("Success", result);
-            return true;
+                return await Post.getPostById(result.insertId);
+            }
+            return undefined;
         }
         catch (reason) {
             console.error("An error occurred while creating a new database entry.", reason);
-            return false;
+            return undefined;
         }
     }
 
