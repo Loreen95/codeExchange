@@ -33,6 +33,8 @@ export class ProfileView {
     }
 
     public render(UserInfo: UserInfo): void {
+        console.log("UserInfo.dob:", UserInfo.dob);
+
         const username: HTMLInputElement = document.querySelector("#username")!;
         const email: HTMLInputElement = document.querySelector("#email")!;
         const biography: HTMLTextAreaElement = document.querySelector("#bioEditor")!;
@@ -40,7 +42,30 @@ export class ProfileView {
 
         username.value = UserInfo.userName;
         email.value = UserInfo.userEmail;
-        dob.value = UserInfo.dob || "";
+        dob.value = this.formatDateForInput(UserInfo.dob);
         biography.value = UserInfo.bio;
+    }
+
+    public formatDateForInput(dob: string | Date | null): string {
+        if (!dob || dob === "Niet beschikbaar" || dob === "00-00-0000") {
+            return "";
+        }
+        if (dob instanceof Date) {
+            return dob.toISOString().split("T")[0];
+        }
+        if (typeof dob === "string") {
+            if (dob.includes("T")) {
+                return dob.split("T")[0];
+            }
+            if (dob.match(/^\d{4}-\d{2}-\d{2}$/)) {
+                return dob;
+            }
+            const dateParts: string[] = dob.split("/");
+            if (dateParts.length === 3) {
+                const [month, day, year] = dateParts;
+                return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+            }
+        }
+        return ""; // Ongeldig formaat
     }
 }
