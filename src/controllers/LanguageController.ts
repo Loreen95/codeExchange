@@ -180,11 +180,15 @@ export class LanguageClass {
             },
             questions: {
                 en: "Questions asked:",
-                nl: "Aantal vragen:",
+                nl: "Gestelde vragen:",
             },
             answers: {
-                en: "Questions answered:",
-                nl: "Aantal antwoorden:",
+                en: "Total answers:",
+                nl: "Totaale antwoorden:",
+            },
+            browse: {
+                en: "Browse recent questions >",
+                nl: "recente vragen bekijken >",
             },
             recent: {
                 en: "Most recent posts:",
