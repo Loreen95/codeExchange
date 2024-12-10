@@ -147,6 +147,11 @@
     padding: 15px 40px 15px 40px;
 }
 
+#edit:hover {   
+    color: aliceblue;
+    background-image: linear-gradient(to bottom right, rgb(188, 35, 35), rgb(145, 33, 33));
+}
+
 #delete {
     background-image: linear-gradient(to bottom right, rgb(211, 40, 40), rgb(158, 39, 39));
     padding: 15px 40px 15px 40px;

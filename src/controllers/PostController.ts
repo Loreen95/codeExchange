@@ -247,7 +247,8 @@ export class PostController {
                 return "<Pre>\n<code>" + hljs.highlightAuto(codeBlock).value + "</code>\n</Pre>";
             });
         }
-        return content.replaceAll("\n", "<br>");
+        // return content.replaceAll("\n", "<br>");
+        return content;
     }
 
     public async onClickSubmit(content: string): Promise<void> {
