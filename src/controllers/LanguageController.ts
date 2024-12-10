@@ -167,8 +167,12 @@ export class LanguageClass {
                 nl: "vraagt",
             },
             welcome: {
-                en: "Become a part of the exchainge™",
-                nl: "Become a part of the exchainge™",
+                en: "Welcome",
+                nl: "Welkom",
+            },
+            slogan: {
+                en: "Become a part of the exchange™",
+                nl: "Become a part of the exchange™",
             },
             visit: {
                 en: "See most recent posts ->",
@@ -179,8 +183,8 @@ export class LanguageClass {
                 nl: "Aangemelde ontwikkelaars",
             },
             questions: {
-                en: "Asked questions",
-                nl: "Vragen gesteld",
+                en: "Questions asked ",
+                nl: "Gestelde vragen",
             },
             answers: {
                 en: "Answers given",
@@ -196,7 +200,19 @@ export class LanguageClass {
             },
             join: {
                 en: "Join the community",
-                nl: "Word lid van de community",
+                nl: "Word lid",
+            },
+            littleAbout: {
+                en: "Statistics",
+                nl: "Statistieken",
+            },
+            trustedBy: {
+                en: "Trusted by like some people | This isn't a scam we promise",
+                nl: "Vertrouwd door sommige mensen | we beloven dat dit geen scam is",
+            },
+            insultToInteligence: {
+                en: "You uneducated fuk",
+                nl: "Jij domme ank",
             },
             translate_service: {
                 en: "Translate services",
