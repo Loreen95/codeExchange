@@ -168,9 +168,6 @@ export class PostController {
         }
     }
 
-    // .addOwnAwnser {
-    //     display: none;
-
     public async isLoggedInUserResponsibleForThisPost(usersId: number, viewingPostId: number): Promise<boolean> {
         const currentpost: Post | undefined = await Post.getPostById(viewingPostId);
         if (usersId === currentpost!.authorId) {

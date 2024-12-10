@@ -193,8 +193,9 @@
     border-radius: 4px;
 }
 
-#insertBirthdayHere {
+#insertBirthdayHere, #insertEmailHere, #insertNameHere {
     margin-top: 0!important;
+    color: white;
 }
 
 .profilePictureInEdit {
@@ -359,9 +360,6 @@
 
     .rowAlign {
         margin: 0;
-        /* display: flex;
-        flex-direction: column;
-        align-items: center; */
     }
 
     .profilestatisticsStatsBottom {

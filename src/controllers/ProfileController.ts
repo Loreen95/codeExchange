@@ -20,27 +20,21 @@ export class ProfileController {
     }
 
     public getUserInfo(): UserInfo {
-        const userId: number = this.profileView.userModel.userId || 0; // Default: 0
-        const userEmail: string = this.profileView.userModel.email || "Onbekend"; // Default: "Onbekend"
-        const userName: string = this.profileView.userModel.userName || "Onbekende gebruiker"; // Default: "Onbekende gebruiker"
+        const userId: number = this.profileView.userModel.userId || 0;
+        const userEmail: string = this.profileView.userModel.email || "Onbekend";
+        const userName: string = this.profileView.userModel.userName || "Onbekende gebruiker";
         const dob: string = this.profileView.userModel.dob
-            ? String(this.profileView.userModel.dob).slice(8, 10) +
-            "-" +
-            String(this.profileView.userModel.dob).slice(5, 7) +
-            "-" +
-            String(this.profileView.userModel.dob).slice(0, 4)
-            : "Niet beschikbaar"; // Default: "Niet beschikbaar"
-        const experience: number = this.profileView.userModel.experience || 0; // Default: 0
-        const bio: string = this.profileView.userModel.bio || "Geen biografie beschikbaar"; // Default: "Geen biografie beschikbaar"
+            ? this.profileView.userModel.dob instanceof Date
+                ? this.profileView.userModel.dob.toISOString().split("T")[0]
+                : this.profileView.userModel.dob
+            : "Niet beschikbaar";
+        const experience: number = this.profileView.userModel.experience || 0;
+        const bio: string = this.profileView.userModel.bio || "Geen biografie beschikbaar";
         const stringedTimeAndDate: string = this.profileView.userModel.createdAt
-            ? String(this.profileView.userModel.createdAt).slice(8, 10) +
-            "-" +
-            String(this.profileView.userModel.createdAt).slice(5, 7) +
-            "-" +
-            String(this.profileView.userModel.createdAt).slice(0, 4) +
-            " | " +
-            String(this.profileView.userModel.createdAt).slice(11, 19)
-            : "Onbekende datum en tijd"; // Default: "Onbekende datum en tijd"
+            ? this.profileView.userModel.createdAt instanceof Date
+                ? this.profileView.userModel.createdAt.toISOString().replace("T", " ").split(".")[0]
+                : this.profileView.userModel.createdAt
+            : "Onbekende datum en tijd";
 
         return {
             userId,

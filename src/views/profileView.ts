@@ -32,15 +32,15 @@ export class ProfileView {
         return new ProfileView(user);
     }
 
-    public render(userInfo: UserInfo): void {
+    public render(UserInfo: UserInfo): void {
         const username: HTMLInputElement = document.querySelector("#username")!;
         const email: HTMLInputElement = document.querySelector("#email")!;
         const biography: HTMLTextAreaElement = document.querySelector("#bioEditor")!;
         const dob: HTMLInputElement = document.querySelector("#dob")!;
 
-        username.value = userInfo.userName;
-        email.value = userInfo.userEmail;
-        dob.value = userInfo.dob;
-        biography.value = userInfo.bio;
+        username.value = UserInfo.userName;
+        email.value = UserInfo.userEmail;
+        dob.value = UserInfo.dob || "";
+        biography.value = UserInfo.bio;
     }
 }

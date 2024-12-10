@@ -69,14 +69,20 @@ export class UserView {
             insertUsernamesHere[i].innerText = String(userInfo.userName);
         }
         document.querySelector("#memberSince")!.innerHTML = userInfo.stringedTimeAndDate;
-        if (userInfo.dob === "Niet beschikbaar" || userInfo.dob === "00-00-0000") {
-            const bdaythings: NodeListOf<HTMLParagraphElement> = document.querySelectorAll(".bdaythings");
-            for (let k: number = 0; k < bdaythings.length; k++) {
-                bdaythings[k].style.display = "none";
+        if (typeof userInfo.dob === "string") {
+            if (userInfo.dob === "Niet beschikbaar" || userInfo.dob === "00-00-0000") {
+                const bdaythings: NodeListOf<HTMLParagraphElement> = document.querySelectorAll(".bdaythings");
+                for (let k: number = 0; k < bdaythings.length; k++) {
+                    bdaythings[k].style.display = "none";
+                }
+            }
+            else {
+                document.querySelector("#insertBirthdayHere")!.innerHTML = userInfo.dob;
             }
         }
-        else {
-            document.querySelector("#insertBirthdayHere")!.innerHTML = userInfo.dob;
+        else if (userInfo.dob instanceof Date) {
+            // If dob is a Date object, format it as a string and display it
+            document.querySelector("#insertBirthdayHere")!.innerHTML = userInfo.dob.toISOString().split("T")[0];
         }
         document.querySelector("#insertEmailHere")!.innerHTML = userInfo.userEmail;
         if (userInfo.bio === "Geen biografie beschikbaar") {
