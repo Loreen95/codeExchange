@@ -158,7 +158,7 @@ export class User {
 
     public async update(username: string, email: string, password: string, bio: string, yearsExperience: number, dob: Date, id: number): Promise<boolean> {
         try {
-            const result: userResult[] = await api.queryDatabase("UPDATE users SET username = ? email = ? password = ? bio = ? yearsExperience = ? dob = ? WHERE userId = ?", [username, email, password, bio, yearsExperience, dob, id]) as userResult[];
+            const result: userResult[] = await api.queryDatabase("UPDATE users SET username = ?, email = ?, password = ?, bio = ?, yearsExperience = ?, dob = ?, WHERE userId = ?", [username, email, password, bio, yearsExperience, dob, id]) as userResult[];
             console.log("Succes", result);
             return true;
         }
