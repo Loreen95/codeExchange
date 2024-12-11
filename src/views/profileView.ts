@@ -6,7 +6,6 @@ import { ProfileController } from "../controllers/ProfileController";
 
 const UI: UserInterfaceClass = new UserInterfaceClass();
 const logout: LogoutClass = new LogoutClass();
-// const profile: ProfileController = new ProfileController(profileView);
 
 export class ProfileView {
     public view!: HTMLElement;
@@ -40,8 +39,6 @@ export class ProfileView {
     }
 
     public render(UserInfo: UserInfo): void {
-        // console.log("UserInfo.dob:", UserInfo.dob);
-
         const username: HTMLInputElement = document.querySelector("#username")!;
         const email: HTMLInputElement = document.querySelector("#email")!;
         const biography: HTMLTextAreaElement = document.querySelector("#bioEditor")!;
@@ -73,43 +70,62 @@ export class ProfileView {
                 return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
             }
         }
-        return ""; // Ongeldig formaat
+        return "";
     }
 }
 
 const profileView: ProfileView = await ProfileView.initialize();
 const profileController: ProfileController = new ProfileController(profileView);
 
-const eradicate: HTMLButtonElement = document.querySelector(".deleteAccountBttn")!;
-const closeButtons: HTMLAnchorElement = document.querySelector(".closeConfirmPopup")!;
-const closeButton2: HTMLButtonElement = document.querySelector(".closeConfirmPopup2")!;
-const deathUponAccountById: HTMLButtonElement = document.querySelector("#kjilUser")!;
-// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+const eradicate: HTMLButtonElement | null = document.querySelector(".deleteAccountBttn");
+const closeButtons: HTMLAnchorElement | null = document.querySelector(".closeConfirmPopup");
+const closeButton2: HTMLButtonElement | null = document.querySelector(".closeConfirmPopup2");
+const deathUponAccountById: HTMLButtonElement | null = document.querySelector("#kjilUser");
+
 if (eradicate) {
     eradicate.addEventListener("click", () => {
         UI.revealOrHideConfirmPopup();
     });
 }
-// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 if (closeButtons) {
     closeButtons.addEventListener("click", () => {
         UI.revealOrHideConfirmPopup();
     });
 }
-// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 if (closeButton2) {
     closeButton2.addEventListener("click", () => {
         UI.revealOrHideConfirmPopup();
     });
 }
-// I just need this to work
-// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+
 if (deathUponAccountById) {
     deathUponAccountById.addEventListener("click", async () => {
         console.log("yea ok");
         const userUrl: URLSearchParams = new URLSearchParams(window.location.search);
         const userId: string | null = userUrl.get("user");
         await profileController.vanquishUserToShadowRealm(Number(userId));
-        // logout.logoutFunction();
+        logout.logoutFunction();
     });
+}
+
+const apply: HTMLButtonElement | null = document.querySelector(".applyChaingesBttn");
+const usernameInput: HTMLInputElement | null = document.querySelector("#username");
+const emailInput: HTMLInputElement | null = document.querySelector("#email");
+const dobInput: HTMLInputElement | null = document.querySelector("#dob");
+const bioInput: HTMLInputElement | null = document.querySelector("#bioEditor");
+
+if (apply && usernameInput && emailInput && dobInput && bioInput) {
+    apply.addEventListener("click", async (e: Event) => {
+        e.preventDefault();
+        const username: string = usernameInput.value.trim();
+        const email: string = emailInput.value.trim();
+        const dob: string = dobInput.value.trim();
+        const bio: string = bioInput.value.trim();
+
+        const dobFormat: string = new Date(dob).toISOString().split("T")[0];
+        await profileController.updateRecords(username, email, dobFormat, bio);
+    });
+}
+else {
+    console.error("One or more form inputs were not found.");
 }

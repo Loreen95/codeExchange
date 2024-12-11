@@ -60,6 +60,10 @@ export class UserView {
         return ratingComment || 0;
     }
 
+    /**
+     * This function renders the userInfo into the view
+     * @param userInfo this is the userInfo to be displayed
+     */
     public async render(userInfo: UserInfo): Promise<void> {
         const postCount: number = await this.countPost();
         const commentCount: number = await this.countComments();
@@ -81,7 +85,6 @@ export class UserView {
             }
         }
         else if (userInfo.dob instanceof Date) {
-            // If dob is a Date object, format it as a string and display it
             document.querySelector("#insertBirthdayHere")!.innerHTML = userInfo.dob.toISOString().split("T")[0];
         }
         document.querySelector("#insertEmailHere")!.innerHTML = userInfo.userEmail;
