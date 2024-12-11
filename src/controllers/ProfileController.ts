@@ -1,7 +1,11 @@
 import { ProfileView } from "../views/profileView";
 import { UserInfo } from "../views/types";
 
+import { User } from "../models/User";
+
 export class ProfileController {
+    private _userModel: User | undefined;
+
     private profileView: ProfileView;
 
     public constructor(profileView: ProfileView) {
@@ -50,4 +54,10 @@ export class ProfileController {
     /**
      * putThisAccountToTheSword
      */
+    public async vanquishUserToShadowRealm(userId: number): Promise<void> {
+        if (userId) {
+            console.log("trigger 2");
+            await User.delete(userId);
+        }
+    }
 }

@@ -1501,6 +1501,21 @@ pre {
     margin: 0;
 }
 
+.confirmPopupText {
+    display: flex;
+    flex-direction: column;
+}
+
+.confirmPopupText input {
+    border: none;
+    background-color: #2e2d2d;
+    padding: 5px;
+    font-size: 20px;
+    color: aliceblue;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
 .confirmPopupText p {
     margin: 10px 0 20px 0;
     font-size: 30px;

@@ -168,7 +168,7 @@ export class User {
         }
     }
 
-    public async delete(userId: number): Promise<boolean> {
+    public static async delete(userId: number): Promise<boolean> {
         try {
             const result: postResult[] = await api.queryDatabase("DELETE FROM user WHERE userId = ?", [userId]) as postResult[];
             console.log("User deleted successfully:", result);

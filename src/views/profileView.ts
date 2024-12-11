@@ -1,8 +1,12 @@
 import { User } from "../models/User";
 import { UserInfo } from "./types";
 import UserInterfaceClass from "./interface";
+import { LogoutClass } from "../controllers/LogoutController";
+import { ProfileController } from "../controllers/ProfileController";
 
 const UI: UserInterfaceClass = new UserInterfaceClass();
+const logout: LogoutClass = new LogoutClass();
+// const profile: ProfileController = new ProfileController(profileView);
 
 export class ProfileView {
     public view!: HTMLElement;
@@ -71,11 +75,10 @@ export class ProfileView {
         }
         return ""; // Ongeldig formaat
     }
-
-    public hello(): void {
-        console.log("he");
-    }
 }
+
+const profileView: ProfileView = await ProfileView.initialize();
+const profileController: ProfileController = new ProfileController(profileView);
 
 const eradicate: HTMLButtonElement = document.querySelector(".deleteAccountBttn")!;
 const closeButtons: HTMLAnchorElement = document.querySelector(".closeConfirmPopup")!;
@@ -99,11 +102,14 @@ if (closeButton2) {
         UI.revealOrHideConfirmPopup();
     });
 }
+// I just need this to work
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 if (deathUponAccountById) {
-    deathUponAccountById.addEventListener("click", () => {
-        // const userUrl: URLSearchParams = new URLSearchParams(window.location.search);
-        // const userId: string | null = userUrl.get("user");
-        // User.delete(Number(userId));
+    deathUponAccountById.addEventListener("click", async () => {
+        console.log("yea ok");
+        const userUrl: URLSearchParams = new URLSearchParams(window.location.search);
+        const userId: string | null = userUrl.get("user");
+        await profileController.vanquishUserToShadowRealm(Number(userId));
+        // logout.logoutFunction();
     });
 }

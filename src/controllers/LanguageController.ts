@@ -306,6 +306,10 @@ export class LanguageClass {
                 en: "Cancel",
                 nl: "Annuleren",
             },
+            yaSureBukko: {
+                en: "Input password to proceed",
+                nl: "Voer wachtwoord in om door te gaan",
+            },
             applychanges: {
                 en: "Apply changes",
                 nl: "Aanpassingen toewijzen",
