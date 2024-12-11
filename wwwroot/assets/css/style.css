@@ -255,9 +255,6 @@ body {
     padding-top: 80px;
 }
 
-
-
-
 .theSideWithTheText {
     display: flex;
     justify-content: center;
@@ -468,8 +465,8 @@ body {
     width: 550px;
     rotate: 45deg;
     position: fixed;
-    left: -200px;
-    bottom: -75px;
+    left: -180px;
+    bottom: -70px;
     z-index: 5;
 }
 
@@ -1372,6 +1369,7 @@ code {
     /* background-image: linear-gradient(to bottom right, #1c1c20, #000000); */
     font-size: 20px;
     font-weight: 100;
+    margin-left: 10px;
     padding: 13.3px;
     padding-bottom: 12px;
     height: fit-content;
@@ -1491,7 +1489,23 @@ pre {
         border-radius: 0;
         margin: 15px 0 0;
         width: 100%;
-        padding: 0 10px 0;
+        padding: 0;
+    }
+
+    .statisticsContainer {
+        align-self: center;
+        align-items: flex-start;
+        max-width: 100%;
+    }
+
+    .statisticContainer h1 {
+        font-size: 30px;
+    }
+
+    .questionContent {
+        /* width: 100%; */
+        border-radius: 0;
+        padding: 10px 10px 10px;
     }
 
     .questionContent  h1 {
@@ -1542,13 +1556,13 @@ pre {
 
     .barka {
         rotate: 45deg;
-        left: -300px;
+        left: -200px;
         bottom: -75px;
     }
 
     .barka button {
-        bottom: 50px;
-        right: -20px;
+        bottom: 15px;
+        right: 50px;
     }
 
     .posts {
@@ -1625,21 +1639,24 @@ pre {
     }
 
     .theSideWithTheText h1 {
-        font-size: 60px;
+        display: none;
+        font-size: 20px;
         align-self: center;
         border: none;
         margin: 30px 0 20px;
     }
 
     .theSideWithTheText p {
-        font-size: 20px;
+        /* font-size: 20px; */
         width: 100%;
-        text-align: center;
-        margin: 0 0 30px;
+        text-align: left;
+        margin: 10px 0 0 0;
     }
 
     .landingsPageContnetBox {
         flex-direction: column;
+        height: fit-content;
+        padding: 0;
     }
 
     .theSideWithTheStats {
@@ -1669,11 +1686,6 @@ pre {
         display: none;
     }
 
-    #whoAsked {
-        position: relative;
-        left: 20px;
-    }
-
     .addOwnAwnser {
         width: 100%;
         align-self: center;
@@ -1697,4 +1709,25 @@ pre {
     #slightMarginForThisX {
         margin-left: 0px;
     }
+    
+    .statisticContainer {
+        /* padding: 0; */
+        border-radius: 0;
+        margin-top: 30px;
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .landingspageButtons {
+        display: none;
+        margin: 0;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .belowStatistics {
+        margin: 0;
+    }
+
+
 }
