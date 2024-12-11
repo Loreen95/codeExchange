@@ -62,6 +62,23 @@ class UserInterfaceClass {
         }
     }
 
+    /**
+     * name
+     */
+
+    private _confirmPopupIsVisible: boolean = false;
+    public revealOrHideConfirmPopup(): void {
+        const confirmPopupBackground: HTMLDivElement = document.querySelector(".confirmPopup")!;
+        if (this._confirmPopupIsVisible) {
+            confirmPopupBackground.style.display = "none";
+            this._confirmPopupIsVisible = false;
+        }
+        else {
+            confirmPopupBackground.style.display = "flex";
+            this._confirmPopupIsVisible = true;
+        }
+    }
+
     // this method opens the foldnav. And it can close it too
     private _opened: boolean = false;
     public shutterSlide(): void {

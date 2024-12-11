@@ -1,5 +1,8 @@
 import { User } from "../models/User";
 import { UserInfo } from "./types";
+import UserInterfaceClass from "./interface";
+
+const UI: UserInterfaceClass = new UserInterfaceClass();
 
 export class ProfileView {
     public view!: HTMLElement;
@@ -33,7 +36,7 @@ export class ProfileView {
     }
 
     public render(UserInfo: UserInfo): void {
-        console.log("UserInfo.dob:", UserInfo.dob);
+        // console.log("UserInfo.dob:", UserInfo.dob);
 
         const username: HTMLInputElement = document.querySelector("#username")!;
         const email: HTMLInputElement = document.querySelector("#email")!;
@@ -68,4 +71,39 @@ export class ProfileView {
         }
         return ""; // Ongeldig formaat
     }
+
+    public hello(): void {
+        console.log("he");
+    }
+}
+
+const eradicate: HTMLButtonElement = document.querySelector(".deleteAccountBttn")!;
+const closeButtons: HTMLAnchorElement = document.querySelector(".closeConfirmPopup")!;
+const closeButton2: HTMLButtonElement = document.querySelector(".closeConfirmPopup2")!;
+const deathUponAccountById: HTMLButtonElement = document.querySelector("#kjilUser")!;
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+if (eradicate) {
+    eradicate.addEventListener("click", () => {
+        UI.revealOrHideConfirmPopup();
+    });
+}
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+if (closeButtons) {
+    closeButtons.addEventListener("click", () => {
+        UI.revealOrHideConfirmPopup();
+    });
+}
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+if (closeButton2) {
+    closeButton2.addEventListener("click", () => {
+        UI.revealOrHideConfirmPopup();
+    });
+}
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+if (deathUponAccountById) {
+    deathUponAccountById.addEventListener("click", () => {
+        // const userUrl: URLSearchParams = new URLSearchParams(window.location.search);
+        // const userId: string | null = userUrl.get("user");
+        // User.delete(Number(userId));
+    });
 }

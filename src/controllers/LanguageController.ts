@@ -294,6 +294,18 @@ export class LanguageClass {
                 en: "Delete account",
                 nl: "Account verwijderen",
             },
+            deleteAccountPopup: {
+                en: "Delete Code Exhange account?",
+                nl: "Code Exhange account verwijderen?",
+            },
+            confirm: {
+                en: "Confirm",
+                nl: "Bevestigen",
+            },
+            cansel: {
+                en: "Cancel",
+                nl: "Annuleren",
+            },
             applychanges: {
                 en: "Apply changes",
                 nl: "Aanpassingen toewijzen",

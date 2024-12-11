@@ -1466,7 +1466,83 @@ pre {
   overflow: auto;
 }
 
+.confirmPopup {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background-color: #000000a7;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: 10000;
+}
 
+.confirmPopupContent {
+    display: flex;
+    flex-direction: column;
+    background-image: linear-gradient(to bottom left, rgb(11, 11, 11), rgb(10, 20, 28));
+    z-index: 10001;
+    padding: 20px;
+    border: solid 2px rgb(193, 17, 17);
+    border-radius: 10px;
+}
+
+.confirmPopupX {
+    color: red;
+    display: flex;
+    justify-content: flex-end;
+    cursor: pointer;
+    font-size: 30px;
+}
+
+.confirmPopupX p {
+    margin: 0;
+}
+
+.confirmPopupText p {
+    margin: 10px 0 20px 0;
+    font-size: 30px;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+.confirmPopupButtons {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row-reverse;
+}
+
+.confirmPopupButtons button {
+    border: none;
+    font-family: Tahoma, sans-serif;
+    padding: 15px 20px 15px;
+    border-radius: 5px;
+    margin: 0 20px 0 0;    
+    cursor: pointer;
+}
+
+.defaultRedButton {
+    background-image: linear-gradient(to bottom right, #b01919, #9c1313);
+    font-weight: 550;
+    font-size: 20px;
+    color: aliceblue;
+}
+
+.defaultRedButton:hover {
+    background-image: linear-gradient(to bottom right, #a01313, #8a0f0f);
+}
+
+.closeConfirmPopup2 {
+    background-image: linear-gradient(to bottom left, #21272e, #000000);
+    font-weight: 550;
+    font-size: 20px;
+    color: aliceblue;
+}
+
+.closeConfirmPopup2:hover {
+    background-image: linear-gradient(to bottom right, #1c2126, #121518);
+}
 
 /* this query chainges the content to fit the screen of a phone */
 @media (max-width: 630px) {

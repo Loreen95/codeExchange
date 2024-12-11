@@ -46,4 +46,8 @@ export class ProfileController {
             stringedTimeAndDate,
         };
     }
+
+    /**
+     * putThisAccountToTheSword
+     */
 }
