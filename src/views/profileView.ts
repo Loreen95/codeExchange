@@ -4,7 +4,7 @@ import UserInterfaceClass from "./interface";
 import { ProfileController } from "../controllers/ProfileController";
 
 const UI: UserInterfaceClass = new UserInterfaceClass();
-// const profile: ProfileController = new ProfileController(profileView);
+const logout: LogoutClass = new LogoutClass();
 
 export class ProfileView {
     public view!: HTMLElement;
@@ -38,8 +38,6 @@ export class ProfileView {
     }
 
     public render(UserInfo: UserInfo): void {
-        // console.log("UserInfo.dob:", UserInfo.dob);
-
         const username: HTMLInputElement = document.querySelector("#username")!;
         const email: HTMLInputElement = document.querySelector("#email")!;
         const biography: HTMLTextAreaElement = document.querySelector("#bioEditor")!;
@@ -71,7 +69,7 @@ export class ProfileView {
                 return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
             }
         }
-        return ""; // Ongeldig formaat
+        return "";
     }
 }
 
@@ -84,12 +82,12 @@ const closeButton2: HTMLButtonElement = document.querySelector(".closeConfirmPop
 const deathUponAccountById: HTMLButtonElement = document.querySelector("#kjilUser")!;
 const passPhrase: HTMLInputElement = document.querySelector(".confirmPassBeforeExecution")!;
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+
 if (eradicate) {
     eradicate.addEventListener("click", () => {
         UI.revealOrHideConfirmPopup();
     });
 }
-// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 if (closeButtons) {
     closeButtons.addEventListener("click", () => {
         UI.revealOrHideConfirmPopup();
@@ -97,7 +95,6 @@ if (closeButtons) {
         passPhrase.style.border = "none";
     });
 }
-// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 if (closeButton2) {
     closeButton2.addEventListener("click", () => {
         UI.revealOrHideConfirmPopup();
@@ -106,7 +103,6 @@ if (closeButton2) {
     });
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 if (deathUponAccountById) {
     deathUponAccountById.addEventListener("click", async () => {
         const userUrl: URLSearchParams = new URLSearchParams(window.location.search);
@@ -116,4 +112,26 @@ if (deathUponAccountById) {
             await profileController.vanquishUserToShadowRealm(Number(userId), dataOfPerson.password, passPhrase.value);
         }
     });
+}
+
+const apply: HTMLButtonElement | null = document.querySelector(".applyChaingesBttn");
+const usernameInput: HTMLInputElement | null = document.querySelector("#username");
+const emailInput: HTMLInputElement | null = document.querySelector("#email");
+const dobInput: HTMLInputElement | null = document.querySelector("#dob");
+const bioInput: HTMLInputElement | null = document.querySelector("#bioEditor");
+
+if (apply && usernameInput && emailInput && dobInput && bioInput) {
+    apply.addEventListener("click", async (e: Event) => {
+        e.preventDefault();
+        const username: string = usernameInput.value.trim();
+        const email: string = emailInput.value.trim();
+        const dob: string = dobInput.value.trim();
+        const bio: string = bioInput.value.trim();
+
+        const dobFormat: string = new Date(dob).toISOString().split("T")[0];
+        await profileController.updateRecords(username, email, dobFormat, bio);
+    });
+}
+else {
+    console.error("One or more form inputs were not found.");
 }
