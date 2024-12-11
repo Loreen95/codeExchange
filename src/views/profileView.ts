@@ -2,6 +2,7 @@ import { User } from "../models/User";
 import { UserInfo } from "./types";
 import UserInterfaceClass from "./interface";
 import { ProfileController } from "../controllers/ProfileController";
+
 const UI: UserInterfaceClass = new UserInterfaceClass();
 
 export class ProfileView {
@@ -74,16 +75,18 @@ export class ProfileView {
 const profileView: ProfileView = await ProfileView.initialize();
 const profileController: ProfileController = new ProfileController(profileView);
 
-const eradicate: HTMLButtonElement | null = document.querySelector(".deleteAccountBttn");
-const closeButtons: HTMLAnchorElement | null = document.querySelector(".closeConfirmPopup");
-const closeButton2: HTMLButtonElement | null = document.querySelector(".closeConfirmPopup2");
-const deathUponAccountById: HTMLButtonElement | null = document.querySelector("#kjilUser");
+const eradicate: HTMLButtonElement = document.querySelector(".deleteAccountBttn")!;
+const closeButtons: HTMLAnchorElement = document.querySelector(".closeConfirmPopup")!;
+const closeButton2: HTMLButtonElement = document.querySelector(".closeConfirmPopup2")!;
+const deathUponAccountById: HTMLButtonElement = document.querySelector("#kjilUser")!;
 const passPhrase: HTMLInputElement = document.querySelector(".confirmPassBeforeExecution")!;
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 if (eradicate) {
     eradicate.addEventListener("click", () => {
         UI.revealOrHideConfirmPopup();
     });
 }
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 if (closeButtons) {
     closeButtons.addEventListener("click", () => {
         UI.revealOrHideConfirmPopup();
@@ -91,6 +94,7 @@ if (closeButtons) {
         passPhrase.style.border = "none";
     });
 }
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 if (closeButton2) {
     closeButton2.addEventListener("click", () => {
         UI.revealOrHideConfirmPopup();
@@ -98,7 +102,7 @@ if (closeButton2) {
         passPhrase.style.border = "none";
     });
 }
-
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 if (deathUponAccountById) {
     deathUponAccountById.addEventListener("click", async () => {
         const userUrl: URLSearchParams = new URLSearchParams(window.location.search);

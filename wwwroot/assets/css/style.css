@@ -900,7 +900,7 @@ body {
     height: fit-content;
     transition: all 0.3s;
     padding: 15px;
-    z-index: 10000;
+    z-index: 10003;
 }
 
 .successIcon {

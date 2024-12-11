@@ -1,8 +1,9 @@
 import { ProfileView } from "../views/profileView";
 import { UserInfo } from "../views/types";
 import { User } from "../models/User";
-import UserInterfaceClass from "../views/interface";
+
 import { LogoutClass } from "../controllers/LogoutController";
+import UserInterfaceClass from "../views/interface";
 
 const UI: UserInterfaceClass = new UserInterfaceClass();
 const logout: LogoutClass = new LogoutClass();
@@ -65,14 +66,18 @@ export class ProfileController {
     public async vanquishUserToShadowRealm(userId: number, passWord: string, userPassPhrase: string): Promise<void> {
         if (userId) {
             if (passWord === userPassPhrase) {
-                await User.delete(userId);
-                logout.logoutFunction();
+                const successMessage: HTMLParagraphElement = document.querySelector("#successMsg")!;
+                successMessage.innerHTML = "You have made a grave mistake";
+                UI.successMessagePopup(true);
+                // await User.delete(userId);
+                await User.delete(userId).then(() => {
+                    logout.logoutFunction();
+                });
             }
             else {
                 const UI: UserInterfaceClass = new UserInterfaceClass();
                 const errorMessage: HTMLParagraphElement = document.querySelector("#errMsg")!;
                 const passPhrase: HTMLInputElement = document.querySelector(".confirmPassBeforeExecution")!;
-                console.log(`"${passWord}" was the awnser and "${userPassPhrase}" was provided`);
                 UI.unleashTheErrorPopup(true);
                 errorMessage.innerText = "Incorrect password";
                 passPhrase.style.border = "solid 3px red";
