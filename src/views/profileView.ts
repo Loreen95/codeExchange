@@ -1,11 +1,9 @@
 import { User } from "../models/User";
 import { UserInfo } from "./types";
 import UserInterfaceClass from "./interface";
-import { LogoutClass } from "../controllers/LogoutController";
 import { ProfileController } from "../controllers/ProfileController";
 
 const UI: UserInterfaceClass = new UserInterfaceClass();
-const logout: LogoutClass = new LogoutClass();
 // const profile: ProfileController = new ProfileController(profileView);
 
 export class ProfileView {
@@ -84,6 +82,7 @@ const eradicate: HTMLButtonElement = document.querySelector(".deleteAccountBttn"
 const closeButtons: HTMLAnchorElement = document.querySelector(".closeConfirmPopup")!;
 const closeButton2: HTMLButtonElement = document.querySelector(".closeConfirmPopup2")!;
 const deathUponAccountById: HTMLButtonElement = document.querySelector("#kjilUser")!;
+const passPhrase: HTMLInputElement = document.querySelector(".confirmPassBeforeExecution")!;
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 if (eradicate) {
     eradicate.addEventListener("click", () => {
@@ -94,22 +93,27 @@ if (eradicate) {
 if (closeButtons) {
     closeButtons.addEventListener("click", () => {
         UI.revealOrHideConfirmPopup();
+        UI.unleashTheErrorPopup(false);
+        passPhrase.style.border = "none";
     });
 }
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 if (closeButton2) {
     closeButton2.addEventListener("click", () => {
         UI.revealOrHideConfirmPopup();
+        UI.unleashTheErrorPopup(false);
+        passPhrase.style.border = "none";
     });
 }
-// I just need this to work
+
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 if (deathUponAccountById) {
     deathUponAccountById.addEventListener("click", async () => {
-        console.log("yea ok");
         const userUrl: URLSearchParams = new URLSearchParams(window.location.search);
         const userId: string | null = userUrl.get("user");
-        await profileController.vanquishUserToShadowRealm(Number(userId));
-        // logout.logoutFunction();
+        const dataOfPerson: User | undefined = await User.getUserById(Number(userId));
+        if (dataOfPerson) {
+            await profileController.vanquishUserToShadowRealm(Number(userId), dataOfPerson.password, passPhrase.value);
+        }
     });
 }

@@ -1,7 +1,10 @@
 import { ProfileView } from "../views/profileView";
 import { UserInfo } from "../views/types";
-
+import UserInterfaceClass from "../views/interface";
+import { LogoutClass } from "../controllers/LogoutController";
 import { User } from "../models/User";
+
+const logout: LogoutClass = new LogoutClass();
 
 export class ProfileController {
     private _userModel: User | undefined;
@@ -54,10 +57,21 @@ export class ProfileController {
     /**
      * putThisAccountToTheSword
      */
-    public async vanquishUserToShadowRealm(userId: number): Promise<void> {
+    public async vanquishUserToShadowRealm(userId: number, passWord: string, userPassPhrase: string): Promise<void> {
         if (userId) {
-            console.log("trigger 2");
-            await User.delete(userId);
+            if (passWord === userPassPhrase) {
+                await User.delete(userId);
+                logout.logoutFunction();
+            }
+            else {
+                const UI: UserInterfaceClass = new UserInterfaceClass();
+                const errorMessage: HTMLParagraphElement = document.querySelector("#errMsg")!;
+                const passPhrase: HTMLInputElement = document.querySelector(".confirmPassBeforeExecution")!;
+                console.log(`"${passWord}" was the awnser and "${userPassPhrase}" was provided`);
+                UI.unleashTheErrorPopup(true);
+                errorMessage.innerText = "Incorrect password";
+                passPhrase.style.border = "solid 3px red";
+            }
         }
     }
 }

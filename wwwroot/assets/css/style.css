@@ -863,7 +863,7 @@ body {
     height: fit-content;
     transition: all 0.3s;
     padding: 15px;
-    z-index: 10000;
+    z-index: 10002;
 }
 
 .errPopupInfo {
@@ -1507,13 +1507,19 @@ pre {
 }
 
 .confirmPopupText input {
+    transition: all 0.3s;
     border: none;
     background-color: #2e2d2d;
     padding: 5px;
     font-size: 20px;
     color: aliceblue;
-    margin-bottom: 20px;
+    margin: 10px 0 20px 0;
     border-radius: 5px;
+}
+
+.confirmPopupText label {
+    font-family: Tahoma, sans-serif;
+    opacity: 0.7;
 }
 
 .confirmPopupText p {

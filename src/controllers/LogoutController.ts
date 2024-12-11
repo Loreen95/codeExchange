@@ -4,10 +4,8 @@ export class LogoutClass {
         // Well this here, uh.. yeah, this just loggs you out. Idunno what to say.
         try {
             if (sessionStorage.getItem("session")) {
-                if (confirm("Proceed with logout?")) {
-                    sessionStorage.removeItem("session");
-                    window.location.href = "http://localhost:3000/landingspagina.html";
-                }
+                sessionStorage.removeItem("session");
+                window.location.href = "http://localhost:3000/landingspagina.html";
             }
             // This shouldn't be possible because the session needs to exist before you have access to the logout button
             else {

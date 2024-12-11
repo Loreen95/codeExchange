@@ -26,7 +26,9 @@ footerContent.innerHTML = String(stringifiedNodes[5]);
 // this logout button is here because we had to make it availible everywhere. And it logs you out
 const logoutBttn: HTMLLinkElement = document.querySelector(".loggingOut")!;
 logoutBttn.addEventListener("click", () => {
-    logout.logoutFunction();
+    if (confirm("Proceed with logout?")) {
+        logout.logoutFunction();
+    }
 });
 
 // this activates a method that chainges a few elements based on the login status of the user
