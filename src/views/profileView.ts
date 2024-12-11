@@ -2,9 +2,7 @@ import { User } from "../models/User";
 import { UserInfo } from "./types";
 import UserInterfaceClass from "./interface";
 import { ProfileController } from "../controllers/ProfileController";
-
 const UI: UserInterfaceClass = new UserInterfaceClass();
-const logout: LogoutClass = new LogoutClass();
 
 export class ProfileView {
     public view!: HTMLElement;
@@ -76,13 +74,11 @@ export class ProfileView {
 const profileView: ProfileView = await ProfileView.initialize();
 const profileController: ProfileController = new ProfileController(profileView);
 
-const eradicate: HTMLButtonElement = document.querySelector(".deleteAccountBttn")!;
-const closeButtons: HTMLAnchorElement = document.querySelector(".closeConfirmPopup")!;
-const closeButton2: HTMLButtonElement = document.querySelector(".closeConfirmPopup2")!;
-const deathUponAccountById: HTMLButtonElement = document.querySelector("#kjilUser")!;
+const eradicate: HTMLButtonElement | null = document.querySelector(".deleteAccountBttn");
+const closeButtons: HTMLAnchorElement | null = document.querySelector(".closeConfirmPopup");
+const closeButton2: HTMLButtonElement | null = document.querySelector(".closeConfirmPopup2");
+const deathUponAccountById: HTMLButtonElement | null = document.querySelector("#kjilUser");
 const passPhrase: HTMLInputElement = document.querySelector(".confirmPassBeforeExecution")!;
-// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-
 if (eradicate) {
     eradicate.addEventListener("click", () => {
         UI.revealOrHideConfirmPopup();

@@ -2,8 +2,10 @@ import { ProfileView } from "../views/profileView";
 import { UserInfo } from "../views/types";
 import { User } from "../models/User";
 import UserInterfaceClass from "../views/interface";
+import { LogoutClass } from "../controllers/LogoutController";
 
 const UI: UserInterfaceClass = new UserInterfaceClass();
+const logout: LogoutClass = new LogoutClass();
 
 export class ProfileController {
     private _profileView: ProfileView;
@@ -75,65 +77,6 @@ export class ProfileController {
                 errorMessage.innerText = "Incorrect password";
                 passPhrase.style.border = "solid 3px red";
             }
-        }
-    }
-
-    public async updateRecords(givenUsername: string, givenEmail: string, givenDob: string, givenBio: string): Promise<void> {
-        const successMessage: HTMLParagraphElement = document.querySelector("#successMsg")!;
-        const errorMessage: HTMLParagraphElement = document.querySelector("#errMsg")!;
-        successMessage.innerHTML = "";
-        errorMessage.innerHTML = "";
-        try {
-            const userIdString: string | null = sessionStorage.getItem("session");
-            if (!userIdString) {
-                console.error("No user found in session storage.");
-                return;
-            }
-            const userId: number = Number(userIdString);
-            if (isNaN(userId)) {
-                console.error("Invalid user ID in session storage.");
-                return;
-            }
-            const user: User | undefined = await User.getUserById(userId);
-            if (!user) {
-                console.error("Cannot find user with ID:", userId);
-                return;
-            }
-
-            if (!givenUsername) {
-                errorMessage.innerHTML = "You must provide a username\n";
-                UI.unleashTheErrorPopup(true);
-                UI.successMessagePopup(false);
-            }
-            else if (!givenEmail) {
-                errorMessage.innerHTML += "You must provide an email\n";
-                UI.unleashTheErrorPopup(true);
-                UI.successMessagePopup(false);
-            }
-            else if (!givenDob) {
-                errorMessage.innerHTML += "Please provide us with your date of birth\n";
-                UI.unleashTheErrorPopup(true);
-                UI.successMessagePopup(false);
-            }
-            else if (!givenBio) {
-                errorMessage.innerHTML += "We'd love to know more about you, please fill in your bio\n";
-                UI.unleashTheErrorPopup(true);
-                UI.successMessagePopup(false);
-            }
-            else {
-                const success: boolean = await this._profileView.userModel.update(givenUsername, givenEmail, givenDob, givenBio, userId);
-
-                if (success) {
-                    successMessage.innerHTML = "The records have been updated";
-                    UI.successMessagePopup(true);
-                }
-                else {
-                    console.error("Failed to update records.");
-                }
-            }
-        }
-        catch (reason) {
-            console.error("Error updating records: ", reason);
         }
     }
 
