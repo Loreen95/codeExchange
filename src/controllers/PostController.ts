@@ -125,16 +125,16 @@ export class PostController {
                 rating = _comment.rating;
             }
             insertCommenthere.insertAdjacentHTML("beforeend", `
-                    <h1 class="awnserTitle">${(await User.getUserById(Number(_comment.userId)))?.userName}</h1>
+                    <h1 class="awnserTitle"><a href="profile.html?user=${await User.getUserById(Number(_comment.userId))}" class="navLinkR">${(await User.getUserById(Number(_comment.userId)))?.userName}</a></h1>
                 <div class="indivAwnser">
                     <div class="contentPart contentPartComment">${this.encodeContentForVieuwingPurposes(_comment.content)}</div>
                 </div>
                 <div class="dateAndRating">
                     <p class="bottomDate">${String(_comment.createdAt).slice(8, 10) + "-" + String(_comment.createdAt).slice(5, 7) + "-" + String(_comment.createdAt).slice(0, 4) + " | " + String(_comment.createdAt).slice(11, 19)}</p>
                     <div class="ratingPart">
-                        <i class="fa-solid fa-thumbs-up"></i>
+                        <a><i class="fa-solid fa-thumbs-up" id="positive"></i></a>
                         <p class="insertRatingHere">${rating}</p>
-                        <i class="fa-solid fa-thumbs-down"></i>
+                        <a><i class="fa-solid fa-thumbs-down" id="negative"></i></a>
                     </div>
                 </div>                
                 <hr>

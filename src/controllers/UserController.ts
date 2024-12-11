@@ -22,18 +22,18 @@ export class UserController extends Controller {
     }
 
     public getUserInfo(): UserInfo {
-        const userId: number = this.userView.userModel.userId || 0; // Default: 0
-        const userEmail: string = this.userView.userModel.email || "Onbekend"; // Default: "Onbekend"
-        const userName: string = this.userView.userModel.userName || "Onbekende gebruiker"; // Default: "Onbekende gebruiker"
+        const userId: number = this.userView.userModel.userId || 0;
+        const userEmail: string = this.userView.userModel.email || "Onbekend";
+        const userName: string = this.userView.userModel.userName || "Onbekende gebruiker";
         const dob: string = this.userView.userModel.dob
             ? String(this.userView.userModel.dob).slice(8, 10) +
             "-" +
             String(this.userView.userModel.dob).slice(5, 7) +
             "-" +
             String(this.userView.userModel.dob).slice(0, 4)
-            : "Niet beschikbaar"; // Default: "Niet beschikbaar"
-        const experience: number = this.userView.userModel.experience || 0; // Default: 0
-        const bio: string = this.userView.userModel.bio || "Geen biografie beschikbaar"; // Default: "Geen biografie beschikbaar"
+            : "Niet beschikbaar";
+        const experience: number = this.userView.userModel.experience || 0;
+        const bio: string = this.userView.userModel.bio || "Geen biografie beschikbaar";
         const stringedTimeAndDate: string = this.userView.userModel.createdAt
             ? String(this.userView.userModel.createdAt).slice(8, 10) +
             "-" +
@@ -42,7 +42,7 @@ export class UserController extends Controller {
             String(this.userView.userModel.createdAt).slice(0, 4) +
             " | " +
             String(this.userView.userModel.createdAt).slice(11, 19)
-            : "Onbekende datum en tijd"; // Default: "Onbekende datum en tijd"
+            : "Onbekende datum en tijd";
 
         return {
             userId,
