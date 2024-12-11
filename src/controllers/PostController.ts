@@ -166,9 +166,14 @@ export class PostController {
             console.log("fuegoFalse");
         }
         else {
-            this._isPanelVisible = true;
-            commentMakerPanel.style.display = "flex";
-            console.log("fuegoTrue");
+            if (!sessionStorage.getItem("session")) {
+                window.location.href = "http://localhost:3000/login.html";
+            }
+            else {
+                this._isPanelVisible = true;
+                commentMakerPanel.style.display = "flex";
+                console.log("fuegoTrue");
+            }
         }
     }
 
