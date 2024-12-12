@@ -83,9 +83,9 @@ export class PostController {
                             <div class="questionContent">
                                 <h1>${titleOfPost}</h1>
                                 <p>${contentOfPost}</p>
-                                <div class="bottrow">
+                                <div class="bottrow">                                
                                     <div class="iconrow">
-                                        <p class="messageIcon"><i class="fa-solid fa-thumbs-up"></i> ${rating}</p>
+                                        <a id="commentPositive"><p class="messageIcon"><i class="fa-solid fa-thumbs-up"></i> ${rating}</p></a>
                                         <p class="messageIcon"><i class="fa-sharp fa-solid fa-message"></i> ${totalComments}</p>
                                     </div>
                                     <p id="datetime">${stringedTimeAndDate}</p>
@@ -334,6 +334,9 @@ export class PostController {
                 this._UI.unleashTheErrorPopup(false);
                 this._UI.successMessagePopup(true);
                 await this.renderComments();
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
             }
             else {
                 errorMessage.innerHTML += "Failed to create the post!";
@@ -423,5 +426,16 @@ export class PostController {
 
     public redoAction(): void {
         document.execCommand("redo", true);
+    }
+
+    public rate(typeRating: string): void {
+        let ratingIndex: number = 0;
+        if (typeRating === "positive") {
+            ratingIndex++;
+        }
+        else if (typeRating === "negative") {
+            ratingIndex--;
+        }
+        console.log(`De huidige ratingIndex is: ${ratingIndex}`);
     }
 }

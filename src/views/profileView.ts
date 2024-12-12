@@ -2,7 +2,6 @@ import { User } from "../models/User";
 import { UserInfo } from "./types";
 import UserInterfaceClass from "./interface";
 import { ProfileController } from "../controllers/ProfileController";
-
 const UI: UserInterfaceClass = new UserInterfaceClass();
 
 export class ProfileView {
@@ -126,6 +125,8 @@ const bioInput: HTMLInputElement | null = document.querySelector("#bioEditor");
 const expertiseInput: HTMLInputElement | null = document.querySelector("#expertise");
 const experienceInput: HTMLInputElement | null = document.querySelector("#yearsexperience");
 
+const imageInput: HTMLInputElement | null = document.querySelector<HTMLInputElement>("#profilePictureInput");
+
 if (apply && usernameInput && emailInput && dobInput && bioInput && experienceInput && expertiseInput) {
     apply.addEventListener("click", async (e: Event) => {
         e.preventDefault();
@@ -139,6 +140,20 @@ if (apply && usernameInput && emailInput && dobInput && bioInput && experienceIn
         await profileController.updateRecords(username, email, dobFormat, bio, experience, expertise);
     });
 }
+
 else {
     console.error("One or more form inputs were not found.");
 }
+
+// Upload een afbeelding
+document.querySelector("#uploadButton")?.addEventListener("click", async () => {
+    const fileInputSelector = "#fileUpload";
+    await profileController.uploadImage(fileInputSelector);
+});
+
+// Toon een voorbeeld van een afbeelding
+document.querySelector("#previewButton")?.addEventListener("click", async () => {
+    const inputSelector = "#profilePictureInput";
+    const imageSelector = "#profilePictureContainer";
+    await profileController.displayImage(inputSelector, imageSelector);
+});

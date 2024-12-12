@@ -146,4 +146,15 @@ closePanelBackUp.addEventListener("click", () => {
     post.unleashAddComentPanel();
 });
 
-// const thumbsUp: HTMLAnchorElement = document.querySelector("#positive");
+const ratingPositive: HTMLLinkElement = document.querySelector("#commentPositive")!;
+const ratingNegative: HTMLLinkElement = document.querySelector("#commentNegative")!;
+
+ratingPositive.addEventListener("click", e => {
+    e.preventDefault();
+    post.rate("positive");
+});
+
+ratingNegative.addEventListener("click", e => {
+    e.preventDefault();
+    post.rate("negative");
+});

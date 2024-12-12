@@ -1,7 +1,7 @@
 import { ProfileView } from "../views/profileView";
 import { UserInfo } from "../views/types";
 import { User } from "../models/User";
-
+import { api, types, utils } from "@hboictcloud/api";
 import { LogoutClass } from "../controllers/LogoutController";
 import UserInterfaceClass from "../views/interface";
 
@@ -153,5 +153,54 @@ export class ProfileController {
         catch (reason) {
             console.error("Error updating records: ", reason);
         }
+    }
+
+    // Upload een afbeelding
+    public async uploadImage(inputSelector: string): Promise<void> {
+        try {
+            // Verkrijg de Data-URL van het input-element
+            const data: types.DataURL = await this.getDataUrl(inputSelector);
+
+            // Upload de afbeelding
+            const result: string = await api.uploadFile("Profile Image", data.url);
+            console.log("Succes!", result);
+        }
+        catch (error) {
+            console.error("Fout bij het uploaden van de afbeelding!", error instanceof Error ? error.message : error);
+        }
+    }
+
+    // Laat een afbeelding zien na upload
+    public async displayImage(inputSelector: string, imageSelector: string): Promise<void> {
+        try {
+            // Verkrijg de Data-URL van het input-element
+            const data: types.DataURL = await this.getDataUrl(inputSelector);
+
+            // Als het bestand een afbeelding is, werk de src van de afbeelding bij
+            if (data.isImage) {
+                const imageElement: HTMLImageElement | null = document.querySelector<HTMLImageElement>(imageSelector);
+                if (imageElement) {
+                    imageElement.src = data.url;
+                }
+                else {
+                    console.warn(`Afbeeldingselement niet gevonden voor selector: ${imageSelector}`);
+                }
+            }
+            else {
+                console.warn("Het geüploade bestand is geen afbeelding.");
+            }
+        }
+        catch (error) {
+            console.error("Fout bij het weergeven van de afbeelding!", error instanceof Error ? error.message : error);
+        }
+    }
+
+    // Hulpfunctie om een Data-URL te verkrijgen van een bestand
+    private async getDataUrl(selector: string): Promise<types.DataURL> {
+        const inputElement: HTMLInputElement | null = document.querySelector<HTMLInputElement>(selector);
+        if (!inputElement || !inputElement.files || inputElement.files.length === 0) {
+            throw new Error("Geen bestand geselecteerd");
+        }
+        return await utils.getDataUrl(inputElement);
     }
 }
