@@ -1,9 +1,11 @@
 import { Post } from "../models/Post";
 import { Comment } from "../models/Comment";
+import { Rating } from "../models/Rating";
 import { User } from "../models/User";
 import UserInterfaceClass from "../views/interface";
 import hljs from "highlight.js";
 import validator from "validator";
+import { ratingResult } from "../views/types";
 
 export class PostController {
     private _postModel: Post | undefined;
@@ -144,15 +146,17 @@ export class PostController {
             `);
             const commentRatingPositive: HTMLAnchorElement | null = document.querySelector(`#commentPositive${commentIndex}`);
             if (commentRatingPositive) {
-                commentRatingPositive.addEventListener("click", () => {
-                    console.log(`${sessionStorage.getItem("session")} ${_comment.commentId} ${Boolean(true)}`);
+                commentRatingPositive.addEventListener("click", async () => {
+                    console.log(`${sessionStorage.getItem("session")} ${_comment.commentId} ${Number(1)}`);
+                    const ratings: Rating | undefined = await Rating.getRatingByUserIdAndCommentId(Number(sessionStorage.getItem("session")), _comment.commentId);
+                    console.log(`the user id is ${ratings?.userId} the comment id is: ${ratings?.postId} and the Id ID PK is: ${ratings?.ratingId}`);
                 });
             }
 
             const commentRatingNegative: HTMLAnchorElement | null = document.querySelector(`#commentNegative${commentIndex}`);
             if (commentRatingNegative) {
                 commentRatingNegative.addEventListener("click", () => {
-                    console.log(`${sessionStorage.getItem("session")} ${_comment.commentId} ${Boolean(false)}`);
+                    console.log(`${sessionStorage.getItem("session")} ${_comment.commentId} ${Number(0)}`);
                 });
             }
             commentIndex++;
