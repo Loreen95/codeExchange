@@ -145,3 +145,5 @@ const closePanelBackUp: HTMLAnchorElement = document.querySelector(".closePanel"
 closePanelBackUp.addEventListener("click", () => {
     post.unleashAddComentPanel();
 });
+
+// const thumbsUp: HTMLAnchorElement = document.querySelector("#positive");

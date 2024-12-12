@@ -119,6 +119,7 @@ export class PostController {
         const insertCommenthere: HTMLDivElement = document.querySelector(".awnsers")!;
         const commentList: Comment[] | undefined = await Comment.getCommentsByMessageId(Number(sessionStorage.getItem("post_Nr")));
         // console.log(commentList);
+        let commentIndex: number = 0;
         commentList.forEach(async _comment => {
             let rating: number | undefined = 0;
             if (String(_comment.rating) !== String(null)) {
@@ -132,15 +133,28 @@ export class PostController {
                 <div class="dateAndRating">
                     <p class="bottomDate">${String(_comment.createdAt).slice(8, 10) + "-" + String(_comment.createdAt).slice(5, 7) + "-" + String(_comment.createdAt).slice(0, 4) + " | " + String(_comment.createdAt).slice(11, 19)}</p>
                     <div class="ratingPart">
-                        <a><i class="fa-solid fa-thumbs-up" id="positive"></i></a>
+                        <a id="commentPositive${commentIndex}"><i class="fa-solid fa-thumbs-up" id="positive"></i></a>
                         <p class="insertRatingHere">${rating}</p>
-                        <a><i class="fa-solid fa-thumbs-down" id="negative"></i></a>
+                        <a id="commentNegative${commentIndex}"><i class="fa-solid fa-thumbs-down" id="negative"></i></a>
                     </div>
                 </div>                
                 <hr>
             `);
-        });
+            const commentRatingPositive: HTMLAnchorElement | null = document.querySelector(`#commentPositive${commentIndex}`);
+            if (commentRatingPositive) {
+                commentRatingPositive.addEventListener("click", () => {
+                    console.log(`${sessionStorage.getItem("session")} ${_comment.commentId} ${Boolean(true)}`);
+                });
+            }
 
+            const commentRatingNegative: HTMLAnchorElement | null = document.querySelector(`#commentNegative${commentIndex}`);
+            if (commentRatingNegative) {
+                commentRatingNegative.addEventListener("click", () => {
+                    console.log(`${sessionStorage.getItem("session")} ${_comment.commentId} ${Boolean(false)}`);
+                });
+            }
+            commentIndex++;
+        });
         const answerBttn: HTMLElement | null = document.querySelector("#createAnswer");
         if (answerBttn) {
             const textarea: Element = document.querySelector("#addOwnAwnser")!;
@@ -402,12 +416,10 @@ export class PostController {
     }
 
     public undoAction(): void {
-        // eslint-disable-next-line @typescript-eslint/no-deprecated
         document.execCommand("undo", false);
     }
 
     public redoAction(): void {
-        // eslint-disable-next-line @typescript-eslint/no-deprecated
         document.execCommand("redo", true);
     }
 }

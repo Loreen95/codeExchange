@@ -27,7 +27,7 @@ export class Comment {
             ) as commentResult[];
             if (result.length > 0) {
                 const comments: Comment[] = result.map(comment => {
-                    const newComment: Comment = new Comment(0, comment.userId, comment.messageId, comment.content);
+                    const newComment: Comment = new Comment(comment.commentId, comment.userId, comment.messageId, comment.content);
                     newComment.rating = comment.rating;
                     newComment.createdAt = comment.createdAt;
                     return newComment;
