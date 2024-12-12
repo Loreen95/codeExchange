@@ -41,10 +41,14 @@ export class ProfileView {
         const email: HTMLInputElement = document.querySelector("#email")!;
         const biography: HTMLTextAreaElement = document.querySelector("#bioEditor")!;
         const dob: HTMLInputElement = document.querySelector("#dob")!;
+        const expertise: HTMLInputElement = document.querySelector("#expertise")!;
+        const experience: HTMLInputElement = document.querySelector("#yearsexperience")!;
 
         username.value = UserInfo.userName;
         email.value = UserInfo.userEmail;
         dob.value = this.formatDateForInput(UserInfo.dob);
+        experience.value = String(UserInfo.yearsExperience);
+        expertise.value = UserInfo.expertise;
         biography.value = UserInfo.bio;
     }
 
@@ -119,17 +123,20 @@ const usernameInput: HTMLInputElement | null = document.querySelector("#username
 const emailInput: HTMLInputElement | null = document.querySelector("#email");
 const dobInput: HTMLInputElement | null = document.querySelector("#dob");
 const bioInput: HTMLInputElement | null = document.querySelector("#bioEditor");
+const expertiseInput: HTMLInputElement | null = document.querySelector("#expertise");
+const experienceInput: HTMLInputElement | null = document.querySelector("#yearsexperience");
 
-if (apply && usernameInput && emailInput && dobInput && bioInput) {
+if (apply && usernameInput && emailInput && dobInput && bioInput && experienceInput && expertiseInput) {
     apply.addEventListener("click", async (e: Event) => {
         e.preventDefault();
         const username: string = usernameInput.value.trim();
         const email: string = emailInput.value.trim();
         const dob: string = dobInput.value.trim();
-        const bio: string = bioInput.value.trim();
-
         const dobFormat: string = new Date(dob).toISOString().split("T")[0];
-        await profileController.updateRecords(username, email, dobFormat, bio);
+        const bio: string = bioInput.value.trim();
+        const experience: number = Number(experienceInput.value.trim());
+        const expertise: string = String(expertiseInput.value.trim());
+        await profileController.updateRecords(username, email, dobFormat, bio, experience, expertise);
     });
 }
 else {

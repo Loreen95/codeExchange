@@ -1309,6 +1309,11 @@ code {
     /* background-color: blue; */
 }
 
+
+#expertise2 {
+    margin-left: 6%;
+}
+
 .awnserRow {
     display: flex;
     gap: 15px;

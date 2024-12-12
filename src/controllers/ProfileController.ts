@@ -41,20 +41,21 @@ export class ProfileController {
                 ? this._profileView.userModel.dob.toISOString().split("T")[0]
                 : this._profileView.userModel.dob
             : "Niet beschikbaar";
-        const experience: number = this._profileView.userModel.experience || 0;
+        const yearsExperience: number = this._profileView.userModel.yearsExperience || 0;
         const bio: string = this._profileView.userModel.bio || "Geen biografie beschikbaar";
         const stringedTimeAndDate: string = this._profileView.userModel.createdAt
             ? this._profileView.userModel.createdAt instanceof Date
                 ? this._profileView.userModel.createdAt.toISOString().replace("T", " ").split(".")[0]
                 : this._profileView.userModel.createdAt
             : "Onbekende datum en tijd";
-
+        const expertise: string = this._profileView.userModel.expertise || "Geen expertise";
         return {
             userId,
             userEmail,
             userName,
             dob,
-            experience,
+            expertise,
+            yearsExperience,
             bio,
             stringedTimeAndDate,
         };
@@ -85,7 +86,7 @@ export class ProfileController {
         }
     }
 
-    public async updateRecords(givenUsername: string, givenEmail: string, givenDob: string, givenBio: string): Promise<void> {
+    public async updateRecords(givenUsername: string, givenEmail: string, givenDob: string, givenBio: string, givenExperience: number, givenExpertise: string): Promise<void> {
         const successMessage: HTMLParagraphElement = document.querySelector("#successMsg")!;
         const errorMessage: HTMLParagraphElement = document.querySelector("#errMsg")!;
         successMessage.innerHTML = "";
@@ -123,12 +124,22 @@ export class ProfileController {
                 UI.successMessagePopup(false);
             }
             else if (!givenBio) {
-                errorMessage.innerHTML += "We'd love to know more about you, please fill in your bio\n";
+                errorMessage.innerHTML = "We'd love to know more about you, please fill in your bio\nPlease use the following format: profession, years of experience | (Here you can put other things)";
+                UI.unleashTheErrorPopup(true);
+                UI.successMessagePopup(false);
+            }
+            else if (!givenExperience) {
+                errorMessage.innerHTML = "Please tell us how many years of experience you have\n";
+                UI.unleashTheErrorPopup(true);
+                UI.successMessagePopup(false);
+            }
+            else if (!givenExpertise) {
+                errorMessage.innerHTML = "Please tell us your profession";
                 UI.unleashTheErrorPopup(true);
                 UI.successMessagePopup(false);
             }
             else {
-                const success: boolean = await this._profileView.userModel.update(givenUsername, givenEmail, givenDob, givenBio, userId);
+                const success: boolean = await this._profileView.userModel.update(givenUsername, givenEmail, givenDob, givenBio, givenExperience, givenExpertise, userId);
 
                 if (success) {
                     successMessage.innerHTML = "The records have been updated";

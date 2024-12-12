@@ -6,6 +6,7 @@ import hljs from "highlight.js";
 import validator from "validator";
 
 export class PostController {
+    private _userModel: User | undefined;
     private _postModel: Post | undefined;
     private _commentModel: Comment | undefined;
     private _UI: UserInterfaceClass;
@@ -125,8 +126,9 @@ export class PostController {
                 rating = _comment.rating;
             }
             insertCommenthere.insertAdjacentHTML("beforeend", `
-                    <h1 class="awnserTitle"><a href="profile.html?user=${await User.getUserById(Number(_comment.userId))}" class="navLinkR">${(await User.getUserById(Number(_comment.userId)))?.userName}</a></h1>
-                <div class="indivAwnser">
+                    <h1 class="awnserTitle"><a href="profile.html?user=${(await User.getUserById(Number(_comment.userId)))?.userId}" class="navLinkR">${(await User.getUserById(Number(_comment.userId)))?.userName}</a></h1>
+                    <p id="expertise2">${(await User.getUserById(Number(_comment.userId)))?.expertise || "No expertise added"} | ${(await User.getUserById(Number(_comment.userId)))?.yearsExperience || "No experience added"}</p>
+                    <div class="indivAwnser">
                     <div class="contentPart contentPartComment">${this.encodeContentForVieuwingPurposes(_comment.content)}</div>
                 </div>
                 <div class="dateAndRating">
