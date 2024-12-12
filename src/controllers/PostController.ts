@@ -125,9 +125,11 @@ export class PostController {
             if (String(_comment.rating) !== String(null)) {
                 rating = _comment.rating;
             }
+            console.log("Comment:", _comment.commentId);
             insertCommenthere.insertAdjacentHTML("beforeend", `
-                    <h1 class="awnserTitle"><a href="profile.html?user=${await User.getUserById(Number(_comment.userId))}" class="navLinkR">${(await User.getUserById(Number(_comment.userId)))?.userName}</a></h1>
-                <div class="indivAwnser">
+                    <h1 class="awnserTitle"><a href="profile.html?user=${(await User.getUserById(Number(_comment.userId)))?.userId}" class="navLinkR">${(await User.getUserById(Number(_comment.userId)))?.userName}</a></h1>
+                    <p id="expertise2">${(await User.getUserById(Number(_comment.userId)))?.expertise || "No expertise added"} | ${(await User.getUserById(Number(_comment.userId)))?.yearsExperience || "No experience added"}</p>
+                    <div class="indivAwnser">
                     <div class="contentPart contentPartComment">${this.encodeContentForVieuwingPurposes(_comment.content)}</div>
                 </div>
                 <div class="dateAndRating">

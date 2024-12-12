@@ -14,6 +14,7 @@ export class User {
     private _dob: Date | undefined;
     private _yearsExperience: number | undefined;
     private _createdAt: Date | undefined;
+    private _expertise: string | undefined;
 
     public constructor(userId: number, email: string, username: string, password: string) {
         this._userId = userId;
@@ -75,8 +76,9 @@ export class User {
                 const user: User = new User(result[0].userId, result[0].email, result[0].username, result[0].password);
                 user.bio = result[0].bio;
                 user.dob = result[0].dob;
-                user.experience = result[0].yearsExperience;
+                user.yearsExperience = result[0].yearsExperience;
                 user.createdAt = result[0].createdAt;
+                user.expertise = result[0].expertise;
                 return user;
             }
             else {
@@ -165,11 +167,11 @@ export class User {
      * @param userId userId
      * @returns boolean based of success
      */
-    public async update(username: string, email: string, dob: string, bio: string, userId: number): Promise<boolean> {
+    public async update(username: string, email: string, dob: string, bio: string, yearsExperience: number, expertise: string, userId: number): Promise<boolean> {
         try {
             const result: userResult[] = await api.queryDatabase(
-                "UPDATE user SET username = ?, email = ?, dob = ?, bio = ? WHERE userId = ?",
-                username, email, dob, bio, userId
+                "UPDATE user SET username = ?, email = ?, dob = ?, bio = ?, yearsExperience = ?, expertise = ? WHERE userId = ?",
+                username, email, dob, bio, yearsExperience, expertise, userId
             ) as userResult[];
             console.log("Success:", result);
             return true;
@@ -254,12 +256,12 @@ export class User {
         this._dob = dob;
     }
 
-    public get experience(): number | undefined {
+    public get yearsExperience(): number | undefined {
         return this._yearsExperience;
     }
 
-    public set experience(experience: number | undefined) {
-        this._yearsExperience = experience;
+    public set yearsExperience(yearsExperience: number | undefined) {
+        this._yearsExperience = yearsExperience;
     }
 
     public get createdAt(): Date | undefined {
@@ -268,5 +270,13 @@ export class User {
 
     public set createdAt(createdAt: Date | undefined) {
         this._createdAt = createdAt;
+    }
+
+    public get expertise(): string | undefined {
+        return this._expertise;
+    }
+
+    public set expertise(expertise: string | undefined) {
+        this._expertise = expertise;
     }
 }

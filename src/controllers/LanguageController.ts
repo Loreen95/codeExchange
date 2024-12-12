@@ -318,6 +318,14 @@ export class LanguageClass {
                 en: "Birthdate",
                 nl: "Geboortedatum",
             },
+            yearsexperience: {
+                en: "Years of experience",
+                nl: "Jaren ervaring",
+            },
+            expertise: {
+                en: "Expertise",
+                nl: "Expertise",
+            },
         });
     }
 

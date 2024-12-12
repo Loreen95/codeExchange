@@ -72,6 +72,7 @@ export class UserView {
         for (let i: number = 0; i < insertUsernamesHere.length; i++) {
             insertUsernamesHere[i].innerText = String(userInfo.userName);
         }
+
         document.querySelector("#memberSince")!.innerHTML = userInfo.stringedTimeAndDate;
         if (typeof userInfo.dob === "string") {
             if (userInfo.dob === "Niet beschikbaar" || userInfo.dob === "00-00-0000") {
@@ -94,6 +95,21 @@ export class UserView {
         }
         else {
             document.querySelector("#insertBiographyHere")!.innerHTML = userInfo.bio;
+        }
+
+        const expertise: Element | null = document.querySelector("#expertise");
+        if (expertise) {
+            expertise.innerHTML = userInfo.expertise;
+        }
+        else {
+            console.warn("No expertise available");
+        }
+        const yearsExperience: Element | null = document.querySelector("#yearsExperience");
+        if (yearsExperience) {
+            String(userInfo.yearsExperience);
+        }
+        else {
+            console.warn("No experience available");
         }
         document.querySelector("#totalPosts")!.innerHTML = String(postCount);
         document.querySelector("#totalComments")!.innerHTML = String(commentCount);

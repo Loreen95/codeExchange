@@ -38,7 +38,8 @@ export interface UserInfo {
     userEmail: string;
     userName: string;
     dob: Date | string | null;
-    experience: number;
+    yearsExperience: number;
+    expertise: string;
     stringedTimeAndDate: string;
     bio: string;
 }

@@ -32,7 +32,7 @@ export class UserController extends Controller {
             "-" +
             String(this.userView.userModel.dob).slice(0, 4)
             : "Niet beschikbaar";
-        const experience: number = this.userView.userModel.experience || 0;
+        const yearsExperience: number = this.userView.userModel.yearsExperience || 0;
         const bio: string = this.userView.userModel.bio || "Geen biografie beschikbaar";
         const stringedTimeAndDate: string = this.userView.userModel.createdAt
             ? String(this.userView.userModel.createdAt).slice(8, 10) +
@@ -43,13 +43,15 @@ export class UserController extends Controller {
             " | " +
             String(this.userView.userModel.createdAt).slice(11, 19)
             : "Onbekende datum en tijd";
+        const expertise: string = this.userView.userModel.expertise || "Geen expertise";
 
         return {
             userId,
             userEmail,
             userName,
             dob,
-            experience,
+            yearsExperience,
+            expertise,
             bio,
             stringedTimeAndDate,
         };
