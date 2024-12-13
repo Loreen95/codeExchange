@@ -1311,7 +1311,10 @@ code {
 
 
 #expertise2 {
-    margin-left: 6%;
+    margin: 5px 0 0 6%;
+    font-family: Tahoma, sans-serif;
+    opacity: 0.4;
+    font-style: oblique -5deg;
 }
 
 .awnserRow {
