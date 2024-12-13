@@ -152,6 +152,21 @@ export class Post {
         }
     }
 
+    public async updateRating(postId: number, rating: number): Promise<boolean> {
+        try {
+            const result: postResult[] = await api.queryDatabase(
+                "UPDATE post SET rating = ? WHERE postId = ?",
+                rating, postId
+            ) as postResult[];
+            console.log("Rating updated successfully:", result);
+            return true;
+        }
+        catch (reason) {
+            console.error("There has been an error updating the rating", reason);
+            return false;
+        }
+    }
+
     public get postId(): number {
         return this._postId;
     }

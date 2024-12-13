@@ -2,7 +2,6 @@
 import { User } from "../models/User";
 import { LoginController } from "./LoginController";
 import UserInterfaceClass from "../views/interface";
-
 // This is where every mayor process takes place right here in this class.
 class RegistrationClass {
     private _userModel: User | undefined;

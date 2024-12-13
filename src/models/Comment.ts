@@ -42,6 +42,23 @@ export class Comment {
         }
     }
 
+    public static async getCommentById(id: number): Promise<Comment | undefined> {
+        try {
+            const result: commentResult[] = await api.queryDatabase("SELECT * FROM comment WHERE commentId = ?", [id]) as commentResult[];
+            if (result.length > 0) {
+                const comment: Comment = new Comment(result[0].commentId, result[0].userId, result[0].messageId, result[0].content);
+                return comment;
+            }
+            else {
+                return undefined;
+            }
+        }
+        catch (reason) {
+            console.error("Error fetching comment", reason);
+            return undefined;
+        }
+    }
+
     public async create(userId: number, messageId: number, content: string): Promise<boolean> {
         try {
             const result: commentResult[] = await api.queryDatabase(
@@ -105,6 +122,21 @@ export class Comment {
         catch (reason) {
             console.error("Error fetching result", reason);
             return undefined;
+        }
+    }
+
+    public async updateRating(commentId: number, rating: number): Promise<boolean> {
+        try {
+            const result: commentResult[] = await api.queryDatabase(
+                "UPDATE comment SET rating = ? WHERE commentId = ?",
+                rating, commentId
+            ) as commentResult[];
+            console.log("Rating updated successfully:", result);
+            return true;
+        }
+        catch (reason) {
+            console.error("There has been an error updating the rating", reason);
+            return false;
         }
     }
 

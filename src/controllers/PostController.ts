@@ -1,6 +1,5 @@
 import { Post } from "../models/Post";
 import { Comment } from "../models/Comment";
-import { Rating } from "../models/Rating";
 import { User } from "../models/User";
 import UserInterfaceClass from "../views/interface";
 import hljs from "highlight.js";
@@ -119,58 +118,52 @@ export class PostController {
     public async renderComments(): Promise<void> {
         const insertCommenthere: HTMLDivElement = document.querySelector(".awnsers")!;
         const commentList: Comment[] | undefined = await Comment.getCommentsByMessageId(Number(sessionStorage.getItem("post_Nr")));
-        // console.log(commentList);
-        let commentIndex: number = 0;
+        
+        // Iterate over each comment and render it
         commentList.forEach(async _comment => {
             let rating: number | undefined = 0;
             if (String(_comment.rating) !== String(null)) {
                 rating = _comment.rating;
             }
             console.log("Comment:", _comment.commentId);
+            
+            // Add the HTML for the comment
             insertCommenthere.insertAdjacentHTML("beforeend", `
-                    <h1 class="awnserTitle"><a href="profile.html?user=${(await User.getUserById(Number(_comment.userId)))?.userId}" class="navLinkR">${(await User.getUserById(Number(_comment.userId)))?.userName}</a></h1>
-                    <p id="expertise2">${(await User.getUserById(Number(_comment.userId)))?.expertise || "No expertise added"} | ${(await User.getUserById(Number(_comment.userId)))?.yearsExperience || "No experience added"}</p>
-                    <div class="indivAwnser">
+                <h1 class="awnserTitle"><a href="profile.html?user=${(await User.getUserById(Number(_comment.userId)))?.userId}" class="navLinkR">${(await User.getUserById(Number(_comment.userId)))?.userName}</a></h1>
+                <p id="expertise2">${(await User.getUserById(Number(_comment.userId)))?.expertise || "No expertise added"} | ${(await User.getUserById(Number(_comment.userId)))?.yearsExperience || "No experience added"}</p>
+                <div class="indivAwnser">
                     <div class="contentPart contentPartComment">${this.encodeContentForVieuwingPurposes(_comment.content)}</div>
                 </div>
                 <div class="dateAndRating">
                     <p class="bottomDate">${String(_comment.createdAt).slice(8, 10) + "-" + String(_comment.createdAt).slice(5, 7) + "-" + String(_comment.createdAt).slice(0, 4) + " | " + String(_comment.createdAt).slice(11, 19)}</p>
                     <div class="ratingPart">
-                        <a id="commentPositive${commentIndex}"><i class="fa-solid fa-thumbs-up" id="positive"></i></a>
-                        <p class="insertRatingHere">${rating}</p>
-                        <a id="commentNegative${commentIndex}"><i class="fa-solid fa-thumbs-down" id="negative"></i></a>
+                        <a id="commentPositive-${_comment.commentId}" href="#${_comment.commentId}" class="navLink">
+                            <i class="fa-solid fa-thumbs-up" id="positive"></i>
+                        </a>
+                        <p class="insertRatingHere" id="ratingText">${rating || 0}</p>
+                        <a id="commentNegative-${_comment.commentId}" href="#${_comment.commentId}" class="navLink">
+                            <i class="fa-solid fa-thumbs-down" id="negative"></i>
+                        </a>
                     </div>
                 </div>                
                 <hr>
             `);
-            const commentRatingPositive: HTMLAnchorElement | null = document.querySelector(`#commentPositive${commentIndex}`);
-            if (commentRatingPositive) {
-                commentRatingPositive.addEventListener("click", async () => {
-                    console.log(`${sessionStorage.getItem("session")} ${_comment.commentId} ${Number(1)}`);
-                    const ratings: Rating | undefined = await Rating.getRatingByUserIdAndCommentId(Number(sessionStorage.getItem("session")), _comment.commentId);
-                    console.log(`the user id is ${ratings?.userId} the comment id is: ${ratings?.postId} and the Id ID PK is: ${ratings?.ratingId}`);
+            // Add event listeners for the rating buttons after the comment is rendered
+            const positiveButton: HTMLLinkElement | null = document.querySelector(`#commentPositive-${_comment.commentId}`);
+            const negativeButton: HTMLLinkElement | null = document.querySelector(`#commentNegative-${_comment.commentId}`);
+            if (positiveButton) {
+                positiveButton.addEventListener("click", async (e: Event) => {
+                    e.preventDefault();
+                    await this.rateComment("positive", _comment.commentId);
                 });
             }
-
-            const commentRatingNegative: HTMLAnchorElement | null = document.querySelector(`#commentNegative${commentIndex}`);
-            if (commentRatingNegative) {
-                commentRatingNegative.addEventListener("click", () => {
-                    console.log(`${sessionStorage.getItem("session")} ${_comment.commentId} ${Number(0)}`);
+            if (negativeButton) {
+                negativeButton.addEventListener("click", async (e: Event) => {
+                    e.preventDefault();
+                    await this.rateComment("negative", _comment.commentId);
                 });
             }
-            commentIndex++;
         });
-        const answerBttn: HTMLElement | null = document.querySelector("#createAnswer");
-        if (answerBttn) {
-            const textarea: Element = document.querySelector("#addOwnAwnser")!;
-            answerBttn.addEventListener("click", () => {
-                window.location.href = "#contentInput";
-                textarea.scrollIntoView({ behavior: "smooth", block: "start" });
-            });
-        }
-        else {
-            console.error(`Element #postNr${answerBttn} not found`);
-        }
     }
 
     /**
@@ -433,14 +426,52 @@ export class PostController {
         document.execCommand("redo", true);
     }
 
-    public rate(typeRating: string): void {
-        let ratingIndex: number = 0;
-        if (typeRating === "positive") {
-            ratingIndex++;
+    public async ratePost(typeRating: string): Promise<void> {
+        try {
+            const postUrl: URLSearchParams = new URLSearchParams(window.location.search);
+            const postId: string | null = postUrl.get("post");
+            const post: Post | undefined = await Post.getPostById(Number(postId));
+            if (!post) {
+                console.log("Post not found");
+                return;
+            }
+            let ratingIndex: number = post.rating || 0;
+            if (typeRating === "positive") {
+                ratingIndex++;
+            }
+            else if (typeRating === "negative") {
+                ratingIndex--;
+            }
+            post.rating = ratingIndex;
+            await post.updateRating(Number(postId), ratingIndex);
+            console.log(`De nieuwe ratingIndex van post ${postId} is: ${ratingIndex}`);
+            window.location.reload();
         }
-        else if (typeRating === "negative") {
-            ratingIndex--;
+        catch (error) {
+            console.error("Error updating the rating:", error);
         }
-        console.log(`De huidige ratingIndex is: ${ratingIndex}`);
+    }
+
+    public async rateComment(typeRating: string, commentId: number): Promise<void> {
+        try {
+            const comment: Comment | undefined = await Comment.getCommentById(commentId);
+            if (!comment) {
+                console.log("Comment not found");
+                return;
+            }
+            let ratingIndex: number = comment.rating || 0;
+            if (typeRating === "positive") {
+                ratingIndex++;
+            }
+            else if (typeRating === "negative") {
+                ratingIndex--;
+            }
+            comment.rating = ratingIndex;
+            await comment.updateRating(commentId, ratingIndex);
+            window.location.reload();
+        }
+        catch (error) {
+            console.error("Error updating the rating:", error);
+        }
     }
 }

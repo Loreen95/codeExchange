@@ -1439,6 +1439,10 @@ code {
     padding: 0;
 }
 
+#commentPositive, #commentNegative { 
+    color: white;
+}
+
 .centeredHr {
     width: 97%;
     align-self: center;

@@ -149,15 +149,15 @@ closePanelBackUp.addEventListener("click", () => {
     post.unleashAddComentPanel();
 });
 
-const ratingPositive: HTMLLinkElement = document.querySelector("#commentPositive")!;
-const ratingNegative: HTMLLinkElement = document.querySelector("#commentNegative")!;
+const ratingPositive: HTMLLinkElement = document.querySelector("#postPositive")!;
+const ratingNegative: HTMLLinkElement = document.querySelector("#postNegative")!;
 
-ratingPositive.addEventListener("click", e => {
+ratingPositive.addEventListener("click", async (e: Event) => {
     e.preventDefault();
-    post.rate("positive");
+    await post.ratePost("positive");
 });
 
-ratingNegative.addEventListener("click", e => {
+ratingNegative.addEventListener("click", async (e: Event) => {
     e.preventDefault();
-    post.rate("negative");
+    await post.ratePost("negative");
 });
