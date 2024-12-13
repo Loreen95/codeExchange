@@ -81,7 +81,7 @@ export class PostController {
                 insertPostsHere.insertAdjacentHTML("beforeend", `
                     <div class="question">
                         <a href="profile.html?user=${userId}" class="navLink" id="whoAsked">${userName}: <p data-translate="asks"></p></a>
-                        <a id="postNr${postIndex}">
+                        <div id="postNr${postIndex}">
                             <div class="questionContent">
                                 <h1>${titleOfPost}</h1>
                                 <p>${contentOfPost}</p>
@@ -93,7 +93,7 @@ export class PostController {
                                     <p id="datetime">${stringedTimeAndDate}</p>
                                 </div>                                
                             </div>
-                        </a>                        
+                        </div>                        
                     </div>
                 `);
 
