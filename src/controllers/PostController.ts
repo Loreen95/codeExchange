@@ -5,7 +5,7 @@ import { User } from "../models/User";
 import UserInterfaceClass from "../views/interface";
 import hljs from "highlight.js";
 import validator from "validator";
-import { ratingResult } from "../views/types";
+// import { ratingResult } from "../views/types";
 
 export class PostController {
     private _postModel: Post | undefined;
@@ -81,19 +81,19 @@ export class PostController {
                 insertPostsHere.insertAdjacentHTML("beforeend", `
                     <div class="question">
                         <a href="profile.html?user=${userId}" class="navLink" id="whoAsked">${userName}: <p data-translate="asks"></p></a>
-                        <a id="postNr${postIndex}">
+                        <a id="postNr${postIndex}" class="navLink" href="post?post=${post.postId}">
                             <div class="questionContent">
                                 <h1>${titleOfPost}</h1>
                                 <p>${contentOfPost}</p>
-                                <div class="bottrow">                                
+                                <div class="bottrow">                                  
                                     <div class="iconrow">
                                         <a id="commentPositive"><p class="messageIcon"><i class="fa-solid fa-thumbs-up"></i> ${rating}</p></a>
                                         <p class="messageIcon"><i class="fa-sharp fa-solid fa-message"></i> ${totalComments}</p>
                                     </div>
                                     <p id="datetime">${stringedTimeAndDate}</p>
-                                </div>                                
+                                </div>                                  
                             </div>
-                        </a>                        
+                        </a>                  
                     </div>
                 `);
 
@@ -108,7 +108,6 @@ export class PostController {
                 else {
                     console.error(`Element #postNr${postIndex} not found`);
                 }
-
                 postIndex++;
             }
         }
@@ -425,10 +424,12 @@ export class PostController {
     }
 
     public undoAction(): void {
+        // eslint-disable-next-line @typescript-eslint/no-deprecated
         document.execCommand("undo", false);
     }
 
     public redoAction(): void {
+        // eslint-disable-next-line @typescript-eslint/no-deprecated
         document.execCommand("redo", true);
     }
 

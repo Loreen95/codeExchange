@@ -65,6 +65,21 @@ export class UserView {
      * @param userInfo this is the userInfo to be displayed
      */
     public async render(userInfo: UserInfo): Promise<void> {
+        const userUrl: URLSearchParams = new URLSearchParams(window.location.search);
+        const userId: string | null = userUrl.get("user");
+        const imageName: string | null = String(sessionStorage.getItem("imageName"));
+        if (userId && imageName) {
+            const userSpecificImageName: string = `${userId}_${imageName}`;
+            const imageUrl: string = `https://dev-hiinooreesaa43-pb2sef2425.hbo-ict.cloud/uploads/${userSpecificImageName}`;
+            const imageElement: HTMLImageElement | null = document.querySelector("#uploadedImage");
+            if (imageElement) {
+                imageElement.src = imageUrl;
+                imageElement.alt = "Uploaded Profile Picture";
+            }
+        }
+        else {
+            console.error("Gebruikers-ID of afbeeldingsnaam niet gevonden.");
+        }
         const postCount: number = await this.countPost();
         const commentCount: number = await this.countComments();
         const ratingCount: number = await this.countRating();
@@ -104,12 +119,11 @@ export class UserView {
         else {
             console.warn("No expertise available");
         }
-        const yearsExperience: Element | null = document.querySelector("#yearsExperience");
-        if (yearsExperience) {
-            String(userInfo.yearsExperience);
+        if (userInfo.yearsExperience > 0) {
+            document.querySelector("#yearsExperience")!.innerHTML = String(userInfo.yearsExperience);
         }
         else {
-            console.warn("No experience available");
+            document.querySelector("#yearsExperience")!.innerHTML = "No data available";
         }
         document.querySelector("#totalPosts")!.innerHTML = String(postCount);
         document.querySelector("#totalComments")!.innerHTML = String(commentCount);

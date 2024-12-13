@@ -1,3 +1,5 @@
+import "../hicConfig";
+import { api, types, utils } from "@hboictcloud/api";
 import { User } from "../models/User";
 import { UserInfo } from "./types";
 import UserInterfaceClass from "./interface";
@@ -49,6 +51,13 @@ export class ProfileView {
         experience.value = String(UserInfo.yearsExperience);
         expertise.value = UserInfo.expertise;
         biography.value = UserInfo.bio;
+        const imageName: string | null = String(sessionStorage.getItem("imageName"));
+        const imageUrl: string = "https://dev-hiinooreesaa43-pb2sef2425.hbo-ict.cloud/uploads/" + imageName;
+        const imageElement: HTMLImageElement | null = document.querySelector("#uploadedImage");
+        if (imageElement) {
+            imageElement.src = imageUrl; // Zet de URL van de afbeelding in de src
+            imageElement.alt = "Uploaded Profile Picture"; // Stel de alternatieve tekst in voor de afbeelding
+        }
     }
 
     public formatDateForInput(dob: string | Date | null): string {
@@ -125,7 +134,7 @@ const bioInput: HTMLInputElement | null = document.querySelector("#bioEditor");
 const expertiseInput: HTMLInputElement | null = document.querySelector("#expertise");
 const experienceInput: HTMLInputElement | null = document.querySelector("#yearsexperience");
 
-const imageInput: HTMLInputElement | null = document.querySelector<HTMLInputElement>("#profilePictureInput");
+const imageInput: HTMLInputElement | null = document.querySelector("#profilePictureInput");
 
 if (apply && usernameInput && emailInput && dobInput && bioInput && experienceInput && expertiseInput) {
     apply.addEventListener("click", async (e: Event) => {
@@ -138,22 +147,32 @@ if (apply && usernameInput && emailInput && dobInput && bioInput && experienceIn
         const experience: number = Number(experienceInput.value.trim());
         const expertise: string = String(expertiseInput.value.trim());
         await profileController.updateRecords(username, email, dobFormat, bio, experience, expertise);
+        if (imageInput) {
+            try {
+                // Verkrijg de gebruikers-ID (bijv. uit de sessie of een globale variabele)
+                const userId: string | null = sessionStorage.getItem("session");
+                const data: string | types.DataURL = await utils.getDataUrl(imageInput);
+                const dataToUpload: string = typeof data === "string" ? data : data.url;
+                const imageName: string = imageInput.value.split("\\").pop() || imageInput.value;
+                const userSpecificImageName: string = `${userId}_${imageName}`;
+                const uploadResponse: string = await api.uploadFile(userSpecificImageName, dataToUpload, true);
+                console.log(uploadResponse);
+                sessionStorage.setItem("imageName", imageName);
+                console.log(uploadResponse, userSpecificImageName);
+                const newImageUrl: string = `https://dev-hiinooreesaa43-pb2sef2425.hbo-ict.cloud/uploads/${userSpecificImageName}`;
+                const imageElement: HTMLImageElement | null = document.querySelector("#uploadedImage");
+                if (imageElement) {
+                    imageElement.src = newImageUrl;
+                    imageElement.alt = "Uploaded Profile Picture";
+                }
+            }
+            catch (error) {
+                console.error("Er is een fout opgetreden:", error);
+            }
+        }
     });
 }
 
 else {
     console.error("One or more form inputs were not found.");
 }
-
-// Upload een afbeelding
-document.querySelector("#uploadButton")?.addEventListener("click", async () => {
-    const fileInputSelector = "#fileUpload";
-    await profileController.uploadImage(fileInputSelector);
-});
-
-// Toon een voorbeeld van een afbeelding
-document.querySelector("#previewButton")?.addEventListener("click", async () => {
-    const inputSelector = "#profilePictureInput";
-    const imageSelector = "#profilePictureContainer";
-    await profileController.displayImage(inputSelector, imageSelector);
-});

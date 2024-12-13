@@ -6,6 +6,9 @@ import hljs from "highlight.js";
 const post: PostController = new PostController();
 const UI: UserInterfaceClass = new UserInterfaceClass();
 
+const postUrl: URLSearchParams = new URLSearchParams(window.location.search);
+const postId: string | null = postUrl.get("post");
+sessionStorage.setItem("post_Nr", String(postId));
 const insertPostsHere: HTMLDivElement = document.querySelector(".posts")!;
 const currentpost: Post | undefined = await Post.getPostById(Number(sessionStorage.getItem("post_Nr")));
 
