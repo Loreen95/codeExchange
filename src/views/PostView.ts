@@ -154,10 +154,10 @@ const ratingNegative: HTMLLinkElement = document.querySelector("#postNegative")!
 
 ratingPositive.addEventListener("click", async (e: Event) => {
     e.preventDefault();
-    await post.ratePost("positive");
+    await post.rateThePost("positive");
 });
 
 ratingNegative.addEventListener("click", async (e: Event) => {
     e.preventDefault();
-    await post.ratePost("negative");
+    await post.rateThePost("negative");
 });

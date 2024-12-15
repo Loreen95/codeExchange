@@ -33,11 +33,18 @@ export type commentResult = {
     count: number;
 };
 
-export type ratingResult = {
+export type ratingCommentResult = {
+    ratingId: number;
+    userId: number;
+    commentId: number;
+    ratingType: string;
+};
+
+export type ratingPostResult = {
     ratingId: number;
     userId: number;
     postId: number;
-    ratingType: number;
+    ratingType: string;
 };
 
 export interface UserInfo {

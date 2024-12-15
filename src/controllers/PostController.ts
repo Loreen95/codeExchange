@@ -4,12 +4,14 @@ import { User } from "../models/User";
 import UserInterfaceClass from "../views/interface";
 import hljs from "highlight.js";
 import validator from "validator";
+import { RatingPost } from "../models/Post_rating";
 // import { ratingResult } from "../views/types";
 
 export class PostController {
     private _postModel: Post | undefined;
     private _commentModel: Comment | undefined;
     private _UI: UserInterfaceClass;
+    private _ratingPostModel: RatingPost | undefined;
 
     public constructor() {
         this._UI = new UserInterfaceClass();
@@ -76,7 +78,15 @@ export class PostController {
 
                 const comments: Comment[] = await Comment.getCommentsByMessageId(post.postId);
                 const totalComments: number = comments.length;
-
+                const existingRating: RatingPost | undefined = await RatingPost.getRatingByUserIdAndPostId(userId, post.postId);
+                const negativeButton: HTMLAnchorElement = document.querySelector("#postNegative")!;
+                const positiveButton: HTMLAnchorElement = document.querySelector("#postPositive")!;
+                if (existingRating) {
+                    negativeButton.style.color = "";
+                    positiveButton.style.color = "";
+                    if (existingRating.ratingType === "negative") negativeButton.style.color = "red";
+                    if (existingRating.ratingType === "positive") positiveButton.style.color = "green";
+                }
                 insertPostsHere.insertAdjacentHTML("beforeend", `
                     <div class="question">
                         <a href="profile.html?user=${userId}" class="navLink" id="whoAsked">${userName}: <p data-translate="asks"></p></a>
@@ -118,16 +128,12 @@ export class PostController {
     public async renderComments(): Promise<void> {
         const insertCommenthere: HTMLDivElement = document.querySelector(".awnsers")!;
         const commentList: Comment[] | undefined = await Comment.getCommentsByMessageId(Number(sessionStorage.getItem("post_Nr")));
-        
-        // Iterate over each comment and render it
         commentList.forEach(async _comment => {
             let rating: number | undefined = 0;
             if (String(_comment.rating) !== String(null)) {
                 rating = _comment.rating;
             }
             console.log("Comment:", _comment.commentId);
-            
-            // Add the HTML for the comment
             insertCommenthere.insertAdjacentHTML("beforeend", `
                 <h1 class="awnserTitle"><a href="profile.html?user=${(await User.getUserById(Number(_comment.userId)))?.userId}" class="navLinkR">${(await User.getUserById(Number(_comment.userId)))?.userName}</a></h1>
                 <p id="expertise2">${(await User.getUserById(Number(_comment.userId)))?.expertise || "No expertise added"} | ${(await User.getUserById(Number(_comment.userId)))?.yearsExperience || "No experience added"}</p>
@@ -149,20 +155,22 @@ export class PostController {
                 <hr>
             `);
             // Add event listeners for the rating buttons after the comment is rendered
-            const positiveButton: HTMLLinkElement | null = document.querySelector(`#commentPositive-${_comment.commentId}`);
-            const negativeButton: HTMLLinkElement | null = document.querySelector(`#commentNegative-${_comment.commentId}`);
-            if (positiveButton) {
-                positiveButton.addEventListener("click", async (e: Event) => {
-                    e.preventDefault();
-                    await this.rateComment("positive", _comment.commentId);
-                });
-            }
-            if (negativeButton) {
-                negativeButton.addEventListener("click", async (e: Event) => {
-                    e.preventDefault();
-                    await this.rateComment("negative", _comment.commentId);
-                });
-            }
+            // const positiveButton: HTMLLinkElement | null = document.querySelector(`#commentPositive-${_comment.commentId}`);
+            // const negativeButton: HTMLLinkElement | null = document.querySelector(`#commentNegative-${_comment.commentId}`);
+            // if (positiveButton) {
+            //     positiveButton.addEventListener("click", async (e: Event) => {
+            //         e.preventDefault();
+            //         console.log("Positive, clicked");
+            //         await this.rateComment("positive", _comment.commentId);
+            //     });
+            // }
+            // if (negativeButton) {
+            //     negativeButton.addEventListener("click", async (e: Event) => {
+            //         e.preventDefault();
+            //         console.log("Negative, clicked");
+            //         await this.rateComment("negative", _comment.commentId);
+            //     });
+            // }
         });
     }
 
@@ -426,52 +434,127 @@ export class PostController {
         document.execCommand("redo", true);
     }
 
-    public async ratePost(typeRating: string): Promise<void> {
+    public async rateThePost(typeRating: string): Promise<void> {
         try {
-            const postUrl: URLSearchParams = new URLSearchParams(window.location.search);
-            const postId: string | null = postUrl.get("post");
-            const post: Post | undefined = await Post.getPostById(Number(postId));
-            if (!post) {
-                console.log("Post not found");
-                return;
+            const userSession: string | null = sessionStorage.getItem("session");
+            const user: User | undefined = await User.getUserById(Number(userSession));
+            if (!user) {
+                console.error("No user found!");
             }
-            let ratingIndex: number = post.rating || 0;
-            if (typeRating === "positive") {
-                ratingIndex++;
+            else {
+                const postUrl: URLSearchParams = new URLSearchParams(window.location.search);
+                const postIdFromUrl: string | null = postUrl.get("post");
+                const post: Post | undefined = await Post.getPostById(Number(postIdFromUrl));
+                if (!post) {
+                    console.log("Post not found");
+                    return;
+                }
+                const existingRating: RatingPost | undefined = await RatingPost.getRatingByUserIdAndPostId(user.userId, post.postId);
+                if (existingRating) {
+                    console.log("Hi");
+                }
+                else {
+                    console.log(`Pressed: ${typeRating},\nRating not submitted`);
+                }
             }
-            else if (typeRating === "negative") {
-                ratingIndex--;
-            }
-            post.rating = ratingIndex;
-            await post.updateRating(Number(postId), ratingIndex);
-            console.log(`De nieuwe ratingIndex van post ${postId} is: ${ratingIndex}`);
-            window.location.reload();
         }
-        catch (error) {
-            console.error("Error updating the rating:", error);
+        catch (reason) {
+            console.error("Hello there", reason);
         }
     }
 
-    public async rateComment(typeRating: string, commentId: number): Promise<void> {
-        try {
-            const comment: Comment | undefined = await Comment.getCommentById(commentId);
-            if (!comment) {
-                console.log("Comment not found");
-                return;
-            }
-            let ratingIndex: number = comment.rating || 0;
-            if (typeRating === "positive") {
-                ratingIndex++;
-            }
-            else if (typeRating === "negative") {
-                ratingIndex--;
-            }
-            comment.rating = ratingIndex;
-            await comment.updateRating(commentId, ratingIndex);
-            window.location.reload();
-        }
-        catch (error) {
-            console.error("Error updating the rating:", error);
-        }
-    }
+    // public async checkExistingPostRating(userId: number, postId: number): Promise<void> {
+    //     try {
+    //         const negativeButton: HTMLAnchorElement = document.querySelector("#postNegative")!;
+    //         const positiveButton: HTMLAnchorElement = document.querySelector("#postPositive")!;
+    //         const existingRating: RatingPost | undefined = await RatingPost.getRatingByUserIdAndPostId(userId, postId);
+    //         negativeButton.style.color = "";
+    //         positiveButton.style.color = "";
+    //         if (existingRating?.ratingType === "negative") negativeButton.style.color = "red";
+    //         if (existingRating?.ratingType === "positive") positiveButton.style.color = "green";
+    //     }
+    //     catch (error) {
+    //         console.error("Error while checking rating:", error);
+    //     }
+    // }
+    // public async ratePost(typeRating: string): Promise<void> {
+    //     try {
+    //         const userSession: string | null = sessionStorage.getItem("session");
+    //         if (!userSession) {
+    //             console.error("User is not logged in.");
+    //             return;
+    //         }
+    //         const userId: User | undefined = await User.getUserById(Number(userSession));
+    //         const postUrl: URLSearchParams = new URLSearchParams(window.location.search);
+    //         const postIdFromUrl: string | null = postUrl.get("post");
+    //         const post: Post | undefined = await Post.getPostById(Number(postIdFromUrl));
+    //         if (!post) {
+    //             console.log("Post not found");
+    //             return;
+    //         }
+    //         const existingRating: RatingPost | undefined = await RatingPost.getRatingByUserIdAndPostId(Number(userId), Number(postId));
+    //         const negativeButton: HTMLElement = document.querySelector("#negative")!;
+    //         const positiveButton: HTMLElement = document.querySelector("#positive")!;
+    //         if (existingRating) {
+    //             if (existingRating.ratingType === "negative") {
+    //                 negativeButton.style.color = "red";
+    //             }
+    //             else if (existingRating.ratingType === "positive") {
+    //                 positiveButton.style.color = "green";
+    //             }
+    //             return;
+    //         }
+    //         const newRatingType: string = typeRating;
+    //         await new RatingPost(0, Number(userId), Number(postId)).create(Number(userId), Number(postId), newRatingType);
+    //         // let ratingIndex: number = existingRating.rating || 0;
+    //     }
+    //     catch (reason) {
+    //         console.log(`Nieuwe rating voor post ${postId}`);
+    //         console.error("Error updating the rating:", reason);
+    //     }
+    // }
+
+    // public async rateComment(typeRating: string, commentId: number): Promise<void> {
+    //     try {
+    //         const userSession: string | null = sessionStorage.getItem("session");
+    //         if (!userSession) {
+    //             console.error("User is not logged in.");
+    //             return;
+    //         }
+    //         const userId: User | undefined = await User.getUserById(Number(userSession));
+    //         const comment: Comment | undefined = await Comment.getCommentById(commentId);
+    //         if (!comment) {
+    //             console.log("Comment not found");
+    //             return;
+    //         }
+    //         const negativeComment: HTMLElement = document.querySelector("#negative")!;
+    //         const positivecomment: HTMLElement = document.querySelector("#positive")!;
+    //         const existingRating: RatingComment | undefined = await RatingComment.getRatingByUserIdAndCommentId(Number(userId), commentId);
+    //         let newRating: number = comment.rating || 0;
+    //         if (typeRating === "positive") {
+    //             newRating++;
+    //         }
+    //         else if (typeRating === "negative") {
+    //             newRating--;
+    //         }
+    //         if (existingRating) {
+    //             if (existingRating.ratingType === "negative") {
+    //                 negativeComment.style.color = "red";
+    //                 return;
+    //             }
+    //             else if (existingRating.ratingType === "positive") {
+    //                 positivecomment.style.color = "green";
+    //                 return;
+    //             }
+    //         }
+    //         else {
+    //             await new RatingComment(0, Number(userId), commentId).create(Number(userId), commentId, typeRating);
+    //         }
+    //         comment.rating = newRating;
+    //         // window.location.reload();
+    //     }
+    //     catch (error) {
+    //         console.error("Error updating the rating:", error);
+    //     }
+    // }
 }

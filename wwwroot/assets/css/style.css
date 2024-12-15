@@ -1243,6 +1243,14 @@ code {
     font-size: 20px;
 }
 
+#positive { 
+    color: white;
+}
+
+#negative { 
+    color: white;
+}
+
 #positive:hover {
     color: green;
 }
@@ -1439,7 +1447,8 @@ code {
     padding: 0;
 }
 
-#commentPositive, #commentNegative { 
+#commentPositive, #commentNegative
+{ 
     color: white;
 }
 
