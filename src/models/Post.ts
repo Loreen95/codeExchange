@@ -135,22 +135,22 @@ export class Post {
         }
     }
 
-    public static async countTotalRatingByUserId(userId: number): Promise<number | undefined> {
-        try {
-            const result: postResult[] = await api.queryDatabase("SELECT SUM(rating) as count FROM post WHERE authorId = ?", [userId]) as postResult[];
-            if (result.length > 0) {
-                return result[0].count;
-            }
-            else {
-                console.error("No results found");
-                return undefined;
-            }
-        }
-        catch (reason) {
-            console.error("Error fetching result", reason);
-            return undefined;
-        }
-    }
+    // public static async countTotalRatingByUserId(userId: number): Promise<number | undefined> {
+    //     try {
+    //         const result: postResult[] = await api.queryDatabase("SELECT SUM(rating) as count FROM post WHERE authorId = ?", [userId]) as postResult[];
+    //         if (result.length > 0) {
+    //             return result[0].count;
+    //         }
+    //         else {
+    //             console.error("No results found");
+    //             return undefined;
+    //         }
+    //     }
+    //     catch (reason) {
+    //         console.error("Error fetching result", reason);
+    //         return undefined;
+    //     }
+    // }
 
     public async updateRating(postId: number, rating: number): Promise<boolean> {
         try {

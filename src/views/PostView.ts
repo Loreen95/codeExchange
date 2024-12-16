@@ -2,6 +2,8 @@ import { Post } from "../models/Post";
 import { PostController } from "../controllers/PostController";
 import UserInterfaceClass from "./interface";
 import hljs from "highlight.js";
+import { RatingPost } from "../models/Post_rating";
+import { User } from "../models/User";
 
 const post: PostController = new PostController();
 const UI: UserInterfaceClass = new UserInterfaceClass();
@@ -66,12 +68,32 @@ if (questionInfoBits) {
     questionInfoBits.innerHTML = `<a href="profile.html?user=${currentpost!.authorId}" class="navLink">${await post.getUserName(currentpost!.authorId)}</a>  ${String(currentpost!.createdAt).slice(8, 10) + "-" + String(currentpost!.createdAt).slice(5, 7) + "-" + String(currentpost!.createdAt).slice(0, 4) + " | " + String(currentpost!.createdAt).slice(11, 19)}`;
 }
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-if (ratingCounter) {
-    if (String(currentpost!.rating) === String(null)) {
-        ratingCounter.innerText = "0";
+if (ratingCounter && currentpost) {
+    const userSession: string | null = sessionStorage.getItem("session");
+    const user: User | undefined = await User.getUserById(Number(userSession));
+    if (!user) {
+        console.error("No user found!");
     }
     else {
-        ratingCounter.innerText = String(currentpost!.rating);
+        const existingRating: RatingPost | undefined = await RatingPost.getRatingByUserIdAndPostId(user.userId, currentpost.postId);
+        const countRating: number | undefined = await RatingPost.countTotalRatingByPostId(currentpost.postId);
+        const positiveButton: HTMLButtonElement = document.querySelector("#positive")!;
+        const negativeButton: HTMLButtonElement = document.querySelector("#negative")!;
+
+        if (existingRating) {
+            if (existingRating.ratingType === "positive") {
+                positiveButton.style.color = "green";
+            }
+            else if (existingRating.ratingType === "negative") {
+                negativeButton.style.color = "#ba2f2f";
+            }
+        }
+        if (String(countRating) === String(null)) {
+            ratingCounter.innerHTML = "0";
+        }
+        else {
+            ratingCounter.innerHTML = String(countRating);
+        }
     }
 }
 

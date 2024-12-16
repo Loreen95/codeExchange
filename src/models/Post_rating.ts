@@ -14,6 +14,24 @@ export class RatingPost {
         this._postId = postId;
     }
 
+    public static async getRatingById(id: number): Promise<RatingPost | undefined> {
+        try {
+            const result: ratingPostResult[] = await api.queryDatabase("SELECT * FROM post_rating WHERE ratingId = ?", [id]) as ratingPostResult[];
+            if (result.length > 0) {
+                const rating: RatingPost = new RatingPost (result[0].ratingId, result[0].userId, result[0].postId);
+                rating.ratingType = result[0].ratingType;
+                return rating;
+            }
+            else {
+                return undefined;
+            }
+        }
+        catch (reason) {
+            console.error("Error fetching Rating", reason);
+            return undefined;
+        }
+    }
+
     public static async getRatingByUserIdAndPostId(userId: number, postId: number): Promise<RatingPost | undefined> {
         try {
             const result: ratingPostResult[] = await api.queryDatabase("SELECT * FROM `post_rating` WHERE userId = ? And postId = ?", userId, postId) as ratingPostResult[];
@@ -33,14 +51,61 @@ export class RatingPost {
         }
     }
 
-    public async create(userId: number, postId: number, ratingType: string): Promise<boolean> {
+    public async create(userId: number, postId: number, ratingType: string): Promise<RatingPost | undefined> {
         try {
-            const result: ratingPostResult[] = await api.queryDatabase("INSERT into post_rating (userId, postId, ratingType) VALUES (?, ?, ?)", userId, postId, ratingType) as ratingPostResult[];
+            const result: { insertId: number } = await api.queryDatabase("INSERT into post_rating (userId, postId, ratingType) VALUES (?, ?, ?)", userId, postId, ratingType) as { insertId: number };
+            if (result.insertId) {
+                console.log("Rating created with ratingId:", result.insertId);
+
+                return await RatingPost.getRatingById(result.insertId);
+            }
+            else {
+                return undefined;
+            }
+        }
+        catch (reason) {
+            console.error("Error creating rating", reason);
+            return undefined;
+        }
+    }
+
+    public static async countTotalRatingByPostId(postId: number): Promise<number> {
+        try {
+            const result: { count: number }[] = await api.queryDatabase("SELECT COUNT(*) as count FROM post_rating WHERE postId = ?", postId) as { count: number }[];
+            if (result.length > 0) {
+                return result[0].count || 0; // Retourneer 0 als de count null of undefined is
+            }
+            else {
+                console.error("No results found");
+                return 0;
+            }
+        }
+        catch (reason) {
+            console.error("Error fetching result", reason);
+            return 0; // Bij een fout retourneren we 0
+        }
+    }
+
+    public async deleteRating(userId: number, postId: number): Promise<boolean> {
+        try {
+            const result: ratingPostResult[] = await api.queryDatabase("DELETE FROM post_rating WHERE userId = ? AND postId = ?", userId, postId) as ratingPostResult[];
+            console.log(`Succesfully deleted: ${this._ratingId} ${userId} ${postId}, ${result}`);
+            return true;
+        }
+        catch (reason) {
+            console.error("Error deleting rating", reason);
+            return false;
+        }
+    }
+
+    public async updateRating(ratingType: string, ratingId: number, userId: number, postId: number): Promise<boolean> {
+        try {
+            const result: ratingPostResult[] = await api.queryDatabase("UPDATE post_rating SET ratingType = ? WHERE ratingId = ? AND userId = ? AND postId = ?", ratingType, ratingId, userId, postId) as ratingPostResult[];
             console.log("Success", result);
             return true;
         }
         catch (reason) {
-            console.error("Error creating rating", reason);
+            console.error("Error updating rating", reason);
             return false;
         }
     }

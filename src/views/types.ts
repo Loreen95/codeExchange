@@ -45,6 +45,7 @@ export type ratingPostResult = {
     userId: number;
     postId: number;
     ratingType: string;
+    count: number;
 };
 
 export interface UserInfo {

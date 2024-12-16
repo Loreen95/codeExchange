@@ -5,6 +5,7 @@ import UserInterfaceClass from "../views/interface";
 import hljs from "highlight.js";
 import validator from "validator";
 import { RatingPost } from "../models/Post_rating";
+import { RatingComment } from "../models/Comment_rating";
 // import { ratingResult } from "../views/types";
 
 export class PostController {
@@ -62,9 +63,10 @@ export class PostController {
                 const userName: string | undefined = (await User.getUserById(Number(post.authorId)))?.userName;
                 const userId: number | undefined = post.authorId;
                 const stringedTimeAndDate: string = String(post.createdAt).slice(8, 10) + "-" + String(post.createdAt).slice(5, 7) + "-" + String(post.createdAt).slice(0, 4) + " | " + String(post.createdAt).slice(11, 19);
-                let rating: number = 0;
-                if (post.rating) {
-                    rating = post.rating;
+                let countRating: number | undefined = await RatingPost.countTotalRatingByUserIdAndPostId(userId, postIndex);
+                // let rating: number = 0;
+                if (countRating) {
+                    countRating = post.rating;
                 }
 
                 titleOfPost = post.title.length > 60 ? post.title.slice(0, 60).concat("...") : post.title;
@@ -78,15 +80,7 @@ export class PostController {
 
                 const comments: Comment[] = await Comment.getCommentsByMessageId(post.postId);
                 const totalComments: number = comments.length;
-                const existingRating: RatingPost | undefined = await RatingPost.getRatingByUserIdAndPostId(userId, post.postId);
-                const negativeButton: HTMLAnchorElement = document.querySelector("#postNegative")!;
-                const positiveButton: HTMLAnchorElement = document.querySelector("#postPositive")!;
-                if (existingRating) {
-                    negativeButton.style.color = "";
-                    positiveButton.style.color = "";
-                    if (existingRating.ratingType === "negative") negativeButton.style.color = "red";
-                    if (existingRating.ratingType === "positive") positiveButton.style.color = "green";
-                }
+
                 insertPostsHere.insertAdjacentHTML("beforeend", `
                     <div class="question">
                         <a href="profile.html?user=${userId}" class="navLink" id="whoAsked">${userName}: <p data-translate="asks"></p></a>
@@ -96,7 +90,7 @@ export class PostController {
                                 <p>${contentOfPost}</p>
                                 <div class="bottrow">                                  
                                     <div class="iconrow">
-                                        <a id="commentPositive"><p class="messageIcon"><i class="fa-solid fa-thumbs-up"></i> ${rating}</p></a>
+                                        <a id="commentPositive"><p class="messageIcon"><i class="fa-solid fa-thumbs-up"></i>${countRating}</p></a>
                                         <p class="messageIcon"><i class="fa-sharp fa-solid fa-message"></i> ${totalComments}</p>
                                     </div>
                                     <p id="datetime">${stringedTimeAndDate}</p>
@@ -449,12 +443,27 @@ export class PostController {
                     console.log("Post not found");
                     return;
                 }
+                this._ratingPostModel = new RatingPost(0, user.userId, post.postId);
                 const existingRating: RatingPost | undefined = await RatingPost.getRatingByUserIdAndPostId(user.userId, post.postId);
-                if (existingRating) {
-                    console.log("Hi");
+                const currentRating: RatingPost | undefined = await RatingPost.getRatingById(this._ratingPostModel.ratingId);
+                console.log(currentRating);
+                if (!existingRating) {
+                    await this._ratingPostModel.create(user.userId, post.postId, typeRating);
                 }
                 else {
-                    console.log(`Pressed: ${typeRating},\nRating not submitted`);
+                    if (existingRating.ratingType === "positive" && typeRating === "positive") {
+                        await this._ratingPostModel.deleteRating(user.userId, post.postId);
+                    }
+                    else if (existingRating.ratingType === "negative" && typeRating === "negative") {
+                        await this._ratingPostModel.deleteRating(user.userId, post.postId);
+                    }
+                    else if (existingRating.ratingType === "positive" && typeRating === "negative") {
+                        await this._ratingPostModel.updateRating(typeRating, existingRating.ratingId, user.userId, post.postId);
+                    }
+                    else if (existingRating.ratingType === "negative" && typeRating === "positive") {
+                        await this._ratingPostModel.updateRating(typeRating, existingRating.ratingId, user.userId, post.postId);
+                    }
+                    window.location.reload();
                 }
             }
         }
@@ -462,99 +471,48 @@ export class PostController {
             console.error("Hello there", reason);
         }
     }
-
-    // public async checkExistingPostRating(userId: number, postId: number): Promise<void> {
-    //     try {
-    //         const negativeButton: HTMLAnchorElement = document.querySelector("#postNegative")!;
-    //         const positiveButton: HTMLAnchorElement = document.querySelector("#postPositive")!;
-    //         const existingRating: RatingPost | undefined = await RatingPost.getRatingByUserIdAndPostId(userId, postId);
-    //         negativeButton.style.color = "";
-    //         positiveButton.style.color = "";
-    //         if (existingRating?.ratingType === "negative") negativeButton.style.color = "red";
-    //         if (existingRating?.ratingType === "positive") positiveButton.style.color = "green";
-    //     }
-    //     catch (error) {
-    //         console.error("Error while checking rating:", error);
-    //     }
-    // }
-    // public async ratePost(typeRating: string): Promise<void> {
-    //     try {
-    //         const userSession: string | null = sessionStorage.getItem("session");
-    //         if (!userSession) {
-    //             console.error("User is not logged in.");
-    //             return;
-    //         }
-    //         const userId: User | undefined = await User.getUserById(Number(userSession));
-    //         const postUrl: URLSearchParams = new URLSearchParams(window.location.search);
-    //         const postIdFromUrl: string | null = postUrl.get("post");
-    //         const post: Post | undefined = await Post.getPostById(Number(postIdFromUrl));
-    //         if (!post) {
-    //             console.log("Post not found");
-    //             return;
-    //         }
-    //         const existingRating: RatingPost | undefined = await RatingPost.getRatingByUserIdAndPostId(Number(userId), Number(postId));
-    //         const negativeButton: HTMLElement = document.querySelector("#negative")!;
-    //         const positiveButton: HTMLElement = document.querySelector("#positive")!;
-    //         if (existingRating) {
-    //             if (existingRating.ratingType === "negative") {
-    //                 negativeButton.style.color = "red";
-    //             }
-    //             else if (existingRating.ratingType === "positive") {
-    //                 positiveButton.style.color = "green";
-    //             }
-    //             return;
-    //         }
-    //         const newRatingType: string = typeRating;
-    //         await new RatingPost(0, Number(userId), Number(postId)).create(Number(userId), Number(postId), newRatingType);
-    //         // let ratingIndex: number = existingRating.rating || 0;
-    //     }
-    //     catch (reason) {
-    //         console.log(`Nieuwe rating voor post ${postId}`);
-    //         console.error("Error updating the rating:", reason);
-    //     }
-    // }
-
-    // public async rateComment(typeRating: string, commentId: number): Promise<void> {
-    //     try {
-    //         const userSession: string | null = sessionStorage.getItem("session");
-    //         if (!userSession) {
-    //             console.error("User is not logged in.");
-    //             return;
-    //         }
-    //         const userId: User | undefined = await User.getUserById(Number(userSession));
-    //         const comment: Comment | undefined = await Comment.getCommentById(commentId);
-    //         if (!comment) {
-    //             console.log("Comment not found");
-    //             return;
-    //         }
-    //         const negativeComment: HTMLElement = document.querySelector("#negative")!;
-    //         const positivecomment: HTMLElement = document.querySelector("#positive")!;
-    //         const existingRating: RatingComment | undefined = await RatingComment.getRatingByUserIdAndCommentId(Number(userId), commentId);
-    //         let newRating: number = comment.rating || 0;
-    //         if (typeRating === "positive") {
-    //             newRating++;
-    //         }
-    //         else if (typeRating === "negative") {
-    //             newRating--;
-    //         }
-    //         if (existingRating) {
-    //             if (existingRating.ratingType === "negative") {
-    //                 negativeComment.style.color = "red";
-    //                 return;
-    //             }
-    //             else if (existingRating.ratingType === "positive") {
-    //                 positivecomment.style.color = "green";
-    //                 return;
-    //             }
-    //         }
-    //         else {
-    //             await new RatingComment(0, Number(userId), commentId).create(Number(userId), commentId, typeRating);
-    //         }
-    //         comment.rating = newRating;
-    //         // window.location.reload();
-    //     }
-    //     catch (error) {
-    //         console.error("Error updating the rating:", error);
-    //     }
-    // }
+    
+    public async rateComment(typeRating: string, commentId: number): Promise<void> {
+        try {
+            const userSession: string | null = sessionStorage.getItem("session");
+            if (!userSession) {
+                console.error("User is not logged in.");
+                return;
+            }
+            const userId: User | undefined = await User.getUserById(Number(userSession));
+            const comment: Comment | undefined = await Comment.getCommentById(commentId);
+            if (!comment) {
+                console.log("Comment not found");
+                return;
+            }
+            const negativeComment: HTMLElement = document.querySelector("#negative")!;
+            const positivecomment: HTMLElement = document.querySelector("#positive")!;
+            const existingRating: RatingComment | undefined = await RatingComment.getRatingByUserIdAndcommentId(Number(userId), commentId);
+            let newRating: number = comment.rating || 0;
+            if (typeRating === "positive") {
+                newRating++;
+            }
+            else if (typeRating === "negative") {
+                newRating--;
+            }
+            if (existingRating) {
+                if (existingRating.ratingType === "negative") {
+                    negativeComment.style.color = "red";
+                    return;
+                }
+                else if (existingRating.ratingType === "positive") {
+                    positivecomment.style.color = "green";
+                    return;
+                }
+            }
+            else {
+                await new RatingComment(0, Number(userId), commentId).create(Number(userId), commentId, typeRating);
+            }
+            comment.rating = newRating;
+            // window.location.reload();
+        }
+        catch (error) {
+            console.error("Error updating the rating:", error);
+        }
+    }
 }
