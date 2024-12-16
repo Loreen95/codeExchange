@@ -202,7 +202,7 @@ body {
     align-self: flex-end;
     font-family: 'Trebuchet MS', sans-serif;
     position: relative;
-    right: 7.5%;
+    right: 1%;
     margin-bottom: 10px;
     display: flex;
     flex-direction: row;
@@ -1438,9 +1438,9 @@ code {
 }
 
 .rightAlignedSepirator {
-    width: 81.5%;
+    width: 75%;
     align-self: flex-end;
-    margin-left: 16.6%;
+    margin-left: 22.6%;
 }
 
 code {
