@@ -45,25 +45,35 @@
                 <label for="dob" data-translate="dob"></label>
                 <input name="dob" type="date" placeholder="" id="dob">
 
-                <label for="expertise" data-translate="expertise"></label>
-                <input name="expertise" type="text" placeholder="Expertise..." id="expertise">
-
-                <label for="yearsexperience" data-translate="yearsexperience"></label>
-                <input name="yearsexperience" type="text" placeholder="Years of experience..." id="yearsexperience">
-
                 <label for="password" data-translate="password"></label>
                 <input name="password" type="text"  placeholder="Password...">
             </section>
             <section class="editAccountInfoSide">
-                <label for="biography" data-translate="biography"></label>
+                <label for="biography" data-translate="biography" class="biographyLabel"></label>
                 <textarea name="biography" id="bioEditor" placeholder="Tell us something about yourself"></textarea>
-                <div class="thebelowButtonStuffAgain">
-                    <button class="deleteAccountBttn" data-translate="deleteaccount"></button>
-                    <button class="applyChaingesBttn" data-translate="applychanges"></button>
+                <div class="expertiseRow">
+                    <div class="expertiseOptions expertiseOptions2">
+                        <label for="expertise" data-translate="expertise"></label>
+                        <input name="expertise" type="text" placeholder="Expertise..." id="expertise">
+                    </div>
+                    
+                    <div class="expertiseOptions">
+                        <label for="yearsexperience" data-translate="yearsexperience"></label>
+                        <input name="yearsexperience" type="text" placeholder="Years of experience..." id="yearsexperience">
+                    </div>
                 </div>
             </section>
-            
         </section>
+        <div class="thebelowButtonStuffAgain"> 
+            <a href="profile.html"><button class="cansel" data-translate="cansel"></button></a>
+            <button class="applyChaingesBttn" data-translate="applychanges"></button>
+        </div>
+
+        <div class="escapeTheNightmare">
+            <p class="whenWillItEnd" data-translate="enough">Had enough?</p>
+            <button class="deleteAccountBttn" data-translate="deleteaccount"></button>
+        </div>
+
     </main>
 
     <section class="footerFilin"></section>

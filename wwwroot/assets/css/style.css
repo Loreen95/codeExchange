@@ -192,6 +192,10 @@ body {
     transition: ease 0.1s;
 }
 
+.addownAwnsertextarea2 {
+    margin-top: 0;
+}
+
 .corporateSeals {
     background-color: brown;
 }
@@ -215,21 +219,6 @@ body {
 
 #space {
     margin-right: 1%;
-}
-
-.userBiography {
-    background-color: #2d2b2b;
-    width: calc(100% - 386px);
-    align-self: flex-end;
-    margin: 0 30px 30px;
-    border-radius: 5px;
-    font-family: 'Trebuchet MS', sans-serif;
-    padding: 20px;
-}
-
-.userBiography h1 {
-    margin: 0;
-    color: #9c1818;
 }
 
 .mostRecentPosts {
@@ -265,6 +254,7 @@ body {
     flex-direction: row-reverse;
     justify-content: center;
     height: calc(100vh - 168.4px);
+    min-height: 360px;
     margin: 0 0 10px;
     padding-top: 80px;
 }
@@ -956,7 +946,7 @@ input:-webkit-autofill:active{
     background-image: linear-gradient(to bottom right, rgb(11, 11, 11), rgb(2, 5, 8));
     box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
     height: auto;
-    margin-top: 25vh;
+    margin-top: 40px;
 }
 
 .corpoFiller {
@@ -1088,7 +1078,7 @@ input:-webkit-autofill:active{
 .addAwnsersTextEditButtons {
     display: flex;
     justify-content: space-between;
-    margin-right: 5px;
+    margin: 0 5px 5px 0;
 }
 
 .noDiplayNone {
@@ -1140,8 +1130,19 @@ input:-webkit-autofill:active{
     /* background-image: linear-gradient(to bottom right, #a42020, #8a1515); */
 }
 
+#titleInput {
+    border: none;
+    outline: none;
+    font-family: Tahoma, sans-serif;
+    border-bottom: dashed 2px rgb(76, 76, 76);
+    background-color: #2b2a2a;
+    padding: 5px;
+    font-size: 25px;
+    color: aliceblue;
+}
+
 .addOwnAwnser textarea {
-    margin: 5px 0 10px;
+    margin: 0 0 10px;
     resize: none;
     border: none;
     height: 30vh;
@@ -1338,7 +1339,7 @@ code {
 
 .TitleCardContainer {
     padding-top: 80px;
-    background-image: linear-gradient(to bottom right, #ca1111, #a01111);
+    background-image: linear-gradient(to bottom right, #ac1c1c, #8e0e0e);
     font-family: 'Trebuchet MS', sans-serif;
     color: aliceblue;
 }

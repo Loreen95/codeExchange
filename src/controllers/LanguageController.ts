@@ -122,6 +122,10 @@ export class LanguageClass {
                 en: "Products",
                 nl: "Producten",
             },
+            enough: {
+                en: "Had enough?",
+                nl: "Genoeg gehad?",
+            },
             about: {
                 en: "About",
                 nl: "Over",
@@ -319,12 +323,12 @@ export class LanguageClass {
                 nl: "Geboortedatum",
             },
             yearsexperience: {
-                en: "Years of experience",
-                nl: "Jaren ervaring",
+                en: "Years of experience:",
+                nl: "Jaren ervaring:",
             },
             expertise: {
-                en: "Expertise",
-                nl: "Expertise",
+                en: "Expertise:",
+                nl: "Expertise:",
             },
         });
     }
