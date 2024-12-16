@@ -88,7 +88,7 @@
 .profileStats {
     width: calc(100% - 350px);
     align-self: flex-end;
-    margin: 100px 30px 20px;
+    margin: 100px 30px 0;
     background-image: linear-gradient(to bottom right, #c40e0e, #ae0101);
     border-radius: 5px;
     display: flex;
@@ -147,10 +147,20 @@
     background-color: #2d2b2b;
     width: calc(100% - 386px);
     align-self: flex-end;
-    margin: 0 30px 30px;
+    margin: 20px 30px 0;
     border-radius: 5px;
     font-family: 'Trebuchet MS', sans-serif;
     padding: 20px;
+}
+
+.obigatoryExpertise {
+    display: flex;
+    font-family: Tahoma, sans-serif;
+    opacity: 0.4;
+    font-style: oblique 5deg;
+    margin: 5px 2.5% 0 0;
+    align-self: flex-end;
+    gap: 10px;
 }
 
 .userBiography h1 {
@@ -221,9 +231,13 @@
     border-radius: 4px;
 }
 
-#insertBirthdayHere, #insertEmailHere, #insertNameHere, #expertise, #yearsExperience {
+#insertBirthdayHere, #insertEmailHere, #insertNameHere {
     margin-top: 0!important;
     color: white;
+}
+
+.obigatoryExpertise p {
+    margin: 0;
 }
 
 .editUserInfoSide {
