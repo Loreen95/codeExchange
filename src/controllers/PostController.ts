@@ -82,15 +82,32 @@ export class PostController {
                 const negativeButton: HTMLAnchorElement = document.querySelector("#postNegative")!;
                 const positiveButton: HTMLAnchorElement = document.querySelector("#postPositive")!;
                 if (existingRating) {
-                    negativeButton.style.color = "";
-                    positiveButton.style.color = "";
-                    if (existingRating.ratingType === "negative") negativeButton.style.color = "red";
-                    if (existingRating.ratingType === "positive") positiveButton.style.color = "green";
+                    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                    if (negativeButton) {
+                        negativeButton.style.color = "";
+                    }
+                    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                    if (positiveButton) {
+                        positiveButton.style.color = "";
+                    }
+                    if (existingRating.ratingType === "negative") {
+                        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                        if (negativeButton) {
+                            negativeButton.style.color = "#9f1414";
+                        }
+                    }
+                    if (existingRating.ratingType === "positive") {
+                        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                        if (positiveButton) {
+                            positiveButton.style.color = "#096409";
+                        }
+                    }
                 }
+                // the anchor (<a>) tag around the post must be a div or it breaks, (doesn't do anything when clicked on)
                 insertPostsHere.insertAdjacentHTML("beforeend", `
                     <div class="question">
                         <a href="profile.html?user=${userId}" class="navLink" id="whoAsked">${userName}: <p data-translate="asks"></p></a>
-                        <a id="postNr${postIndex}" class="navLink" href="post?post=${post.postId}">
+                        <div id="postNr${postIndex}" class="navLink" href="post?post=${post.postId}">
                             <div class="questionContent">
                                 <h1>${titleOfPost}</h1>
                                 <p>${contentOfPost}</p>
@@ -102,7 +119,7 @@ export class PostController {
                                     <p id="datetime">${stringedTimeAndDate}</p>
                                 </div>                                  
                             </div>
-                        </a>                  
+                        </div>                  
                     </div>
                 `);
 
