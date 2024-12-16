@@ -13,6 +13,7 @@ export class PostController {
     private _commentModel: Comment | undefined;
     private _UI: UserInterfaceClass;
     private _ratingPostModel: RatingPost | undefined;
+    private _ratingCommentModel: RatingComment | undefined;
 
     public constructor() {
         this._UI = new UserInterfaceClass();
@@ -63,7 +64,7 @@ export class PostController {
                 const userName: string | undefined = (await User.getUserById(Number(post.authorId)))?.userName;
                 const userId: number | undefined = post.authorId;
                 const stringedTimeAndDate: string = String(post.createdAt).slice(8, 10) + "-" + String(post.createdAt).slice(5, 7) + "-" + String(post.createdAt).slice(0, 4) + " | " + String(post.createdAt).slice(11, 19);
-                let countRating: number | undefined = await RatingPost.countTotalRatingByUserIdAndPostId(userId, postIndex);
+                let countRating: number | undefined = await RatingPost.countTotalRatingByPostId(post.postId);
                 // let rating: number = 0;
                 if (countRating) {
                     countRating = post.rating;
@@ -115,7 +116,7 @@ export class PostController {
                                 <p>${contentOfPost}</p>
                                 <div class="bottrow">                                  
                                     <div class="iconrow">
-                                        <a id="commentPositive"><p class="messageIcon"><i class="fa-solid fa-thumbs-up"></i>${countRating}</p></a>
+                                        <a id="commentPositive"><p class="messageIcon"><i class="fa-solid fa-thumbs-up"></i> ${countRating}</p></a>
                                         <p class="messageIcon"><i class="fa-sharp fa-solid fa-message"></i> ${totalComments}</p>
                                     </div>
                                     <p id="datetime">${stringedTimeAndDate}</p>
@@ -147,11 +148,8 @@ export class PostController {
     public async renderComments(): Promise<void> {
         const insertCommenthere: HTMLDivElement = document.querySelector(".awnsers")!;
         const commentList: Comment[] | undefined = await Comment.getCommentsByMessageId(Number(sessionStorage.getItem("post_Nr")));
+        const ratingCounter: HTMLParagraphElement | null = document.querySelector(".insertCommentRatingHere");
         commentList.forEach(async _comment => {
-            let rating: number | undefined = 0;
-            if (String(_comment.rating) !== String(null)) {
-                rating = _comment.rating;
-            }
             console.log("Comment:", _comment.commentId);
             insertCommenthere.insertAdjacentHTML("beforeend", `
                 <h1 class="awnserTitle"><a href="profile.html?user=${(await User.getUserById(Number(_comment.userId)))?.userId}" class="navLinkR">${(await User.getUserById(Number(_comment.userId)))?.userName}</a></h1>
@@ -163,33 +161,50 @@ export class PostController {
                     <p class="bottomDate">${String(_comment.createdAt).slice(8, 10) + "-" + String(_comment.createdAt).slice(5, 7) + "-" + String(_comment.createdAt).slice(0, 4) + " | " + String(_comment.createdAt).slice(11, 19)}</p>
                     <div class="ratingPart">
                         <a id="commentPositive-${_comment.commentId}" href="#${_comment.commentId}" class="navLink">
-                            <i class="fa-solid fa-thumbs-up" id="positive"></i>
+                            <i class="fa-solid fa-thumbs-up" id="positiveComment"></i>
                         </a>
-                        <p class="insertRatingHere" id="ratingText">${rating || 0}</p>
+                        <p class="insertCommentRatingHere" id="ratingText"></p>
                         <a id="commentNegative-${_comment.commentId}" href="#${_comment.commentId}" class="navLink">
-                            <i class="fa-solid fa-thumbs-down" id="negative"></i>
+                            <i class="fa-solid fa-thumbs-down" id="negativeComment"></i>
                         </a>
                     </div>
                 </div>                
                 <hr>
             `);
+            const currentComment: Comment | undefined = await Comment.getCommentById(_comment.commentId);
+            if (ratingCounter && currentComment) {
+                const userSession: string | null = sessionStorage.getItem("session");
+                const user: User | undefined = await User.getUserById(Number(userSession));
+                if (!user) {
+                    console.error("No user found!");
+                }
+                else {
+                    const existingRating: RatingComment | undefined = await RatingComment.getRatingByUserIdAndcommentId(user.userId, currentComment.commentId);
+                    const positiveButton: HTMLButtonElement = document.querySelector("#positiveComment")!;
+                    const negativeButton: HTMLButtonElement = document.querySelector("#negativeComment")!;
+                    if (existingRating) {
+                        if (existingRating.ratingType === "positive") {
+                            positiveButton.style.color = "green";
+                        }
+                        else if (existingRating.ratingType === "negative") {
+                            negativeButton.style.color = "#ba2f2f";
+                        }
+                    }
+                }
+            }
             // Add event listeners for the rating buttons after the comment is rendered
-            // const positiveButton: HTMLLinkElement | null = document.querySelector(`#commentPositive-${_comment.commentId}`);
-            // const negativeButton: HTMLLinkElement | null = document.querySelector(`#commentNegative-${_comment.commentId}`);
-            // if (positiveButton) {
-            //     positiveButton.addEventListener("click", async (e: Event) => {
-            //         e.preventDefault();
-            //         console.log("Positive, clicked");
-            //         await this.rateComment("positive", _comment.commentId);
-            //     });
-            // }
-            // if (negativeButton) {
-            //     negativeButton.addEventListener("click", async (e: Event) => {
-            //         e.preventDefault();
-            //         console.log("Negative, clicked");
-            //         await this.rateComment("negative", _comment.commentId);
-            //     });
-            // }
+            const positiveButton: HTMLLinkElement = document.querySelector(`#commentPositive-${_comment.commentId}`)!;
+            const negativeButton: HTMLLinkElement = document.querySelector(`#commentNegative-${_comment.commentId}`)!;
+            positiveButton.addEventListener("click", async (e: Event) => {
+                e.preventDefault();
+                console.log("Positive clicked for comment:", _comment.commentId);
+                await this.rateComment("positive", _comment.commentId);
+            });
+            negativeButton.addEventListener("click", async (e: Event) => {
+                e.preventDefault();
+                console.log("Negative clicked for comment:", _comment.commentId);
+                await this.rateComment("negative", _comment.commentId);
+            });
         });
     }
 
@@ -496,7 +511,7 @@ export class PostController {
             console.error("Hello there", reason);
         }
     }
-    
+
     public async rateComment(typeRating: string, commentId: number): Promise<void> {
         try {
             const userSession: string | null = sessionStorage.getItem("session");
@@ -504,36 +519,33 @@ export class PostController {
                 console.error("User is not logged in.");
                 return;
             }
-            const userId: User | undefined = await User.getUserById(Number(userSession));
+            const user: User | undefined = await User.getUserById(Number(userSession));
             const comment: Comment | undefined = await Comment.getCommentById(commentId);
-            if (!comment) {
-                console.log("Comment not found");
+            if (!comment || !user) {
+                console.log("Comment & user not found");
                 return;
             }
-            const negativeComment: HTMLElement = document.querySelector("#negative")!;
-            const positivecomment: HTMLElement = document.querySelector("#positive")!;
-            const existingRating: RatingComment | undefined = await RatingComment.getRatingByUserIdAndcommentId(Number(userId), commentId);
-            let newRating: number = comment.rating || 0;
-            if (typeRating === "positive") {
-                newRating++;
-            }
-            else if (typeRating === "negative") {
-                newRating--;
-            }
-            if (existingRating) {
-                if (existingRating.ratingType === "negative") {
-                    negativeComment.style.color = "red";
-                    return;
-                }
-                else if (existingRating.ratingType === "positive") {
-                    positivecomment.style.color = "green";
-                    return;
-                }
+            this._ratingCommentModel = new RatingComment(0, user.userId, comment.commentId);
+            const existingRating: RatingComment | undefined = await RatingComment.getRatingByUserIdAndcommentId(user.userId, commentId);
+            const currentRating: RatingComment | undefined = await RatingComment.getRatingById(this._ratingCommentModel.ratingId);
+            console.log(currentRating);
+            if (!existingRating) {
+                await this._ratingCommentModel.create(user.userId, commentId, typeRating);
             }
             else {
-                await new RatingComment(0, Number(userId), commentId).create(Number(userId), commentId, typeRating);
+                if (existingRating.ratingType === "negative" && typeRating === "negative") {
+                    await this._ratingCommentModel.deleteRating(user.userId, comment.commentId);
+                }
+                else if (existingRating.ratingType === "positive" && typeRating === "positive") {
+                    await this._ratingCommentModel.deleteRating(user.userId, comment.commentId);
+                }
+                else if (existingRating.ratingType === "negative" && typeRating === "positive") {
+                    await this._ratingCommentModel.updateRating(typeRating, existingRating.ratingId, user.userId, comment.commentId);
+                }
+                else if (existingRating.ratingType === "positive" && typeRating === "negative") {
+                    await this._ratingCommentModel.updateRating(typeRating, existingRating.ratingId, user.userId, comment.commentId);
+                }
             }
-            comment.rating = newRating;
             // window.location.reload();
         }
         catch (error) {

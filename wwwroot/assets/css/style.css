@@ -1244,19 +1244,19 @@ code {
     font-size: 20px;
 }
 
-#positive { 
+#positive, #positivecomment { 
     color: white;
 }
 
-#negative { 
+#negative, #negativeComment { 
     color: white;
 }
 
-#positive:hover {
+#positive:hover, #positiveComment:hover {
     color: green;
 }
 
-#negative:hover {
+#negative:hover, #negativeComment:hover {
     color: #ba2f2f;
 }
 
