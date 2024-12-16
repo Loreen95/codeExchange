@@ -122,6 +122,10 @@ export class LanguageClass {
                 en: "Products",
                 nl: "Producten",
             },
+            enough: {
+                en: "Had enough?",
+                nl: "Genoeg gehad?",
+            },
             about: {
                 en: "About",
                 nl: "Over",

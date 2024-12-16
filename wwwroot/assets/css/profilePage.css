@@ -233,6 +233,39 @@
     padding-bottom: 10px;
 }
 
+.expertiseRow {
+    display: flex;
+}
+
+.biographyLabel {
+    font-size: 40px;
+}
+
+.expertiseOptions {
+    display: flex;
+    flex-direction: column;
+}
+
+.expertiseOptions2 {
+    flex-grow: 1;
+    margin-right: 20px;
+}
+
+.expertiseOptions input {
+    border: none;
+    border-radius: 5px;
+    font-size: 20px;
+    padding: 5px;
+    background-color: #444444;
+    color: aliceblue;
+    letter-spacing: 0.03em;
+    font-weight: 400;
+}
+
+.expertiseOptions label {
+    font-size: 20px;
+}
+
 .editUserInfoSide input {
     margin: 0 0 10px;
     width: 80%;
@@ -282,8 +315,34 @@
 
 .thebelowButtonStuffAgain {
     display: flex;
+    flex-direction: row;
     font-family: 'Trebuchet MS', sans-serif;
     justify-content: flex-end;
+    margin: 15px 0 0 0;
+    padding-left: 10%;
+}
+
+.whenWillItEnd {
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+.cansel {
+    color: aliceblue;
+    font-size: 20px;
+    font-weight: 500;
+    border: none;
+    padding: 10px;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    width: fit-content;
+    margin: 0 20px 0 0;
+    border-radius: 1px;
+    background-color: #c40e0e;
+}
+
+.cansel:hover {
+    transition: all 0.3s;
+    background-color: #a10f0f;
 }
 
 .thebelowButtonStuffAgain button {
@@ -294,11 +353,24 @@
     padding: 10px;
     letter-spacing: 0.03em;
     cursor: pointer;
+    width: fit-content;
+}
+
+.escapeTheNightmare {
+    margin: 20vh 0 0 1%;
 }
 
 .deleteAccountBttn {
    background-color: #be0a0a;
    border-radius: 2px;
+   color: aliceblue;
+   font-size: 20px;
+   font-weight: 500;
+   border: none;
+   padding: 10px;
+   letter-spacing: 0.03em;
+   cursor: pointer;
+   width: fit-content;
 }
 
 .deleteAccountBttn:hover {
@@ -309,8 +381,8 @@
 .applyChaingesBttn {
     background-color: #0b0b0b;
     border-radius: 2px;
-    margin: 0 0 0 10px;
-    flex-grow: 1;
+    margin: 0 11% 0 0;
+    /* flex-grow: 1; */
     display: flex;
     justify-content: flex-start;
 }
@@ -328,7 +400,7 @@
 
 .editAccountInfoSide label { 
     font-family: 'Trebuchet MS', sans-serif;
-    font-size: 40px;
+    /* font-size: 40px; */
     margin-bottom: 5px;
 }
 
