@@ -61,6 +61,28 @@ class RegistrationClass {
         }
     }
 
+    public alterInputFields(whatInput?: string): void {
+        const emailAdressUserInput: HTMLInputElement = document.querySelector("#emailInput")!;
+        const nameUserInput: HTMLInputElement = document.querySelector("#userName")!;
+        const passwordUserInput: HTMLInputElement = document.querySelector(".passPhrase")!;
+        const grayBorder: string = "solid rgb(58, 58, 58)";
+        const redBorder: string = "solid rgb(168, 32, 32) 3px";
+        if (!whatInput) {
+            nameUserInput.style.border = grayBorder;
+            emailAdressUserInput.style.border = grayBorder;
+            passwordUserInput.style.border = grayBorder;
+        }
+        else if (whatInput === "nameUserInput") {
+            nameUserInput.style.border = redBorder;
+        }
+        else if (whatInput === "emailAdressUserInput") {
+            emailAdressUserInput.style.border = redBorder;
+        }
+        else if (whatInput === "passwordUserInput") {
+            passwordUserInput.style.border = redBorder;
+        }
+    }
+
     /**
      * This here function contains an else if chain that goes through each individual input,
      * and spits out an error with some information on the html page if somethings wrong with them
@@ -75,16 +97,10 @@ class RegistrationClass {
         const infoMessage: HTMLParagraphElement = document.querySelector("#infoMsg")!;
         const successMessage: HTMLParagraphElement = document.querySelector("#successMsg")!;
         // And this calls in the input fields so I can make them red later.
-        const emailAdressUserInput: HTMLInputElement = document.querySelector("#emailInput")!;
-        const nameUserInput: HTMLInputElement = document.querySelector("#userName")!;
-        const passwordUserInput: HTMLInputElement = document.querySelector(".passPhrase")!;
-
+        this.alterInputFields();
         // This resets everything everytime this method is used.
         errorMessage.innerHTML = "";
         infoMessage.innerText = "";
-        nameUserInput.style.border = "solid rgb(58, 58, 58)";
-        emailAdressUserInput.style.border = "solid rgb(58, 58, 58)";
-        passwordUserInput.style.border = "solid rgb(58, 58, 58)";
         infoMessage.style.display = "none";
 
         // and this boolean gets set to false if any error occurs. If it remains true the user will be created
@@ -93,32 +109,32 @@ class RegistrationClass {
         // this list of else if, assesses the received credentials. I trust the error messages themselves are self explanatory
         if (!userInputName) {
             errorMessage.innerText += "You must provide a name.\n";
-            nameUserInput.style.border = "solid rgb(168, 32, 32) 3px";
+            this.alterInputFields("nameUserInput");
             allIsInOrder = false;
         }
         else if (String(await User.doesUserExistForUsername(userInputName)) === "true") {
             errorMessage.innerText += "Provided Username is already in use.\n";
-            nameUserInput.style.border = "solid rgb(168, 32, 32) 3px";
+            this.alterInputFields("nameUserInput");
             allIsInOrder = false;
         }
         if (!userInputEmail) {
             errorMessage.innerText += "You must provide an email.\n";
-            emailAdressUserInput.style.border = "solid rgb(168, 32, 32) 3px";
+            this.alterInputFields("emailAdressUserInput");
             allIsInOrder = false;
         }
         else if (!userInputEmail.match(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)) {
             errorMessage.innerText += "The email is invalid.\n";
-            emailAdressUserInput.style.border = "solid rgb(168, 32, 32) 3px";
+            this.alterInputFields("emailAdressUserInput");
             allIsInOrder = false;
         }
         else if (await User.doesUserExistForEmail(userInputEmail)) {
             errorMessage.innerText += "This email is already being used.\n";
-            emailAdressUserInput.style.border = "solid rgb(168, 32, 32) 3px";
+            this.alterInputFields("emailAdressUserInput");
             allIsInOrder = false;
         }
         if (!userInputPassword) {
             errorMessage.innerText += "You must provide a password.\n";
-            passwordUserInput.style.border = "solid rgb(168, 32, 32) 3px";
+            this.alterInputFields("passwordUserInput");
             allIsInOrder = false;
         }
         // This here calls forth the password examination and displays appropreate errors and info when a failure occurs
@@ -126,7 +142,7 @@ class RegistrationClass {
             infoMessage.style.display = "block";
             errorMessage.innerText += String(this._whyItIsNotGoodEnough);
             infoMessage.innerText += String(this._neededInformation);
-            passwordUserInput.style.border = "solid rgb(168, 32, 32) 2px";
+            this.alterInputFields("passwordUserInput");
             allIsInOrder = false;
         }
 

@@ -179,13 +179,11 @@ export class PostController {
                     const negativeButton: HTMLAnchorElement = document.querySelector(`.negativeComment7${_comment.commentId}`)!;
                     if (existingRating) {
                         if (existingRating.ratingType === "positive") {
-                            console.log(`${existingRating.ratingType} Cheeki Breeki!`);
                             positiveButton.innerHTML = `
                                 <i class="fa-solid fa-thumbs-up" id="positiveComment" style="color: green;"></i>
                             `;
                         }
                         else if (existingRating.ratingType === "negative") {
-                            console.log(`${existingRating.ratingType} Cheeki Breeki!`);
                             negativeButton.innerHTML = `
                                 <i class="fa-solid fa-thumbs-down" id="negativeComment" style="color: #ba2f2f;"></i>
                             `;
@@ -199,11 +197,15 @@ export class PostController {
             positiveButton.addEventListener("click", async (e: Event) => {
                 e.preventDefault();
                 console.log("Positive clicked for comment:", _comment.commentId);
+                // negativeButton.style.color = "aliceblue";
+                // positiveButton.style.color = "green";
                 await this.rateComment("positive", _comment.commentId);
             });
             negativeButton.addEventListener("click", async (e: Event) => {
                 e.preventDefault();
                 console.log("Negative clicked for comment:", _comment.commentId);
+                // positiveButton.style.color = "aliceblue";
+                // negativeButton.style.color = "#ba2f2f";
                 await this.rateComment("negative", _comment.commentId);
             });
         });
