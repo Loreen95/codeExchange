@@ -64,12 +64,7 @@ export class PostController {
                 const userName: string | undefined = (await User.getUserById(Number(post.authorId)))?.userName;
                 const userId: number | undefined = post.authorId;
                 const stringedTimeAndDate: string = String(post.createdAt).slice(8, 10) + "-" + String(post.createdAt).slice(5, 7) + "-" + String(post.createdAt).slice(0, 4) + " | " + String(post.createdAt).slice(11, 19);
-                let countRating: number | undefined = await RatingPost.countTotalRatingByPostId(post.postId);
-                // let rating: number = 0;
-                if (countRating) {
-                    countRating = post.rating;
-                }
-
+                const countRating: number | undefined = await RatingPost.countTotalRatingByPostId(post.postId);
                 titleOfPost = post.title.length > 60 ? post.title.slice(0, 60).concat("...") : post.title;
                 if (post.content.includes("[code]")) {
                     const cutoffValue: number = post.content.indexOf("[code]");
@@ -106,7 +101,6 @@ export class PostController {
                         }
                     }
                 }
-                // the anchor (<a>) tag around the post must be a div or it breaks, (doesn't do anything when clicked on)
                 insertPostsHere.insertAdjacentHTML("beforeend", `
                     <div class="question">
                         <a href="profile.html?user=${userId}" class="navLink" id="whoAsked">${userName}: <p data-translate="asks"></p></a>
@@ -150,6 +144,7 @@ export class PostController {
         const commentList: Comment[] | undefined = await Comment.getCommentsByMessageId(Number(sessionStorage.getItem("post_Nr")));
         const ratingCounter: HTMLParagraphElement | null = document.querySelector(".insertCommentRatingHere");
         commentList.forEach(async _comment => {
+            const countRating: number | undefined = await RatingComment.countTotalRatingBycommentId(_comment.commentId);
             console.log("Comment:", _comment.commentId);
             insertCommenthere.insertAdjacentHTML("beforeend", `
                 <h1 class="awnserTitle"><a href="profile.html?user=${(await User.getUserById(Number(_comment.userId)))?.userId}" class="navLinkR">${(await User.getUserById(Number(_comment.userId)))?.userName}</a></h1>
@@ -163,7 +158,7 @@ export class PostController {
                         <a id="commentPositive-${_comment.commentId}" href="#${_comment.commentId}" class="navLink">
                             <i class="fa-solid fa-thumbs-up" id="positiveComment"></i>
                         </a>
-                        <p class="insertCommentRatingHere" id="ratingText"></p>
+                        <p class="insertCommentRatingHere" id="ratingText">${countRating}</p>
                         <a id="commentNegative-${_comment.commentId}" href="#${_comment.commentId}" class="navLink">
                             <i class="fa-solid fa-thumbs-down" id="negativeComment"></i>
                         </a>
