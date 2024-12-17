@@ -142,10 +142,9 @@ export class PostController {
     public async renderComments(): Promise<void> {
         const insertCommenthere: HTMLDivElement = document.querySelector(".awnsers")!;
         const commentList: Comment[] | undefined = await Comment.getCommentsByMessageId(Number(sessionStorage.getItem("post_Nr")));
-        const ratingCounter: HTMLParagraphElement | null = document.querySelector(".insertCommentRatingHere");
         commentList.forEach(async _comment => {
             const countRating: number | undefined = await RatingComment.countTotalRatingBycommentId(_comment.commentId);
-            console.log("Comment:", _comment.commentId);
+            // console.log("Comment:", _comment.commentId);
             insertCommenthere.insertAdjacentHTML("beforeend", `
                 <h1 class="awnserTitle"><a href="profile.html?user=${(await User.getUserById(Number(_comment.userId)))?.userId}" class="navLinkR">${(await User.getUserById(Number(_comment.userId)))?.userName}</a></h1>
                 <p id="expertise2">${(await User.getUserById(Number(_comment.userId)))?.expertise || "No expertise added"} | ${(await User.getUserById(Number(_comment.userId)))?.yearsExperience || "No experience added"}</p>
@@ -155,17 +154,18 @@ export class PostController {
                 <div class="dateAndRating">
                     <p class="bottomDate">${String(_comment.createdAt).slice(8, 10) + "-" + String(_comment.createdAt).slice(5, 7) + "-" + String(_comment.createdAt).slice(0, 4) + " | " + String(_comment.createdAt).slice(11, 19)}</p>
                     <div class="ratingPart">
-                        <a id="commentPositive-${_comment.commentId}" href="#${_comment.commentId}" class="navLink">
+                        <a id="commentPositive-${_comment.commentId}" href="#${_comment.commentId}" class="navLink positiveComment7${_comment.commentId}">
                             <i class="fa-solid fa-thumbs-up" id="positiveComment"></i>
                         </a>
                         <p class="insertCommentRatingHere" id="ratingText">${countRating}</p>
-                        <a id="commentNegative-${_comment.commentId}" href="#${_comment.commentId}" class="navLink">
+                        <a id="commentNegative-${_comment.commentId}" href="#${_comment.commentId}" class="navLink negativeComment7${_comment.commentId}">
                             <i class="fa-solid fa-thumbs-down" id="negativeComment"></i>
                         </a>
                     </div>
                 </div>                
                 <hr>
             `);
+            const ratingCounter: HTMLParagraphElement | null = document.querySelector(".insertCommentRatingHere");
             const currentComment: Comment | undefined = await Comment.getCommentById(_comment.commentId);
             if (ratingCounter && currentComment) {
                 const userSession: string | null = sessionStorage.getItem("session");
@@ -175,14 +175,20 @@ export class PostController {
                 }
                 else {
                     const existingRating: RatingComment | undefined = await RatingComment.getRatingByUserIdAndcommentId(user.userId, currentComment.commentId);
-                    const positiveButton: HTMLButtonElement = document.querySelector("#positiveComment")!;
-                    const negativeButton: HTMLButtonElement = document.querySelector("#negativeComment")!;
+                    const positiveButton: HTMLAnchorElement = document.querySelector(`.positiveComment7${_comment.commentId}`)!;
+                    const negativeButton: HTMLAnchorElement = document.querySelector(`.negativeComment7${_comment.commentId}`)!;
                     if (existingRating) {
                         if (existingRating.ratingType === "positive") {
-                            positiveButton.style.color = "green";
+                            console.log(`${existingRating.ratingType} Cheeki Breeki!`);
+                            positiveButton.innerHTML = `
+                                <i class="fa-solid fa-thumbs-up" id="positiveComment" style="color: green;"></i>
+                            `;
                         }
                         else if (existingRating.ratingType === "negative") {
-                            negativeButton.style.color = "#ba2f2f";
+                            console.log(`${existingRating.ratingType} Cheeki Breeki!`);
+                            negativeButton.innerHTML = `
+                                <i class="fa-solid fa-thumbs-down" id="negativeComment" style="color: #ba2f2f;"></i>
+                            `;
                         }
                     }
                 }
@@ -212,7 +218,6 @@ export class PostController {
         if (this._isPanelVisible) {
             this._isPanelVisible = false;
             commentMakerPanel.style.display = "none";
-            console.log("fuegoFalse");
         }
         else {
             if (!sessionStorage.getItem("session")) {
@@ -221,7 +226,6 @@ export class PostController {
             else {
                 this._isPanelVisible = true;
                 commentMakerPanel.style.display = "flex";
-                console.log("fuegoTrue");
             }
         }
     }
