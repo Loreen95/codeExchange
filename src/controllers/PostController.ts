@@ -101,7 +101,6 @@ export class PostController {
                         }
                     }
                 }
-                // the anchor (<a>) tag around the post must be a div or it breaks, (doesn't do anything when clicked on)
                 insertPostsHere.insertAdjacentHTML("beforeend", `
                     <div class="question">
                         <a href="profile.html?user=${userId}" class="navLink" id="whoAsked">${userName}: <p data-translate="asks"></p></a>
@@ -145,6 +144,7 @@ export class PostController {
         const commentList: Comment[] | undefined = await Comment.getCommentsByMessageId(Number(sessionStorage.getItem("post_Nr")));
         const ratingCounter: HTMLParagraphElement | null = document.querySelector(".insertCommentRatingHere");
         commentList.forEach(async _comment => {
+            const countRating: number | undefined = await RatingComment.countTotalRatingBycommentId(_comment.commentId);
             console.log("Comment:", _comment.commentId);
             insertCommenthere.insertAdjacentHTML("beforeend", `
                 <h1 class="awnserTitle"><a href="profile.html?user=${(await User.getUserById(Number(_comment.userId)))?.userId}" class="navLinkR">${(await User.getUserById(Number(_comment.userId)))?.userName}</a></h1>
@@ -158,7 +158,7 @@ export class PostController {
                         <a id="commentPositive-${_comment.commentId}" href="#${_comment.commentId}" class="navLink">
                             <i class="fa-solid fa-thumbs-up" id="positiveComment"></i>
                         </a>
-                        <p class="insertCommentRatingHere" id="ratingText"></p>
+                        <p class="insertCommentRatingHere" id="ratingText">${countRating}</p>
                         <a id="commentNegative-${_comment.commentId}" href="#${_comment.commentId}" class="navLink">
                             <i class="fa-solid fa-thumbs-down" id="negativeComment"></i>
                         </a>
