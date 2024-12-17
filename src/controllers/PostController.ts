@@ -64,12 +64,7 @@ export class PostController {
                 const userName: string | undefined = (await User.getUserById(Number(post.authorId)))?.userName;
                 const userId: number | undefined = post.authorId;
                 const stringedTimeAndDate: string = String(post.createdAt).slice(8, 10) + "-" + String(post.createdAt).slice(5, 7) + "-" + String(post.createdAt).slice(0, 4) + " | " + String(post.createdAt).slice(11, 19);
-                let countRating: number | undefined = await RatingPost.countTotalRatingByPostId(post.postId);
-                // let rating: number = 0;
-                if (countRating) {
-                    countRating = post.rating;
-                }
-
+                const countRating: number | undefined = await RatingPost.countTotalRatingByPostId(post.postId);
                 titleOfPost = post.title.length > 60 ? post.title.slice(0, 60).concat("...") : post.title;
                 if (post.content.includes("[code]")) {
                     const cutoffValue: number = post.content.indexOf("[code]");
