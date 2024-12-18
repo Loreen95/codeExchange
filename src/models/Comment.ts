@@ -1,6 +1,6 @@
 import "../hicConfig";
 import { api } from "@hboictcloud/api";
-import { commentResult } from "../views/types";
+import { CommentResult } from "../views/types";
 
 export class Comment {
     private _commentId: number;
@@ -21,10 +21,10 @@ export class Comment {
     // CRUD methods:
     public static async getCommentsByMessageId(id: number): Promise<Comment[]> {
         try {
-            const result: commentResult[] = await api.queryDatabase(
+            const result: CommentResult[] = await api.queryDatabase(
                 "SELECT * FROM comment WHERE messageId = ? ORDER BY createdAt DESC",
                 [id]
-            ) as commentResult[];
+            ) as CommentResult[];
             if (result.length > 0) {
                 const comments: Comment[] = result.map(comment => {
                     const newComment: Comment = new Comment(comment.commentId, comment.userId, comment.messageId, comment.content);
@@ -44,7 +44,7 @@ export class Comment {
 
     public static async getCommentById(id: number): Promise<Comment | undefined> {
         try {
-            const result: commentResult[] = await api.queryDatabase("SELECT * FROM comment WHERE commentId = ?", [id]) as commentResult[];
+            const result: CommentResult[] = await api.queryDatabase("SELECT * FROM comment WHERE commentId = ?", [id]) as CommentResult[];
             if (result.length > 0) {
                 const comment: Comment = new Comment(result[0].commentId, result[0].userId, result[0].messageId, result[0].content);
                 return comment;
@@ -61,9 +61,9 @@ export class Comment {
 
     public async create(userId: number, messageId: number, content: string): Promise<boolean> {
         try {
-            const result: commentResult[] = await api.queryDatabase(
+            const result: CommentResult[] = await api.queryDatabase(
                 "INSERT INTO comment (userId, messageId, content) VALUES (?, ?, ?)", userId, messageId, content
-            ) as commentResult[];
+            ) as CommentResult[];
 
             console.log("Success", result);
             return true;
@@ -76,9 +76,9 @@ export class Comment {
 
     public static async delete(commentId: number): Promise<boolean> {
         try {
-            const result: commentResult[] = await api.queryDatabase(
+            const result: CommentResult[] = await api.queryDatabase(
                 "DELETE FROM comment WHERE commentId = ?", commentId
-            ) as commentResult[];
+            ) as CommentResult[];
 
             console.log("Comment deleted successfully", result);
             return true;
@@ -91,7 +91,7 @@ export class Comment {
 
     public static async countTotalComments(): Promise<number | undefined> {
         try {
-            const result: commentResult[] = await api.queryDatabase("SELECT COUNT(*) as count FROM comment") as commentResult[];
+            const result: CommentResult[] = await api.queryDatabase("SELECT COUNT(*) as count FROM comment") as CommentResult[];
             if (result.length > 0) {
                 return result[0].count;
             }
@@ -108,7 +108,7 @@ export class Comment {
 
     public static async countTotalCommentsByUserId(userId: number): Promise<number | undefined> {
         try {
-            const result: commentResult[] = await api.queryDatabase("SELECT COUNT(*) as count FROM comment WHERE userId = ?", [userId]) as commentResult[];
+            const result: CommentResult[] = await api.queryDatabase("SELECT COUNT(*) as count FROM comment WHERE userId = ?", [userId]) as CommentResult[];
             if (result.length > 0) {
                 return result[0].count;
             }
@@ -125,7 +125,7 @@ export class Comment {
 
     public static async countTotalRatingByUserId(userId: number): Promise<number | undefined> {
         try {
-            const result: commentResult[] = await api.queryDatabase("SELECT SUM(rating) as count FROM comment WHERE userId = ?", [userId]) as commentResult[];
+            const result: CommentResult[] = await api.queryDatabase("SELECT SUM(rating) as count FROM comment WHERE userId = ?", [userId]) as CommentResult[];
             if (result.length > 0) {
                 return result[0].count;
             }
@@ -142,10 +142,10 @@ export class Comment {
 
     public async updateRating(commentId: number, rating: number): Promise<boolean> {
         try {
-            const result: commentResult[] = await api.queryDatabase(
+            const result: CommentResult[] = await api.queryDatabase(
                 "UPDATE comment SET rating = ? WHERE commentId = ?",
                 rating, commentId
-            ) as commentResult[];
+            ) as CommentResult[];
             console.log("Rating updated successfully:", result);
             return true;
         }

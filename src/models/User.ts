@@ -1,6 +1,6 @@
 import "../hicConfig";
 import { api } from "@hboictcloud/api";
-import { postResult, userResult } from "../views/types";
+import { PostResult, UserResult } from "../views/types";
 
 /* Class User
  * This class represents a user
@@ -15,6 +15,7 @@ export class User {
     private _yearsExperience: number | undefined;
     private _createdAt: Date | undefined;
     private _expertise: string | undefined;
+    private _foto: string | undefined;
 
     public constructor(userId: number, email: string, username: string, password: string) {
         this._userId = userId;
@@ -30,7 +31,7 @@ export class User {
      */
     public static async doesUserExistForEmail(email: string): Promise<boolean | undefined> {
         try {
-            const result: userResult[] = await api.queryDatabase("SELECT email FROM user WHERE email = ?", [email]) as userResult[];
+            const result: UserResult[] = await api.queryDatabase("SELECT email FROM user WHERE email = ?", [email]) as UserResult[];
             if (result.length > 0) {
                 return true;
             }
@@ -51,7 +52,7 @@ export class User {
      */
     public static async doesUserExistForUsername(username: string): Promise<boolean | undefined> {
         try {
-            const result: userResult[] = await api.queryDatabase("SELECT username FROM user WHERE username = ?", [username]) as userResult[];
+            const result: UserResult[] = await api.queryDatabase("SELECT username FROM user WHERE username = ?", [username]) as UserResult[];
             if (result.length > 0) {
                 return true;
             }
@@ -71,7 +72,7 @@ export class User {
      */
     public static async getUserById(userId: number): Promise<User | undefined> {
         try {
-            const result: userResult[] = await api.queryDatabase("SELECT * from user WHERE userId = ?", [userId]) as userResult[];
+            const result: UserResult[] = await api.queryDatabase("SELECT * from user WHERE userId = ?", [userId]) as UserResult[];
             if (result.length > 0) {
                 const user: User = new User(result[0].userId, result[0].email, result[0].username, result[0].password);
                 user.bio = result[0].bio;
@@ -79,6 +80,7 @@ export class User {
                 user.yearsExperience = result[0].yearsExperience;
                 user.createdAt = result[0].createdAt;
                 user.expertise = result[0].expertise;
+                user.foto = result[0].foto;
                 return user;
             }
             else {
@@ -99,8 +101,8 @@ export class User {
      */
     public static async getUserByEmailAndPassword(email: string, password: string): Promise<User | undefined> {
         try {
-            const result: userResult[] = await api.queryDatabase(
-                "SELECT * FROM user WHERE email = ? AND password = ?", email, password) as userResult[];
+            const result: UserResult[] = await api.queryDatabase(
+                "SELECT * FROM user WHERE email = ? AND password = ?", email, password) as UserResult[];
             if (result.length > 0) {
                 return new User(result[0].userId, result[0].email, result[0].username, result[0].password);
             }
@@ -122,8 +124,8 @@ export class User {
      */
     public static async getUserByUsernameAndPassword(username: string, password: string): Promise<User | undefined> {
         try {
-            const result: userResult[] = await api.queryDatabase(
-                "SELECT * FROM user WHERE username = ? AND password = ?", username, password) as userResult[];
+            const result: UserResult[] = await api.queryDatabase(
+                "SELECT * FROM user WHERE username = ? AND password = ?", username, password) as UserResult[];
             if (result.length > 0) {
                 return new User(result[0].userId, result[0].email, result[0].username, result[0].password);
             }
@@ -146,9 +148,9 @@ export class User {
      */
     public async create(username: string, email: string, password: string): Promise<boolean> {
         try {
-            const result: userResult[] = await api.queryDatabase(
+            const result: UserResult[] = await api.queryDatabase(
                 "INSERT INTO user (username, email, password) VALUES (?, ?, ?)", username, email, password
-            ) as userResult[];
+            ) as UserResult[];
             console.log("Success", result);
             return true;
         }
@@ -167,12 +169,12 @@ export class User {
      * @param userId userId
      * @returns boolean based of success
      */
-    public async update(username: string, email: string, dob: string, bio: string, yearsExperience: number, expertise: string, userId: number): Promise<boolean> {
+    public async update(username: string, email: string, dob: string, bio: string, yearsExperience: number, expertise: string, userId: number, foto: string): Promise<boolean> {
         try {
-            const result: userResult[] = await api.queryDatabase(
-                "UPDATE user SET username = ?, email = ?, dob = ?, bio = ?, yearsExperience = ?, expertise = ? WHERE userId = ?",
-                username, email, dob, bio, yearsExperience, expertise, userId
-            ) as userResult[];
+            const result: UserResult[] = await api.queryDatabase(
+                "UPDATE user SET username = ?, email = ?, dob = ?, bio = ?, yearsExperience = ?, expertise = ?, foto = ? WHERE userId = ?",
+                username, email, dob, bio, yearsExperience, expertise, foto, userId
+            ) as UserResult[];
             console.log("Success:", result);
             return true;
         }
@@ -184,7 +186,7 @@ export class User {
 
     public static async delete(userId: number): Promise<boolean> {
         try {
-            const result: postResult[] = await api.queryDatabase("DELETE FROM user WHERE userId = ?", [userId]) as postResult[];
+            const result: PostResult[] = await api.queryDatabase("DELETE FROM user WHERE userId = ?", [userId]) as PostResult[];
             console.log("User deleted successfully:", result);
             return true;
         }
@@ -196,7 +198,7 @@ export class User {
 
     public static async countTotalUsers(): Promise<number | undefined> {
         try {
-            const result: userResult[] = await api.queryDatabase("SELECT COUNT(*) as count FROM user") as userResult[];
+            const result: UserResult[] = await api.queryDatabase("SELECT COUNT(*) as count FROM user") as UserResult[];
             if (result.length > 0) {
                 return result[0].count;
             }
@@ -278,5 +280,13 @@ export class User {
 
     public set expertise(expertise: string | undefined) {
         this._expertise = expertise;
+    }
+
+    public get foto(): string | undefined {
+        return this._foto;
+    }
+
+    public set foto(foto: string | undefined) {
+        this._foto = foto;
     }
 }

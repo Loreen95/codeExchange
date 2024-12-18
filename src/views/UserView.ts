@@ -67,18 +67,13 @@ export class UserView {
     public async render(userInfo: UserInfo): Promise<void> {
         const userUrl: URLSearchParams = new URLSearchParams(window.location.search);
         const userId: string | null = userUrl.get("user");
-        const imageName: string | null = String(sessionStorage.getItem("imageName"));
-        if (userId && imageName) {
-            const userSpecificImageName: string = `${userId}_${imageName}`;
-            const imageUrl: string = `https://dev-hiinooreesaa43-pb2sef2425.hbo-ict.cloud/uploads/${userSpecificImageName}`;
+        if (userId) {
+            const imgUrl: string = userInfo.foto;
             const imageElement: HTMLImageElement | null = document.querySelector("#uploadedImage");
             if (imageElement) {
-                imageElement.src = imageUrl;
+                imageElement.src = imgUrl;
                 imageElement.alt = "Uploaded Profile Picture";
             }
-        }
-        else {
-            console.error("Gebruikers-ID of afbeeldingsnaam niet gevonden.");
         }
         const postCount: number = await this.countPost();
         const commentCount: number = await this.countComments();

@@ -44,7 +44,7 @@ export class UserController extends Controller {
             String(this.userView.userModel.createdAt).slice(11, 19)
             : "Onbekende datum en tijd";
         const expertise: string = this.userView.userModel.expertise || "Geen expertise";
-
+        const foto: string = this.userView.userModel.foto || "Error";
         return {
             userId,
             userEmail,
@@ -54,6 +54,7 @@ export class UserController extends Controller {
             expertise,
             bio,
             stringedTimeAndDate,
+            foto,
         };
     }
 }
