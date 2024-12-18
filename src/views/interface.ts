@@ -84,12 +84,12 @@ class UserInterfaceClass {
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         if (stuff) {
             stuff.innerHTML = `
-                <div class="confirmPopupX"><a class="closeConfirmPopup"><i class="fa-solid fa-xmark"></i></a></div>
                 <div class="confirmPopupText">
                     <p class="confirmPopupMessage" data-translate="deleteComment">Delete comment?</p>
                 <div>
                 <div class="confirmPopupButtons">
-                    <button>elo</button>
+                    <button class="defaultRedButton" id="kjillComment" data-translate="confirm">Confirm</button> 
+                    <button class="closeConfirmPopup2" data-translate="cancel">Cancel</button>
                 </div>
             `;
         }

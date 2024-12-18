@@ -149,7 +149,7 @@ export class PostController {
             insertCommenthere.insertAdjacentHTML("beforeend", `
                 <div class="commentHeader">
                     <h1 class="awnserTitle"><a href="profile.html?user=${(await User.getUserById(Number(_comment.userId)))?.userId}" class="navLinkR">${(await User.getUserById(Number(_comment.userId)))?.userName}</a></h1>
-                    <a class="deleteCommentOption"><p> </p></a>
+                    <a id="deleteCommentOption" class="deleteCommentOption${_comment.commentId}"><p> </p></a>
                 </div>
                 
                 <p id="expertise2">${(await User.getUserById(Number(_comment.userId)))?.expertise || "No expertise added"} | ${(await User.getUserById(Number(_comment.userId)))?.yearsExperience || "No experience added"}</p>
@@ -170,15 +170,33 @@ export class PostController {
                 </div>                
                 <hr>
             `);
-            const deleteCommentBttn: HTMLAnchorElement = document.querySelector(".deleteCommentOption")!;
+            const deleteCommentBttn: HTMLAnchorElement = document.querySelector(`.deleteCommentOption${_comment.commentId}`)!;
             if (Number(sessionStorage.getItem("session")) === Number(_comment.userId)) {
                 deleteCommentBttn.innerHTML = `
                     <i class="fa-solid fa-trash-can"></i>
                 `;
                 deleteCommentBttn.addEventListener("click", () => {
-                    console.log(`yay you klich onuh ${_comment.commentId}`);
                     this._UI.dressConfirmPopupToDeleteComment();
+                    const cancelBttn: HTMLButtonElement = document.querySelector(".closeConfirmPopup2")!;
+                    const kjillCommentBttn: HTMLButtonElement = document.querySelector("#kjillComment")!;
                     this._UI.revealOrHideConfirmPopup();
+
+                    cancelBttn.addEventListener("click", () => {
+                        this._UI.revealOrHideConfirmPopup();
+                    });
+
+                    kjillCommentBttn.addEventListener("click", async () => {
+                        const successMessage: HTMLParagraphElement = document.querySelector("#successMsg")!;
+                        successMessage.innerText += "Your comment has been deleted.";
+                        this._UI.successMessagePopup(true);
+                        await Comment.delete(_comment.commentId).then(async () => {
+                            await this.renderComments();
+                            this._UI.revealOrHideConfirmPopup();
+                            await new Promise(r => setTimeout(r, 2000)).then(() => {
+                                this._UI.successMessagePopup(false);
+                            });
+                        });
+                    });
                 });
             }
             const ratingCounter: HTMLParagraphElement | null = document.querySelector(".insertCommentRatingHere");

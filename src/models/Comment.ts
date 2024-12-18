@@ -74,6 +74,21 @@ export class Comment {
         }
     }
 
+    public static async delete(commentId: number): Promise<boolean> {
+        try {
+            const result: commentResult[] = await api.queryDatabase(
+                "DELETE FROM comment WHERE commentId = ?", commentId
+            ) as commentResult[];
+
+            console.log("Comment deleted successfully", result);
+            return true;
+        }
+        catch (reason) {
+            console.error("An error occurred while destroying a database entry.", reason);
+            return false;
+        }
+    }
+
     public static async countTotalComments(): Promise<number | undefined> {
         try {
             const result: commentResult[] = await api.queryDatabase("SELECT COUNT(*) as count FROM comment") as commentResult[];
