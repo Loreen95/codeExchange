@@ -144,7 +144,6 @@ export class PostController {
         const commentList: Comment[] | undefined = await Comment.getCommentsByMessageId(Number(sessionStorage.getItem("post_Nr")));
         commentList.forEach(async _comment => {
             const countRating: number | undefined = await RatingComment.countTotalRatingBycommentId(_comment.commentId);
-            // console.log("Comment:", _comment.commentId);
             insertCommenthere.innerHTML = "";
             insertCommenthere.insertAdjacentHTML("beforeend", `
                 <div class="commentHeader">
@@ -494,13 +493,10 @@ export class PostController {
                 const postIdFromUrl: string | null = postUrl.get("post");
                 const post: Post | undefined = await Post.getPostById(Number(postIdFromUrl));
                 if (!post) {
-                    // console.log("Post not found");
                     return;
                 }
                 this._ratingPostModel = new RatingPost(0, user.userId, post.postId);
                 const existingRating: RatingPost | undefined = await RatingPost.getRatingByUserIdAndPostId(user.userId, post.postId);
-                // const currentRating: RatingPost | undefined = await RatingPost.getRatingById(this._ratingPostModel.ratingId);
-                // console.log(currentRating);
                 if (!existingRating) {
                     await this._ratingPostModel.create(user.userId, post.postId, typeRating);
                 }
@@ -560,7 +556,7 @@ export class PostController {
                     await this._ratingCommentModel.updateRating(typeRating, existingRating.ratingId, user.userId, comment.commentId);
                 }
             }
-            // window.location.reload();
+            window.location.reload();
         }
         catch (error) {
             console.error("Error updating the rating:", error);

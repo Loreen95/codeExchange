@@ -74,7 +74,7 @@ export class RatingComment {
             const positiveResult: { count: number }[] = await api.queryDatabase("SELECT COUNT(*) as count FROM comment_rating WHERE commentId = ? AND ratingType = 'positive'", commentId) as { count: number }[];
             const negativeResult: { count: number }[] = await api.queryDatabase("SELECT COUNT(*) as count FROM comment_rating WHERE commentId = ? AND ratingType = 'negative'", commentId) as { count: number }[];
             if (positiveResult.length > 0 || negativeResult.length > 0) {
-                return positiveResult[0].count - negativeResult[0].count || 0; // Retourneer 0 als de count null of undefined is
+                return positiveResult[0].count - negativeResult[0].count || 0;
             }
             else {
                 console.error("No results found");

@@ -71,9 +71,10 @@ export class RatingPost {
 
     public static async countTotalRatingByPostId(postId: number): Promise<number> {
         try {
-            const result: { count: number }[] = await api.queryDatabase("SELECT COUNT(*) as count FROM post_rating WHERE postId = ?", postId) as { count: number }[];
-            if (result.length > 0) {
-                return result[0].count || 0; // Retourneer 0 als de count null of undefined is
+            const positiveResult: { count: number }[] = await api.queryDatabase("SELECT COUNT(*) as count FROM post_rating WHERE postId = ? AND ratingType = 'positive'", postId) as { count: number }[];
+            const negativeResult: { count: number }[] = await api.queryDatabase("SELECT COUNT(*) as count FROM post_rating WHERE postId = ? AND ratingType = 'negative'", postId) as { count: number }[];
+            if (positiveResult.length > 0 || negativeResult.length > 0) {
+                return positiveResult[0].count - negativeResult[0].count || 0;
             }
             else {
                 console.error("No results found");
@@ -82,7 +83,7 @@ export class RatingPost {
         }
         catch (reason) {
             console.error("Error fetching result", reason);
-            return 0; // Bij een fout retourneren we 0
+            return 0;
         }
     }
 
