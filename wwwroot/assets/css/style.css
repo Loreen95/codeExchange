@@ -1234,14 +1234,14 @@ input:-webkit-autofill:active{
     align-items: center;
 }
 
-.deleteCommentOption {
+#deleteCommentOption {
     color: rgb(172, 26, 26);
     margin: 0 0 0 0;
     font-size: 25px;
     cursor: pointer;
 }
 
-.deleteCommentOption:hover {
+#deleteCommentOption:hover {
     transition: all 0.3s;
     color: rgb(101, 11, 11);
 }

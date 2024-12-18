@@ -306,10 +306,6 @@ export class LanguageClass {
                 en: "Confirm",
                 nl: "Bevestigen",
             },
-            cansel: {
-                en: "Cancel",
-                nl: "Annuleren",
-            },
             yaSureBukko: {
                 en: "Input password to proceed",
                 nl: "Voer wachtwoord in om door te gaan",
