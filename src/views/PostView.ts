@@ -2,7 +2,6 @@ import { Post } from "../models/Post";
 import { PostController } from "../controllers/PostController";
 import UserInterfaceClass from "./interface";
 import hljs from "highlight.js";
-import { RatingPost } from "../models/Post_rating";
 import { User } from "../models/User";
 
 const post: PostController = new PostController();
@@ -75,25 +74,7 @@ if (ratingCounter && currentpost) {
         console.error("No user found!");
     }
     else {
-        const existingRating: RatingPost | undefined = await RatingPost.getRatingByUserIdAndPostId(user.userId, currentpost.postId);
-        const countRating: number | undefined = await RatingPost.countTotalRatingByPostId(currentpost.postId);
-        const positiveButton: HTMLButtonElement = document.querySelector("#positive")!;
-        const negativeButton: HTMLButtonElement = document.querySelector("#negative")!;
-
-        if (existingRating) {
-            if (existingRating.ratingType === "positive") {
-                positiveButton.style.color = "green";
-            }
-            else if (existingRating.ratingType === "negative") {
-                negativeButton.style.color = "#ba2f2f";
-            }
-        }
-        if (String(countRating) === String(null)) {
-            ratingCounter.innerHTML = "0";
-        }
-        else {
-            ratingCounter.innerHTML = String(countRating);
-        }
+        await post.renderPostRating();
     }
 }
 
@@ -176,10 +157,14 @@ const ratingNegative: HTMLLinkElement = document.querySelector("#postNegative")!
 
 ratingPositive.addEventListener("click", async (e: Event) => {
     e.preventDefault();
-    await post.rateThePost("positive");
+    await post.rateThePost("positive").then(async () => {
+        await post.renderPostRating();
+    });
 });
 
 ratingNegative.addEventListener("click", async (e: Event) => {
     e.preventDefault();
-    await post.rateThePost("negative");
+    await post.rateThePost("negative").then(async () => {
+        await post.renderPostRating();
+    });
 });

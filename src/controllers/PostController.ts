@@ -139,6 +139,35 @@ export class PostController {
         }
     }
 
+    public async renderPostRating(): Promise<void> {
+        console.log("Confirmatiom57");
+        const userSession: string | null = sessionStorage.getItem("session");
+        const currentpost: Post | undefined = await Post.getPostById(Number(sessionStorage.getItem("post_Nr")));
+        const user: User | undefined = await User.getUserById(Number(userSession));
+        const existingRating: RatingPost | undefined = await RatingPost.getRatingByUserIdAndPostId(user.userId, currentpost.postId);
+        const countRating: number | undefined = await RatingPost.countTotalRatingByPostId(currentpost.postId);
+        const ratingCounter: HTMLParagraphElement = document.querySelector(".insertRatingHere")!;
+        const positiveButton: HTMLButtonElement = document.querySelector("#positive")!;
+        const negativeButton: HTMLButtonElement = document.querySelector("#negative")!;
+        negativeButton.style.color = "aliceblue";
+        positiveButton.style.color = "aliceblue";
+
+        if (existingRating) {
+            if (existingRating.ratingType === "positive") {
+                positiveButton.style.color = "green";
+            }
+            else if (existingRating.ratingType === "negative") {
+                negativeButton.style.color = "#ba2f2f";
+            }
+        }
+        if (String(countRating) === String(null)) {
+            ratingCounter.innerHTML = "0";
+        }
+        else {
+            ratingCounter.innerHTML = String(countRating);
+        }
+    }
+
     public async renderComments(): Promise<void> {
         const insertCommenthere: HTMLDivElement = document.querySelector(".awnsers")!;
         const commentList: Comment[] | undefined = await Comment.getCommentsByMessageId(Number(sessionStorage.getItem("post_Nr")));
@@ -533,7 +562,7 @@ export class PostController {
                     else if (existingRating.ratingType === "negative" && typeRating === "positive") {
                         await this._ratingPostModel.updateRating(typeRating, existingRating.ratingId, user.userId, post.postId);
                     }
-                    window.location.reload();
+                    // window.location.reload();
                 }
             }
         }

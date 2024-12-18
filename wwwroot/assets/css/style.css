@@ -1234,6 +1234,10 @@ input:-webkit-autofill:active{
     align-items: center;
 }
 
+#postNegative, #positive {
+    cursor: pointer;
+}
+
 #deleteCommentOption {
     color: rgb(172, 26, 26);
     margin: 0 0 0 0;
