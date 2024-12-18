@@ -110,17 +110,20 @@ const questionStatsDisplay: HTMLParagraphElement = document.querySelector("#ques
 const answerStatsDisplay: HTMLParagraphElement = document.querySelector("#answerStats")!;
 const memberStatsDisplay: HTMLParagraphElement = document.querySelector("#memberStats")!;
 
-const questionStats: number | undefined = await Post.countTotalPosts();
-const answerStats: number | undefined = await Comment.countTotalComments();
-const memberStats: number | undefined = await User.countTotalUsers();
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+if (questionStatsDisplay && answerStatsDisplay && memberStatsDisplay) {
+    const questionStats: number | undefined = await Post.countTotalPosts();
+    const answerStats: number | undefined = await Comment.countTotalComments();
+    const memberStats: number | undefined = await User.countTotalUsers();
 
-if (!questionStats || !answerStats || !memberStats) {
-    questionStatsDisplay.innerHTML = "0";
-    answerStatsDisplay.innerHTML = "0";
-    memberStatsDisplay.innerHTML = "0";
-}
-else {
-    questionStatsDisplay.innerHTML = `${questionStats}`;
-    answerStatsDisplay.innerHTML = `${answerStats}`;
-    memberStatsDisplay.innerHTML = `${memberStats}`;
+    if (!questionStats || !answerStats || !memberStats) {
+        questionStatsDisplay.innerHTML = "0";
+        answerStatsDisplay.innerHTML = "0";
+        memberStatsDisplay.innerHTML = "0";
+    }
+    else {
+        questionStatsDisplay.innerHTML = `${questionStats}`;
+        answerStatsDisplay.innerHTML = `${answerStats}`;
+        memberStatsDisplay.innerHTML = `${memberStats}`;
+    }
 }

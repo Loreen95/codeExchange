@@ -140,7 +140,6 @@ export class PostController {
     }
 
     public async renderPostRating(): Promise<void> {
-        console.log("Confirmatiom57");
         const userSession: string | null = sessionStorage.getItem("session");
         const currentpost: Post | undefined = await Post.getPostById(Number(sessionStorage.getItem("post_Nr")));
         const user: User | undefined = await User.getUserById(Number(userSession));
@@ -566,7 +565,6 @@ export class PostController {
                     else if (existingRating.ratingType === "negative" && typeRating === "positive") {
                         await this._ratingPostModel.updateRating(typeRating, existingRating.ratingId, user.userId, post.postId);
                     }
-                    // window.location.reload();
                 }
             }
         }
@@ -590,8 +588,8 @@ export class PostController {
             }
             this._ratingCommentModel = new RatingComment(0, user.userId, comment.commentId);
             const existingRating: RatingComment | undefined = await RatingComment.getRatingByUserIdAndcommentId(user.userId, commentId);
-            const currentRating: RatingComment | undefined = await RatingComment.getRatingById(this._ratingCommentModel.ratingId);
-            console.log(currentRating);
+            // const currentRating: RatingComment | undefined = await RatingComment.getRatingById(this._ratingCommentModel.ratingId);
+            // console.log(currentRating);
             if (!existingRating) {
                 await this._ratingCommentModel.create(user.userId, commentId, typeRating);
             }
@@ -609,7 +607,6 @@ export class PostController {
                     await this._ratingCommentModel.updateRating(typeRating, existingRating.ratingId, user.userId, comment.commentId);
                 }
             }
-            window.location.reload();
         }
         catch (error) {
             console.error("Error updating the rating:", error);
