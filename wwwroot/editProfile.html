@@ -28,12 +28,7 @@
                 <figure class="profilePicture profilePictureInEdit" id="profilePictureContainer">
                     <img id="uploadedImage" src="" alt="Profile Picture">
                     <label for="profilePictureInput">
-                        <input 
-                            type="file" 
-                            id="profilePictureInput" 
-                            class="hidden-file-input" 
-                            accept="image/*"
-                        />
+                        <input type="file" id="profilePictureInput" class="hidden-file-input" accept="image/*"/>
                     </label>
                 </figure>
                 <label for="username" data-translate="username"></label>
@@ -65,7 +60,7 @@
             </section>
         </section>
         <div class="thebelowButtonStuffAgain"> 
-            <a href="profile.html"><button class="cansel" data-translate="cansel"></button></a>
+            <a href="profile.html"><button class="cansel" data-translate="cancel"></button></a>
             <button class="applyChaingesBttn" data-translate="applychanges"></button>
         </div>
 
@@ -86,4 +81,27 @@
     <script src="/src/controllers/ProfileController.ts" type="module"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
     <script>hljs.highlightAll();</script>
+    <script>
+        const imageInput = document.getElementById('profilePictureInput');
+        const uploadedImage = document.getElementById('uploadedImage');
+        imageInput.addEventListener("change", function () {
+            if (imageInput.files && imageInput.files[0]) {
+                const reader = new FileReader();
+                console.log("Ik zie een fileReader");
+                reader.onload = function (e) {
+                    console.log("Bestand geupload: ", e.target.result);
+                    if (uploadedImage) {
+                        uploadedImage.src = e.target.result;
+                        uploadedImage.alt = "Profile Picture Preview";
+                        console.log("Afbeelding geladen: ", uploadedImage.src);
+                    } else {
+                        console.error("Afbeelding element niet gevonden.");
+                    }
+                };
+                reader.readAsDataURL(imageInput.files[0]);
+            } else {
+                console.error("Geen bestand geselecteerd.");
+            }
+        });
+    </script>
 </body>

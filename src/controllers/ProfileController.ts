@@ -48,6 +48,7 @@ export class ProfileController {
                 : this._profileView.userModel.createdAt
             : "Onbekende datum en tijd";
         const expertise: string = this._profileView.userModel.expertise || "Geen expertise";
+        const foto: string = this._profileView.userModel.foto || "No Foto";
         return {
             userId,
             userEmail,
@@ -57,6 +58,7 @@ export class ProfileController {
             yearsExperience,
             bio,
             stringedTimeAndDate,
+            foto,
         };
     }
 
@@ -85,7 +87,7 @@ export class ProfileController {
         }
     }
 
-    public async updateRecords(givenUsername: string, givenEmail: string, givenDob: string, givenBio: string, givenExperience: number, givenExpertise: string): Promise<void> {
+    public async updateRecords(givenUsername: string, givenEmail: string, givenDob: string, givenBio: string, givenExperience: number, givenExpertise: string, foto: string): Promise<void> {
         const successMessage: HTMLParagraphElement = document.querySelector("#successMsg")!;
         const errorMessage: HTMLParagraphElement = document.querySelector("#errMsg")!;
         successMessage.innerHTML = "";
@@ -138,7 +140,7 @@ export class ProfileController {
                 UI.successMessagePopup(false);
             }
             else {
-                const success: boolean = await this._profileView.userModel.update(givenUsername, givenEmail, givenDob, givenBio, givenExperience, givenExpertise, userId);
+                const success: boolean = await this._profileView.userModel.update(givenUsername, givenEmail, givenDob, givenBio, givenExperience, givenExpertise, userId, foto);
 
                 if (success) {
                     successMessage.innerHTML = "The records have been updated";

@@ -1,4 +1,4 @@
-export type userResult = {
+export type UserResult = {
     userId: number;
     username: string;
     email: string;
@@ -9,9 +9,10 @@ export type userResult = {
     yearsExperience: number;
     createdAt: Date;
     count: number;
+    foto: string;
 };
 
-export type postResult = {
+export type PostResult = {
     postId: number;
     authorId: number;
     title: string;
@@ -22,7 +23,7 @@ export type postResult = {
     insertId: number;
 };
 
-export type commentResult = {
+export type CommentResult = {
     commentId: number;
     userId: number;
     messageId: number;
@@ -33,14 +34,14 @@ export type commentResult = {
     count: number;
 };
 
-export type ratingCommentResult = {
+export type RatingCommentResult = {
     ratingId: number;
     userId: number;
     commentId: number;
     ratingType: string;
 };
 
-export type ratingPostResult = {
+export type RatingPostResult = {
     ratingId: number;
     userId: number;
     postId: number;
@@ -57,6 +58,7 @@ export interface UserInfo {
     expertise: string;
     stringedTimeAndDate: string;
     bio: string;
+    foto: string;
 }
 
 export interface PostInfo {

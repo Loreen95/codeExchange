@@ -1,6 +1,6 @@
 import "../hicConfig";
 import { api } from "@hboictcloud/api";
-import { postResult } from "../views/types";
+import { PostResult } from "../views/types";
 
 export class Post {
     private _postId: number;
@@ -21,7 +21,7 @@ export class Post {
     // CRUD methods:
     public static async getAllPosts(): Promise<Post[] | undefined> {
         try {
-            const result: postResult[] = await api.queryDatabase("Select * from post ORDER BY createdAt DESC") as postResult[];
+            const result: PostResult[] = await api.queryDatabase("Select * from post ORDER BY createdAt DESC") as PostResult[];
             if (result.length > 0) {
                 const posts: Post[] = result.map(post => {
                     const newPost: Post = new Post(post.postId, post.authorId, post.title, post.content);
@@ -43,7 +43,7 @@ export class Post {
 
     public static async getAllPostsByUserId(id: number): Promise<Post[] | undefined> {
         try {
-            const result: postResult[] = await api.queryDatabase("SELECT * FROM `post` WHERE authorId = ? ORDER BY createdAt DESC", [id]) as postResult[];
+            const result: PostResult[] = await api.queryDatabase("SELECT * FROM `post` WHERE authorId = ? ORDER BY createdAt DESC", [id]) as PostResult[];
             if (result.length > 0) {
                 const posts: Post[] = result.map(post => {
                     const newPost: Post = new Post(post.postId, post.authorId, post.title, post.content);
@@ -65,7 +65,7 @@ export class Post {
 
     public static async getPostById(id: number): Promise<Post | undefined> {
         try {
-            const result: postResult[] = await api.queryDatabase("SELECT * from post WHERE postId = ?", [id]) as postResult[];
+            const result: PostResult[] = await api.queryDatabase("SELECT * from post WHERE postId = ?", [id]) as PostResult[];
             if (result.length > 0) {
                 const post: Post = new Post(result[0].postId, result[0].authorId, result[0].title, result[0].content);
                 post.rating = result[0].rating;
@@ -103,7 +103,7 @@ export class Post {
 
     public static async countTotalPosts(): Promise<number | undefined> {
         try {
-            const result: postResult[] = await api.queryDatabase("SELECT COUNT(*) as count FROM post") as postResult[];
+            const result: PostResult[] = await api.queryDatabase("SELECT COUNT(*) as count FROM post") as PostResult[];
             if (result.length > 0) {
                 return result[0].count;
             }
@@ -120,7 +120,7 @@ export class Post {
 
     public static async countTotalPostsByUserId(authorId: number): Promise<number | undefined> {
         try {
-            const result: postResult[] = await api.queryDatabase("SELECT COUNT(*) as count FROM post WHERE authorId = ?", [authorId]) as postResult[];
+            const result: PostResult[] = await api.queryDatabase("SELECT COUNT(*) as count FROM post WHERE authorId = ?", [authorId]) as PostResult[];
             if (result.length > 0) {
                 return result[0].count;
             }
@@ -137,7 +137,7 @@ export class Post {
 
     // public static async countTotalRatingByUserId(userId: number): Promise<number | undefined> {
     //     try {
-    //         const result: postResult[] = await api.queryDatabase("SELECT SUM(rating) as count FROM post WHERE authorId = ?", [userId]) as postResult[];
+    //         const result: PostResult[] = await api.queryDatabase("SELECT SUM(rating) as count FROM post WHERE authorId = ?", [userId]) as PostResult[];
     //         if (result.length > 0) {
     //             return result[0].count;
     //         }
@@ -154,10 +154,10 @@ export class Post {
 
     public async updateRating(postId: number, rating: number): Promise<boolean> {
         try {
-            const result: postResult[] = await api.queryDatabase(
+            const result: PostResult[] = await api.queryDatabase(
                 "UPDATE post SET rating = ? WHERE postId = ?",
                 rating, postId
-            ) as postResult[];
+            ) as PostResult[];
             console.log("Rating updated successfully:", result);
             return true;
         }

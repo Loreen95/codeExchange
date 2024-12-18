@@ -146,30 +146,25 @@ if (apply && usernameInput && emailInput && dobInput && bioInput && experienceIn
         const bio: string = bioInput.value.trim();
         const experience: number = Number(experienceInput.value.trim());
         const expertise: string = String(expertiseInput.value.trim());
-        await profileController.updateRecords(username, email, dobFormat, bio, experience, expertise);
-        if (imageInput) {
-            try {
-                // Verkrijg de gebruikers-ID (bijv. uit de sessie of een globale variabele)
-                const userId: string | null = sessionStorage.getItem("session");
-                const data: string | types.DataURL = await utils.getDataUrl(imageInput);
-                const dataToUpload: string = typeof data === "string" ? data : data.url;
-                const imageName: string = imageInput.value.split("\\").pop() || imageInput.value;
-                const userSpecificImageName: string = `${userId}_${imageName}`;
-                const uploadResponse: string = await api.uploadFile(userSpecificImageName, dataToUpload, true);
-                console.log(uploadResponse);
-                sessionStorage.setItem("imageName", imageName);
-                console.log(uploadResponse, userSpecificImageName);
-                const newImageUrl: string = `https://dev-hiinooreesaa43-pb2sef2425.hbo-ict.cloud/uploads/${userSpecificImageName}`;
-                const imageElement: HTMLImageElement | null = document.querySelector("#uploadedImage");
-                if (imageElement) {
-                    imageElement.src = newImageUrl;
-                    imageElement.alt = "Uploaded Profile Picture";
-                }
-            }
-            catch (error) {
-                console.error("Er is een fout opgetreden:", error);
-            }
+        if (!imageInput) {
+            return;
         }
+        const userId: string | null = sessionStorage.getItem("session");
+        const data: string | types.DataURL = await utils.getDataUrl(imageInput);
+        const dataToUpload: string = typeof data === "string" ? data : data.url;
+        const imageName: string = imageInput.value.split("\\").pop() || imageInput.value;
+        const userSpecificImageName: string = `${userId}_${imageName}`;
+        const uploadResponse: string = await api.uploadFile(userSpecificImageName, dataToUpload, true);
+        console.log(uploadResponse);
+        sessionStorage.setItem("imageName", imageName);
+        console.log(uploadResponse, userSpecificImageName);
+        const newImageUrl: string = `https://dev-hiinooreesaa43-pb2sef2425.hbo-ict.cloud/uploads/${userSpecificImageName}`;
+        const imageElement: HTMLImageElement | null = document.querySelector("#uploadedImage");
+        if (imageElement) {
+            imageElement.src = newImageUrl;
+            imageElement.alt = "Uploaded Profile Picture";
+        }
+        await profileController.updateRecords(username, email, dobFormat, bio, experience, expertise, newImageUrl);
     });
 }
 

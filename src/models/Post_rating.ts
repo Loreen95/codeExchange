@@ -1,6 +1,6 @@
 import "../hicConfig";
 import { api } from "@hboictcloud/api";
-import { ratingPostResult } from "../views/types";
+import { RatingPostResult } from "../views/types";
 
 export class RatingPost {
     private _ratingId: number;
@@ -16,7 +16,7 @@ export class RatingPost {
 
     public static async getRatingById(id: number): Promise<RatingPost | undefined> {
         try {
-            const result: ratingPostResult[] = await api.queryDatabase("SELECT * FROM post_rating WHERE ratingId = ?", [id]) as ratingPostResult[];
+            const result: RatingPostResult[] = await api.queryDatabase("SELECT * FROM post_rating WHERE ratingId = ?", [id]) as RatingPostResult[];
             if (result.length > 0) {
                 const rating: RatingPost = new RatingPost (result[0].ratingId, result[0].userId, result[0].postId);
                 rating.ratingType = result[0].ratingType;
@@ -34,7 +34,7 @@ export class RatingPost {
 
     public static async getRatingByUserIdAndPostId(userId: number, postId: number): Promise<RatingPost | undefined> {
         try {
-            const result: ratingPostResult[] = await api.queryDatabase("SELECT * FROM `post_rating` WHERE userId = ? And postId = ?", userId, postId) as ratingPostResult[];
+            const result: RatingPostResult[] = await api.queryDatabase("SELECT * FROM `post_rating` WHERE userId = ? And postId = ?", userId, postId) as RatingPostResult[];
             if (result.length > 0) {
                 console.log(result[0].ratingId, result[0].userId, result[0].postId, result[0].ratingType);
                 const ratingPost: RatingPost = new RatingPost(result[0].ratingId, result[0].userId, result[0].postId);
@@ -89,7 +89,7 @@ export class RatingPost {
 
     public async deleteRating(userId: number, postId: number): Promise<boolean> {
         try {
-            const result: ratingPostResult[] = await api.queryDatabase("DELETE FROM post_rating WHERE userId = ? AND postId = ?", userId, postId) as ratingPostResult[];
+            const result: RatingPostResult[] = await api.queryDatabase("DELETE FROM post_rating WHERE userId = ? AND postId = ?", userId, postId) as RatingPostResult[];
             console.log(`Succesfully deleted: ${this._ratingId} ${userId} ${postId}, ${result}`);
             return true;
         }
@@ -101,7 +101,7 @@ export class RatingPost {
 
     public async updateRating(ratingType: string, ratingId: number, userId: number, postId: number): Promise<boolean> {
         try {
-            const result: ratingPostResult[] = await api.queryDatabase("UPDATE post_rating SET ratingType = ? WHERE ratingId = ? AND userId = ? AND postId = ?", ratingType, ratingId, userId, postId) as ratingPostResult[];
+            const result: RatingPostResult[] = await api.queryDatabase("UPDATE post_rating SET ratingType = ? WHERE ratingId = ? AND userId = ? AND postId = ?", ratingType, ratingId, userId, postId) as RatingPostResult[];
             console.log("Success", result);
             return true;
         }

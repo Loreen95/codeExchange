@@ -1,6 +1,6 @@
 import "../hicConfig";
 import { api } from "@hboictcloud/api";
-import { ratingCommentResult } from "../views/types";
+import { RatingCommentResult } from "../views/types";
 
 export class RatingComment {
     private _ratingId: number;
@@ -16,7 +16,7 @@ export class RatingComment {
 
     public static async getRatingById(id: number): Promise<RatingComment | undefined> {
         try {
-            const result: ratingCommentResult[] = await api.queryDatabase("SELECT * FROM comment_rating WHERE ratingId = ?", [id]) as ratingCommentResult[];
+            const result: RatingCommentResult[] = await api.queryDatabase("SELECT * FROM comment_rating WHERE ratingId = ?", [id]) as RatingCommentResult[];
             if (result.length > 0) {
                 const rating: RatingComment = new RatingComment (result[0].ratingId, result[0].userId, result[0].commentId);
                 rating.ratingType = result[0].ratingType;
@@ -34,7 +34,7 @@ export class RatingComment {
 
     public static async getRatingByUserIdAndcommentId(userId: number, commentId: number): Promise<RatingComment | undefined> {
         try {
-            const result: ratingCommentResult[] = await api.queryDatabase("SELECT * FROM `comment_rating` WHERE userId = ? And commentId = ?", userId, commentId) as ratingCommentResult[];
+            const result: RatingCommentResult[] = await api.queryDatabase("SELECT * FROM `comment_rating` WHERE userId = ? And commentId = ?", userId, commentId) as RatingCommentResult[];
             if (result.length > 0) {
                 console.log(result[0].ratingId, result[0].userId, result[0].commentId, result[0].ratingType);
                 const ratingComment: RatingComment = new RatingComment(result[0].ratingId, result[0].userId, result[0].commentId);
@@ -89,7 +89,7 @@ export class RatingComment {
 
     public async deleteRating(userId: number, commentId: number): Promise<boolean> {
         try {
-            const result: ratingCommentResult[] = await api.queryDatabase("DELETE FROM comment_rating WHERE userId = ? AND commentId = ?", userId, commentId) as ratingCommentResult[];
+            const result: RatingCommentResult[] = await api.queryDatabase("DELETE FROM comment_rating WHERE userId = ? AND commentId = ?", userId, commentId) as RatingCommentResult[];
             console.log(`Succesfully deleted: ${this._ratingId} ${userId} ${commentId}, ${result}`);
             return true;
         }
@@ -101,7 +101,7 @@ export class RatingComment {
 
     public async updateRating(ratingType: string, ratingId: number, userId: number, commentId: number): Promise<boolean> {
         try {
-            const result: ratingCommentResult[] = await api.queryDatabase("UPDATE comment_rating SET ratingType = ? WHERE ratingId = ? AND userId = ? AND commentId = ?", ratingType, ratingId, userId, commentId) as ratingCommentResult[];
+            const result: RatingCommentResult[] = await api.queryDatabase("UPDATE comment_rating SET ratingType = ? WHERE ratingId = ? AND userId = ? AND commentId = ?", ratingType, ratingId, userId, commentId) as RatingCommentResult[];
             console.log("Success", result);
             return true;
         }
