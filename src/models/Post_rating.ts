@@ -36,7 +36,7 @@ export class RatingPost {
         try {
             const result: ratingPostResult[] = await api.queryDatabase("SELECT * FROM `post_rating` WHERE userId = ? And postId = ?", userId, postId) as ratingPostResult[];
             if (result.length > 0) {
-                console.log(result[0].ratingId, result[0].userId, result[0].postId, result[0].ratingType);
+                // console.log(result[0].ratingId, result[0].userId, result[0].postId, result[0].ratingType);
                 const ratingPost: RatingPost = new RatingPost(result[0].ratingId, result[0].userId, result[0].postId);
                 ratingPost.ratingType = result[0].ratingType;
                 return ratingPost;

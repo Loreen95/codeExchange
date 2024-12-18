@@ -144,8 +144,12 @@ export class PostController {
         const userSession: string | null = sessionStorage.getItem("session");
         const currentpost: Post | undefined = await Post.getPostById(Number(sessionStorage.getItem("post_Nr")));
         const user: User | undefined = await User.getUserById(Number(userSession));
-        const existingRating: RatingPost | undefined = await RatingPost.getRatingByUserIdAndPostId(user.userId, currentpost.postId);
-        const countRating: number | undefined = await RatingPost.countTotalRatingByPostId(currentpost.postId);
+        let countRating: number | undefined = undefined;
+        let existingRating: RatingPost | undefined = undefined;
+        if (user && currentpost) {
+            existingRating = await RatingPost.getRatingByUserIdAndPostId(user.userId, currentpost.postId);
+            countRating = await RatingPost.countTotalRatingByPostId(currentpost.postId);
+        }
         const ratingCounter: HTMLParagraphElement = document.querySelector(".insertRatingHere")!;
         const positiveButton: HTMLButtonElement = document.querySelector("#positive")!;
         const negativeButton: HTMLButtonElement = document.querySelector("#negative")!;
