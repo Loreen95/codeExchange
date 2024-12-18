@@ -145,8 +145,13 @@ export class PostController {
         commentList.forEach(async _comment => {
             const countRating: number | undefined = await RatingComment.countTotalRatingBycommentId(_comment.commentId);
             // console.log("Comment:", _comment.commentId);
+            insertCommenthere.innerHTML = "";
             insertCommenthere.insertAdjacentHTML("beforeend", `
-                <h1 class="awnserTitle"><a href="profile.html?user=${(await User.getUserById(Number(_comment.userId)))?.userId}" class="navLinkR">${(await User.getUserById(Number(_comment.userId)))?.userName}</a></h1>
+                <div class="commentHeader">
+                    <h1 class="awnserTitle"><a href="profile.html?user=${(await User.getUserById(Number(_comment.userId)))?.userId}" class="navLinkR">${(await User.getUserById(Number(_comment.userId)))?.userName}</a></h1>
+                    <a class="deleteCommentOption"><p> </p></a>
+                </div>
+                
                 <p id="expertise2">${(await User.getUserById(Number(_comment.userId)))?.expertise || "No expertise added"} | ${(await User.getUserById(Number(_comment.userId)))?.yearsExperience || "No experience added"}</p>
                 <div class="indivAwnser">
                     <div class="contentPart contentPartComment">${this.encodeContentForVieuwingPurposes(_comment.content)}</div>
@@ -165,6 +170,17 @@ export class PostController {
                 </div>                
                 <hr>
             `);
+            const deleteCommentBttn: HTMLAnchorElement = document.querySelector(".deleteCommentOption")!;
+            if (Number(sessionStorage.getItem("session")) === Number(_comment.userId)) {
+                deleteCommentBttn.innerHTML = `
+                    <i class="fa-solid fa-trash-can"></i>
+                `;
+                deleteCommentBttn.addEventListener("click", () => {
+                    console.log(`yay you klich onuh ${_comment.commentId}`);
+                    this._UI.dressConfirmPopupToDeleteComment();
+                    this._UI.revealOrHideConfirmPopup();
+                });
+            }
             const ratingCounter: HTMLParagraphElement | null = document.querySelector(".insertCommentRatingHere");
             const currentComment: Comment | undefined = await Comment.getCommentById(_comment.commentId);
             if (ratingCounter && currentComment) {
@@ -196,17 +212,17 @@ export class PostController {
             const negativeButton: HTMLLinkElement = document.querySelector(`#commentNegative-${_comment.commentId}`)!;
             positiveButton.addEventListener("click", async (e: Event) => {
                 e.preventDefault();
-                console.log("Positive clicked for comment:", _comment.commentId);
-                // negativeButton.style.color = "aliceblue";
-                // positiveButton.style.color = "green";
-                await this.rateComment("positive", _comment.commentId);
+                // console.log("Positive clicked for comment:", _comment.commentId);
+                await this.rateComment("positive", _comment.commentId).then(async () => {
+                    await this.renderComments();
+                });
             });
             negativeButton.addEventListener("click", async (e: Event) => {
                 e.preventDefault();
-                console.log("Negative clicked for comment:", _comment.commentId);
-                // positiveButton.style.color = "aliceblue";
-                // negativeButton.style.color = "#ba2f2f";
-                await this.rateComment("negative", _comment.commentId);
+                // console.log("Negative clicked for comment:", _comment.commentId);
+                await this.rateComment("negative", _comment.commentId).then(async () => {
+                    await this.renderComments();
+                });
             });
         });
     }
@@ -280,7 +296,7 @@ export class PostController {
 
             if (isPostCreated) {
                 const postId: number = isPostCreated.postId;
-                console.log("Redirecting to post with ID:", postId);
+                // console.log("Redirecting to post with ID:", postId);
                 successMessage.innerHTML = `Post created successfully! Redirecting to post ${postId}`;
                 this._UI.unleashTheErrorPopup(false);
                 this._UI.successMessagePopup(true);
@@ -401,10 +417,9 @@ export class PostController {
         const userUrl: URLSearchParams = new URLSearchParams(window.location.search);
         const userId: string | null = userUrl.get("user");
         if (Number(sessionStorage.getItem("session")) === Number(userId)) {
-            console.log("wegotta match");
+            console.log("user is on their own profile page");
         }
         else {
-            console.log("no match");
             const onlyShowThisToCorrectUser: NodeListOf<HTMLElement> = document.querySelectorAll(".onlyForOwnerOfAccount");
             for (let o: number = 0; o < onlyShowThisToCorrectUser.length; o++) {
                 onlyShowThisToCorrectUser[o].style.display = "none";
@@ -460,12 +475,10 @@ export class PostController {
     }
 
     public undoAction(): void {
-        // eslint-disable-next-line @typescript-eslint/no-deprecated
         document.execCommand("undo", false);
     }
 
     public redoAction(): void {
-        // eslint-disable-next-line @typescript-eslint/no-deprecated
         document.execCommand("redo", true);
     }
 
@@ -481,13 +494,13 @@ export class PostController {
                 const postIdFromUrl: string | null = postUrl.get("post");
                 const post: Post | undefined = await Post.getPostById(Number(postIdFromUrl));
                 if (!post) {
-                    console.log("Post not found");
+                    // console.log("Post not found");
                     return;
                 }
                 this._ratingPostModel = new RatingPost(0, user.userId, post.postId);
                 const existingRating: RatingPost | undefined = await RatingPost.getRatingByUserIdAndPostId(user.userId, post.postId);
-                const currentRating: RatingPost | undefined = await RatingPost.getRatingById(this._ratingPostModel.ratingId);
-                console.log(currentRating);
+                // const currentRating: RatingPost | undefined = await RatingPost.getRatingById(this._ratingPostModel.ratingId);
+                // console.log(currentRating);
                 if (!existingRating) {
                     await this._ratingPostModel.create(user.userId, post.postId, typeRating);
                 }

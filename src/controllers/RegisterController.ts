@@ -122,6 +122,7 @@ class RegistrationClass {
             this.alterInputFields("emailAdressUserInput");
             allIsInOrder = false;
         }
+        // this regex looks for strings that resemble valid email adresses.
         else if (!userInputEmail.match(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)) {
             errorMessage.innerText += "The email is invalid.\n";
             this.alterInputFields("emailAdressUserInput");

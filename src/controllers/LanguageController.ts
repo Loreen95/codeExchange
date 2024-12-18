@@ -330,6 +330,10 @@ export class LanguageClass {
                 en: "Expertise:",
                 nl: "Expertise:",
             },
+            deleteComment: {
+                en: "Delete this comment?",
+                nl: "Andwoord verwijderen?",
+            },
         });
     }
 
