@@ -399,23 +399,15 @@ body {
     font-size: 35px;
     text-align: left;
     letter-spacing: 0.03em;
-    /* margin: 20px 8% 0 2%; */
-    /* border-radius: 5px; */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
     padding: 25px;
-    /* width: fit-content;
-    height: fit-content; */
     background-image: linear-gradient(to bottom right, #2e2d2d, #2b2a2a);
     background-color: #2e2d2d;
     color: aliceblue;
 }
-
-/* .theStats p {
-    margin: 10px 0 0;
-} */
 
 .alignRow {
     display: flex;
@@ -434,20 +426,107 @@ body {
     flex-direction: row;
     align-items: flex-start;
     margin-bottom: 10px;
-    /* margin-left: 50%; */
 }
 
 .alignRow2 p {
     margin: 0 0 0 10px;
 }
 
+.filterContainer {
+    transition: all 0.3s;
+    font-family: 'Trebuchet MS', sans-serif;
+    background-color: #21272e;
+    position: fixed;
+    top: 80px;
+    z-index: 20001;
+    color: aliceblue;
+    width: fit-content;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 20px;
+    left: -240px;
+}
 
+.filterContainer h1 {
+    margin: 0 0 10px 0;
+    color: rgb(215, 15, 15);
+}
 
-/* #memberStats,
-#questionStats,
-#answerStats {
-    color: #811b0e;
+.filterInput {
+    display: flex;
+    justify-content: space-between;
+    background-color: #191919;
+    padding: 5px;
+    border-radius: 1.5px;
+    margin: 0 0 5px 0;
+}
+
+.filterContainer input {
+    border: none;
+    background-color: #191919;
+    color: aliceblue;
+    outline: none;
+}
+
+.arrowLafel {
+    transition: all 0.3s;
+    position: fixed;
+    background-color: #21272e;
+    border-radius: 0 20px 20px 0;
+    color: #cb0e0e;
+    left: 0px;
+    top: 100px;
+    padding: 10px 10px 10px 40px;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+/* .arrowLafel i {
+    rotate: 180deg;
 } */
+
+.openAndCloseFilters {
+    cursor: pointer;
+    rotate: 0deg;
+}
+
+.buttonFilters button {
+    display: flex;
+    border: none;
+    font-size: 17px;
+    margin: 13px 0 0 0;
+    border-radius: 1.5px;
+    width: 100%;
+    justify-content: flex-start;
+    background-color: #a51010;
+    color: aliceblue;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.buttonFilters button:hover {
+    background-color: #790b0b;
+    transition: all 0.3s;
+}
+
+.filterInput button {
+    border: none;
+    background-color: transparent;
+    color: aliceblue;
+    cursor: pointer;
+    position: relative;
+}
+
+.filterInput button:hover {
+    transition: all 0.3s;
+    color: rgb(191, 16, 16);
+    left: 3px;
+}
+
+.wordFilterInput {
+    display: flex;
+    flex-direction: row;
+}
 
 .boldCont {
     font-size: 45px;

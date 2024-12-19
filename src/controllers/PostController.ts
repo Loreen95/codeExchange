@@ -299,11 +299,32 @@ export class PostController {
 
     public async isLoggedInUserResponsibleForThisPost(usersId: number, viewingPostId: number): Promise<boolean> {
         const currentpost: Post | undefined = await Post.getPostById(viewingPostId);
-        if (usersId === currentpost!.authorId) {
-            return true;
+        if (currentpost) {
+            if (usersId === currentpost.authorId) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+    }
+
+    private _filtersAreVisible: boolean = false;
+    public openAndCloseFilters(): void {
+        const filterContainer: HTMLDivElement = document.querySelector(".filterContainer")!;
+        const arrowLafel: HTMLDivElement = document.querySelector(".arrowLafel")!;
+        const openAndCloseFilters: HTMLDivElement = document.querySelector(".openAndCloseFilters")!;
+        if (this._filtersAreVisible) {
+            arrowLafel.style.left = "0px";
+            filterContainer.style.left = "-240px";
+            this._filtersAreVisible = false;
+            openAndCloseFilters.style.rotate = "0deg";
         }
         else {
-            return false;
+            arrowLafel.style.left = "230px";
+            filterContainer.style.left = "0px";
+            this._filtersAreVisible = true;
+            openAndCloseFilters.style.rotate = "180deg";
         }
     }
 

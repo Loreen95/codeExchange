@@ -26,6 +26,32 @@
                 <button data-translate="createpost"></button>
             </section>
     
+            <section class="filterContainer">
+                <!-- <h1>Filters:</h1> -->
+                <label for="wordFilter">filter words</label>
+                <div class="filterInput">
+                    <input type="text" name="wordFilter" id="wordFilter">
+                    <button class="wordFilterBttn"><i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+                
+                <label for="expertiseFilter">filter expertise</label>
+                <div class="filterInput">
+                    <input type="text" name="expertiseFilter" id="expertiseFilter">
+                    <button class="expertiseFilterBttn"><i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+
+                <div class="buttonFilters">
+                    <button class="filterOutNoComments" data-translate="answeredQuestions">Questions</button>
+                    <button class="filterOutNegativeRating" data-translate="highestRated">Highest</button>                  
+                </div>
+
+                <div class="arrowLafel">
+                    <div class="openAndCloseFilters">
+                        <i class="fa-solid fa-chevron-right" id="lillArrow"></i>    
+                    </div>
+                </div>
+            </section>
+
             <section class="posts"></section>
 
         </main>    
