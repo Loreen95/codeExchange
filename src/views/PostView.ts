@@ -212,3 +212,10 @@ if (String(expertiseFilterBttn) !== "null") {
         await post.renderPosts("postsByWordInUserExpertise", 0, expertiseFilter.value);
     });
 }
+
+const filterOutNoComments: HTMLButtonElement = document.querySelector(".filterOutNoComments")!;
+if (String(filterOutNoComments) !== "null") {
+    filterOutNoComments.addEventListener("click", async () => {
+        await post.renderPosts("commentedOnly");
+    });
+}

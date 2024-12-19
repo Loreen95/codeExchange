@@ -86,6 +86,12 @@ export class PostController {
 
             // Render alle posts
             for (const post of postList) {
+                const comments: Comment[] = await Comment.getCommentsByMessageId(post.postId);
+                if (selectionMethod === "commentedOnly") {
+                    if (comments.length < 1) {
+                        continue;
+                    }
+                }
                 let titleOfPost: string = "";
                 let contentOfPost: string = "";
                 const userName: string | undefined = (await User.getUserById(Number(post.authorId)))?.userName;
@@ -100,8 +106,6 @@ export class PostController {
                 else {
                     contentOfPost = post.content.length > 240 ? post.content.slice(0, 240).concat("...") : post.content;
                 }
-
-                const comments: Comment[] = await Comment.getCommentsByMessageId(post.postId);
                 const totalComments: number = comments.length;
                 const existingRating: RatingPost | undefined = await RatingPost.getRatingByUserIdAndPostId(userId, post.postId);
                 const negativeButton: HTMLAnchorElement = document.querySelector("#postNegative")!;
