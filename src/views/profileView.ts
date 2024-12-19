@@ -51,12 +51,12 @@ export class ProfileView {
         experience.value = String(UserInfo.yearsExperience);
         expertise.value = UserInfo.expertise;
         biography.value = UserInfo.bio;
-        const imageName: string | null = String(sessionStorage.getItem("imageName"));
-        const imageUrl: string = "https://dev-hiinooreesaa43-pb2sef2425.hbo-ict.cloud/uploads/" + imageName;
+
+        const imgUrl: string = UserInfo.foto;
         const imageElement: HTMLImageElement | null = document.querySelector("#uploadedImage");
         if (imageElement) {
-            imageElement.src = imageUrl; // Zet de URL van de afbeelding in de src
-            imageElement.alt = "Uploaded Profile Picture"; // Stel de alternatieve tekst in voor de afbeelding
+            imageElement.src = imgUrl;
+            imageElement.alt = "Uploaded Profile Picture";
         }
     }
 
