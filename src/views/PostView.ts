@@ -204,3 +204,11 @@ if (String(wordsearchBttn) !== "null") {
         await post.renderPosts("postsByWordInContent", 0, wordsearchInput.value);
     });
 }
+
+const expertiseFilterBttn: HTMLButtonElement = document.querySelector(".expertiseFilterBttn")!;
+const expertiseFilter: HTMLInputElement = document.querySelector("#expertiseFilter")!;
+if (String(expertiseFilterBttn) !== "null") {
+    expertiseFilterBttn.addEventListener("click", async () => {
+        await post.renderPosts("postsByWordInUserExpertise", 0, expertiseFilter.value);
+    });
+}

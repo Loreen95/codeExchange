@@ -33,6 +33,17 @@ export class PostController {
         return totalComments;
     }
 
+    private async _filterError(message: string): Promise<void> {
+        const errorMessage: HTMLParagraphElement | null = document.querySelector("#errMsg");
+        if (errorMessage) {
+            errorMessage.innerHTML = message;
+        }
+        this._UI.unleashTheErrorPopup(true);
+        await new Promise(r => setTimeout(r, 2000)).then(() => {
+            this._UI.unleashTheErrorPopup(false);
+        });
+    }
+
     public async renderPosts(selectionMethod?: string, possibleUserId?: number, possibleSearchTerm?: string): Promise<void> {
         let postList: Post[] | undefined = await Post.getAllPosts();
         if (selectionMethod === "userSpecific") {
@@ -44,7 +55,17 @@ export class PostController {
         if (selectionMethod === "postsByWordInContent") {
             if (possibleSearchTerm) {
                 postList = await Post.getAllPostsByWordInContent(possibleSearchTerm);
-                console.log(postList);
+                if (String(postList) === "undefined") {
+                    await this._filterError("Nothing found");
+                }
+            }
+        }
+        if (selectionMethod === "postsByWordInUserExpertise") {
+            if (possibleSearchTerm) {
+                postList = await Post.getAllPostsByWordInUserExpertise(possibleSearchTerm);
+                if (String(postList) === "undefined") {
+                    await this._filterError("Nothing found");
+                }
             }
         }
         const totalQquestionAmount: Element | null = document.querySelector("#totalQquestionAmount");
