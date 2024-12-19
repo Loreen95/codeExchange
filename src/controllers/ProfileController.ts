@@ -145,6 +145,9 @@ export class ProfileController {
                 if (success) {
                     successMessage.innerHTML = "The records have been updated";
                     UI.successMessagePopup(true);
+                    await new Promise(r => setTimeout(r, 2000)).then(() => {
+                        window.location.href = `http://localhost:3000/profile?user=${sessionStorage.getItem("session")}`;
+                    });
                 }
                 else {
                     console.error("Failed to update records.");

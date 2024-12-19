@@ -33,12 +33,39 @@ export class PostController {
         return totalComments;
     }
 
-    public async renderPosts(selectionMethod?: string, possibleUserId?: number): Promise<void> {
+    private async _filterError(message: string): Promise<void> {
+        const errorMessage: HTMLParagraphElement | null = document.querySelector("#errMsg");
+        if (errorMessage) {
+            errorMessage.innerHTML = message;
+        }
+        this._UI.unleashTheErrorPopup(true);
+        await new Promise(r => setTimeout(r, 2000)).then(() => {
+            this._UI.unleashTheErrorPopup(false);
+        });
+    }
+
+    public async renderPosts(selectionMethod?: string, possibleUserId?: number, possibleSearchTerm?: string): Promise<void> {
         let postList: Post[] | undefined = await Post.getAllPosts();
         if (selectionMethod === "userSpecific") {
             if (possibleUserId) {
                 postList = await Post.getAllPostsByUserId(possibleUserId);
                 console.log(postList);
+            }
+        }
+        if (selectionMethod === "postsByWordInContent") {
+            if (possibleSearchTerm) {
+                postList = await Post.getAllPostsByWordInContent(possibleSearchTerm);
+                if (String(postList) === "undefined") {
+                    await this._filterError("Nothing found");
+                }
+            }
+        }
+        if (selectionMethod === "postsByWordInUserExpertise") {
+            if (possibleSearchTerm) {
+                postList = await Post.getAllPostsByWordInUserExpertise(possibleSearchTerm);
+                if (String(postList) === "undefined") {
+                    await this._filterError("Nothing found");
+                }
             }
         }
         const totalQquestionAmount: Element | null = document.querySelector("#totalQquestionAmount");
@@ -59,6 +86,12 @@ export class PostController {
 
             // Render alle posts
             for (const post of postList) {
+                const comments: Comment[] = await Comment.getCommentsByMessageId(post.postId);
+                if (selectionMethod === "commentedOnly") {
+                    if (comments.length < 1) {
+                        continue;
+                    }
+                }
                 let titleOfPost: string = "";
                 let contentOfPost: string = "";
                 const userName: string | undefined = (await User.getUserById(Number(post.authorId)))?.userName;
@@ -73,8 +106,6 @@ export class PostController {
                 else {
                     contentOfPost = post.content.length > 240 ? post.content.slice(0, 240).concat("...") : post.content;
                 }
-
-                const comments: Comment[] = await Comment.getCommentsByMessageId(post.postId);
                 const totalComments: number = comments.length;
                 const existingRating: RatingPost | undefined = await RatingPost.getRatingByUserIdAndPostId(userId, post.postId);
                 const negativeButton: HTMLAnchorElement = document.querySelector("#postNegative")!;
@@ -348,11 +379,32 @@ export class PostController {
 
     public async isLoggedInUserResponsibleForThisPost(usersId: number, viewingPostId: number): Promise<boolean> {
         const currentpost: Post | undefined = await Post.getPostById(viewingPostId);
-        if (usersId === currentpost!.authorId) {
-            return true;
+        if (currentpost) {
+            if (usersId === currentpost.authorId) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+    }
+
+    private _filtersAreVisible: boolean = false;
+    public openAndCloseFilters(): void {
+        const filterContainer: HTMLDivElement = document.querySelector(".filterContainer")!;
+        const arrowLafel: HTMLDivElement = document.querySelector(".arrowLafel")!;
+        const openAndCloseFilters: HTMLDivElement = document.querySelector(".openAndCloseFilters")!;
+        if (this._filtersAreVisible) {
+            arrowLafel.style.left = "-20px";
+            filterContainer.style.left = "-240px";
+            this._filtersAreVisible = false;
+            openAndCloseFilters.style.rotate = "0deg";
         }
         else {
-            return false;
+            arrowLafel.style.left = "220px";
+            filterContainer.style.left = "0px";
+            this._filtersAreVisible = true;
+            openAndCloseFilters.style.rotate = "180deg";
         }
     }
 

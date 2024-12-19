@@ -310,6 +310,14 @@ export class LanguageClass {
                 en: "Input password to proceed",
                 nl: "Voer wachtwoord in om door te gaan",
             },
+            answeredQuestions: {
+                en: "Questions with answers",
+                nl: "Vragen met antwoorden",
+            },
+            highestRated: {
+                en: "Highest rated",
+                nl: "Hoogste beoordeling",
+            },
             applychanges: {
                 en: "Apply changes",
                 nl: "Aanpassingen toewijzen",

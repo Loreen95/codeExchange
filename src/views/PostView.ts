@@ -97,74 +97,125 @@ const linkBtn: HTMLButtonElement = document.querySelector(".link")!;
 const undo: HTMLButtonElement = document.querySelector(".undo")!;
 const redo: HTMLButtonElement = document.querySelector(".redo")!;
 
-boldBtn.addEventListener("click", e => {
-    e.preventDefault();
-    const textarea: HTMLTextAreaElement = document.querySelector("#contentInput")!;
-    post.addToField(textarea, "<b>", "</b>");
-});
+if (String(boldBtn) !== "null") {
+    boldBtn.addEventListener("click", e => {
+        e.preventDefault();
+        const textarea: HTMLTextAreaElement = document.querySelector("#contentInput")!;
+        post.addToField(textarea, "<b>", "</b>");
+    });
+}
 
-italicBtn.addEventListener("click", e => {
-    e.preventDefault();
-    const textarea: HTMLTextAreaElement = document.querySelector("#contentInput")!;
-    post.addToField(textarea, "<i>", "</i>");
-});
+if (String(italicBtn) !== "null") {
+    italicBtn.addEventListener("click", e => {
+        e.preventDefault();
+        const textarea: HTMLTextAreaElement = document.querySelector("#contentInput")!;
+        post.addToField(textarea, "<i>", "</i>");
+    });
+}
 
-linkBtn.addEventListener("click", e => {
-    e.preventDefault();
-    const textarea: HTMLTextAreaElement = document.querySelector("#contentInput")!;
+if (String(italicBtn) !== "null") {
+    linkBtn.addEventListener("click", e => {
+        e.preventDefault();
+        const textarea: HTMLTextAreaElement = document.querySelector("#contentInput")!;
 
-    // Verkrijg de geselecteerde tekst in de textarea
-    const selection: string = textarea.value.substring(textarea.selectionStart, textarea.selectionEnd).trim();
-    // Als er geen selectie is, vraag de gebruiker om een URL in te voeren
-    const urlToAdd: string = selection;
-    if (urlToAdd) {
-        // Voeg de URL als platte tekst toe in de textarea, zonder de <a> tags
-        post.addToField(textarea, urlToAdd, "");
-    }
-    else {
-        console.error("De ingevoerde tekst is geen geldige URL.");
-    }
-});
+        // Verkrijg de geselecteerde tekst in de textarea
+        const selection: string = textarea.value.substring(textarea.selectionStart, textarea.selectionEnd).trim();
+        // Als er geen selectie is, vraag de gebruiker om een URL in te voeren
+        const urlToAdd: string = selection;
+        if (urlToAdd) {
+            // Voeg de URL als platte tekst toe in de textarea, zonder de <a> tags
+            post.addToField(textarea, urlToAdd, "");
+        }
+        else {
+            console.error("De ingevoerde tekst is geen geldige URL.");
+        }
+    });
+}
 
-codeBtn.addEventListener("click", e => {
-    e.preventDefault();
-    const textarea: HTMLTextAreaElement = document.querySelector("#contentInput")!;
-    post.addToField(textarea, "[code]", "[/code]");
-});
+if (String(codeBtn) !== "null") {
+    codeBtn.addEventListener("click", e => {
+        e.preventDefault();
+        const textarea: HTMLTextAreaElement = document.querySelector("#contentInput")!;
+        post.addToField(textarea, "[code]", "[/code]");
+    });
+}
 
-undo.addEventListener("click", e => {
-    e.preventDefault();
-    post.undoAction();
-});
+if (String(undo) !== "null") {
+    undo.addEventListener("click", e => {
+        e.preventDefault();
+        post.undoAction();
+    });
+}
 
-redo.addEventListener("click", e => {
-    e.preventDefault();
-    post.redoAction();
-});
+if (String(redo) !== "null") {
+    redo.addEventListener("click", e => {
+        e.preventDefault();
+        post.redoAction();
+    });
+}
 
 const unleashCommentPlate: HTMLAnchorElement = document.querySelector("#createAnswer")!;
-unleashCommentPlate.addEventListener("click", () => {
-    post.unleashAddComentPanel();
-});
+if (String(unleashCommentPlate) !== "null") {
+    unleashCommentPlate.addEventListener("click", () => {
+        post.unleashAddComentPanel();
+    });
+}
 
 const closePanelBackUp: HTMLAnchorElement = document.querySelector(".closePanel")!;
-closePanelBackUp.addEventListener("click", () => {
-    post.unleashAddComentPanel();
-});
+if (String(closePanelBackUp) !== "null") {
+    closePanelBackUp.addEventListener("click", () => {
+        post.unleashAddComentPanel();
+    });
+}
 
 const ratingPositive: HTMLLinkElement = document.querySelector("#postPositive")!;
 const ratingNegative: HTMLLinkElement = document.querySelector("#postNegative")!;
 
-ratingPositive.addEventListener("click", async (e: Event) => {
-    e.preventDefault();
-    await post.rateThePost("positive").then(async () => {
-        await post.renderPostRating();
+if (String(ratingPositive) !== "null") {
+    ratingPositive.addEventListener("click", async (e: Event) => {
+        e.preventDefault();
+        await post.rateThePost("positive").then(async () => {
+            await post.renderPostRating();
+        });
     });
-});
+}
 
-ratingNegative.addEventListener("click", async (e: Event) => {
-    e.preventDefault();
-    await post.rateThePost("negative").then(async () => {
-        await post.renderPostRating();
+if (String(ratingNegative) !== "null") {
+    ratingNegative.addEventListener("click", async (e: Event) => {
+        e.preventDefault();
+        await post.rateThePost("negative").then(async () => {
+            await post.renderPostRating();
+        });
     });
-});
+}
+
+// this is the filter related functionality
+const openAndCloseFilters: HTMLDivElement = document.querySelector(".openAndCloseFilters")!;
+if (String(openAndCloseFilters) !== "null") {
+    openAndCloseFilters.addEventListener("click", () => {
+        post.openAndCloseFilters();
+    });
+}
+
+const wordsearchBttn: HTMLButtonElement = document.querySelector(".wordFilterBttn")!;
+const wordsearchInput: HTMLInputElement = document.querySelector("#wordFilter")!;
+if (String(wordsearchBttn) !== "null") {
+    wordsearchBttn.addEventListener("click", async () => {
+        await post.renderPosts("postsByWordInContent", 0, wordsearchInput.value);
+    });
+}
+
+const expertiseFilterBttn: HTMLButtonElement = document.querySelector(".expertiseFilterBttn")!;
+const expertiseFilter: HTMLInputElement = document.querySelector("#expertiseFilter")!;
+if (String(expertiseFilterBttn) !== "null") {
+    expertiseFilterBttn.addEventListener("click", async () => {
+        await post.renderPosts("postsByWordInUserExpertise", 0, expertiseFilter.value);
+    });
+}
+
+const filterOutNoComments: HTMLButtonElement = document.querySelector(".filterOutNoComments")!;
+if (String(filterOutNoComments) !== "null") {
+    filterOutNoComments.addEventListener("click", async () => {
+        await post.renderPosts("commentedOnly");
+    });
+}
