@@ -189,9 +189,18 @@ if (String(ratingNegative) !== "null") {
     });
 }
 
+// this is the filter related functionality
 const openAndCloseFilters: HTMLDivElement = document.querySelector(".openAndCloseFilters")!;
-if (String(openAndCloseFilters) !== "undefined") {
+if (String(openAndCloseFilters) !== "null") {
     openAndCloseFilters.addEventListener("click", () => {
         post.openAndCloseFilters();
+    });
+}
+
+const wordsearchBttn: HTMLButtonElement = document.querySelector(".wordFilterBttn")!;
+const wordsearchInput: HTMLInputElement = document.querySelector("#wordFilter")!;
+if (String(wordsearchBttn) !== "null") {
+    wordsearchBttn.addEventListener("click", async () => {
+        await post.renderPosts("postsByWordInContent", 0, wordsearchInput.value);
     });
 }

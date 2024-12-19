@@ -33,11 +33,17 @@ export class PostController {
         return totalComments;
     }
 
-    public async renderPosts(selectionMethod?: string, possibleUserId?: number): Promise<void> {
+    public async renderPosts(selectionMethod?: string, possibleUserId?: number, possibleSearchTerm?: string): Promise<void> {
         let postList: Post[] | undefined = await Post.getAllPosts();
         if (selectionMethod === "userSpecific") {
             if (possibleUserId) {
                 postList = await Post.getAllPostsByUserId(possibleUserId);
+                console.log(postList);
+            }
+        }
+        if (selectionMethod === "postsByWordInContent") {
+            if (possibleSearchTerm) {
+                postList = await Post.getAllPostsByWordInContent(possibleSearchTerm);
                 console.log(postList);
             }
         }
@@ -315,13 +321,13 @@ export class PostController {
         const arrowLafel: HTMLDivElement = document.querySelector(".arrowLafel")!;
         const openAndCloseFilters: HTMLDivElement = document.querySelector(".openAndCloseFilters")!;
         if (this._filtersAreVisible) {
-            arrowLafel.style.left = "0px";
+            arrowLafel.style.left = "-20px";
             filterContainer.style.left = "-240px";
             this._filtersAreVisible = false;
             openAndCloseFilters.style.rotate = "0deg";
         }
         else {
-            arrowLafel.style.left = "230px";
+            arrowLafel.style.left = "220px";
             filterContainer.style.left = "0px";
             this._filtersAreVisible = true;
             openAndCloseFilters.style.rotate = "180deg";

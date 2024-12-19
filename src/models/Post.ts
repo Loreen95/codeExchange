@@ -63,6 +63,54 @@ export class Post {
         }
     }
 
+    public static async getAllPostsByWordInContent(searchTerm: string): Promise<Post[] | undefined> {
+        try {
+            searchTerm = "%" + searchTerm + "%";
+            console.log(searchTerm);
+            const result: PostResult[] = await api.queryDatabase("SELECT * FROM post WHERE content LIKE ? ORDER BY createdAt DESC", searchTerm) as PostResult[];
+            if (result.length > 0) {
+                const posts: Post[] = result.map(post => {
+                    const newPost: Post = new Post(post.postId, post.authorId, post.title, post.content);
+                    newPost.rating = post.rating;
+                    newPost.createdAt = post.createdAt;
+                    return newPost;
+                });
+                return posts;
+            }
+            else {
+                return undefined;
+            }
+        }
+        catch (reason) {
+            console.error("An error occurred while gathering all posts by search term.", reason);
+            return undefined;
+        }
+    }
+
+    public static async getAllPostsByWordInUserExpertise(searchTerm: string): Promise<Post[] | undefined> {
+        try {
+            searchTerm = "%" + searchTerm + "%";
+            console.log(searchTerm);
+            const result: PostResult[] = await api.queryDatabase("SELECT post.* FROM `post` INNER JOIN `user` ON post.authorId = user.userId WHERE user.expertise LIKE ?", searchTerm) as PostResult[];
+            if (result.length > 0) {
+                const posts: Post[] = result.map(post => {
+                    const newPost: Post = new Post(post.postId, post.authorId, post.title, post.content);
+                    newPost.rating = post.rating;
+                    newPost.createdAt = post.createdAt;
+                    return newPost;
+                });
+                return posts;
+            }
+            else {
+                return undefined;
+            }
+        }
+        catch (reason) {
+            console.error("An error occurred while gathering all posts by search term.", reason);
+            return undefined;
+        }
+    }
+
     public static async getPostById(id: number): Promise<Post | undefined> {
         try {
             const result: PostResult[] = await api.queryDatabase("SELECT * from post WHERE postId = ?", [id]) as PostResult[];
@@ -134,23 +182,6 @@ export class Post {
             return undefined;
         }
     }
-
-    // public static async countTotalRatingByUserId(userId: number): Promise<number | undefined> {
-    //     try {
-    //         const result: PostResult[] = await api.queryDatabase("SELECT SUM(rating) as count FROM post WHERE authorId = ?", [userId]) as PostResult[];
-    //         if (result.length > 0) {
-    //             return result[0].count;
-    //         }
-    //         else {
-    //             console.error("No results found");
-    //             return undefined;
-    //         }
-    //     }
-    //     catch (reason) {
-    //         console.error("Error fetching result", reason);
-    //         return undefined;
-    //     }
-    // }
 
     public async updateRating(postId: number, rating: number): Promise<boolean> {
         try {
