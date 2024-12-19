@@ -67,7 +67,7 @@ export class Post {
         try {
             searchTerm = "%" + searchTerm + "%";
             console.log(searchTerm);
-            const result: PostResult[] = await api.queryDatabase("SELECT * FROM post WHERE content LIKE ? ORDER BY createdAt DESC", searchTerm) as PostResult[];
+            const result: PostResult[] = await api.queryDatabase("SELECT * FROM post WHERE title LIKE ? OR content LIKE ? ORDER BY createdAt DESC", searchTerm, searchTerm) as PostResult[];
             if (result.length > 0) {
                 const posts: Post[] = result.map(post => {
                     const newPost: Post = new Post(post.postId, post.authorId, post.title, post.content);
