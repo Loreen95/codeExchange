@@ -1596,6 +1596,11 @@ pre {
     background-image: linear-gradient(to bottom right, #1c2126, #121518);
 }
 
+.pagination {
+    text-align: center;
+    font-size: 20px;
+}
+
 /* this query chainges the content to fit the screen of a phone */
 @media (max-width: 630px) {
     pre {

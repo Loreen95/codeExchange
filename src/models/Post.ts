@@ -21,7 +21,7 @@ export class Post {
     // CRUD methods:
     public static async getAllPosts(): Promise<Post[] | undefined> {
         try {
-            const result: PostResult[] = await api.queryDatabase("Select * from post ORDER BY createdAt DESC") as PostResult[];
+            const result: PostResult[] = await api.queryDatabase("Select * from post ORDER BY createdAt DESC LIMIT 10") as PostResult[];
             if (result.length > 0) {
                 const posts: Post[] = result.map(post => {
                     const newPost: Post = new Post(post.postId, post.authorId, post.title, post.content);
@@ -118,6 +118,24 @@ export class Post {
         }
     }
 
+    public static async countPages(limit: number = 10): Promise<number | undefined> {
+        try {
+            const result: PostResult[] = await api.queryDatabase("SELECT COUNT(*) as total_rows FROM post") as PostResult[];
+            if (result.length > 0) {
+                const totalRows: number = result[0].total_rows;
+                return Math.ceil(totalRows / limit); // Dynamisch het aantal pagina's berekenen
+            }
+            else {
+                console.error("No results found");
+                return undefined;
+            }
+        }
+        catch (reason) {
+            console.error("Error counting", reason);
+            return undefined;
+        }
+    }
+
     public static async countTotalPostsByUserId(authorId: number): Promise<number | undefined> {
         try {
             const result: PostResult[] = await api.queryDatabase("SELECT COUNT(*) as count FROM post WHERE authorId = ?", [authorId]) as PostResult[];
@@ -132,38 +150,6 @@ export class Post {
         catch (reason) {
             console.error("Error fetching result", reason);
             return undefined;
-        }
-    }
-
-    // public static async countTotalRatingByUserId(userId: number): Promise<number | undefined> {
-    //     try {
-    //         const result: PostResult[] = await api.queryDatabase("SELECT SUM(rating) as count FROM post WHERE authorId = ?", [userId]) as PostResult[];
-    //         if (result.length > 0) {
-    //             return result[0].count;
-    //         }
-    //         else {
-    //             console.error("No results found");
-    //             return undefined;
-    //         }
-    //     }
-    //     catch (reason) {
-    //         console.error("Error fetching result", reason);
-    //         return undefined;
-    //     }
-    // }
-
-    public async updateRating(postId: number, rating: number): Promise<boolean> {
-        try {
-            const result: PostResult[] = await api.queryDatabase(
-                "UPDATE post SET rating = ? WHERE postId = ?",
-                rating, postId
-            ) as PostResult[];
-            console.log("Rating updated successfully:", result);
-            return true;
-        }
-        catch (reason) {
-            console.error("There has been an error updating the rating", reason);
-            return false;
         }
     }
 

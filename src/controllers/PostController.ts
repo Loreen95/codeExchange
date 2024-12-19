@@ -116,7 +116,7 @@ export class PostController {
                                     <p id="datetime">${stringedTimeAndDate}</p>
                                 </div>                                  
                             </div>
-                        </div>                  
+                        </div>               
                     </div>
                 `);
 
@@ -132,6 +132,55 @@ export class PostController {
                     console.error(`Element #postNr${postIndex} not found`);
                 }
                 postIndex++;
+            }
+            const pageCount: number | undefined = await Post.countPages();
+            const insertPagination: HTMLDivElement | null = document.querySelector(".pagination");
+
+            if (!insertPagination) {
+                return;
+            }
+            if (!pageCount) {
+                return;
+            }
+            insertPagination.innerHTML = "<a href='#' class='navLink' data-page='prev'>&laquo;</a>";
+            for (let i: number = 1; i <= pageCount; i++) {
+                insertPagination.innerHTML += `<a href="#" class="navLink" data-page="${i}"> ${i} </a>`;
+            }
+            insertPagination.innerHTML += "<a href='#' class='navLink' data-page='next'>&raquo;</a>";
+            let currentPage: number = 1;
+            insertPagination.addEventListener("click", async (e: Event) => {
+                e.preventDefault();
+                const target: HTMLAnchorElement = e.target as HTMLAnchorElement;
+
+                if (target.tagName.toLowerCase() === "a") {
+                    const page: string | null = target.getAttribute("data-page");
+
+                    if (page === "prev") {
+                        if (currentPage > 1) {
+                            currentPage--;
+                        }
+                    }
+                    else if (page === "next") {
+                        if (currentPage < pageCount) {
+                            currentPage++;
+                        }
+                    }
+                    else if (page) {
+                        currentPage = parseInt(page);
+                    }
+
+                    console.log(`Navigating to page ${currentPage}`);
+                    await renderPosts(currentPage);
+                    history.pushState({ page: currentPage }, `Page ${currentPage}`, `?page=${currentPage}`);
+                }
+            });
+
+            async function renderPosts(page: number): Promise<void> {
+                const insertPostsHere: HTMLDivElement | null = document.querySelector(".posts");
+                if (insertPostsHere) {
+                    // insertPostsHere.insertAdjacentElement = "";
+                    await renderPosts(currentPage);
+                }
             }
         }
         else {

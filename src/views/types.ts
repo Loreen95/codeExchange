@@ -21,6 +21,7 @@ export type PostResult = {
     createdAt: string;
     count: number;
     insertId: number;
+    total_rows: number;
 };
 
 export type CommentResult = {
