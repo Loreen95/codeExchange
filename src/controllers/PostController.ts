@@ -44,8 +44,8 @@ export class PostController {
         });
     }
 
-    public async renderPosts(selectionMethod?: string, possibleUserId?: number, possibleSearchTerm?: string): Promise<void> {
-        let postList: Post[] | undefined = await Post.getAllPosts();
+    public async renderPosts(selectionMethod?: string, possibleUserId?: number, possibleSearchTerm?: string, page: number = 1): Promise<void> {
+        let postList: Post[] | undefined = await Post.getAllPosts(page);
         if (selectionMethod === "userSpecific") {
             if (possibleUserId) {
                 postList = await Post.getAllPostsByUserId(possibleUserId);
@@ -164,58 +164,55 @@ export class PostController {
                 }
                 postIndex++;
             }
-            const pageCount: number | undefined = await Post.countPages();
-            const insertPagination: HTMLDivElement | null = document.querySelector(".pagination");
-
-            if (!insertPagination) {
-                return;
-            }
-            if (!pageCount) {
-                return;
-            }
-            insertPagination.innerHTML = "<a href='#' class='navLink' data-page='prev'>&laquo;</a>";
-            for (let i: number = 1; i <= pageCount; i++) {
-                insertPagination.innerHTML += `<a href="#" class="navLink" data-page="${i}"> ${i} </a>`;
-            }
-            insertPagination.innerHTML += "<a href='#' class='navLink' data-page='next'>&raquo;</a>";
-            let currentPage: number = 1;
-            insertPagination.addEventListener("click", async (e: Event) => {
-                e.preventDefault();
-                const target: HTMLAnchorElement = e.target as HTMLAnchorElement;
-
-                if (target.tagName.toLowerCase() === "a") {
-                    const page: string | null = target.getAttribute("data-page");
-
-                    if (page === "prev") {
-                        if (currentPage > 1) {
-                            currentPage--;
-                        }
-                    }
-                    else if (page === "next") {
-                        if (currentPage < pageCount) {
-                            currentPage++;
-                        }
-                    }
-                    else if (page) {
-                        currentPage = parseInt(page);
-                    }
-
-                    console.log(`Navigating to page ${currentPage}`);
-                    await renderPosts(currentPage);
-                    history.pushState({ page: currentPage }, `Page ${currentPage}`, `?page=${currentPage}`);
-                }
-            });
-
-            async function renderPosts(page: number): Promise<void> {
-                const insertPostsHere: HTMLDivElement | null = document.querySelector(".posts");
-                if (insertPostsHere) {
-                    // insertPostsHere.insertAdjacentElement = "";
-                    await renderPosts(currentPage);
-                }
-            }
-        }
-        else {
             console.log("Something is wrong, postList is undefined");
+        }
+    }
+
+    public async renderPagination(currentPage: number, totalPages: number): Promise<void> {
+        const paginationContainer: HTMLElement | null = document.querySelector("#pagination");
+        if (!paginationContainer) return;
+
+        paginationContainer.innerHTML = "";
+
+        const firstButton: HTMLButtonElement = document.createElement("button");
+        firstButton.innerText = "<<";
+        firstButton.disabled = currentPage === 1;
+        firstButton.addEventListener("click", async () => await this.changePage(1));
+        paginationContainer.appendChild(firstButton);
+
+        const prevButton: HTMLButtonElement = document.createElement("button");
+        prevButton.innerText = "<";
+        prevButton.disabled = currentPage === 1;
+        prevButton.addEventListener("click", async () => await this.changePage(currentPage - 1));
+        paginationContainer.appendChild(prevButton);
+
+        for (let i: number = 1; i <= totalPages; i++) {
+            const pageButton: HTMLButtonElement = document.createElement("button");
+            pageButton.innerText = String(i);
+            pageButton.disabled = i === currentPage;
+            pageButton.addEventListener("click", async () => await this.changePage(i));
+            paginationContainer.appendChild(pageButton);
+        }
+
+        const nextButton: HTMLButtonElement = document.createElement("button");
+        nextButton.innerText = ">";
+        nextButton.disabled = currentPage === totalPages;
+        nextButton.addEventListener("click", async () => await this.changePage(currentPage + 1));
+        paginationContainer.appendChild(nextButton);
+
+        const lastButton: HTMLButtonElement = document.createElement("button");
+        lastButton.innerText = ">>";
+        lastButton.disabled = currentPage === totalPages;
+        lastButton.addEventListener("click", async () => await this.changePage(totalPages));
+        paginationContainer.appendChild(lastButton);
+        await Promise.resolve();
+    }
+
+    public async changePage(page: number): Promise<void> {
+        await this.renderPosts(undefined, undefined, undefined, page);
+        const totalPages: number | undefined = await Post.countPages();
+        if (totalPages) {
+            await this.renderPagination(page, totalPages);
         }
     }
 
@@ -377,7 +374,7 @@ export class PostController {
         }
     }
 
-    public async isLoggedInUserResponsibleForThisPost(usersId: number, viewingPostId: number): Promise<boolean> {
+    public async isLoggedInUserResponsibleForThisPost(usersId: number, viewingPostId: number): Promise<boolean | undefined> {
         const currentpost: Post | undefined = await Post.getPostById(viewingPostId);
         if (currentpost) {
             if (usersId === currentpost.authorId) {
@@ -386,6 +383,9 @@ export class PostController {
             else {
                 return false;
             }
+        }
+        else {
+            return undefined;
         }
     }
 
