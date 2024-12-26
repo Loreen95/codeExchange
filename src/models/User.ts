@@ -140,23 +140,28 @@ export class User {
     }
 
     /**
-     * Stores inputted data into the database.
-     * @param username requires the username to be put in the database.
-     * @param email requires the email to be put in the database.
-     * @param password requires the password to be put in the database.
-     * @returns boolean.
-     */
-    public async create(username: string, email: string, password: string): Promise<boolean> {
+    * Stores inputted data into the database.
+    * @param username requires the username to be put in the database.
+    * @param email requires the email to be put in the database.
+    * @param password requires the password to be put in the database.
+    * @returns Promise<User | undefined | string> A promise that resolves to either an insertedId, undefined or an error string.
+    */
+    public async create(username: string, email: string, password: string): Promise<User | undefined> {
         try {
-            const result: UserResult[] = await api.queryDatabase(
+            const result: { insertId: number } = await api.queryDatabase(
                 "INSERT INTO user (username, email, password) VALUES (?, ?, ?)", username, email, password
-            ) as UserResult[];
+            ) as { insertId: number };
             console.log("Success", result);
-            return true;
+            if (result.insertId) {
+                return await User.getUserById(result.insertId);
+            }
+            else {
+                return undefined;
+            }
         }
         catch (reason) {
             console.error("An error occurred while creating a new database entry.", reason);
-            return false;
+            return undefined;
         }
     }
 
@@ -184,6 +189,12 @@ export class User {
         }
     }
 
+    /**
+     * Deletes user based off userId
+     * @param userId userId
+     * @returns boolean to indicate succes
+     * The API has a string error message implemented which will automaticaly be displayed in console
+     */
     public static async delete(userId: number): Promise<boolean> {
         try {
             const result: PostResult[] = await api.queryDatabase("DELETE FROM user WHERE userId = ?", [userId]) as PostResult[];
