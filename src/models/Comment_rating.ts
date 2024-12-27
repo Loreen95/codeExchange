@@ -87,6 +87,24 @@ export class RatingComment {
         }
     }
 
+    public static async countAvgRatingByUserId(userId: number): Promise<number> {
+        try {
+            const positiveResult: { count: number }[] = await api.queryDatabase("SELECT COUNT(*) as count FROM comment_rating WHERE userId = ? AND ratingType = 'positive'", userId) as { count: number }[];
+            const negativeResult: { count: number }[] = await api.queryDatabase("SELECT COUNT(*) as count FROM comment_rating WHERE userId = ? AND ratingType = 'negative'", userId) as { count: number }[];
+            if (positiveResult.length > 0 || negativeResult.length > 0) {
+                return positiveResult[0].count - negativeResult[0].count || 0;
+            }
+            else {
+                console.error("No results found");
+                return 0;
+            }
+        }
+        catch (reason) {
+            console.error("Error fetching results", reason);
+            return 0;
+        }
+    }
+
     public async deleteRating(userId: number, commentId: number): Promise<boolean> {
         try {
             const result: RatingCommentResult[] = await api.queryDatabase("DELETE FROM comment_rating WHERE userId = ? AND commentId = ?", userId, commentId) as RatingCommentResult[];

@@ -267,12 +267,12 @@ export class LanguageClass {
                 nl: "Stuur antwoord",
             },
             totalpost: {
-                en: "Total questions",
-                nl: "Totaal aantal vragen",
+                en: "Total questions:",
+                nl: "Totaal aantal vragen:",
             },
             totalanswer: {
-                en: "Total answers",
-                nl: "Totaal aantal antwoorden",
+                en: "Total answers:",
+                nl: "Totaal aantal antwoorden:",
             },
             biography: {
                 en: "Biography",
