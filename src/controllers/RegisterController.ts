@@ -97,7 +97,7 @@ class RegistrationClass {
         const errorMessage: HTMLParagraphElement = document.querySelector("#errMsg")!;
         const infoMessage: HTMLParagraphElement = document.querySelector("#infoMsg")!;
         const successMessage: HTMLParagraphElement = document.querySelector("#successMsg")!;
-        // And this calls in the input fields so I can make them red later.
+        // And this resets the input field styling,
         this.alterInputFields();
         // This resets everything everytime this method is used.
         errorMessage.innerHTML = "";
