@@ -156,7 +156,7 @@ class RegistrationClass {
             successMessage.innerText = "";
             try {
                 // Gebruiker aanmaken
-                const createdUser: boolean = await this._userModel.create(userInputName, userInputEmail, userInputPassword);
+                const createdUser: User | undefined = await this._userModel.create(userInputName, userInputEmail, userInputPassword);
                 console.log("Aangemaakte gebruiker:", createdUser);
                 successMessage.innerText += "Account creation was succesful. You will be logged in automatically.";
                 this._UI.successMessagePopup(true);

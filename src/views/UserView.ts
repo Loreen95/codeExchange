@@ -2,6 +2,7 @@ import { UserInfo } from "../views/types";
 import { User } from "../models/User";
 import { Post } from "../models/Post";
 import { Comment } from "../models/Comment";
+import { RatingComment } from "../models/Comment_rating";
 import { PostController } from "../controllers/PostController";
 const post: PostController = new PostController();
 
@@ -52,11 +53,7 @@ export class UserView {
     public async countRating(): Promise<number> {
         const userUrl: URLSearchParams = new URLSearchParams(window.location.search);
         const userId: string | null = userUrl.get("user");
-        // const ratingPost: number | undefined = await Post.countTotalRatingByUserId(Number(userId));
-        // const ratingComment: number | undefined = await Comment.countTotalRatingByUserId(Number(userId));
-        // const totalRating: number = (ratingPost ?? 0) + (ratingComment ?? 0);
-        // return totalRating || 0;
-        const ratingComment: number | undefined = await Comment.countTotalRatingByUserId(Number(userId));
+        const ratingComment: number | undefined = await RatingComment.countAvgRatingByUserId(Number(userId));
         return ratingComment || 0;
     }
 

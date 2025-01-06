@@ -19,9 +19,8 @@ if (insertPostsHere) {
 }
 const titleUserInput: HTMLInputElement = document.querySelector("#titleInput")!;
 const contentInput: HTMLInputElement = document.querySelector("#contentInput")!;
-const createBtn: HTMLButtonElement = document.querySelector("#createPost")!;
+const createBtn: HTMLButtonElement | null = document.querySelector("#createPost");
 
-// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 if (createBtn) {
     createBtn.addEventListener("click", async () => {
         await post.onClickCreate(titleUserInput.value.trim(), contentInput.value.trim());
@@ -37,9 +36,7 @@ if (submitBtn) {
     });
 }
 
-const insertCommenthere: HTMLDivElement = document.querySelector(".awnsers")!;
-
-// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+const insertCommenthere: HTMLDivElement | null = document.querySelector(".awnsers");
 if (insertCommenthere) {
     await post.renderComments();
 }
@@ -51,22 +48,18 @@ else {
     UI.adjustPageToOwnerStatus(false);
 }
 
-const insertQuestionNameHere: HTMLHeadElement = document.querySelector("#insertQuestionNameHere")!;
-const questionInfoBits: HTMLParagraphElement = document.querySelector(".questionstats")!;
-const ratingCounter: HTMLParagraphElement = document.querySelector(".insertRatingHere")!;
-const contentOfPost: HTMLDivElement = document.querySelector(".contentPart")!;
-const awnseramount: HTMLHeadElement = document.querySelector("#injectawnseramountHere")!;
+const insertQuestionNameHere: HTMLHeadElement | null = document.querySelector("#insertQuestionNameHere");
+const questionInfoBits: HTMLParagraphElement | null = document.querySelector(".questionstats");
+const ratingCounter: HTMLParagraphElement | null = document.querySelector(".insertRatingHere");
+const contentOfPost: HTMLDivElement | null = document.querySelector(".contentPart");
+const awnseramount: HTMLHeadElement | null = document.querySelector("#injectawnseramountHere");
 
-// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 if (insertQuestionNameHere) {
     insertQuestionNameHere.innerText = String(currentpost!.title);
 }
-
-// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 if (questionInfoBits) {
     questionInfoBits.innerHTML = `<a href="profile.html?user=${currentpost!.authorId}" class="navLink">${await post.getUserName(currentpost!.authorId)}</a>  ${String(currentpost!.createdAt).slice(8, 10) + "-" + String(currentpost!.createdAt).slice(5, 7) + "-" + String(currentpost!.createdAt).slice(0, 4) + " | " + String(currentpost!.createdAt).slice(11, 19)}`;
 }
-// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 if (ratingCounter && currentpost) {
     const userSession: string | null = sessionStorage.getItem("session");
     const user: User | undefined = await User.getUserById(Number(userSession));
@@ -77,15 +70,21 @@ if (ratingCounter && currentpost) {
         await post.renderPostRating();
     }
 }
-
-// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 if (contentOfPost) {
     contentOfPost.innerHTML = post.encodeContentForVieuwingPurposes(currentpost!.content);
 }
-
-// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 if (awnseramount) {
     awnseramount.innerHTML = String(await post.getCommentAmount());
+}
+
+const currentPage: number = 1; // Begin altijd op pagina 1
+const totalPages: number | undefined = await Post.countPages();
+if (totalPages) {
+    await post.renderPosts(undefined, undefined, undefined, currentPage);
+    await post.renderPagination(currentPage, totalPages);
+}
+else {
+    console.error("Could not retrieve the total number of pages.");
 }
 
 hljs.highlightAll();
@@ -97,6 +96,7 @@ const linkBtn: HTMLButtonElement = document.querySelector(".link")!;
 const undo: HTMLButtonElement = document.querySelector(".undo")!;
 const redo: HTMLButtonElement = document.querySelector(".redo")!;
 
+// eslint-disable-next-line @typescript-eslint/no-base-to-string
 if (String(boldBtn) !== "null") {
     boldBtn.addEventListener("click", e => {
         e.preventDefault();
@@ -105,6 +105,7 @@ if (String(boldBtn) !== "null") {
     });
 }
 
+// eslint-disable-next-line @typescript-eslint/no-base-to-string
 if (String(italicBtn) !== "null") {
     italicBtn.addEventListener("click", e => {
         e.preventDefault();
@@ -113,6 +114,7 @@ if (String(italicBtn) !== "null") {
     });
 }
 
+// eslint-disable-next-line @typescript-eslint/no-base-to-string
 if (String(italicBtn) !== "null") {
     linkBtn.addEventListener("click", e => {
         e.preventDefault();
@@ -132,6 +134,7 @@ if (String(italicBtn) !== "null") {
     });
 }
 
+// eslint-disable-next-line @typescript-eslint/no-base-to-string
 if (String(codeBtn) !== "null") {
     codeBtn.addEventListener("click", e => {
         e.preventDefault();
@@ -140,6 +143,7 @@ if (String(codeBtn) !== "null") {
     });
 }
 
+// eslint-disable-next-line @typescript-eslint/no-base-to-string
 if (String(undo) !== "null") {
     undo.addEventListener("click", e => {
         e.preventDefault();
@@ -147,6 +151,7 @@ if (String(undo) !== "null") {
     });
 }
 
+// eslint-disable-next-line @typescript-eslint/no-base-to-string
 if (String(redo) !== "null") {
     redo.addEventListener("click", e => {
         e.preventDefault();
@@ -171,6 +176,7 @@ if (String(closePanelBackUp) !== "null") {
 const ratingPositive: HTMLLinkElement = document.querySelector("#postPositive")!;
 const ratingNegative: HTMLLinkElement = document.querySelector("#postNegative")!;
 
+// eslint-disable-next-line @typescript-eslint/no-base-to-string
 if (String(ratingPositive) !== "null") {
     ratingPositive.addEventListener("click", async (e: Event) => {
         e.preventDefault();
@@ -180,6 +186,7 @@ if (String(ratingPositive) !== "null") {
     });
 }
 
+// eslint-disable-next-line @typescript-eslint/no-base-to-string
 if (String(ratingNegative) !== "null") {
     ratingNegative.addEventListener("click", async (e: Event) => {
         e.preventDefault();
@@ -191,6 +198,7 @@ if (String(ratingNegative) !== "null") {
 
 // this is the filter related functionality
 const openAndCloseFilters: HTMLDivElement = document.querySelector(".openAndCloseFilters")!;
+// eslint-disable-next-line @typescript-eslint/no-base-to-string
 if (String(openAndCloseFilters) !== "null") {
     openAndCloseFilters.addEventListener("click", () => {
         post.openAndCloseFilters();
@@ -199,6 +207,7 @@ if (String(openAndCloseFilters) !== "null") {
 
 const wordsearchBttn: HTMLButtonElement = document.querySelector(".wordFilterBttn")!;
 const wordsearchInput: HTMLInputElement = document.querySelector("#wordFilter")!;
+// eslint-disable-next-line @typescript-eslint/no-base-to-string
 if (String(wordsearchBttn) !== "null") {
     wordsearchBttn.addEventListener("click", async () => {
         await post.renderPosts("postsByWordInContent", 0, wordsearchInput.value);
@@ -207,6 +216,7 @@ if (String(wordsearchBttn) !== "null") {
 
 const expertiseFilterBttn: HTMLButtonElement = document.querySelector(".expertiseFilterBttn")!;
 const expertiseFilter: HTMLInputElement = document.querySelector("#expertiseFilter")!;
+// eslint-disable-next-line @typescript-eslint/no-base-to-string
 if (String(expertiseFilterBttn) !== "null") {
     expertiseFilterBttn.addEventListener("click", async () => {
         await post.renderPosts("postsByWordInUserExpertise", 0, expertiseFilter.value);
@@ -214,6 +224,7 @@ if (String(expertiseFilterBttn) !== "null") {
 }
 
 const filterOutNoComments: HTMLButtonElement = document.querySelector(".filterOutNoComments")!;
+// eslint-disable-next-line @typescript-eslint/no-base-to-string
 if (String(filterOutNoComments) !== "null") {
     filterOutNoComments.addEventListener("click", async () => {
         await post.renderPosts("commentedOnly");

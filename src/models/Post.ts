@@ -19,9 +19,12 @@ export class Post {
     }
 
     // CRUD methods:
-    public static async getAllPosts(): Promise<Post[] | undefined> {
+    public static async getAllPosts(page: number = 1, limit: number = 10): Promise<Post[] | undefined> {
         try {
-            const result: PostResult[] = await api.queryDatabase("Select * from post ORDER BY createdAt DESC LIMIT 10") as PostResult[];
+            const offset: number = (page - 1) * limit;
+            const result: PostResult[] = await api.queryDatabase(
+                `SELECT * FROM post ORDER BY createdAt DESC LIMIT ${limit} OFFSET ${offset}`
+            ) as PostResult[];
             if (result.length > 0) {
                 const posts: Post[] = result.map(post => {
                     const newPost: Post = new Post(post.postId, post.authorId, post.title, post.content);
@@ -36,7 +39,7 @@ export class Post {
             }
         }
         catch (reason) {
-            console.error("An error occurred while gathering all posts.", reason);
+            console.error("An error occurred while gathering posts for the page.", reason);
             return undefined;
         }
     }
