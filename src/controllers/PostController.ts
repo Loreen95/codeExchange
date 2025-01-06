@@ -713,4 +713,11 @@ export class PostController {
             console.error("Error updating the rating:", error);
         }
     }
+
+    public async editPost(postId: number, title: string, content: string): Promise<void> {
+        if (this._postModel) {
+            const result: boolean = await this._postModel.update(postId, title, content);
+            console.log(result);
+        }
+    }
 }

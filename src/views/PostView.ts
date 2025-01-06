@@ -36,6 +36,15 @@ if (submitBtn) {
     });
 }
 
+const editBtn: HTMLButtonElement | null = document.querySelector("#editBtn");
+if (editBtn) {
+    editBtn.addEventListener("click", async (e: Event) => {
+        e.preventDefault();
+        console.log(postId, titleUserInput, contentInput);
+        await post.editPost(Number(postId), titleUserInput.value.trim(), contentInput.value.trim());
+    });
+}
+
 const insertCommenthere: HTMLDivElement | null = document.querySelector(".awnsers");
 if (insertCommenthere) {
     await post.renderComments();
@@ -75,6 +84,19 @@ if (contentOfPost) {
 }
 if (awnseramount) {
     awnseramount.innerHTML = String(await post.getCommentAmount());
+}
+
+const editLink: HTMLLinkElement | null = document.querySelector(".editLink");
+if (editLink) {
+    editLink.href = `editPost?post=${postId}`;
+}
+
+const postTitle: HTMLInputElement = document.querySelector("#titleInput")!;
+const postContent: HTMLTextAreaElement = document.querySelector(".addownAwnsertextarea2")!;
+const theCurrentPost: Post | undefined = await Post.getPostById(Number(postId));
+if (theCurrentPost) {
+    postTitle.value = theCurrentPost.title;
+    postContent.value = theCurrentPost.content || "test";
 }
 
 const currentPage: number = 1; // Begin altijd op pagina 1
