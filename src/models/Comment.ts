@@ -74,6 +74,9 @@ export class Comment {
         }
     }
 
+    /**
+     * this one should speak for itself, it deletes a comment entry from the database
+     */
     public static async delete(commentId: number): Promise<boolean> {
         try {
             const result: CommentResult[] = await api.queryDatabase(
