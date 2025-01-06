@@ -64,6 +64,6 @@ export interface UserInfo {
 
 export interface PostInfo {
     postId: number;
-    title: string;
-    content: string;
+    postTitle: string;
+    postContent: string;
 }

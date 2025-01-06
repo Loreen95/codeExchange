@@ -338,6 +338,14 @@ export class LanguageClass {
                 en: "Delete this comment?",
                 nl: "Andwoord verwijderen?",
             },
+            edit_own_question: {
+                en: "Edit your question",
+                nl: "Pas jouw vraag aan",
+            },
+            editPost: {
+                en: "Edit post",
+                nl: "Post aanpassen",
+            },
         });
     }
 

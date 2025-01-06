@@ -158,6 +158,18 @@ export class Post {
         }
     }
 
+    public async update(postId: number, title: string, content: string): Promise<boolean> {
+        try {
+            const result: PostResult[] = await api.queryDatabase("UPDATE post SET title = ?, content = ? WHERE postId = ?", title, content, postId) as PostResult[];
+            console.log("Success:", result);
+            return true;
+        }
+        catch (reason) {
+            console.error("Error updating post:", reason);
+            return false;
+        }
+    }
+
     public static async countTotalPosts(): Promise<number | undefined> {
         try {
             const result: PostResult[] = await api.queryDatabase("SELECT COUNT(*) as count FROM post") as PostResult[];
