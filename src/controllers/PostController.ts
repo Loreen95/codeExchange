@@ -719,5 +719,8 @@ export class PostController {
             const result: boolean = await this._postModel.update(postId, title, content);
             console.log(result);
         }
+        else {
+            console.log("no post model");
+        }
     }
 }

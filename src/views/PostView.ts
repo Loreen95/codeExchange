@@ -36,7 +36,7 @@ if (submitBtn) {
     });
 }
 
-const editBtn: HTMLButtonElement | null = document.querySelector("#editBtn");
+const editBtn: HTMLButtonElement | null = document.querySelector("#editPost");
 if (editBtn) {
     editBtn.addEventListener("click", async (e: Event) => {
         e.preventDefault();

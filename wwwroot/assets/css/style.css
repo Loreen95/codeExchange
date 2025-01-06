@@ -838,6 +838,10 @@ body {
     cursor: pointer;
 }
 
+.editLink {
+    text-decoration: none;
+}
+
 .posts {
     display: flex;
     /* align-items: center; */
