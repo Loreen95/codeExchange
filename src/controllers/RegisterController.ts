@@ -36,10 +36,11 @@ class RegistrationClass {
         }
         else {
             // This is the final exam that checks the affinity and strength of the password.
+            // All it does is see if the password contains uppercase letters, lowercase letters, numbers and at least one special carcter
             if (givenPassword.match(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()]).{8,}$/)) {
                 return true;
             }
-            // And this is what happens if the pasword was found wanting.
+            // This is what happens if the password was found wanting and doesn't contain all requirements.
             else {
                 this._whyItIsNotGoodEnough = "Your password is unsafe.";
                 this._neededInformation = "Note: You must include the following in your password: ";

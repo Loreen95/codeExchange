@@ -1676,6 +1676,24 @@ pre {
     font-size: 20px;
 }
 
+.pagination button {
+    border: none;
+    font-size: 25px;
+    font-family: 'Trebuchet MS', sans-serif;
+    background-color: transparent;
+    color: aliceblue;
+    cursor: pointer;
+}
+
+.pagination button:hover {
+    transition: all 0.3s;
+    color: #9e2828;
+}
+
+.pagination button:disabled {
+    opacity: 0.5;
+}
+
 /* this query chainges the content to fit the screen of a phone */
 @media (max-width: 630px) {
     pre {

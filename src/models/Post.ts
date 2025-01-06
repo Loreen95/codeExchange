@@ -90,6 +90,9 @@ export class Post {
         }
     }
 
+    /**
+     * getAllPostsByWordInUserExpertise gathers all posts made by users with a spesific word in their expertise. using an inner join
+     */
     public static async getAllPostsByWordInUserExpertise(searchTerm: string): Promise<Post[] | undefined> {
         try {
             searchTerm = "%" + searchTerm + "%";
@@ -133,6 +136,9 @@ export class Post {
         }
     }
 
+    /**
+     * create.. uum yea it creates a new database entry. not mutch to say about it
+     */
     public async create(authorId: number, title: string, content: string): Promise<Post | undefined> {
         try {
             const result: { insertId: number } = await api.queryDatabase(
