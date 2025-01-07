@@ -62,6 +62,7 @@ class RegistrationClass {
         }
     }
 
+    // this chainges the input fields to red and back to gray depending on if an error has occured
     public alterInputFields(whatInput?: string): void {
         const emailAdressUserInput: HTMLInputElement = document.querySelector("#emailInput")!;
         const nameUserInput: HTMLInputElement = document.querySelector("#userName")!;
@@ -84,6 +85,7 @@ class RegistrationClass {
         }
     }
 
+    // this method checks if a name has been given and if it's already in use
     private async _verifyGivenUsername(username: string): Promise<boolean> {
         const errorMessage: HTMLParagraphElement = document.querySelector("#errMsg")!;
         if (!username) {
@@ -101,6 +103,7 @@ class RegistrationClass {
         }
     }
 
+    // this checks if a given emain has been given, is strong enough and not already in use
     private async _verifyGivenEmailAdress(emailAdress: string): Promise<boolean> {
         const errorMessage: HTMLParagraphElement = document.querySelector("#errMsg")!;
         if (!emailAdress) {
@@ -122,6 +125,7 @@ class RegistrationClass {
         return true;
     }
 
+    // this method checks if a password has been received and if so it sends it to the passStrengthChecker
     private _verifyGivenPassword(password: string): boolean {
         const errorMessage: HTMLParagraphElement = document.querySelector("#errMsg")!;
         const infoMessage: HTMLParagraphElement = document.querySelector("#infoMsg")!;
@@ -159,19 +163,12 @@ class RegistrationClass {
      * The return value is a void (nothing) because it's just supposed to process and directly display information
     */
     public async onClickRegister(userInputName: string, userInputEmail: string, userInputPassword: string): Promise<void> {
-        this._userModel = new User(0, userInputEmail, userInputName, userInputPassword);
-        // This gatheres the needed Html elements to display warnings and information about the provided credentials
-
-        const successMessage: HTMLParagraphElement = document.querySelector("#successMsg")!;
-        // And this resets the input field styling,
+        // theese methods reset everything everytime this method is used.
         this.alterInputFields();
-        // This resets everything everytime this method is used.
         this._resetErrorMessages();
 
         // and this boolean gets set to false if any error occurs. If it remains true the user will be created
         let allIsInOrder: boolean = true;
-
-        // this list of else if, assesses the received credentials. I trust the error messages themselves are self explanatory
 
         if (!await this._verifyGivenUsername(userInputName)) {
             allIsInOrder = false;
@@ -189,26 +186,36 @@ class RegistrationClass {
             this._resetErrorMessages();
             try {
                 // Gebruiker aanmaken
-                const createdUser: User | undefined = await this._userModel.create(userInputName, userInputEmail, userInputPassword);
-                console.log("Aangemaakte gebruiker:", createdUser);
-                successMessage.innerText += "Account creation was succesful. You will be logged in automatically.";
-                this._UI.successMessagePopup(true);
-                // 5MS Wachten
-                await new Promise(resolve => setTimeout(resolve, 1000));
-                // Check of de gebruiker succesvol kan inloggen
-                await this._login.onClickLogin(userInputEmail, userInputPassword);
+                await this._createAccount(userInputName, userInputEmail, userInputPassword);
+                // 5MS Wachten & Check of de gebruiker succesvol kan inloggen
+                await new Promise(r => setTimeout(r, 1000)).then(async () => {
+                    await this._login.onClickLogin(userInputEmail, userInputPassword);
+                });
             }
             catch (reason) {
-                const errorMessage: HTMLParagraphElement = document.querySelector("#errMsg")!;
-                console.error("Fout tijdens registratie en inloggen:", reason);
-                console.log("Detail van de fout:", JSON.stringify(reason, null, 2));
-                errorMessage.innerHTML = "An error occurred. Please try again later.";
+                this._accountCreationFaillureProcedure(reason);
             }
         }
         else {
             // af all isn't in order it shows the error messahe that should already contain the proper message
             this._UI.unleashTheErrorPopup(true);
         }
+    }
+
+    private async _createAccount(username: string, email: string, passwword: string): Promise<void> {
+        const successMessage: HTMLParagraphElement = document.querySelector("#successMsg")!;
+        this._userModel = new User(0, email, username, passwword);
+        const createdUser: User | undefined = await this._userModel.create(username, email, passwword);
+        console.log("Aangemaakte gebruiker:", createdUser);
+        successMessage.innerText += "Account creation was succesful. You will be logged in automatically.";
+        this._UI.successMessagePopup(true);
+    }
+
+    private _accountCreationFaillureProcedure(reason: unknown): void {
+        const errorMessage: HTMLParagraphElement = document.querySelector("#errMsg")!;
+        console.error("Fout tijdens registratie en inloggen:", reason);
+        console.log("Detail van de fout:", JSON.stringify(reason, null, 2));
+        errorMessage.innerHTML = "An error occurred. Please try again later.";
     }
 }
 
