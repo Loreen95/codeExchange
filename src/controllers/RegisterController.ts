@@ -21,7 +21,7 @@ class RegistrationClass {
      *  The only argument it receives is the provided password.
      *  And the return value is a boolean as a failing or passing grade.
     */
-    private passChecker(givenPassword: string): boolean {
+    private passStrengthChecker(givenPassword: string): boolean {
         // This returns a failing grade if the password is too small and pitifull
         if (givenPassword.length < 7) {
             this._whyItIsNotGoodEnough = "your password is too short.";
@@ -84,6 +84,73 @@ class RegistrationClass {
         }
     }
 
+    private async _verifyGivenUsername(username: string): Promise<boolean> {
+        const errorMessage: HTMLParagraphElement = document.querySelector("#errMsg")!;
+        if (!username) {
+            errorMessage.innerText += "You must provide a name.\n";
+            this.alterInputFields("nameUserInput");
+            return false;
+        }
+        else if (String(await User.doesUserExistForUsername(username)) === "true") {
+            errorMessage.innerText += "Provided Username is already in use.\n";
+            this.alterInputFields("nameUserInput");
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    private async _verifyGivenEmailAdress(emailAdress: string): Promise<boolean> {
+        const errorMessage: HTMLParagraphElement = document.querySelector("#errMsg")!;
+        if (!emailAdress) {
+            errorMessage.innerText += "You must provide an email.\n";
+            this.alterInputFields("emailAdressUserInput");
+            return false;
+        }
+        // this regex looks for strings that resemble valid email adresses.
+        else if (!emailAdress.match(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)) {
+            errorMessage.innerText += "The email is invalid.\n";
+            this.alterInputFields("emailAdressUserInput");
+            return false;
+        }
+        else if (await User.doesUserExistForEmail(emailAdress)) {
+            errorMessage.innerText += "This email is already being used.\n";
+            this.alterInputFields("emailAdressUserInput");
+            return false;
+        }
+        return true;
+    }
+
+    private _verifyGivenPassword(password: string): boolean {
+        const errorMessage: HTMLParagraphElement = document.querySelector("#errMsg")!;
+        const infoMessage: HTMLParagraphElement = document.querySelector("#infoMsg")!;
+        if (!password) {
+            errorMessage.innerText += "You must provide a password.\n";
+            this.alterInputFields("passwordUserInput");
+            return false;
+        }
+        // This here calls forth the password examination and displays appropreate errors and info when a failure occurs
+        else if (!this.passStrengthChecker(password)) {
+            infoMessage.style.display = "block";
+            errorMessage.innerText += String(this._whyItIsNotGoodEnough);
+            infoMessage.innerText += String(this._neededInformation);
+            this.alterInputFields("passwordUserInput");
+            return false;
+        }
+        return true;
+    }
+
+    private _resetErrorMessages(): void {
+        const errorMessage: HTMLParagraphElement = document.querySelector("#errMsg")!;
+        const infoMessage: HTMLParagraphElement = document.querySelector("#infoMsg")!;
+        const successMessage: HTMLParagraphElement = document.querySelector("#successMsg")!;
+        errorMessage.innerHTML = "";
+        infoMessage.innerText = "";
+        infoMessage.style.display = "none";
+        successMessage.innerText = "";
+    }
+
     /**
      * This here function contains an else if chain that goes through each individual input,
      * and spits out an error with some information on the html page if somethings wrong with them
@@ -94,66 +161,32 @@ class RegistrationClass {
     public async onClickRegister(userInputName: string, userInputEmail: string, userInputPassword: string): Promise<void> {
         this._userModel = new User(0, userInputEmail, userInputName, userInputPassword);
         // This gatheres the needed Html elements to display warnings and information about the provided credentials
-        const errorMessage: HTMLParagraphElement = document.querySelector("#errMsg")!;
-        const infoMessage: HTMLParagraphElement = document.querySelector("#infoMsg")!;
+
         const successMessage: HTMLParagraphElement = document.querySelector("#successMsg")!;
         // And this resets the input field styling,
         this.alterInputFields();
         // This resets everything everytime this method is used.
-        errorMessage.innerHTML = "";
-        infoMessage.innerText = "";
-        infoMessage.style.display = "none";
+        this._resetErrorMessages();
 
         // and this boolean gets set to false if any error occurs. If it remains true the user will be created
         let allIsInOrder: boolean = true;
 
         // this list of else if, assesses the received credentials. I trust the error messages themselves are self explanatory
-        if (!userInputName) {
-            errorMessage.innerText += "You must provide a name.\n";
-            this.alterInputFields("nameUserInput");
+
+        if (!await this._verifyGivenUsername(userInputName)) {
             allIsInOrder = false;
         }
-        else if (String(await User.doesUserExistForUsername(userInputName)) === "true") {
-            errorMessage.innerText += "Provided Username is already in use.\n";
-            this.alterInputFields("nameUserInput");
+        if (!await this._verifyGivenEmailAdress(userInputEmail)) {
             allIsInOrder = false;
         }
-        if (!userInputEmail) {
-            errorMessage.innerText += "You must provide an email.\n";
-            this.alterInputFields("emailAdressUserInput");
-            allIsInOrder = false;
-        }
-        // this regex looks for strings that resemble valid email adresses.
-        else if (!userInputEmail.match(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)) {
-            errorMessage.innerText += "The email is invalid.\n";
-            this.alterInputFields("emailAdressUserInput");
-            allIsInOrder = false;
-        }
-        else if (await User.doesUserExistForEmail(userInputEmail)) {
-            errorMessage.innerText += "This email is already being used.\n";
-            this.alterInputFields("emailAdressUserInput");
-            allIsInOrder = false;
-        }
-        if (!userInputPassword) {
-            errorMessage.innerText += "You must provide a password.\n";
-            this.alterInputFields("passwordUserInput");
-            allIsInOrder = false;
-        }
-        // This here calls forth the password examination and displays appropreate errors and info when a failure occurs
-        else if (!this.passChecker(userInputPassword)) {
-            infoMessage.style.display = "block";
-            errorMessage.innerText += String(this._whyItIsNotGoodEnough);
-            infoMessage.innerText += String(this._neededInformation);
-            this.alterInputFields("passwordUserInput");
+        if (!this._verifyGivenPassword(userInputPassword)) {
             allIsInOrder = false;
         }
 
         // And finally when all is checked and double checked and no faults where found. The user will actually be created
         if (allIsInOrder) {
             this._UI.unleashTheErrorPopup(false);
-            errorMessage.innerHTML = "";
-            infoMessage.innerText = "Success!";
-            successMessage.innerText = "";
+            this._resetErrorMessages();
             try {
                 // Gebruiker aanmaken
                 const createdUser: User | undefined = await this._userModel.create(userInputName, userInputEmail, userInputPassword);
@@ -166,12 +199,14 @@ class RegistrationClass {
                 await this._login.onClickLogin(userInputEmail, userInputPassword);
             }
             catch (reason) {
+                const errorMessage: HTMLParagraphElement = document.querySelector("#errMsg")!;
                 console.error("Fout tijdens registratie en inloggen:", reason);
                 console.log("Detail van de fout:", JSON.stringify(reason, null, 2));
                 errorMessage.innerHTML = "An error occurred. Please try again later.";
             }
         }
         else {
+            // af all isn't in order it shows the error messahe that should already contain the proper message
             this._UI.unleashTheErrorPopup(true);
         }
     }
