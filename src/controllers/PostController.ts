@@ -132,6 +132,11 @@ export class PostController {
                         }
                     }
                 }
+                let isEdited: string = "";
+                if (post.updatedAt && post.updatedAt !== post.createdAt) {
+                    const formattedUpdatedAt: string = new Date(post.updatedAt).toLocaleString(); // Formatteer de datum
+                    isEdited = `Edited: ${formattedUpdatedAt}`;
+                }
                 insertPostsHere.insertAdjacentHTML("beforeend", `
                     <div class="question">
                         <a href="profile.html?user=${userId}" class="navLink" id="whoAsked">${userName}: <p data-translate="asks"></p></a>
@@ -145,12 +150,12 @@ export class PostController {
                                         <p class="messageIcon"><i class="fa-sharp fa-solid fa-message"></i> ${totalComments}</p>
                                     </div>
                                     <p id="datetime">${stringedTimeAndDate}</p>
+                                    <p id="edited">${isEdited}</p>
                                 </div>                                  
                             </div>
                         </div>               
                     </div>
                 `);
-
                 const postElement: Element | null = insertPostsHere.querySelector(`#postNr${postIndex}`);
                 if (postElement) {
                     postElement.addEventListener("click", () => {
@@ -715,12 +720,56 @@ export class PostController {
     }
 
     public async editPost(postId: number, title: string, content: string): Promise<void> {
-        if (this._postModel) {
-            const result: boolean = await this._postModel.update(postId, title, content);
-            console.log(result);
+        try {
+            const errorMessage: HTMLParagraphElement | null = document.querySelector("#errMsg");
+            const successMessage: HTMLParagraphElement | null = document.querySelector("#successMsg");
+
+            if (!errorMessage || !successMessage) {
+                console.error("Error and success message elements not found.");
+                return;
+            }
+
+            errorMessage.innerHTML = "";
+            successMessage.innerHTML = "";
+
+            if (!title || !content) {
+                errorMessage.innerHTML += "You must add a title and message!";
+                this._UI.unleashTheErrorPopup(true);
+                return;
+            }
+
+            this._postModel = new Post(postId, 0, title, content);
+            const isPostEdited: boolean = await this._postModel.update(postId, title, content);
+
+            if (isPostEdited) {
+                successMessage.innerHTML = `Post updated successfully! Redirecting to post ${postId}`;
+                this._UI.unleashTheErrorPopup(false);
+                this._UI.successMessagePopup(true);
+                if (postId) {
+                    await this.renderPosts();
+                    sessionStorage.setItem("post_Nr", String(postId));
+                    setTimeout(() => {
+                        window.location.href = `http://localhost:3000/post?post=${postId}`;
+                    }, 1500);
+                }
+                else {
+                    errorMessage.innerHTML += "Failed to update the post!";
+                    this._UI.unleashTheErrorPopup(true);
+                }
+            }
+            else {
+                errorMessage.innerHTML += "Failed to update the post!";
+                this._UI.unleashTheErrorPopup(true);
+            }
         }
-        else {
-            console.log("no post model");
+        catch (reason) {
+            console.error("Error updating post!", reason);
+
+            const errorMessage: HTMLParagraphElement | null = document.querySelector("#errMsg");
+            if (errorMessage) {
+                errorMessage.innerHTML = "An error occurred while updating the post.";
+                this._UI.unleashTheErrorPopup(true);
+            }
         }
     }
 }

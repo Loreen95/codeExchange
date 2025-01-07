@@ -38,9 +38,15 @@ if (submitBtn) {
 
 const editBtn: HTMLButtonElement | null = document.querySelector("#editPost");
 if (editBtn) {
+    const postTitle: HTMLInputElement = document.querySelector("#titleInput")!;
+    const postContent: HTMLTextAreaElement = document.querySelector(".addownAwnsertextarea2")!;
+    const theCurrentPost: Post | undefined = await Post.getPostById(Number(postId));
+    if (theCurrentPost) {
+        postTitle.value = theCurrentPost.title;
+        postContent.value = theCurrentPost.content || "test";
+    }
     editBtn.addEventListener("click", async (e: Event) => {
         e.preventDefault();
-        console.log(postId, titleUserInput, contentInput);
         await post.editPost(Number(postId), titleUserInput.value.trim(), contentInput.value.trim());
     });
 }
@@ -66,9 +72,21 @@ const awnseramount: HTMLHeadElement | null = document.querySelector("#injectawns
 if (insertQuestionNameHere) {
     insertQuestionNameHere.innerText = String(currentpost!.title);
 }
+
 if (questionInfoBits) {
-    questionInfoBits.innerHTML = `<a href="profile.html?user=${currentpost!.authorId}" class="navLink">${await post.getUserName(currentpost!.authorId)}</a>  ${String(currentpost!.createdAt).slice(8, 10) + "-" + String(currentpost!.createdAt).slice(5, 7) + "-" + String(currentpost!.createdAt).slice(0, 4) + " | " + String(currentpost!.createdAt).slice(11, 19)}`;
+    if (currentpost) {
+        const formattedCreatedAt: string = String(currentpost.createdAt).slice(8, 10) + "-" + String(currentpost.createdAt).slice(5, 7) + "-" + String(currentpost.createdAt).slice(0, 4) + " | " + String(currentpost.createdAt).slice(11, 19);
+        const formattedUpdatedAt: string = String(currentpost.updatedAt).slice(8, 10) + "-" + String(currentpost.updatedAt).slice(5, 7) + "-" + String(currentpost.updatedAt).slice(0, 4) + " | " + String(currentpost.updatedAt).slice(11, 19);
+        questionInfoBits.innerHTML = `
+            <a href="profile.html?user=${currentpost.authorId}" class="navLink">
+                ${await post.getUserName(currentpost.authorId)}
+            </a>
+            Created: ${formattedCreatedAt}
+            Edited: ${formattedUpdatedAt}
+        `;
+    }
 }
+
 if (ratingCounter && currentpost) {
     const userSession: string | null = sessionStorage.getItem("session");
     const user: User | undefined = await User.getUserById(Number(userSession));
@@ -91,13 +109,13 @@ if (editLink) {
     editLink.href = `editPost?post=${postId}`;
 }
 
-const postTitle: HTMLInputElement = document.querySelector("#titleInput")!;
-const postContent: HTMLTextAreaElement = document.querySelector(".addownAwnsertextarea2")!;
-const theCurrentPost: Post | undefined = await Post.getPostById(Number(postId));
-if (theCurrentPost) {
-    postTitle.value = theCurrentPost.title;
-    postContent.value = theCurrentPost.content || "test";
-}
+// const postTitle: HTMLInputElement = document.querySelector("#titleInput")!;
+// const postContent: HTMLTextAreaElement = document.querySelector(".addownAwnsertextarea2")!;
+// const theCurrentPost: Post | undefined = await Post.getPostById(Number(postId));
+// if (theCurrentPost) {
+//     postTitle.value = theCurrentPost.title;
+//     postContent.value = theCurrentPost.content || "test";
+// }
 
 const currentPage: number = 1; // Begin altijd op pagina 1
 const totalPages: number | undefined = await Post.countPages();
