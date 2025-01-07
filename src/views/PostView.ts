@@ -76,7 +76,7 @@ if (insertQuestionNameHere) {
 if (questionInfoBits) {
     if (currentpost) {
         const formattedCreatedAt: string = String(currentpost.createdAt).slice(8, 10) + "-" + String(currentpost.createdAt).slice(5, 7) + "-" + String(currentpost.createdAt).slice(0, 4) + " | " + String(currentpost.createdAt).slice(11, 19);
-        const formattedUpdatedAt: string = currentpost.updatedAt ? (String(currentpost.updatedAt).slice(8, 10) + "-" + String(currentpost.updatedAt).slice(5, 7) + "-" + String(currentpost.updatedAt).slice(0, 4) + " | " + String(currentpost.updatedAt).slice(11, 19)) : '';
+        const formattedUpdatedAt: string = currentpost.updatedAt ? (String(currentpost.updatedAt).slice(8, 10) + "-" + String(currentpost.updatedAt).slice(5, 7) + "-" + String(currentpost.updatedAt).slice(0, 4) + " | " + String(currentpost.updatedAt).slice(11, 19)) : "";
 
         let updatedInfo: string = "";
         if (formattedUpdatedAt) {
@@ -114,14 +114,6 @@ const editLink: HTMLLinkElement | null = document.querySelector(".editLink");
 if (editLink) {
     editLink.href = `editPost?post=${postId}`;
 }
-
-// const postTitle: HTMLInputElement = document.querySelector("#titleInput")!;
-// const postContent: HTMLTextAreaElement = document.querySelector(".addownAwnsertextarea2")!;
-// const theCurrentPost: Post | undefined = await Post.getPostById(Number(postId));
-// if (theCurrentPost) {
-//     postTitle.value = theCurrentPost.title;
-//     postContent.value = theCurrentPost.content || "test";
-// }
 
 const currentPage: number = 1; // Begin altijd op pagina 1
 const totalPages: number | undefined = await Post.countPages();
