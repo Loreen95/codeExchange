@@ -9,6 +9,7 @@ export class Post {
     private _content: string;
     private _rating: number | undefined;
     private _createdAt: string | undefined;
+    private _updatedAt: string | undefined;
 
     // constructor:
     public constructor(postId: number, authorId: number, title: string, content: string) {
@@ -30,6 +31,7 @@ export class Post {
                     const newPost: Post = new Post(post.postId, post.authorId, post.title, post.content);
                     newPost.rating = post.rating;
                     newPost.createdAt = post.createdAt;
+                    newPost.updatedAt = post.updatedAt;
                     return newPost;
                 });
                 return posts;
@@ -52,6 +54,7 @@ export class Post {
                     const newPost: Post = new Post(post.postId, post.authorId, post.title, post.content);
                     newPost.rating = post.rating;
                     newPost.createdAt = post.createdAt;
+                    newPost.updatedAt = post.updatedAt;
                     return newPost;
                 });
                 return posts;
@@ -76,6 +79,7 @@ export class Post {
                     const newPost: Post = new Post(post.postId, post.authorId, post.title, post.content);
                     newPost.rating = post.rating;
                     newPost.createdAt = post.createdAt;
+                    newPost.updatedAt = post.updatedAt;
                     return newPost;
                 });
                 return posts;
@@ -103,6 +107,7 @@ export class Post {
                     const newPost: Post = new Post(post.postId, post.authorId, post.title, post.content);
                     newPost.rating = post.rating;
                     newPost.createdAt = post.createdAt;
+                    newPost.updatedAt = post.updatedAt;
                     return newPost;
                 });
                 return posts;
@@ -124,6 +129,7 @@ export class Post {
                 const post: Post = new Post(result[0].postId, result[0].authorId, result[0].title, result[0].content);
                 post.rating = result[0].rating;
                 post.createdAt = result[0].createdAt;
+                post.updatedAt = result[0].updatedAt;
                 return post;
             }
             else {
@@ -246,6 +252,10 @@ export class Post {
         return this._createdAt;
     }
 
+    public get updatedAt(): string | undefined {
+        return this._updatedAt;
+    }
+
     public set title(newTitle: string) {
         this._title = newTitle;
     }
@@ -260,5 +270,9 @@ export class Post {
 
     public set createdAt(newcreatedAt: string | undefined) {
         this._createdAt = newcreatedAt;
+    }
+
+    public set updatedAt(newUpdatedAt: string | undefined) {
+        this._updatedAt = newUpdatedAt;
     }
 }
