@@ -76,13 +76,19 @@ if (insertQuestionNameHere) {
 if (questionInfoBits) {
     if (currentpost) {
         const formattedCreatedAt: string = String(currentpost.createdAt).slice(8, 10) + "-" + String(currentpost.createdAt).slice(5, 7) + "-" + String(currentpost.createdAt).slice(0, 4) + " | " + String(currentpost.createdAt).slice(11, 19);
-        const formattedUpdatedAt: string = String(currentpost.updatedAt).slice(8, 10) + "-" + String(currentpost.updatedAt).slice(5, 7) + "-" + String(currentpost.updatedAt).slice(0, 4) + " | " + String(currentpost.updatedAt).slice(11, 19);
+        const formattedUpdatedAt: string = currentpost.updatedAt ? (String(currentpost.updatedAt).slice(8, 10) + "-" + String(currentpost.updatedAt).slice(5, 7) + "-" + String(currentpost.updatedAt).slice(0, 4) + " | " + String(currentpost.updatedAt).slice(11, 19)) : '';
+
+        let updatedInfo: string = "";
+        if (formattedUpdatedAt) {
+            updatedInfo = `Edited: ${formattedUpdatedAt}`;
+        }
+
         questionInfoBits.innerHTML = `
             <a href="profile.html?user=${currentpost.authorId}" class="navLink">
                 ${await post.getUserName(currentpost.authorId)}
             </a>
             Created: ${formattedCreatedAt}
-            Edited: ${formattedUpdatedAt}
+            ${updatedInfo}
         `;
     }
 }
