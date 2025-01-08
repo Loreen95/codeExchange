@@ -58,14 +58,14 @@ export class UserView {
     }
 
     /**
-     * This function renders the userInfo into the view
-     * @param userInfo this is the userInfo to be displayed
+     * This function renders the UserInfo into the view
+     * @param UserInfo this is the UserInfo to be displayed
      */
-    public async render(userInfo: UserInfo): Promise<void> {
+    public async render(UserInfo: UserInfo): Promise<void> {
         const userUrl: URLSearchParams = new URLSearchParams(window.location.search);
         const userId: string | null = userUrl.get("user");
         if (userId) {
-            const imgUrl: string = userInfo.foto;
+            const imgUrl: string = UserInfo.foto;
             const imageElement: HTMLImageElement | null = document.querySelector("#uploadedImage");
             if (imageElement) {
                 imageElement.src = imgUrl;
@@ -77,52 +77,44 @@ export class UserView {
         const ratingCount: number = await this.countRating();
         const insertUsernamesHere: NodeListOf<HTMLHeadingElement> = document.querySelectorAll("#insertNameHere");
         for (let i: number = 0; i < insertUsernamesHere.length; i++) {
-            insertUsernamesHere[i].innerText = String(userInfo.userName);
+            insertUsernamesHere[i].innerText = String(UserInfo.userName);
         }
 
-        document.querySelector("#memberSince")!.innerHTML = userInfo.stringedTimeAndDate;
-        if (typeof userInfo.dob === "string") {
-            if (userInfo.dob === "Niet beschikbaar" || userInfo.dob === "00-00-0000") {
+        document.querySelector("#memberSince")!.innerHTML = UserInfo.stringedTimeAndDate;
+        if (typeof UserInfo.dob === "string") {
+            if (UserInfo.dob === "Niet beschikbaar" || UserInfo.dob === "00-00-0000") {
                 const bdaythings: NodeListOf<HTMLParagraphElement> = document.querySelectorAll(".bdaythings");
                 for (let k: number = 0; k < bdaythings.length; k++) {
                     bdaythings[k].style.display = "none";
                 }
             }
             else {
-                document.querySelector("#insertBirthdayHere")!.innerHTML = userInfo.dob;
+                document.querySelector("#insertBirthdayHere")!.innerHTML = UserInfo.dob;
             }
         }
-        else if (userInfo.dob instanceof Date) {
-            document.querySelector("#insertBirthdayHere")!.innerHTML = userInfo.dob.toISOString().split("T")[0];
+        else if (UserInfo.dob instanceof Date) {
+            document.querySelector("#insertBirthdayHere")!.innerHTML = UserInfo.dob.toISOString().split("T")[0];
         }
-        document.querySelector("#insertEmailHere")!.innerHTML = userInfo.userEmail;
-        if (userInfo.bio === "Geen biografie beschikbaar") {
-            const biobit: HTMLDivElement = document.querySelector(".userBiography")!;
+        document.querySelector("#insertEmailHere")!.innerHTML = UserInfo.userEmail;
+        const biobit: HTMLDivElement = document.querySelector(".userBiography")!;
+        if (UserInfo.bio === "Geen biografie beschikbaar") {
+            biobit.style.display = "none";
+        }
+        else if (UserInfo.bio === "No biography available") {
             biobit.style.display = "none";
         }
         else {
-            document.querySelector("#insertBiographyHere")!.innerHTML = userInfo.bio;
+            document.querySelector("#insertBiographyHere")!.innerHTML = UserInfo.bio;
         }
 
-        const expertise: Element | null = document.querySelector("#expertise");
-        if (expertise) {
-            expertise.innerHTML = userInfo.expertise;
-        }
-        else {
-            console.warn("No expertise available");
-        }
-        if (userInfo.yearsExperience > 0) {
-            document.querySelector("#yearsExperience")!.innerHTML = String(userInfo.yearsExperience);
-        }
-        else {
-            document.querySelector("#yearsExperience")!.innerHTML = "No data available";
-        }
+        document.querySelector("#expertise")!.innerHTML = UserInfo.expertise;
+        document.querySelector("#yearsExperience")!.innerHTML = UserInfo.yearsExperienceDisplay;
         document.querySelector("#totalPosts")!.innerHTML = String(postCount);
         document.querySelector("#totalComments")!.innerHTML = String(commentCount);
         document.querySelector("#totalRating")!.innerHTML = String(ratingCount);
 
         const editLink: HTMLLinkElement = document.querySelector("#edit")!;
-        editLink.href = `editProfile?user=${userInfo.userId}`;
+        editLink.href = `editProfile?user=${UserInfo.userId}`;
 
         const insertPostsHere: HTMLElement | null = document.querySelector(".posts");
         if (insertPostsHere) {

@@ -22,16 +22,29 @@ class RegistrationClass {
      *  And the return value is a boolean as a failing or passing grade.
     */
     private passStrengthChecker(givenPassword: string): boolean {
+        const chosenlanguage: string = sessionStorage.getItem("lang")!;
         // This returns a failing grade if the password is too small and pitifull
         if (givenPassword.length < 7) {
-            this._whyItIsNotGoodEnough = "your password is too short.";
-            this._neededInformation = "Note: Use at least 7 caracters.";
+            if (chosenlanguage === "en") {
+                this._whyItIsNotGoodEnough = "Your password is too short.";
+                this._neededInformation = "Note: Use at least 7 caracters.";
+            }
+            else if (chosenlanguage === "nl") {
+                this._whyItIsNotGoodEnough = "Het wachtwoord is te kort.";
+                this._neededInformation = "Opmerking: Minimaal 7 karakters.";
+            }
             return false;
         }
         // This returns a failing grade if the password is too large. (we don't have an infinite amount of storage).
         else if (givenPassword.length > 20) {
-            this._whyItIsNotGoodEnough = "Your password is too long.";
-            this._neededInformation = "Note: You're not gonna remember all that. Use a maximum of 20 caracters.";
+            if (chosenlanguage === "en") {
+                this._whyItIsNotGoodEnough = "Your password is too long.";
+                this._neededInformation = "Note: You're not gonna remember all that. Use a maximum of 20 caracters.";
+            }
+            else if (chosenlanguage === "nl") {
+                this._whyItIsNotGoodEnough = "Het wachtwoord is te lang.";
+                this._neededInformation = "Opmerking: Je gaat het niet onthouden. Gebruik maximaal 20 karakters.";
+            }
             return false;
         }
         else {
@@ -42,20 +55,39 @@ class RegistrationClass {
             }
             // This is what happens if the password was found wanting and doesn't contain all requirements.
             else {
-                this._whyItIsNotGoodEnough = "Your password is unsafe.";
-                this._neededInformation = "Note: You must include the following in your password: ";
-                // This figures out the reason why the password is so pathetic and displays it to the user.
-                if (!givenPassword.match(/[a-z]/)) {
-                    this._neededInformation += "-lowercase letters ";
+                if (chosenlanguage === "en") {
+                    this._whyItIsNotGoodEnough = "Your password is unsafe.";
+                    this._neededInformation = "Note: You must include the following in your password: ";
+                    // This figures out the reason why the password is so pathetic and displays it to the user.
+                    if (!givenPassword.match(/[a-z]/)) {
+                        this._neededInformation += "-lowercase letters ";
+                    }
+                    if (!givenPassword.match(/[A-Z]/)) {
+                        this._neededInformation += "-uppercase letters ";
+                    }
+                    if (!givenPassword.match(/[0-9]/)) {
+                        this._neededInformation += "-numbers ";
+                    }
+                    if (!givenPassword.match(/[!@#$%^&*()]/)) {
+                        this._neededInformation += "-special caracters ";
+                    }
                 }
-                if (!givenPassword.match(/[A-Z]/)) {
-                    this._neededInformation += "-uppercase letters ";
-                }
-                if (!givenPassword.match(/[0-9]/)) {
-                    this._neededInformation += "-numbers ";
-                }
-                if (!givenPassword.match(/[!@#$%^&*()]/)) {
-                    this._neededInformation += "-special caracters ";
+                else if (chosenlanguage === "nl") {
+                    this._whyItIsNotGoodEnough = "Het wachtwoord is onveilig.";
+                    this._neededInformation = "Opmerking: Je moet de volgende elementen toevoegen: ";
+                    // This figures out the reason why the password is so pathetic and displays it to the user.
+                    if (!givenPassword.match(/[a-z]/)) {
+                        this._neededInformation += "-kleine letters ";
+                    }
+                    if (!givenPassword.match(/[A-Z]/)) {
+                        this._neededInformation += "-hoofdletters ";
+                    }
+                    if (!givenPassword.match(/[0-9]/)) {
+                        this._neededInformation += "-nummers ";
+                    }
+                    if (!givenPassword.match(/[!@#$%^&*()]/)) {
+                        this._neededInformation += "-speciale karakters ";
+                    }
                 }
                 return false;
             }
@@ -87,14 +119,25 @@ class RegistrationClass {
 
     // this method checks if a name has been given and if it's already in use
     private async _verifyGivenUsername(username: string): Promise<boolean> {
+        const chosenlanguage: string = sessionStorage.getItem("lang")!;
         const errorMessage: HTMLParagraphElement = document.querySelector("#errMsg")!;
         if (!username) {
-            errorMessage.innerText += "You must provide a name.\n";
+            if (chosenlanguage === "en") {
+                errorMessage.innerText += "You must provide a name.\n";
+            }
+            else if (chosenlanguage === "nl") {
+                errorMessage.innerText += "Voer een gebruikersnaam in.\n";
+            }
             this.alterInputFields("nameUserInput");
             return false;
         }
         else if (String(await User.doesUserExistForUsername(username)) === "true") {
-            errorMessage.innerText += "Provided Username is already in use.\n";
+            if (chosenlanguage === "en") {
+                errorMessage.innerText += "Provided Username is already in use.\n";
+            }
+            else if (chosenlanguage === "nl") {
+                errorMessage.innerText += "Deze gebruikersnaam is reeds in gebruik.\n";
+            }
             this.alterInputFields("nameUserInput");
             return false;
         }
@@ -105,20 +148,36 @@ class RegistrationClass {
 
     // this checks if a given emain has been given, is strong enough and not already in use
     private async _verifyGivenEmailAdress(emailAdress: string): Promise<boolean> {
+        const chosenlanguage: string = sessionStorage.getItem("lang")!;
         const errorMessage: HTMLParagraphElement = document.querySelector("#errMsg")!;
         if (!emailAdress) {
-            errorMessage.innerText += "You must provide an email.\n";
+            if (chosenlanguage === "en") {
+                errorMessage.innerText += "You must provide an email.\n";
+            }
+            else if (chosenlanguage === "nl") {
+                errorMessage.innerText += "Voer een emailadres in.\n";
+            }
             this.alterInputFields("emailAdressUserInput");
             return false;
         }
         // this regex looks for strings that resemble valid email adresses.
         else if (!emailAdress.match(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)) {
-            errorMessage.innerText += "The email is invalid.\n";
+            if (chosenlanguage === "en") {
+                errorMessage.innerText += "The email is invalid.\n";
+            }
+            else if (chosenlanguage === "nl") {
+                errorMessage.innerText += "Dit emailadres is ongeldig.\n";
+            }
             this.alterInputFields("emailAdressUserInput");
             return false;
         }
         else if (await User.doesUserExistForEmail(emailAdress)) {
-            errorMessage.innerText += "This email is already being used.\n";
+            if (chosenlanguage === "en") {
+                errorMessage.innerText += "This email is already being used.\n";
+            }
+            else if (chosenlanguage === "nl") {
+                errorMessage.innerText += "Dit emailadres is reeds in gebruik.\n";
+            }
             this.alterInputFields("emailAdressUserInput");
             return false;
         }
@@ -127,10 +186,16 @@ class RegistrationClass {
 
     // this method checks if a password has been received and if so it sends it to the passStrengthChecker
     private _verifyGivenPassword(password: string): boolean {
+        const chosenlanguage: string = sessionStorage.getItem("lang")!;
         const errorMessage: HTMLParagraphElement = document.querySelector("#errMsg")!;
         const infoMessage: HTMLParagraphElement = document.querySelector("#infoMsg")!;
         if (!password) {
-            errorMessage.innerText += "You must provide a password.\n";
+            if (chosenlanguage === "en") {
+                errorMessage.innerText += "You must provide a password.\n";
+            }
+            else if (chosenlanguage === "nl") {
+                errorMessage.innerText += "Voer een wachtwoord in.\n";
+            }
             this.alterInputFields("passwordUserInput");
             return false;
         }
@@ -203,19 +268,31 @@ class RegistrationClass {
     }
 
     private async _createAccount(username: string, email: string, passwword: string): Promise<void> {
+        const chosenlanguage: string = sessionStorage.getItem("lang")!;
         const successMessage: HTMLParagraphElement = document.querySelector("#successMsg")!;
         this._userModel = new User(0, email, username, passwword);
         const createdUser: User | undefined = await this._userModel.create(username, email, passwword);
         console.log("Aangemaakte gebruiker:", createdUser);
-        successMessage.innerText += "Account creation was succesful. You will be logged in automatically.";
+        if (chosenlanguage === "en") {
+            successMessage.innerText += "Account creation was succesful. You will be logged in automatically.";
+        }
+        else if (chosenlanguage === "nl") {
+            successMessage.innerText += "Account succesvol aangemaakt. Je wordt automatisch ingelogd.";
+        }
         this._UI.successMessagePopup(true);
     }
 
     private _accountCreationFaillureProcedure(reason: unknown): void {
+        const chosenlanguage: string = sessionStorage.getItem("lang")!;
         const errorMessage: HTMLParagraphElement = document.querySelector("#errMsg")!;
         console.error("Fout tijdens registratie en inloggen:", reason);
         console.log("Detail van de fout:", JSON.stringify(reason, null, 2));
-        errorMessage.innerHTML = "An error occurred. Please try again later.";
+        if (chosenlanguage === "en") {
+            errorMessage.innerHTML = "An error occurred. Please try again later.";
+        }
+        else if (chosenlanguage === "nl") {
+            errorMessage.innerHTML = "Onverwachte error. Probeer het later opnieuw.";
+        }
     }
 }
 

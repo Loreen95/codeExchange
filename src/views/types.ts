@@ -62,6 +62,7 @@ export interface UserInfo {
     stringedTimeAndDate: string;
     bio: string;
     foto: string;
+    yearsExperienceDisplay: string;
 }
 
 export interface PostInfo {
