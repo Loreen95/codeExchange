@@ -450,17 +450,18 @@ export class PostController {
         }
     }
 
+    private _isEditPanelVisible: boolean = false;
     public displayEditCommentPanel(): void {
         const editCommentPanel: HTMLDivElement | null = document.querySelector(".editOwnAnswer");
-        if (this._isPanelVisible && editCommentPanel) {
-            this._isPanelVisible = false;
+        if (this._isEditPanelVisible && editCommentPanel) {
+            this._isEditPanelVisible = false;
             editCommentPanel.style.display = "none";
         }
         else if (!sessionStorage.getItem("session")) {
             window.location.href = "http://localhost:3000/login.html";
         }
         else if (editCommentPanel) {
-            this._isPanelVisible = true;
+            this._isEditPanelVisible = true;
             editCommentPanel.style.display = "flex";
         }
     }

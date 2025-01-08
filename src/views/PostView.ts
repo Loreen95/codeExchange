@@ -285,3 +285,26 @@ if (editCommentBttn) {
 else {
     console.error("Error fetching button");
 }
+
+const cancelBttn: HTMLButtonElement | null = document.querySelector("#clacelAwnser");
+if (cancelBttn) {
+    cancelBttn.addEventListener("click", e => {
+        e.preventDefault();
+        window.location.href = "http://localhost:3000/landingspagina.html";
+    });
+}
+
+const cancelEditBttn: HTMLButtonElement | null = document.querySelector("#clacelEditAwnser");
+if (cancelEditBttn) {
+    cancelEditBttn.addEventListener("click", e => {
+        e.preventDefault();
+        window.location.href = `http://localhost:3000/post?post=${postId}`;
+    });
+}
+
+const closeEditPanelBackUp: HTMLAnchorElement = document.querySelector(".closeEditPanel")!;
+if (String(closeEditPanelBackUp) !== "null") {
+    closeEditPanelBackUp.addEventListener("click", () => {
+        post.displayEditCommentPanel();
+    });
+}
