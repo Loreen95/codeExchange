@@ -822,54 +822,28 @@ export class PostController {
             }
             this._ratingCommentModel = new RatingComment(0, user.userId, comment.commentId);
             const existingRating: RatingComment | undefined = await RatingComment.getRatingByUserIdAndcommentId(user.userId, commentId);
-      const successMessage: HTMLParagraphElement | null = document.querySelector("#successMsg");
-
-            if (!errorMessage || !successMessage) {
-                console.error("Error and success message elements not found.");
-                return;
-            }
-
-            errorMessage.innerHTML = "";
-            successMessage.innerHTML = "";
-
-            if (!title || !content) {
-                errorMessage.innerHTML += "You must add a title and message!";
-                this._UI.unleashTheErrorPopup(true);
-                return;
-            }
-
-            this._postModel = new Post(postId, 0, title, content);
-            const isPostEdited: boolean = await this._postModel.update(postId, title, content);
-
-            if (isPostEdited) {
-                successMessage.innerHTML = `Post updated successfully! Redirecting to post ${postId}`;
-                this._UI.unleashTheErrorPopup(false);
-                this._UI.successMessagePopup(true);
-                if (postId) {
-                    await this.renderPosts();
-                    sessionStorage.setItem("post_Nr", String(postId));
-                    setTimeout(() => {
-                        window.location.href = `http://localhost:3000/post?post=${postId}`;
-                    }, 1500);
-                }
-                else {
-                    errorMessage.innerHTML += "Failed to update the post!";
-                    this._UI.unleashTheErrorPopup(true);
-                }
+            // const currentRating: RatingComment | undefined = await RatingComment.getRatingById(this._ratingCommentModel.ratingId);
+            // console.log(currentRating);
+            if (!existingRating) {
+                await this._ratingCommentModel.create(user.userId, commentId, typeRating);
             }
             else {
-                errorMessage.innerHTML += "Failed to update the post!";
-                this._UI.unleashTheErrorPopup(true);
+                if (existingRating.ratingType === "negative" && typeRating === "negative") {
+                    await this._ratingCommentModel.deleteRating(user.userId, comment.commentId);
+                }
+                else if (existingRating.ratingType === "positive" && typeRating === "positive") {
+                    await this._ratingCommentModel.deleteRating(user.userId, comment.commentId);
+                }
+                else if (existingRating.ratingType === "negative" && typeRating === "positive") {
+                    await this._ratingCommentModel.updateRating(typeRating, existingRating.ratingId, user.userId, comment.commentId);
+                }
+                else if (existingRating.ratingType === "positive" && typeRating === "negative") {
+                    await this._ratingCommentModel.updateRating(typeRating, existingRating.ratingId, user.userId, comment.commentId);
+                }
             }
         }
-        catch (reason) {
-            console.error("Error updating post!", reason);
-
-            const errorMessage: HTMLParagraphElement | null = document.querySelector("#errMsg");
-            if (errorMessage) {
-                errorMessage.innerHTML = "An error occurred while updating the post.";
-                this._UI.unleashTheErrorPopup(true);
-            }
+        catch (error) {
+            console.error("Error updating the rating:", error);
         }
     }
 }
