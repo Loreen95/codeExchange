@@ -6,7 +6,7 @@ import hljs from "highlight.js";
 import validator from "validator";
 import { RatingPost } from "../models/Post_rating";
 import { RatingComment } from "../models/Comment_rating";
-
+// impor
 export class PostController {
     private _postModel: Post | undefined;
     private _commentModel: Comment | undefined;
@@ -266,8 +266,10 @@ export class PostController {
             insertCommenthere.insertAdjacentHTML("beforeend", `
                 <div class="commentHeader">
                     <h1 class="awnserTitle"><a href="profile.html?user=${(await User.getUserById(Number(_comment.userId)))?.userId}" class="navLinkR">${(await User.getUserById(Number(_comment.userId)))?.userName}</a></h1>
-                    <a id="editCommentOption" class="editCommentOption${_comment.commentId}"><p> </p></a>
-                    <a id="deleteCommentOption" class="deleteCommentOption${_comment.commentId}"><p> </p></a>
+                    <div class="editNdelete">
+                        <a id="editCommentOption" class="editCommentOption${_comment.commentId}"><p> </p></a>
+                        <a id="deleteCommentOption" class="deleteCommentOption${_comment.commentId}"><p> </p></a>
+                    </div>
                 </div>
                 
                 <p id="expertise2">${(await User.getUserById(Number(_comment.userId)))?.expertise || "No expertise added"} | ${(await User.getUserById(Number(_comment.userId)))?.yearsExperience || "No experience added"}</p>
@@ -275,8 +277,10 @@ export class PostController {
                     <div class="contentPart contentPartComment">${this.encodeContentForVieuwingPurposes(_comment.content)}</div>
                 </div>
                 <div class="dateAndRating">
-                    <p class="bottomDate">${String(_comment.createdAt).slice(8, 10) + "-" + String(_comment.createdAt).slice(5, 7) + "-" + String(_comment.createdAt).slice(0, 4) + " | " + String(_comment.createdAt).slice(11, 19)}</p>
-                    <p class="bottomEditDate">${isEdited}</p>
+                    <div class="editedAndDateLeftside">
+                        <p class="bottomDate">${String(_comment.createdAt).slice(8, 10) + "-" + String(_comment.createdAt).slice(5, 7) + "-" + String(_comment.createdAt).slice(0, 4) + " | " + String(_comment.createdAt).slice(11, 19)}</p>
+                        <p class="bottomEditDate">${isEdited}</p>
+                    </div>
                     <div class="ratingPart">
                         <a id="commentPositive-${_comment.commentId}" href="#${_comment.commentId}" class="navLink positiveComment7${_comment.commentId}">
                             <i class="fa-solid fa-thumbs-up" id="positiveComment"></i>
@@ -437,12 +441,13 @@ export class PostController {
         const isCommentEdited: boolean = await commentModel.update(commentId, content.value.trim());
         if (isCommentEdited) {
             successMessage.innerHTML = "Comment updated successfully!";
+            this.displayEditCommentPanel();
             this._UI.unleashTheErrorPopup(false);
             this._UI.successMessagePopup(true);
             await this.renderComments();
             setTimeout(() => {
-                window.location.reload();
-            }, 1300);
+                this._UI.successMessagePopup(false);
+            }, 2000);
         }
         else {
             errorMessage.innerHTML += "Failed to update the comment!";
@@ -450,17 +455,18 @@ export class PostController {
         }
     }
 
+    private _isEditPanelHere: boolean = false;
     public displayEditCommentPanel(): void {
         const editCommentPanel: HTMLDivElement | null = document.querySelector(".editOwnAnswer");
-        if (this._isPanelVisible && editCommentPanel) {
-            this._isPanelVisible = false;
+        if (this._isEditPanelHere && editCommentPanel) {
+            this._isEditPanelHere = false;
             editCommentPanel.style.display = "none";
         }
         else if (!sessionStorage.getItem("session")) {
             window.location.href = "http://localhost:3000/login.html";
         }
         else if (editCommentPanel) {
-            this._isPanelVisible = true;
+            this._isEditPanelHere = true;
             editCommentPanel.style.display = "flex";
         }
     }
@@ -813,33 +819,7 @@ export class PostController {
             }
             this._ratingCommentModel = new RatingComment(0, user.userId, comment.commentId);
             const existingRating: RatingComment | undefined = await RatingComment.getRatingByUserIdAndcommentId(user.userId, commentId);
-            if (!existingRating) {
-                await this._ratingCommentModel.create(user.userId, commentId, typeRating);
-            }
-            else {
-                if (existingRating.ratingType === "negative" && typeRating === "negative") {
-                    await this._ratingCommentModel.deleteRating(user.userId, comment.commentId);
-                }
-                else if (existingRating.ratingType === "positive" && typeRating === "positive") {
-                    await this._ratingCommentModel.deleteRating(user.userId, comment.commentId);
-                }
-                else if (existingRating.ratingType === "negative" && typeRating === "positive") {
-                    await this._ratingCommentModel.updateRating(typeRating, existingRating.ratingId, user.userId, comment.commentId);
-                }
-                else if (existingRating.ratingType === "positive" && typeRating === "negative") {
-                    await this._ratingCommentModel.updateRating(typeRating, existingRating.ratingId, user.userId, comment.commentId);
-                }
-            }
-        }
-        catch (error) {
-            console.error("Error updating the rating:", error);
-        }
-    }
-
-    public async editPost(postId: number, title: string, content: string): Promise<void> {
-        try {
-            const errorMessage: HTMLParagraphElement | null = document.querySelector("#errMsg");
-            const successMessage: HTMLParagraphElement | null = document.querySelector("#successMsg");
+      const successMessage: HTMLParagraphElement | null = document.querySelector("#successMsg");
 
             if (!errorMessage || !successMessage) {
                 console.error("Error and success message elements not found.");
