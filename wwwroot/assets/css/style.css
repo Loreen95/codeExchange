@@ -827,6 +827,23 @@ body {
     margin-left: 12px;
 }
 
+.editNdelete {
+    display: flex;
+    gap: 10px;
+}
+
+.editedAndDateLeftside {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.bottomEditDate {
+    margin: 0;
+    font-family: 'Trebuchet MS', sans-serif;
+    opacity: 0.2;
+}
+
 .pageTitle button {
     border: none;
     background-image: linear-gradient(to bottom right, #171616, #0f121a);
