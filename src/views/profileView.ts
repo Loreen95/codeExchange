@@ -45,16 +45,19 @@ export class ProfileView {
         const expertise: HTMLInputElement = document.querySelector("#expertise")!;
         const experience: HTMLInputElement = document.querySelector("#yearsexperience")!;
 
-        username.value = UserInfo.userName;
+        // Stel de gebruikersnaam in
+        username.value = UserInfo.userName.trim();
         email.value = UserInfo.userEmail;
         dob.value = this.formatDateForInput(UserInfo.dob);
-        experience.value = String(UserInfo.yearsExperience);
+        experience.value = UserInfo.yearsExperience;
         expertise.value = UserInfo.expertise;
         biography.value = UserInfo.bio;
 
         const imgUrl: string = UserInfo.foto;
         const imageElement: HTMLImageElement | null = document.querySelector("#uploadedImage");
-        if (imageElement) {
+        const fotoFigure: HTMLImageElement | null = document.querySelector(".profilePicture");
+
+        if (imageElement && fotoFigure) {
             imageElement.src = imgUrl;
             imageElement.alt = "Uploaded Profile Picture";
         }
@@ -137,6 +140,7 @@ const experienceInput: HTMLInputElement | null = document.querySelector("#yearse
 const imageInput: HTMLInputElement | null = document.querySelector("#profilePictureInput");
 
 if (apply && usernameInput && emailInput && dobInput && bioInput && experienceInput && expertiseInput) {
+    const userInfo: UserInfo = profileController.getUserInfo();
     apply.addEventListener("click", async (e: Event) => {
         e.preventDefault();
         const username: string = usernameInput.value.trim();
@@ -144,30 +148,36 @@ if (apply && usernameInput && emailInput && dobInput && bioInput && experienceIn
         const dob: string = dobInput.value.trim();
         const dobFormat: string = new Date(dob).toISOString().split("T")[0];
         const bio: string = bioInput.value.trim();
-        const experience: number = Number(experienceInput.value.trim());
+        const experience: string = String(experienceInput.value.trim());
         const expertise: string = String(expertiseInput.value.trim());
-        if (!imageInput) {
-            return;
+        let imageUpload: string = userInfo.foto; // Default image URL
+        // Check if a new image is being uploaded
+        if (imageInput && imageInput.files && imageInput.files.length > 0) {
+            const userId: string | null = sessionStorage.getItem("session");
+            const data: string | types.DataURL = await utils.getDataUrl(imageInput);
+            const dataToUpload: string = typeof data === "string" ? data : data.url;
+            const imageName: string = imageInput.value.split("\\").pop() || imageInput.value;
+            const userSpecificImageName: string = `${userId}_${imageName}`;
+            const uploadResponse: string = await api.uploadFile(userSpecificImageName, dataToUpload, true);
+            console.log(uploadResponse);
+            sessionStorage.setItem("imageName", imageName);
+            console.log(uploadResponse, userSpecificImageName);
+
+            // Construct the new image URL after upload
+            imageUpload = `https://dev-hiinooreesaa43-pb2sef2425.hbo-ict.cloud/uploads/${userSpecificImageName}`;
         }
-        const userId: string | null = sessionStorage.getItem("session");
-        const data: string | types.DataURL = await utils.getDataUrl(imageInput);
-        const dataToUpload: string = typeof data === "string" ? data : data.url;
-        const imageName: string = imageInput.value.split("\\").pop() || imageInput.value;
-        const userSpecificImageName: string = `${userId}_${imageName}`;
-        const uploadResponse: string = await api.uploadFile(userSpecificImageName, dataToUpload, true);
-        console.log(uploadResponse);
-        sessionStorage.setItem("imageName", imageName);
-        console.log(uploadResponse, userSpecificImageName);
-        const newImageUrl: string = `https://dev-hiinooreesaa43-pb2sef2425.hbo-ict.cloud/uploads/${userSpecificImageName}`;
+
+        // Update image in the profile
         const imageElement: HTMLImageElement | null = document.querySelector("#uploadedImage");
         if (imageElement) {
-            imageElement.src = newImageUrl;
+            imageElement.src = imageUpload; // Set the image to either default or newly uploaded image
             imageElement.alt = "Uploaded Profile Picture";
         }
-        await profileController.updateRecords(username, email, dobFormat, bio, experience, expertise, newImageUrl);
+
+        // Update other profile details
+        await profileController.updateRecords(username, email, dobFormat, bio, experience, expertise, imageUpload);
     });
 }
-
 else {
     console.error("One or more form inputs were not found.");
 }

@@ -747,7 +747,7 @@ body {
     padding: 15px 40px 15px 40px;
 }
 
-.registerNewUser:hover, .loginUser:hover, .createPost:hover, .createComment:hover {
+.registerNewUser:hover, .login:hover, .createPost:hover, .createComment:hover {
     background-image: linear-gradient(to bottom right, rgb(211, 40, 40), rgb(200, 22, 22));
     transition: ease 0.3s;
 }

@@ -6,7 +6,7 @@ export type UserResult = {
     expertise: string;
     dob: Date;
     bio: string;
-    yearsExperience: number;
+    yearsExperience: string;
     createdAt: Date;
     count: number;
     foto: string;
@@ -57,7 +57,7 @@ export interface UserInfo {
     userEmail: string;
     userName: string;
     dob: Date | string | null;
-    yearsExperience: number;
+    yearsExperience: string;
     expertise: string;
     stringedTimeAndDate: string;
     bio: string;

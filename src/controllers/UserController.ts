@@ -33,8 +33,8 @@ export class UserController extends Controller {
             "-" +
             String(this.userView.userModel.dob).slice(0, 4)
             : errorMessages.unknownDob;
-        const yearsExperience: number = this.userView.userModel.yearsExperience || 0;
-        const yearsExperienceDisplay: string = yearsExperience === 0 ? errorMessages.unknownExperience : `${yearsExperience} years`;
+        const yearsExperience: string = this.userView.userModel.yearsExperience || "0";
+        const yearsExperienceDisplay: string = yearsExperience === "0" ? errorMessages.unknownExperience : yearsExperience;
         const bio: string = this.userView.userModel.bio || errorMessages.unknownBio;
         const stringedTimeAndDate: string = this.userView.userModel.createdAt
             ? String(this.userView.userModel.createdAt).slice(8, 10) +

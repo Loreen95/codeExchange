@@ -1,4 +1,4 @@
-import { ProfileView } from "../views/profileView";
+import { ProfileView } from "../views/ProfileView";
 import { UserInfo } from "../views/types";
 import { User } from "../models/User";
 import { LogoutClass } from "../controllers/LogoutController";
@@ -32,23 +32,25 @@ export class ProfileController {
      * @returns UserInfo
      */
     public getUserInfo(): UserInfo {
+        const errorMessages: { [key: string]: string } = this.getErrorMessages();
         const userId: number = this._profileView.userModel.userId || 0;
-        const userEmail: string = this._profileView.userModel.email || "Onbekend";
-        const userName: string = this._profileView.userModel.userName || "Onbekende gebruiker";
+        const userEmail: string = this._profileView.userModel.email || errorMessages.unknownEmail;
+        const userName: string = this._profileView.userModel.userName || errorMessages.unknownUser;
         const dob: string = this._profileView.userModel.dob
             ? this._profileView.userModel.dob instanceof Date
                 ? this._profileView.userModel.dob.toISOString().split("T")[0]
                 : this._profileView.userModel.dob
-            : "Niet beschikbaar";
-        const yearsExperience: number = this._profileView.userModel.yearsExperience || 0;
-        const bio: string = this._profileView.userModel.bio || "Geen biografie beschikbaar";
+            : errorMessages.unknownDob;
+        const yearsExperience: string = this._profileView.userModel.yearsExperience || "0";
+        const yearsExperienceDisplay: string = yearsExperience === "0" ? errorMessages.unknownExperience : yearsExperience;
+        const bio: string = this._profileView.userModel.bio || errorMessages.unknownBio;
         const stringedTimeAndDate: string = this._profileView.userModel.createdAt
             ? this._profileView.userModel.createdAt instanceof Date
                 ? this._profileView.userModel.createdAt.toISOString().replace("T", " ").split(".")[0]
                 : this._profileView.userModel.createdAt
-            : "Onbekende datum en tijd";
-        const expertise: string = this._profileView.userModel.expertise || "Geen expertise";
-        const foto: string = this._profileView.userModel.foto || "No Foto";
+            : errorMessages.unknownDateTime;
+        const expertise: string = this._profileView.userModel.expertise || errorMessages.unknownExpertise;
+        const foto: string = this._profileView.userModel.foto || errorMessages.noPhoto;
         return {
             userId,
             userEmail,
@@ -56,10 +58,42 @@ export class ProfileController {
             dob,
             expertise,
             yearsExperience,
+            yearsExperienceDisplay,
             bio,
             stringedTimeAndDate,
             foto,
         };
+    }
+
+    private getErrorMessages(): { [key: string]: string } {
+        const language: string = sessionStorage.getItem("lang") || "en";
+        // Foutmeldingen voor de verschillende talen
+        const messages: {
+            en: { unknownEmail: string; unknownUser: string; unknownDob: string; unknownBio: string; unknownDateTime: string; unknownExperience: string; unknownExpertise: string; noPhoto: string };
+            nl: { unknownEmail: string; unknownUser: string; unknownDob: string; unknownBio: string; unknownDateTime: string; unknownExperience: string; unknownExpertise: string; noPhoto: string };
+        } = {
+            en: {
+                unknownEmail: "Unknown",
+                unknownUser: "Unknown user",
+                unknownDob: "Not available",
+                unknownBio: "No biography available",
+                unknownDateTime: "Unknown date and time",
+                unknownExperience: "No experience known",
+                unknownExpertise: "No expertise",
+                noPhoto: "No photo",
+            },
+            nl: {
+                unknownEmail: "Onbekend",
+                unknownUser: "Onbekende gebruiker",
+                unknownDob: "Niet beschikbaar",
+                unknownBio: "Geen biografie beschikbaar",
+                unknownDateTime: "Onbekende datum en tijd",
+                unknownExperience: "Geen ervaring bekend",
+                unknownExpertise: "Geen expertise",
+                noPhoto: "Geen foto",
+            },
+        };
+        return messages[language as "en" | "nl"];
     }
 
     /**
@@ -71,7 +105,6 @@ export class ProfileController {
                 const successMessage: HTMLParagraphElement = document.querySelector("#successMsg")!;
                 successMessage.innerHTML = "You have made a grave mistake";
                 UI.successMessagePopup(true);
-                // await User.delete(userId);
                 await User.delete(userId).then(() => {
                     logout.logoutFunction();
                 });
@@ -87,7 +120,7 @@ export class ProfileController {
         }
     }
 
-    public async updateRecords(givenUsername: string, givenEmail: string, givenDob: string, givenBio: string, givenExperience: number, givenExpertise: string, foto: string): Promise<void> {
+    public async updateRecords(givenUsername: string, givenEmail: string, givenDob: string, givenBio: string, givenExperience: string, givenExpertise: string, foto: string): Promise<void> {
         const successMessage: HTMLParagraphElement = document.querySelector("#successMsg")!;
         const errorMessage: HTMLParagraphElement = document.querySelector("#errMsg")!;
         successMessage.innerHTML = "";

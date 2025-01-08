@@ -12,7 +12,7 @@ export class User {
     private _username: string;
     private _bio: string | undefined;
     private _dob: Date | undefined;
-    private _yearsExperience: number | undefined;
+    private _yearsExperience: string | undefined;
     private _createdAt: Date | undefined;
     private _expertise: string | undefined;
     private _foto: string | undefined;
@@ -174,7 +174,7 @@ export class User {
      * @param userId userId
      * @returns boolean based of success
      */
-    public async update(username: string, email: string, dob: string, bio: string, yearsExperience: number, expertise: string, userId: number, foto: string): Promise<boolean> {
+    public async update(username: string, email: string, dob: string, bio: string, yearsExperience: string, expertise: string, userId: number, foto: string): Promise<boolean> {
         try {
             const result: UserResult[] = await api.queryDatabase(
                 "UPDATE user SET username = ?, email = ?, dob = ?, bio = ?, yearsExperience = ?, expertise = ?, foto = ? WHERE userId = ?",
@@ -269,11 +269,11 @@ export class User {
         this._dob = dob;
     }
 
-    public get yearsExperience(): number | undefined {
+    public get yearsExperience(): string | undefined {
         return this._yearsExperience;
     }
 
-    public set yearsExperience(yearsExperience: number | undefined) {
+    public set yearsExperience(yearsExperience: string | undefined) {
         this._yearsExperience = yearsExperience;
     }
 
