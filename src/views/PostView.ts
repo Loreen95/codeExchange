@@ -15,7 +15,15 @@ const currentpost: Post | undefined = await Post.getPostById(Number(sessionStora
 
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 if (insertPostsHere) {
-    await post.renderPosts();
+    const currentPage: number = 1; // Begin altijd op pagina 1
+    const totalPages: number | undefined = await Post.countPages();
+    if (totalPages) {
+        await post.renderPosts(undefined, undefined, undefined, currentPage);
+        await post.renderPagination(currentPage, totalPages);
+    }
+    else {
+        console.error("Could not retrieve the total number of pages.");
+    }
 }
 const titleUserInput: HTMLInputElement = document.querySelector("#titleInput")!;
 const contentInput: HTMLInputElement = document.querySelector("#contentInput")!;
@@ -113,16 +121,6 @@ if (awnseramount) {
 const editLink: HTMLLinkElement | null = document.querySelector(".editLink");
 if (editLink) {
     editLink.href = `editPost?post=${postId}`;
-}
-
-const currentPage: number = 1; // Begin altijd op pagina 1
-const totalPages: number | undefined = await Post.countPages();
-if (totalPages) {
-    await post.renderPosts(undefined, undefined, undefined, currentPage);
-    await post.renderPagination(currentPage, totalPages);
-}
-else {
-    console.error("Could not retrieve the total number of pages.");
 }
 
 hljs.highlightAll();
