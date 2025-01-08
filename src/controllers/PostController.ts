@@ -300,13 +300,15 @@ export class PostController {
 
                     kjillCommentBttn.addEventListener("click", async () => {
                         const successMessage: HTMLParagraphElement = document.querySelector("#successMsg")!;
-                        successMessage.innerText += "Your comment has been deleted.";
+                        successMessage.innerText = "Your comment has been deleted.";
                         this._UI.successMessagePopup(true);
                         await Comment.delete(_comment.commentId).then(async () => {
+                            await this._renderAmountOfAnswers();
                             await this.renderComments();
                             this._UI.revealOrHideConfirmPopup();
-                            await new Promise(r => setTimeout(r, 2000)).then(() => {
+                            await new Promise(r => setTimeout(r, 2000)).then(async () => {
                                 this._UI.successMessagePopup(false);
+                                await this.renderComments();
                             });
                         });
                     });
@@ -498,6 +500,7 @@ export class PostController {
         try {
             const errorMessage: HTMLParagraphElement | null = document.querySelector("#errMsg");
             const successMessage: HTMLParagraphElement | null = document.querySelector("#successMsg");
+            const textarea: HTMLTextAreaElement = document.querySelector("#contentInput")!;
 
             if (!errorMessage || !successMessage) {
                 console.error("Error and success message elements not found.");
@@ -541,11 +544,13 @@ export class PostController {
 
             if (isCommentCreated) {
                 successMessage.innerHTML = "Comment created successfully!";
+                await this._renderAmountOfAnswers();
+                this.unleashAddComentPanel();
                 this._UI.unleashTheErrorPopup(false);
                 this._UI.successMessagePopup(true);
                 await this.renderComments();
                 setTimeout(() => {
-                    window.location.reload();
+                    this._UI.successMessagePopup(false);
                 }, 1500);
             }
             else {
@@ -553,6 +558,8 @@ export class PostController {
                 this._UI.unleashTheErrorPopup(true);
             }
             successMessage.innerHTML = "Comment submitted successfully!";
+            await this._renderAmountOfAnswers();
+            textarea.value = "";
             this._UI.unleashTheErrorPopup(false);
         }
         catch (reason) {
@@ -562,6 +569,13 @@ export class PostController {
                 errorMessage.innerHTML = "An unexpected error occurred. Please try again.";
             }
             this._UI.unleashTheErrorPopup(true);
+        }
+    }
+
+    private async _renderAmountOfAnswers(): Promise<void> {
+        const awnseramount: HTMLHeadElement | null = document.querySelector("#injectawnseramountHere");
+        if (awnseramount) {
+            awnseramount.innerHTML = String(await this.getCommentAmount());
         }
     }
 
