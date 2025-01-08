@@ -10,13 +10,9 @@ const UI: UserInterfaceClass = new UserInterfaceClass();
 const postUrl: URLSearchParams = new URLSearchParams(window.location.search);
 const postId: string | null = postUrl.get("post");
 sessionStorage.setItem("post_Nr", String(postId));
-const insertPostsHere: HTMLDivElement = document.querySelector(".posts")!;
+// const insertPostsHere: HTMLDivElement = document.querySelector(".posts")!;
 const currentpost: Post | undefined = await Post.getPostById(Number(sessionStorage.getItem("post_Nr")));
 
-// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-if (insertPostsHere) {
-    await post.renderPosts();
-}
 const titleUserInput: HTMLInputElement = document.querySelector("#titleInput")!;
 const contentInput: HTMLInputElement = document.querySelector("#contentInput")!;
 const createBtn: HTMLButtonElement | null = document.querySelector("#createPost");
