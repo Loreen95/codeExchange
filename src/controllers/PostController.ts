@@ -6,7 +6,6 @@ import hljs from "highlight.js";
 import validator from "validator";
 import { RatingPost } from "../models/Post_rating";
 import { RatingComment } from "../models/Comment_rating";
-// import { ratingResult } from "../views/types";
 
 export class PostController {
     private _postModel: Post | undefined;
@@ -257,11 +256,17 @@ export class PostController {
         const insertCommenthere: HTMLDivElement = document.querySelector(".awnsers")!;
         const commentList: Comment[] | undefined = await Comment.getCommentsByMessageId(Number(sessionStorage.getItem("post_Nr")));
         commentList.forEach(async _comment => {
+            let isEdited: string = "";
+            if (_comment.updatedAt && _comment.updatedAt !== _comment.createdAt) {
+                const formattedUpdatedAt: string = new Date(_comment.updatedAt).toLocaleString(); // Formatteer de datum
+                isEdited = `Edited: ${formattedUpdatedAt}`;
+            }
             const countRating: number | undefined = await RatingComment.countTotalRatingBycommentId(_comment.commentId);
             insertCommenthere.innerHTML = "";
             insertCommenthere.insertAdjacentHTML("beforeend", `
                 <div class="commentHeader">
                     <h1 class="awnserTitle"><a href="profile.html?user=${(await User.getUserById(Number(_comment.userId)))?.userId}" class="navLinkR">${(await User.getUserById(Number(_comment.userId)))?.userName}</a></h1>
+                    <a id="editCommentOption" class="editCommentOption${_comment.commentId}"><p> </p></a>
                     <a id="deleteCommentOption" class="deleteCommentOption${_comment.commentId}"><p> </p></a>
                 </div>
                 
@@ -271,6 +276,7 @@ export class PostController {
                 </div>
                 <div class="dateAndRating">
                     <p class="bottomDate">${String(_comment.createdAt).slice(8, 10) + "-" + String(_comment.createdAt).slice(5, 7) + "-" + String(_comment.createdAt).slice(0, 4) + " | " + String(_comment.createdAt).slice(11, 19)}</p>
+                    <p class="bottomEditDate">${isEdited}</p>
                     <div class="ratingPart">
                         <a id="commentPositive-${_comment.commentId}" href="#${_comment.commentId}" class="navLink positiveComment7${_comment.commentId}">
                             <i class="fa-solid fa-thumbs-up" id="positiveComment"></i>
@@ -312,32 +318,83 @@ export class PostController {
                     });
                 });
             }
-            const ratingCounter: HTMLParagraphElement | null = document.querySelector(".insertCommentRatingHere");
-            const currentComment: Comment | undefined = await Comment.getCommentById(_comment.commentId);
-            if (ratingCounter && currentComment) {
-                const userSession: string | null = sessionStorage.getItem("session");
-                const user: User | undefined = await User.getUserById(Number(userSession));
-                if (!user) {
-                    console.error("No user found!");
+
+            const editCommentBttn: HTMLAnchorElement | null = document.querySelector(`.editCommentOption${_comment.commentId}`);
+            if (editCommentBttn) {
+                if (Number(sessionStorage.getItem("session")) === Number(_comment.userId)) {
+                    editCommentBttn.innerHTML = "<i class='fas fa-edit'> </i>";
+                    const submitBtn: HTMLButtonElement | null = document.querySelector("#editAnswer");
+                    if (submitBtn) {
+                        editCommentBttn.dataset.commentId = String(_comment.commentId); // Voeg ID van comment toe als data-attribuut
+                    }
+
+                    if (!editCommentBttn.dataset.listenerAdded) {
+                        editCommentBttn.dataset.listenerAdded = "true";
+
+                        editCommentBttn.addEventListener("click", e => {
+                            e.preventDefault();
+                            this.displayEditCommentPanel();
+
+                            const content: HTMLTextAreaElement | null = document.querySelector("#editContentInput");
+                            if (content) {
+                                content.value = _comment.content;
+                            }
+
+                            // Stel het comment ID in en voeg een event listener toe aan #editAnswer
+                            const submitBtn: HTMLButtonElement | null = document.querySelector("#editAnswer");
+                            if (submitBtn) {
+                                submitBtn.dataset.commentId = String(_comment.commentId); // Stel het comment ID in
+
+                                if (!submitBtn.dataset.listenerAdded) {
+                                    submitBtn.dataset.listenerAdded = "true"; // Voorkom dubbele listeners
+                                    submitBtn.addEventListener("click", async (e: Event) => {
+                                        e.preventDefault();
+                                        const commentId: string | undefined = submitBtn.dataset.commentId;
+                                        if (commentId) {
+                                            await this.editComment(Number(commentId));
+                                        }
+                                        else {
+                                            console.error("Error fetching commentID");
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    }
                 }
-                else {
-                    const existingRating: RatingComment | undefined = await RatingComment.getRatingByUserIdAndcommentId(user.userId, currentComment.commentId);
-                    const positiveButton: HTMLAnchorElement = document.querySelector(`.positiveComment7${_comment.commentId}`)!;
-                    const negativeButton: HTMLAnchorElement = document.querySelector(`.negativeComment7${_comment.commentId}`)!;
-                    if (existingRating) {
-                        if (existingRating.ratingType === "positive") {
-                            positiveButton.innerHTML = `
-                                <i class="fa-solid fa-thumbs-up" id="positiveComment" style="color: green;"></i>
-                            `;
-                        }
-                        else if (existingRating.ratingType === "negative") {
-                            negativeButton.innerHTML = `
-                                <i class="fa-solid fa-thumbs-down" id="negativeComment" style="color: #ba2f2f;"></i>
-                            `;
+                const ratingCounter: HTMLParagraphElement | null = document.querySelector(".insertCommentRatingHere");
+                const currentComment: Comment | undefined = await Comment.getCommentById(_comment.commentId);
+
+                if (ratingCounter && currentComment) {
+                    const userSession: string | null = sessionStorage.getItem("session");
+                    const user: User | undefined = await User.getUserById(Number(userSession));
+
+                    if (!user) {
+                        console.error("No user found!");
+                    }
+                    else {
+                        const existingRating: RatingComment | undefined = await RatingComment.getRatingByUserIdAndcommentId(user.userId, currentComment.commentId);
+                        const positiveButton: HTMLAnchorElement | null = document.querySelector(`.positiveComment7${_comment.commentId}`);
+                        const negativeButton: HTMLAnchorElement | null = document.querySelector(`.negativeComment7${_comment.commentId}`);
+
+                        if (positiveButton && negativeButton) {
+                            if (existingRating) {
+                                if (existingRating.ratingType === "positive") {
+                                    positiveButton.innerHTML = `
+                                        <i class="fa-solid fa-thumbs-up" id="positiveComment" style="color: green;"></i>
+                                    `;
+                                }
+                                else if (existingRating.ratingType === "negative") {
+                                    negativeButton.innerHTML = `
+                                        <i class="fa-solid fa-thumbs-down" id="negativeComment" style="color: #ba2f2f;"></i>
+                                    `;
+                                }
+                            }
                         }
                     }
                 }
             }
+
             // Add event listeners for the rating buttons after the comment is rendered
             const positiveButton: HTMLLinkElement = document.querySelector(`#commentPositive-${_comment.commentId}`)!;
             const negativeButton: HTMLLinkElement = document.querySelector(`#commentNegative-${_comment.commentId}`)!;
@@ -356,6 +413,54 @@ export class PostController {
                 });
             });
         });
+    }
+
+    public async editComment(commentId: number): Promise<void> {
+        const errorMessage: HTMLParagraphElement | null = document.querySelector("#errMsg");
+        const successMessage: HTMLParagraphElement | null = document.querySelector("#successMsg");
+        const content: HTMLTextAreaElement | null = document.querySelector("#editContentInput");
+        if (!errorMessage || !successMessage) {
+            console.error("Error and success message elements not found.");
+            return;
+        }
+        errorMessage.innerHTML = "";
+        successMessage.innerHTML = "";
+
+        if (!content || !content.value.trim()) {
+            errorMessage.innerHTML = "You must add a message!";
+            this._UI.unleashTheErrorPopup(true);
+            return;
+        }
+        const commentModel: Comment = new Comment(0, 0, 0, "");
+        const isCommentEdited: boolean = await commentModel.update(commentId, content.value.trim());
+        if (isCommentEdited) {
+            successMessage.innerHTML = "Comment updated successfully!";
+            this._UI.unleashTheErrorPopup(false);
+            this._UI.successMessagePopup(true);
+            await this.renderComments();
+            setTimeout(() => {
+                window.location.reload();
+            }, 1300);
+        }
+        else {
+            errorMessage.innerHTML += "Failed to update the comment!";
+            this._UI.unleashTheErrorPopup(true);
+        }
+    }
+
+    public displayEditCommentPanel(): void {
+        const editCommentPanel: HTMLDivElement | null = document.querySelector(".editOwnAnswer");
+        if (this._isPanelVisible && editCommentPanel) {
+            this._isPanelVisible = false;
+            editCommentPanel.style.display = "none";
+        }
+        else if (!sessionStorage.getItem("session")) {
+            window.location.href = "http://localhost:3000/login.html";
+        }
+        else if (editCommentPanel) {
+            this._isPanelVisible = true;
+            editCommentPanel.style.display = "flex";
+        }
     }
 
     /**
@@ -694,8 +799,6 @@ export class PostController {
             }
             this._ratingCommentModel = new RatingComment(0, user.userId, comment.commentId);
             const existingRating: RatingComment | undefined = await RatingComment.getRatingByUserIdAndcommentId(user.userId, commentId);
-            // const currentRating: RatingComment | undefined = await RatingComment.getRatingById(this._ratingCommentModel.ratingId);
-            // console.log(currentRating);
             if (!existingRating) {
                 await this._ratingCommentModel.create(user.userId, commentId, typeRating);
             }

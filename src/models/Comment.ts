@@ -9,6 +9,7 @@ export class Comment {
     private _content: string;
     private _rating: number | undefined;
     private _createdAt: string | undefined;
+    private _updatedAt: string | undefined;
 
     // constructor:
     public constructor(commentId: number, userId: number, messageId: number, content: string) {
@@ -30,6 +31,7 @@ export class Comment {
                     const newComment: Comment = new Comment(comment.commentId, comment.userId, comment.messageId, comment.content);
                     newComment.rating = comment.rating;
                     newComment.createdAt = comment.createdAt;
+                    newComment.updatedAt = comment.updatedAt;
                     return newComment;
                 });
                 return comments;
@@ -47,6 +49,8 @@ export class Comment {
             const result: CommentResult[] = await api.queryDatabase("SELECT * FROM comment WHERE commentId = ?", [id]) as CommentResult[];
             if (result.length > 0) {
                 const comment: Comment = new Comment(result[0].commentId, result[0].userId, result[0].messageId, result[0].content);
+                comment.createdAt = result[0].createdAt;
+                comment.updatedAt = result[0].updatedAt;
                 return comment;
             }
             else {
@@ -143,6 +147,18 @@ export class Comment {
         }
     }
 
+    public async update(commentId: number, content: string): Promise<boolean> {
+        try {
+            const result: CommentResult[] = await api.queryDatabase("UPDATE comment SET content = ? WHERE commentId = ?", content, commentId) as CommentResult[];
+            console.log(result);
+            return true;
+        }
+        catch (reason) {
+            console.error("Error updating records", reason);
+            return false;
+        }
+    }
+
     public async updateRating(commentId: number, rating: number): Promise<boolean> {
         try {
             const result: CommentResult[] = await api.queryDatabase(
@@ -183,6 +199,10 @@ export class Comment {
         return this._createdAt;
     }
 
+    public get updatedAt(): string | undefined {
+        return this._updatedAt;
+    }
+
     public set content(newContent: string) {
         this._content = newContent;
     }
@@ -191,7 +211,11 @@ export class Comment {
         this._rating = newRating;
     }
 
-    public set createdAt(newcreatedAt: string | undefined) {
-        this._createdAt = newcreatedAt;
+    public set createdAt(newCreatedAt: string | undefined) {
+        this._createdAt = newCreatedAt;
+    }
+
+    public set updatedAt(newUpdatedAt: string | undefined) {
+        this._updatedAt = newUpdatedAt;
     }
 }

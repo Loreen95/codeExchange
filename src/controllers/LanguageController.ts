@@ -346,6 +346,10 @@ export class LanguageClass {
                 en: "Edit post",
                 nl: "Post aanpassen",
             },
+            editComment: {
+                en: "Edit comment",
+                nl: "Antwoord aanpassen",
+            },
         });
     }
 

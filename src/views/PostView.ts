@@ -268,3 +268,20 @@ if (String(filterOutNoComments) !== "null") {
         await post.renderPosts("commentedOnly");
     });
 }
+
+const editCommentBttn: HTMLButtonElement | null = document.querySelector("#editAnswer");
+if (editCommentBttn) {
+    const commentId: string | undefined = editCommentBttn.dataset.commentId;
+    if (commentId) {
+        editCommentBttn.addEventListener("click", async (e: Event) => {
+            e.preventDefault();
+            await post.editComment(Number(commentId));
+        });
+    }
+    else {
+        console.error("Error fetching commentID");
+    }
+}
+else {
+    console.error("Error fetching button");
+}

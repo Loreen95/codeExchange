@@ -1150,7 +1150,7 @@ input:-webkit-autofill:active{
 
 
 
-.addOwnAwnser {
+.addOwnAwnser, .editOwnAnswer {
     display: none;
     flex-direction: column;
     width: 75.5%;
@@ -1164,7 +1164,11 @@ input:-webkit-autofill:active{
     border-radius: 5px;
 }
 
-.addAwnsersTextEditButtons {
+/* #editContentInput {
+    display: none;
+} */
+
+.addAwnsersTextEditButtons, .editAwnsersTextEditButtons {
     display: flex;
     justify-content: space-between;
     margin: 0 5px 5px 0;
@@ -1174,11 +1178,11 @@ input:-webkit-autofill:active{
     display: flex!important;
 }
 
-.addAwnsersTextEditButtons a {
+.addAwnsersTextEditButtons a, .editAwnsersTextEditButtons a {
     margin: 6px 7px 2px;
 }
 
-.addAwnsersTextEditButtons a:hover {
+.addAwnsersTextEditButtons a:hover, .editAwnsersTextEditButtons a:hover {
     transition: all 0.3s;
     color: #2b2a2a;
 }
@@ -1230,7 +1234,7 @@ input:-webkit-autofill:active{
     color: aliceblue;
 }
 
-.addOwnAwnser textarea {
+.addOwnAwnser textarea, .editOwnAnswer textarea {
     margin: 0 0 10px;
     resize: none;
     border: none;
@@ -1242,11 +1246,11 @@ input:-webkit-autofill:active{
     padding: 10px;
 }
 
-.addAwnserLeftSide {
+.addAwnserLeftSide, .editAwnserLeftSide {
     display: flex;
 }
 
-.addAwnserRightSide {
+.addAwnserRightSide, .editAwnserRightSide {
     display: flex;
     margin-right: -5px;
 }
@@ -1298,14 +1302,14 @@ input:-webkit-autofill:active{
     cursor: pointer;
 }
 
-#deleteCommentOption {
+#deleteCommentOption, #editCommentOption {
     color: rgb(172, 26, 26);
     margin: 0 0 0 0;
     font-size: 25px;
     cursor: pointer;
 }
 
-#deleteCommentOption:hover {
+#deleteCommentOption:hover, #editCommentOption:hover {
     transition: all 0.3s;
     color: rgb(101, 11, 11);
 }

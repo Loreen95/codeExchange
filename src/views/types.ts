@@ -34,6 +34,7 @@ export type CommentResult = {
     rating: number;
     createdAt: string;
     count: number;
+    updatedAt: string;
 };
 
 export type RatingCommentResult = {
