@@ -21,7 +21,6 @@ else {
     console.error("Could not retrieve the total number of pages.");
 }
 
-// const insertPostsHere: HTMLDivElement = document.querySelector(".posts")!;
 const currentpost: Post | undefined = await Post.getPostById(Number(sessionStorage.getItem("post_Nr")));
 
 const titleUserInput: HTMLInputElement = document.querySelector("#titleInput")!;
