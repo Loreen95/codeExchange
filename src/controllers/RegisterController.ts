@@ -180,7 +180,7 @@ class RegistrationClass {
             allIsInOrder = false;
         }
 
-        // And finally when all is checked and double checked and no faults where found. The user will actually be created
+        // And finally when all is checked and double checked and no faults where found. The user will actually be created and logged in
         if (allIsInOrder) {
             this._UI.unleashTheErrorPopup(false);
             this._resetErrorMessages();
