@@ -477,6 +477,9 @@ export class PostController {
     private _isPanelVisible: boolean = false;
     public unleashAddComentPanel(): void {
         const commentMakerPanel: HTMLDivElement = document.querySelector(".addOwnAwnser")!;
+        if (this._isEditPanelHere) {
+            this.displayEditCommentPanel();
+        }
         if (this._isPanelVisible) {
             this._isPanelVisible = false;
             commentMakerPanel.style.display = "none";
