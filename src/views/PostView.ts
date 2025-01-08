@@ -10,21 +10,20 @@ const UI: UserInterfaceClass = new UserInterfaceClass();
 const postUrl: URLSearchParams = new URLSearchParams(window.location.search);
 const postId: string | null = postUrl.get("post");
 sessionStorage.setItem("post_Nr", String(postId));
-const insertPostsHere: HTMLDivElement = document.querySelector(".posts")!;
+
+const currentPage: number = 1; // Begin altijd op pagina 1
+const totalPages: number | undefined = await Post.countPages();
+if (totalPages) {
+    await post.renderPosts(undefined, undefined, undefined, currentPage);
+    await post.renderPagination(currentPage, totalPages);
+}
+else {
+    console.error("Could not retrieve the total number of pages.");
+}
+
+// const insertPostsHere: HTMLDivElement = document.querySelector(".posts")!;
 const currentpost: Post | undefined = await Post.getPostById(Number(sessionStorage.getItem("post_Nr")));
 
-// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-if (insertPostsHere) {
-    const currentPage: number = 1; // Begin altijd op pagina 1
-    const totalPages: number | undefined = await Post.countPages();
-    if (totalPages) {
-        await post.renderPosts(undefined, undefined, undefined, currentPage);
-        await post.renderPagination(currentPage, totalPages);
-    }
-    else {
-        console.error("Could not retrieve the total number of pages.");
-    }
-}
 const titleUserInput: HTMLInputElement = document.querySelector("#titleInput")!;
 const contentInput: HTMLInputElement = document.querySelector("#contentInput")!;
 const createBtn: HTMLButtonElement | null = document.querySelector("#createPost");
