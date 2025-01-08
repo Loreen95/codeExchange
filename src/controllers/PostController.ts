@@ -846,4 +846,58 @@ export class PostController {
             console.error("Error updating the rating:", error);
         }
     }
+
+    public async editPost(postId: number, title: string, content: string): Promise<void> {
+        try {
+            const errorMessage: HTMLParagraphElement | null = document.querySelector("#errMsg");
+            const successMessage: HTMLParagraphElement | null = document.querySelector("#successMsg");
+
+            if (!errorMessage || !successMessage) {
+                console.error("Error and success message elements not found.");
+                return;
+            }
+
+            errorMessage.innerHTML = "";
+            successMessage.innerHTML = "";
+
+            if (!title || !content) {
+                errorMessage.innerHTML += "You must add a title and message!";
+                this._UI.unleashTheErrorPopup(true);
+                return;
+            }
+
+            this._postModel = new Post(postId, 0, title, content);
+            const isPostEdited: boolean = await this._postModel.update(postId, title, content);
+
+            if (isPostEdited) {
+                successMessage.innerHTML = `Post updated successfully! Redirecting to post ${postId}`;
+                this._UI.unleashTheErrorPopup(false);
+                this._UI.successMessagePopup(true);
+                if (postId) {
+                    await this.renderPosts();
+                    sessionStorage.setItem("post_Nr", String(postId));
+                    setTimeout(() => {
+                        window.location.href = `http://localhost:3000/post?post=${postId}`;
+                    }, 1500);
+                }
+                else {
+                    errorMessage.innerHTML += "Failed to update the post!";
+                    this._UI.unleashTheErrorPopup(true);
+                }
+            }
+            else {
+                errorMessage.innerHTML += "Failed to update the post!";
+                this._UI.unleashTheErrorPopup(true);
+            }
+        }
+        catch (reason) {
+            console.error("Error updating post!", reason);
+
+            const errorMessage: HTMLParagraphElement | null = document.querySelector("#errMsg");
+            if (errorMessage) {
+                errorMessage.innerHTML = "An error occurred while updating the post.";
+                this._UI.unleashTheErrorPopup(true);
+            }
+        }
+    }
 }
