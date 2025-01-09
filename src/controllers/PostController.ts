@@ -425,6 +425,7 @@ export class PostController {
         const errorMessage: HTMLParagraphElement | null = document.querySelector("#errMsg");
         const successMessage: HTMLParagraphElement | null = document.querySelector("#successMsg");
         const content: HTMLTextAreaElement | null = document.querySelector("#editContentInput");
+        const chosenLanguage: string | undefined = sessionStorage.getItem("lang")!;
         if (!errorMessage || !successMessage) {
             console.error("Error and success message elements not found.");
             return;
@@ -433,14 +434,24 @@ export class PostController {
         successMessage.innerHTML = "";
 
         if (!content || !content.value.trim()) {
-            errorMessage.innerHTML = "You must add a message!";
+            if (chosenLanguage === "en") {
+                errorMessage.innerHTML = "You must add a message!";
+            }
+            else if (chosenLanguage === "nl") {
+                errorMessage.innerHTML = "Het antwoord kan niet leeg zijn!";
+            }
             this._UI.unleashTheErrorPopup(true);
             return;
         }
         const commentModel: Comment = new Comment(0, 0, 0, "");
         const isCommentEdited: boolean = await commentModel.update(commentId, content.value.trim());
         if (isCommentEdited) {
-            successMessage.innerHTML = "Comment updated successfully!";
+            if (chosenLanguage === "en") {
+                successMessage.innerHTML = "Comment updated successfully!";
+            }
+            else if (chosenLanguage === "nl") {
+                successMessage.innerHTML = "Antwoord succesvol aangepast!";
+            }
             this.displayEditCommentPanel();
             this._UI.unleashTheErrorPopup(false);
             this._UI.successMessagePopup(true);
@@ -450,7 +461,12 @@ export class PostController {
             }, 2000);
         }
         else {
-            errorMessage.innerHTML += "Failed to update the comment!";
+            if (chosenLanguage === "en") {
+                errorMessage.innerHTML += "Failed to update the comment!";
+            }
+            else if (chosenLanguage === "nl") {
+                errorMessage.innerHTML += "Er is iets fout gegaan tijdens het updaten van het antwoord!";
+            }
             this._UI.unleashTheErrorPopup(true);
         }
     }
@@ -851,6 +867,7 @@ export class PostController {
         try {
             const errorMessage: HTMLParagraphElement | null = document.querySelector("#errMsg");
             const successMessage: HTMLParagraphElement | null = document.querySelector("#successMsg");
+            const chosenLanguage: string | undefined = sessionStorage.getItem("lang")!;
 
             if (!errorMessage || !successMessage) {
                 console.error("Error and success message elements not found.");
@@ -861,7 +878,12 @@ export class PostController {
             successMessage.innerHTML = "";
 
             if (!title || !content) {
-                errorMessage.innerHTML += "You must add a title and message!";
+                if (chosenLanguage === "en") {
+                    errorMessage.innerHTML += "You must add a title and message!";
+                }
+                else if (chosenLanguage === "nl") {
+                    errorMessage.innerHTML += "Het bericht moet een titel en een bericht hebben!";
+                }
                 this._UI.unleashTheErrorPopup(true);
                 return;
             }
@@ -870,7 +892,12 @@ export class PostController {
             const isPostEdited: boolean = await this._postModel.update(postId, title, content);
 
             if (isPostEdited) {
-                successMessage.innerHTML = `Post updated successfully! Redirecting to post ${postId}`;
+                if (chosenLanguage === "en") {
+                    successMessage.innerHTML = `Post updated successfully! Redirecting to post ${postId}`;
+                }
+                else if (chosenLanguage === "nl") {
+                    successMessage.innerHTML = `Post is succesvol aangepast! Je wordt doorgestuurd naar ${postId}`;
+                }
                 this._UI.unleashTheErrorPopup(false);
                 this._UI.successMessagePopup(true);
                 if (postId) {
@@ -881,12 +908,22 @@ export class PostController {
                     }, 1500);
                 }
                 else {
-                    errorMessage.innerHTML += "Failed to update the post!";
+                    if (chosenLanguage === "en") {
+                        errorMessage.innerHTML += "Failed to update the post!";
+                    }
+                    else if (chosenLanguage === "nl") {
+                        errorMessage.innerHTML += "Er is iets fout gegaan met het updaten van de post!";
+                    }
                     this._UI.unleashTheErrorPopup(true);
                 }
             }
             else {
-                errorMessage.innerHTML += "Failed to update the post!";
+                if (chosenLanguage === "en") {
+                    errorMessage.innerHTML += "Failed to update the post!";
+                }
+                else if (chosenLanguage === "nl") {
+                    errorMessage.innerHTML += "Er is iets fout gegaan met het updaten van de post!";
+                }
                 this._UI.unleashTheErrorPopup(true);
             }
         }
@@ -894,8 +931,14 @@ export class PostController {
             console.error("Error updating post!", reason);
 
             const errorMessage: HTMLParagraphElement | null = document.querySelector("#errMsg");
+            const chosenLanguage: string | undefined = sessionStorage.getItem("lang")!;
             if (errorMessage) {
-                errorMessage.innerHTML = "An error occurred while updating the post.";
+                if (chosenLanguage === "en") {
+                    errorMessage.innerHTML = "An error occurred while updating the post.";
+                }
+                else if (chosenLanguage === "nl") {
+                    errorMessage.innerHTML = "Er is een error tijdens het updaten van de post. Probeer het later opnieuw.";
+                }
                 this._UI.unleashTheErrorPopup(true);
             }
         }
