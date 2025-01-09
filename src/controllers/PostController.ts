@@ -347,8 +347,10 @@ export class PostController {
 
                         editCommentBttn.addEventListener("click", e => {
                             e.preventDefault();
+                            if (this._isPanelVisible) {
+                                this.unleashAddComentPanel();
+                            }
                             this.displayEditCommentPanel();
-
                             const content: HTMLTextAreaElement | null = document.querySelector("#editContentInput");
                             if (content) {
                                 content.value = _comment.content;
