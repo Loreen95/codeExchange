@@ -832,6 +832,19 @@ body {
     gap: 10px;
 }
 
+#edited {
+    margin: 0;
+    opacity: 0.5;
+    margin-right: 10px;
+    position: relative;
+    top: 5px;
+}
+
+.dateAndEdited {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
 .editedAndDateLeftside {
     display: flex;
     flex-direction: row;

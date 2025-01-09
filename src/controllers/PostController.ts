@@ -148,8 +148,10 @@ export class PostController {
                                         <a id="commentPositive"><p class="messageIcon"><i class="fa-solid fa-thumbs-up"></i> ${countRating}</p></a>
                                         <p class="messageIcon"><i class="fa-sharp fa-solid fa-message"></i> ${totalComments}</p>
                                     </div>
-                                    <p id="datetime">${stringedTimeAndDate}</p>
-                                    <p id="edited">${isEdited}</p>
+                                    <div class="dateAndEdited">
+                                        <p id="datetime">${stringedTimeAndDate}</p>
+                                        <p id="edited">${isEdited}</p>
+                                    </div>
                                 </div>                                  
                             </div>
                         </div>               
