@@ -211,6 +211,21 @@ if (String(closePanelBackUp) !== "null") {
     });
 }
 
+const cancelEditBttn: HTMLButtonElement | null = document.querySelector("#clacelEditAwnser");
+if (cancelEditBttn) {
+    cancelEditBttn.addEventListener("click", e => {
+        e.preventDefault();
+        window.location.href = `http://localhost:3000/post?post=${postId}`;
+    });
+}
+
+const closeEditPanelBackUp: HTMLAnchorElement = document.querySelector(".closeEditPanel")!;
+if (String(closeEditPanelBackUp) !== "null") {
+    closeEditPanelBackUp.addEventListener("click", () => {
+        post.displayEditCommentPanel();
+    });
+}
+
 const ratingPositive: HTMLLinkElement = document.querySelector("#postPositive")!;
 const ratingNegative: HTMLLinkElement = document.querySelector("#postNegative")!;
 

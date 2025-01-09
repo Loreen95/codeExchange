@@ -466,6 +466,12 @@ export class PostController {
             await this.renderComments();
             setTimeout(() => {
                 this._UI.successMessagePopup(false);
+                const closePanelBackUp: HTMLAnchorElement = document.querySelector(".closeEditComment")!;
+                if (String(closePanelBackUp) !== "null") {
+                    closePanelBackUp.addEventListener("click", () => {
+                        this.displayEditCommentPanel();
+                    });
+                }
             }, 2000);
         }
         else {
