@@ -549,6 +549,7 @@ export class PostController {
         try {
             const errorMessage: HTMLParagraphElement | null = document.querySelector("#errMsg");
             const successMessage: HTMLParagraphElement | null = document.querySelector("#successMsg");
+            const chosenLanguage: string = sessionStorage.getItem("lang")!;
 
             if (!errorMessage || !successMessage) {
                 console.error("Error and success message elements not found.");
@@ -559,21 +560,36 @@ export class PostController {
             successMessage.innerHTML = "";
 
             if (!title || !content) {
-                errorMessage.innerHTML += "You must add a title and message!";
+                if (chosenLanguage === "en") {
+                    errorMessage.innerHTML += "You must add a title and message!";
+                }
+                else if (chosenLanguage === "nl") {
+                    errorMessage.innerHTML += "Je moet een titel en bericht meegeven!";
+                }
                 this._UI.unleashTheErrorPopup(true);
                 return;
             }
 
             const userId: string | null = sessionStorage.getItem("session");
             if (!userId) {
-                errorMessage.innerHTML += "You must be logged in!";
+                if (chosenLanguage === "en") {
+                    errorMessage.innerHTML += "You must be logged in!";
+                }
+                else if (chosenLanguage === "nl") {
+                    errorMessage.innerHTML += "Je moet ingelogd zijn!";
+                }
                 this._UI.unleashTheErrorPopup(true);
                 return;
             }
 
             const user: User | undefined = await User.getUserById(Number(userId));
             if (!user) {
-                errorMessage.innerHTML += "User not found!";
+                if (chosenLanguage === "en") {
+                    errorMessage.innerHTML += "User not found!";
+                }
+                else if (chosenLanguage === "nl") {
+                    errorMessage.innerHTML += "Gebruiker niet gevonden!";
+                }
                 this._UI.unleashTheErrorPopup(true);
                 return;
             }
@@ -583,8 +599,12 @@ export class PostController {
 
             if (isPostCreated) {
                 const postId: number = isPostCreated.postId;
-                // console.log("Redirecting to post with ID:", postId);
-                successMessage.innerHTML = `Post created successfully! Redirecting to post ${postId}`;
+                if (chosenLanguage === "en") {
+                    successMessage.innerHTML = `Post created successfully! Redirecting to post ${postId}`;
+                }
+                else if (chosenLanguage === "nl") {
+                    successMessage.innerHTML = `Post succesvol aangemaakt! Je wordt doorverwezen naar ${postId}`;
+                }
                 this._UI.unleashTheErrorPopup(false);
                 this._UI.successMessagePopup(true);
                 if (postId) {
@@ -595,12 +615,22 @@ export class PostController {
                     }, 1500);
                 }
                 else {
-                    errorMessage.innerHTML += "Failed to create the post!";
+                    if (chosenLanguage === "en") {
+                        errorMessage.innerHTML += "Failed to create the post!";
+                    }
+                    else if (chosenLanguage === "nl") {
+                        errorMessage.innerHTML += "Er is een error ontstaan bij het aanmaken van de post. Probeer het later opnieuw!";
+                    }
                     this._UI.unleashTheErrorPopup(true);
                 }
             }
             else {
-                errorMessage.innerHTML += "Failed to create the post!";
+                if (chosenLanguage === "en") {
+                    errorMessage.innerHTML += "Failed to create the post!";
+                }
+                else if (chosenLanguage === "nl") {
+                    errorMessage.innerHTML += "Er is een error ontstaan bij het aanmaken van de post. Probeer het later opnieuw!";
+                }
                 this._UI.unleashTheErrorPopup(true);
             }
         }
@@ -608,8 +638,14 @@ export class PostController {
             console.error("Error creating post!", reason);
 
             const errorMessage: HTMLParagraphElement | null = document.querySelector("#errMsg");
+            const chosenLanguage: string = sessionStorage.getItem("lang")!;
             if (errorMessage) {
-                errorMessage.innerHTML = "An error occurred while creating the post.";
+                if (chosenLanguage === "en") {
+                    errorMessage.innerHTML += "An error occurred while creating post!";
+                }
+                else if (chosenLanguage === "nl") {
+                    errorMessage.innerHTML += "Er is een error ontstaan bij het aanmaken van de post. Probeer het later opnieuw!";
+                }
                 this._UI.unleashTheErrorPopup(true);
             }
         }
@@ -631,6 +667,7 @@ export class PostController {
             const errorMessage: HTMLParagraphElement | null = document.querySelector("#errMsg");
             const successMessage: HTMLParagraphElement | null = document.querySelector("#successMsg");
             const textarea: HTMLTextAreaElement = document.querySelector("#contentInput")!;
+            const chosenLanguage: string = sessionStorage.getItem("lang")!;
 
             if (!errorMessage || !successMessage) {
                 console.error("Error and success message elements not found.");
@@ -641,21 +678,36 @@ export class PostController {
             successMessage.innerHTML = "";
 
             if (!content) {
-                errorMessage.innerHTML = "You must add a message!";
+                if (chosenLanguage === "en") {
+                    errorMessage.innerHTML = "You must add a message!";
+                }
+                else if (chosenLanguage === "nl") {
+                    errorMessage.innerHTML += "Je moet een titel en bericht meegeven!";
+                }
                 this._UI.unleashTheErrorPopup(true);
                 return;
             }
 
             const session: string | null = sessionStorage.getItem("session");
             if (!session) {
-                errorMessage.innerHTML = "You must be logged in!";
+                if (chosenLanguage === "en") {
+                    errorMessage.innerHTML += "You must be logged in!";
+                }
+                else if (chosenLanguage === "nl") {
+                    errorMessage.innerHTML += "Je moet ingelogd zijn!";
+                }
                 this._UI.unleashTheErrorPopup(true);
                 return;
             }
 
             const user: User | undefined = await User.getUserById(Number(sessionStorage.getItem("session")));
             if (!user) {
-                errorMessage.innerHTML = "User not found!";
+                if (chosenLanguage === "en") {
+                    errorMessage.innerHTML += "User not found!";
+                }
+                else if (chosenLanguage === "nl") {
+                    errorMessage.innerHTML += "Gebruiker niet gevonden!";
+                }
                 this._UI.unleashTheErrorPopup(true);
                 return;
             }
@@ -664,7 +716,12 @@ export class PostController {
             const postId: string | null = postUrl.get("post");
             const post: Post | undefined = await Post.getPostById(Number(postId));
             if (!post) {
-                errorMessage.innerHTML = "Error finding original post!";
+                if (chosenLanguage === "en") {
+                    errorMessage.innerHTML = "Error finding original post!";
+                }
+                else if (chosenLanguage === "nl") {
+                    errorMessage.innerHTML = "Er is een error ontstaan bij het zoeken van het originele bericht";
+                }
                 this._UI.unleashTheErrorPopup(true);
                 return;
             }
@@ -673,7 +730,12 @@ export class PostController {
             const isCommentCreated: boolean = await this._commentModel.create(user.userId, post.postId, content);
 
             if (isCommentCreated) {
-                successMessage.innerHTML = "Comment created successfully!";
+                if (chosenLanguage === "en") {
+                    successMessage.innerHTML = "Comment created successfully!";
+                }
+                else if (chosenLanguage === "nl") {
+                    successMessage.innerHTML = "Antwoord succesvol aangemaakt!";
+                }
                 await this._renderAmountOfAnswers();
                 this.unleashAddComentPanel();
                 this._UI.unleashTheErrorPopup(false);
@@ -694,9 +756,15 @@ export class PostController {
         }
         catch (reason) {
             console.error("Error submitting comment:", reason);
+            const chosenLanguage: string = sessionStorage.getItem("lang")!;
             const errorMessage: HTMLParagraphElement | null = document.querySelector("#errMsg");
             if (errorMessage) {
-                errorMessage.innerHTML = "An unexpected error occurred. Please try again.";
+                if (chosenLanguage === "en") {
+                    errorMessage.innerHTML = "An unexpected error occurred. Please try again.";
+                }
+                else if (chosenLanguage === "nl") {
+                    errorMessage.innerHTML = "Er is een onverwachte error ontstaan. Probeer het later opnieuw";
+                }
             }
             this._UI.unleashTheErrorPopup(true);
         }
