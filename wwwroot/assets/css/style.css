@@ -1656,6 +1656,7 @@ pre {
     background-color: #2e2d2d;
     padding: 5px;
     font-size: 20px;
+    outline: none;
     color: aliceblue;
     margin: 10px 0 20px 0;
     border-radius: 5px;
