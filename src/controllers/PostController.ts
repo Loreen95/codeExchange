@@ -312,7 +312,13 @@ export class PostController {
 
                     kjillCommentBttn.addEventListener("click", async () => {
                         const successMessage: HTMLParagraphElement = document.querySelector("#successMsg")!;
-                        successMessage.innerText = "Your comment has been deleted.";
+                        const chosenLanguage: string = sessionStorage.getItem("lang")!;
+                        if (chosenLanguage === "en") {
+                            successMessage.innerText = "Your comment has been deleted.";
+                        }
+                        else if (chosenLanguage === "nl") {
+                            successMessage.innerText = "Je antwoord is verwijderd.";
+                        }
                         this._UI.successMessagePopup(true);
                         await Comment.delete(_comment.commentId).then(async () => {
                             await this._renderAmountOfAnswers();
@@ -684,7 +690,7 @@ export class PostController {
                     errorMessage.innerHTML = "You must add a message!";
                 }
                 else if (chosenLanguage === "nl") {
-                    errorMessage.innerHTML += "Je moet een titel en bericht meegeven!";
+                    errorMessage.innerHTML += "Je moet een bericht meegeven!";
                 }
                 this._UI.unleashTheErrorPopup(true);
                 return;
@@ -751,7 +757,6 @@ export class PostController {
                 errorMessage.innerHTML += "Failed to create the post!";
                 this._UI.unleashTheErrorPopup(true);
             }
-            successMessage.innerHTML = "Comment submitted successfully!";
             await this._renderAmountOfAnswers();
             textarea.value = "";
             this._UI.unleashTheErrorPopup(false);

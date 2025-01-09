@@ -1,4 +1,4 @@
-import { ProfileView } from "../views/ProfileView";
+import { ProfileView } from "../views/profileView";
 import { UserInfo } from "../views/types";
 import { User } from "../models/User";
 import { LogoutClass } from "../controllers/LogoutController";

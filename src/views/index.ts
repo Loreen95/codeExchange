@@ -1,6 +1,6 @@
 import { ProfileController } from "../controllers/ProfileController";
 import { UserController } from "../controllers/UserController";
-import { ProfileView } from "./ProfileView";
+import { ProfileView } from "./profileView";
 import { UserView } from "./UserView";
 
 async function initializeViews(): Promise<void> {

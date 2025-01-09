@@ -81,17 +81,31 @@ class UserInterfaceClass {
 
     public dressConfirmPopupToDeleteComment(): void {
         const stuff: HTMLDivElement = document.querySelector(".confirmPopupContent")!;
+        const chosenLanguage: string = sessionStorage.getItem("lang")!;
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         if (stuff) {
-            stuff.innerHTML = `
-                <div class="confirmPopupText">
-                    <p class="confirmPopupMessage" data-translate="deleteComment">Delete comment?</p>
-                <div>
-                <div class="confirmPopupButtons">
-                    <button class="defaultRedButton" id="kjillComment" data-translate="confirm">Confirm</button> 
-                    <button class="closeConfirmPopup2" data-translate="cancel">Cancel</button>
-                </div>
-            `;
+            if (chosenLanguage === "en") {
+                stuff.innerHTML = `
+                    <div class="confirmPopupText">
+                        <p class="confirmPopupMessage" data-translate="deleteComment">Delete comment?</p>
+                    <div>
+                    <div class="confirmPopupButtons">
+                        <button class="defaultRedButton" id="kjillComment" data-translate="confirm">Confirm</button> 
+                        <button class="closeConfirmPopup2" data-translate="cancel">Cancel</button>
+                    </div>
+                `;
+            }
+            else if (chosenLanguage === "nl") {
+                stuff.innerHTML = `
+                    <div class="confirmPopupText">
+                        <p class="confirmPopupMessage" data-translate="deleteComment">Delete comment?</p>
+                    <div>
+                    <div class="confirmPopupButtons">
+                        <button class="defaultRedButton" id="kjillComment" data-translate="confirm">Bevestigen</button> 
+                        <button class="closeConfirmPopup2" data-translate="cancel">Annuleren</button>
+                    </div>
+                `;
+            }
         }
     }
 

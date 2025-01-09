@@ -10,19 +10,13 @@ const UI: UserInterfaceClass = new UserInterfaceClass();
 const postUrl: URLSearchParams = new URLSearchParams(window.location.search);
 const postId: string | null = postUrl.get("post");
 sessionStorage.setItem("post_Nr", String(postId));
-
-const currentPage: number = 1; // Begin altijd op pagina 1
-const totalPages: number | undefined = await Post.countPages();
-if (totalPages) {
-    await post.renderPosts(undefined, undefined, undefined, currentPage);
-    await post.renderPagination(currentPage, totalPages);
-}
-else {
-    console.error("Could not retrieve the total number of pages.");
-}
-
+const insertPostsHere: HTMLDivElement = document.querySelector(".posts")!;
 const currentpost: Post | undefined = await Post.getPostById(Number(sessionStorage.getItem("post_Nr")));
 
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+if (insertPostsHere) {
+    await post.renderPosts();
+}
 const titleUserInput: HTMLInputElement = document.querySelector("#titleInput")!;
 const contentInput: HTMLInputElement = document.querySelector("#contentInput")!;
 const createBtn: HTMLButtonElement | null = document.querySelector("#createPost");
@@ -119,6 +113,16 @@ if (awnseramount) {
 const editLink: HTMLLinkElement | null = document.querySelector(".editLink");
 if (editLink) {
     editLink.href = `editPost?post=${postId}`;
+}
+
+const currentPage: number = 1; // Begin altijd op pagina 1
+const totalPages: number | undefined = await Post.countPages();
+if (totalPages) {
+    await post.renderPosts(undefined, undefined, undefined, currentPage);
+    await post.renderPagination(currentPage, totalPages);
+}
+else {
+    console.error("Could not retrieve the total number of pages.");
 }
 
 hljs.highlightAll();
@@ -262,45 +266,5 @@ const filterOutNoComments: HTMLButtonElement = document.querySelector(".filterOu
 if (String(filterOutNoComments) !== "null") {
     filterOutNoComments.addEventListener("click", async () => {
         await post.renderPosts("commentedOnly");
-    });
-}
-
-const editCommentBttn: HTMLButtonElement | null = document.querySelector("#editAnswer");
-if (editCommentBttn) {
-    const commentId: string | undefined = editCommentBttn.dataset.commentId;
-    if (commentId) {
-        editCommentBttn.addEventListener("click", async (e: Event) => {
-            e.preventDefault();
-            await post.editComment(Number(commentId));
-        });
-    }
-    else {
-        console.error("Error fetching commentID");
-    }
-}
-else {
-    console.error("Error fetching button");
-}
-
-const cancelBttn: HTMLButtonElement | null = document.querySelector("#clacelAwnser");
-if (cancelBttn) {
-    cancelBttn.addEventListener("click", e => {
-        e.preventDefault();
-        window.location.href = "http://localhost:3000/landingspagina.html";
-    });
-}
-
-const cancelEditBttn: HTMLButtonElement | null = document.querySelector("#clacelEditAwnser");
-if (cancelEditBttn) {
-    cancelEditBttn.addEventListener("click", e => {
-        e.preventDefault();
-        window.location.href = `http://localhost:3000/post?post=${postId}`;
-    });
-}
-
-const closeEditPanelBackUp: HTMLAnchorElement = document.querySelector(".closeEditPanel")!;
-if (String(closeEditPanelBackUp) !== "null") {
-    closeEditPanelBackUp.addEventListener("click", () => {
-        post.displayEditCommentPanel();
     });
 }
